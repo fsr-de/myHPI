@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "1328"
+name = "wagtail_1327"
 version = "0.1.0"
 description = ""
 authors = ["Julian B. <jeriox@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 wagtail = "^2.12.3"
 wagtail-markdown = "^0.6"
 django-environ = "^0.4.5"
