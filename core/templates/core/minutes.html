@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load wagtailmarkdown %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-9">
+            {{ page.text| markdown }}
+        </div>
+        <div class="col-3">
+            <h4>Date</h4>
+            <p>{{ page.date }}</p>
+            <h4>Moderator</h4>
+            <p>{{ page.moderator }}</p>
+            <h4>Minutes taker</h4>
+            <p>{{ page.author }}</p>
+            <h4>Participants</h4>
+            <ul>
+                {% for participant in page.participants.all %}
+                    <li><i>participant</i></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

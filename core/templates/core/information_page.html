@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load wagtailmarkdown %}
+
+{% block content %}
+    {{ page.body| markdown }}
+{% endblock %}
