@@ -11,6 +11,7 @@ wagtail = "^2.12.3"
 django-environ = "^0.4.5"
 bleach = "^3.3.0"
 Markdown = "^3.3.4"
+wagtail-localize = "^0.9.5"
 
 [tool.poetry.dev-dependencies]
 

@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail_markdown',
+    "wagtail_localize",
+    "wagtail_localize.locales",
 
     'modelcluster',
     'taggit',
@@ -78,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
@@ -139,6 +142,14 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+WAGTAIL_I18N_ENABLED = True
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ('en', "English"),
+    ('de', "German"),
+]
+WAGTAILLOCALIZE_MACHINE_TRANSLATOR = {
+    'CLASS': 'wagtail_localize.machine_translators.dummy.DummyTranslator',
+}
 
 USE_L10N = True
 
