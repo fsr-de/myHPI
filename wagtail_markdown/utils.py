@@ -16,6 +16,7 @@ import bleach
 import markdown
 
 from .mdx import linker, tables
+from .minutes_extensions import MinuteExtension
 
 
 def render_markdown(text, context=None):
@@ -140,7 +141,8 @@ def _get_markdown_kwargs():
              'page:': 'wagtail_markdown.mdx.linkers.page',
              'image:': 'wagtail_markdown.mdx.linkers.image',
              'doc:': 'wagtail_markdown.mdx.linkers.document',
-         })
+         }),
+        MinuteExtension()
     ]
 
     if hasattr(settings, 'WAGTAILMARKDOWN_EXTENSIONS'):

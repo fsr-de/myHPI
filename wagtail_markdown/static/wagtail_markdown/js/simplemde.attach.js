@@ -18,10 +18,10 @@ function simplemdeAttach(id) {
             autofocus: false,
             toolbar: ["bold", "italic", "heading-1",
         {
-            name: "redText",
-            action: drawRedText,
-            className: "fa fa-bold", // Look for a suitable icon
-            title: "Red text (Ctrl/Cmd-Alt-R)",
+            name: "start meeting",
+            action: startMeeting,
+            className: "fa fa-play", // Look for a suitable icon
+            title: "start meeting (Ctrl/Cmd-Alt-R)",
         }
     ]
         });
@@ -32,16 +32,15 @@ function simplemdeAttach(id) {
         });
 }
 
-function drawRedText(editor) {
+function startMeeting(editor) {
 
     var cm = editor.codemirror;
     var output = '';
     var selectedText = cm.getSelection();
     var text = selectedText || 'placeholder';
 
-    output = '!!' + text + '!!';
+    output = "|start|(" + new Date().toLocaleTimeString() + ")" ;
     cm.replaceSelection(output);
-
 }
 
 /*
