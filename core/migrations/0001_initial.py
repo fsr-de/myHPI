@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtailmarkdown.fields
+import wagtail_markdown.fields
 
 
 class Migration(migrations.Migration):
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='InformationPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('body', wagtailmarkdown.fields.MarkdownField()),
+                ('body', wagtail_markdown.fields.MarkdownField()),
             ],
             options={
                 'abstract': False,

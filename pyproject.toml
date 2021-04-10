@@ -8,8 +8,9 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.8"
 wagtail = "^2.12.3"
-wagtail-markdown = "^0.6"
 django-environ = "^0.4.5"
+bleach = "^3.3.0"
+Markdown = "^3.3.4"
 
 [tool.poetry.dev-dependencies]
 

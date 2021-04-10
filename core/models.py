@@ -4,8 +4,8 @@ from django.db import models
 from django.db.models import DateField, ForeignKey, ManyToManyField
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
-from wagtailmarkdown.edit_handlers import MarkdownPanel
-from wagtailmarkdown.fields import MarkdownField
+from wagtail_markdown.edit_handlers import MarkdownPanel
+from wagtail_markdown.fields import MarkdownField
 
 
 class InformationPage(Page):
