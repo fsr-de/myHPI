@@ -18,18 +18,18 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
         super(MarkdownTextarea, self).__init__(**kwargs)
 
     def render_js_init(self, id_, name, value):
-        return 'simplemdeAttach("{0}");'.format(id_)
+        return 'easymdeAttach("{0}");'.format(id_)
 
     @property
     def media(self):
         return forms.Media(
             css={
                 'all': (
-                    'wagtail_markdown/css/simplemde.min.css',
+                    'wagtail_markdown/css/easymde.min.css',
                 )
             },
             js=(
-                'wagtail_markdown/js/simplemde.min.js',
-                'wagtail_markdown/js/simplemde.attach.js',
+                'wagtail_markdown/js/easymde.min.js',
+                'wagtail_markdown/js/easymde.attach.js',
             )
         )
