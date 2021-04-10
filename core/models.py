@@ -1,9 +1,9 @@
-from django.conf import settings
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import DateField, ForeignKey, ManyToManyField
+from django.http import HttpResponseRedirect
 from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail_markdown.edit_handlers import MarkdownPanel
 from wagtail_markdown.fields import MarkdownField
 
@@ -14,6 +14,7 @@ class InformationPage(Page):
     content_panels = Page.content_panels + [
         MarkdownPanel('body', classname="full"),
     ]
+    parent_page_types = ["FirstLevelMenuItem", "SecondLevelMenuItem", "InformationPage", "RootPage"]
 
 
 class MinutesList(Page):
@@ -22,6 +23,7 @@ class MinutesList(Page):
     content_panels = Page.content_panels + [
         FieldPanel("group"),
     ]
+    parent_page_types = ["FirstLevelMenuItem", "SecondLevelMenuItem", "InformationPage", "RootPage"]
     subpage_types = ["Minutes"]
 
     def get_context(self, request, *args, **kwargs):
@@ -48,3 +50,29 @@ class Minutes(Page):
         MarkdownPanel('text', classname="full"),
     ]
     parent_page_types = ["MinutesList"]
+    subpage_types = []
+
+
+class RootPage(InformationPage):
+    template = "core/information_page.html"
+
+    parent_page_types = ['wagtailcore.Page']
+
+
+class FirstLevelMenuItem(Page):
+    parent_page_types = ["RootPage"]
+    subpage_types = ["SecondLevelMenuItem", "InformationPage", "MinutesList"]
+    show_in_menus_default = True
+
+    def serve(self, request, *args, **kwargs):
+        # To handle the situation where someone inadvertently lands on a menu page, do a redirect
+        first_descendant = self.get_descendants().first()
+        if first_descendant:
+            return HttpResponseRedirect(first_descendant.url)
+        else:
+            return HttpResponseRedirect(Site.find_for_request(request).root_page.url)
+
+
+class SecondLevelMenuItem(FirstLevelMenuItem):
+    parent_page_types = ["FirstLevelMenuItem"]
+    subpage_types = ["InformationPage", "MinutesList"]
