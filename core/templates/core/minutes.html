@@ -3,8 +3,9 @@
 
 {% block content %}
     <div class="row">
+        {% with page.text|markdown as parsed_md %}
         <div class="col-9">
-            {{ page.text| markdown }}
+            {{ parsed_md.0 }}
         </div>
         <div class="col-3">
             <h4>Date</h4>
@@ -19,6 +20,9 @@
                     <li><i>participant</i></li>
                 {% endfor %}
             </ul>
+            <h4>Table of contents</h4>
+            {{ parsed_md.1 }}
         </div>
+        {% endwith %}
     </div>
 {% endblock %}

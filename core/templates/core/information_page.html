@@ -2,5 +2,15 @@
 {% load wagtailmarkdown %}
 
 {% block content %}
-    {{ page.body| markdown }}
+    {% with page.body|markdown as parsed_md %}
+        <div class="row">
+            <div class="col-9">
+                {{ parsed_md.0 }}
+            </div>
+            <div class="col-3">
+                <h4>Table of contents</h4>
+                {{ parsed_md.1 }}
+            </div>
+        </div>
+    {% endwith %}
 {% endblock %}

@@ -14,6 +14,7 @@ from django.utils.safestring import mark_safe
 
 import bleach
 import markdown
+from markdown.extensions.toc import TocExtension
 
 from .mdx import linker, tables
 from .minutes_extensions import MinuteExtension
@@ -25,13 +26,15 @@ def render_markdown(text, context=None):
     """
     if context is None or not isinstance(context, dict):
         context = {}
-    markdown_html = _transform_markdown_into_html(text)
+    markdown_html, toc = _transform_markdown_into_html(text)
     sanitised_markdown_html = _sanitise_markdown_html(markdown_html)
-    return mark_safe(sanitised_markdown_html)
+    return mark_safe(sanitised_markdown_html), mark_safe(toc)
 
 
 def _transform_markdown_into_html(text):
-    return markdown.markdown(smart_text(text), **_get_markdown_kwargs())
+    md = markdown.Markdown(**_get_markdown_kwargs())
+    # abbreveations = "\n" + ("\n".join([str(abbr) for abbr in AbbreviationExplanation.objects.all()]))
+    return md.convert(smart_text(text)), md.toc
 
 
 def _sanitise_markdown_html(markdown_html):
@@ -142,7 +145,8 @@ def _get_markdown_kwargs():
              'image:': 'wagtail_markdown.mdx.linkers.image',
              'doc:': 'wagtail_markdown.mdx.linkers.document',
          }),
-        MinuteExtension()
+        MinuteExtension(),
+        TocExtension(),
     ]
 
     if hasattr(settings, 'WAGTAILMARKDOWN_EXTENSIONS'):
