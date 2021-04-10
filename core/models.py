@@ -26,7 +26,8 @@ class MinutesList(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.setdefault("minutes_list", Minutes.objects.live().filter(group=self.group))
+        minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
+        context.setdefault("minutes_list", Minutes.objects.filter(id__in=minutes_ids, group=self.group))
         return context
 
 
