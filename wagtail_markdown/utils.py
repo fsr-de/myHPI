@@ -32,9 +32,11 @@ def render_markdown(text, context=None):
 
 
 def _transform_markdown_into_html(text):
+    from core.models import AbbreviationExplanation
+
     md = markdown.Markdown(**_get_markdown_kwargs())
-    # abbreveations = "\n" + ("\n".join([str(abbr) for abbr in AbbreviationExplanation.objects.all()]))
-    return md.convert(smart_text(text)), md.toc
+    abbreveations = "\n" + ("\n".join([f"*[{abbr.abbreviation}]: {abbr.explanation}" for abbr in AbbreviationExplanation.objects.all()]))
+    return md.convert(smart_text(text) + abbreveations), md.toc
 
 
 def _sanitise_markdown_html(markdown_html):
@@ -44,6 +46,7 @@ def _sanitise_markdown_html(markdown_html):
 def _get_bleach_kwargs():
     bleach_kwargs = {}
     bleach_kwargs['tags'] = [
+        "abbr",
         'p',
         'div',
         'span',
@@ -85,6 +88,9 @@ def _get_bleach_kwargs():
             'class',
             'style',
             'id',
+        ],
+        "abbr": [
+            "title"
         ],
         'a': [
             'href',
@@ -147,6 +153,7 @@ def _get_markdown_kwargs():
          }),
         MinuteExtension(),
         TocExtension(),
+        'markdown.extensions.abbr',
     ]
 
     if hasattr(settings, 'WAGTAILMARKDOWN_EXTENSIONS'):

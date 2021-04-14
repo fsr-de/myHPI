@@ -11,13 +11,13 @@
             <h4>Date</h4>
             <p>{{ page.date }}</p>
             <h4>Moderator</h4>
-            <p>{{ page.moderator }}</p>
+            <p>{{ page.moderator.get_full_name }}</p>
             <h4>Minutes taker</h4>
-            <p>{{ page.author }}</p>
+            <p>{{ page.author.get_full_name }}</p>
             <h4>Participants</h4>
             <ul>
                 {% for participant in page.participants.all %}
-                    <li><i>participant</i></li>
+                    <li>{{ participant.get_full_name }}</li>
                 {% endfor %}
             </ul>
             <h4>Table of contents</h4>
