@@ -27,7 +27,7 @@ class MarkdownField(TextField):
         return super(MarkdownField, self).formfield(**defaults)
 
     def get_translatable_segments(self, value):
-        template, strings = extract_strings(render_markdown(value)[0])
+        template, strings = extract_strings(render_markdown(value, with_abbreveations=False)[0])
 
         # Find all unique href values
         hrefs = set()
