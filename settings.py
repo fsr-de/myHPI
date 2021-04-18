@@ -84,6 +84,8 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
+    "core.middleware.IPRangeUserMiddleware",
 ]
 
 ROOT_URLCONF = 'urls'
@@ -185,3 +187,7 @@ WAGTAIL_SITE_NAME = "wagtail_1327"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+ANONYMOUS_IP_RANGE_GROUPS = {
+    "127.0.0.1": "Moderators"
+}

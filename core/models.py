@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import TaggedItemBase, TagBase, ItemBase
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.core.models import Page, Site
 from wagtail.snippets.models import register_snippet
 
@@ -58,6 +58,7 @@ class Minutes(Page):
     author = ForeignKey(User, on_delete=models.CASCADE, related_name="author")
     participants = ParentalManyToManyField(User, related_name="participants")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
+    visible_for = ParentalManyToManyField(Group, related_name="visible_for")
     text = MarkdownField()
 
     content_panels = Page.content_panels + [
@@ -68,6 +69,10 @@ class Minutes(Page):
         FieldPanel("participants"),
         FieldPanel("labels"),
         MarkdownPanel('text', classname="full"),
+    ]
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("visible_for"),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
