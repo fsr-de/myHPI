@@ -136,7 +136,7 @@ class InternalLinkPattern(LinkInlineProcessor):
         return el, m.start(0), m.end(0)
 
     def url(self, id):
-        return Page.objects.get(id=id).localized().get_url()
+        return Page.objects.get(id=id).localized.get_url()
 
 
 class MinuteExtension(Extension):

@@ -32,6 +32,6 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
                 'wagtail_markdown/js/easymde.min.js',
                 'wagtail_markdown/js/easymde.attach.js',
                 "wagtailadmin/js/page-chooser-modal.js",
-                "wagtailadmin/js/image-chooser-modal.js",
+                "wagtailimages/js/image-chooser-modal.js",
             )
         )

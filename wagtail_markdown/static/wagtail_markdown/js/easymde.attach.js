@@ -34,10 +34,7 @@ function easymdeAttach(id) {
                         onload: PAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
                         responses: {
                             pageChosen: function (t) {
-                                var cm = editor.codemirror;
-                                var output = '';
-
-                                cm.replaceSelection("[" + t.title + "](page:" + t.id + ")");
+                                editor.codemirror.replaceSelection("[" + t.title + "](page:" + t.id + ")");
                             }
                         },
 
@@ -53,21 +50,18 @@ function easymdeAttach(id) {
                         onError: function (error) {
                             console.log(error)
                         },
-                        url: "/admin/choose/image/",
-                        onload: PAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
+                        url: "/admin/images/chooser/",
+                        onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
                         responses: {
-                            pageChosen: function (t) {
-                                var cm = editor.codemirror;
-                                var output = '';
-
-                                cm.replaceSelection("[" + t.title + "](page:" + t.id + ")");
+                            imageChosen: function (t) {
+                                editor.codemirror.replaceSelection("![" + t.title + "](" + t.preview.url + ")")
                             }
                         },
 
                     })
                 },
-                className: "fa fa-link",
-                title: "Add internal link"
+                className: "fa fa-image",
+                title: "Add image"
             }
         ],
     });
