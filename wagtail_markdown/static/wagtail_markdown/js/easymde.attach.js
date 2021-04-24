@@ -22,6 +22,52 @@ function easymdeAttach(id) {
                 action: startMeeting,
                 className: "fa fa-play", // Look for a suitable icon
                 title: "start meeting (Ctrl/Cmd-Alt-R)",
+            },
+            {
+                name: "Internal link",
+                action: function (editor) {
+                    ModalWorkflow({
+                        onError: function (error) {
+                            console.log(error)
+                        },
+                        url: "/admin/choose-page/",
+                        onload: PAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
+                        responses: {
+                            pageChosen: function (t) {
+                                var cm = editor.codemirror;
+                                var output = '';
+
+                                cm.replaceSelection("[" + t.title + "](page:" + t.id + ")");
+                            }
+                        },
+
+                    })
+                },
+                className: "fa fa-link",
+                title: "Add internal link"
+            },
+            {
+                name: "Image",
+                action: function (editor) {
+                    ModalWorkflow({
+                        onError: function (error) {
+                            console.log(error)
+                        },
+                        url: "/admin/choose/image/",
+                        onload: PAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
+                        responses: {
+                            pageChosen: function (t) {
+                                var cm = editor.codemirror;
+                                var output = '';
+
+                                cm.replaceSelection("[" + t.title + "](page:" + t.id + ")");
+                            }
+                        },
+
+                    })
+                },
+                className: "fa fa-link",
+                title: "Add internal link"
             }
         ],
     });
@@ -63,6 +109,6 @@ function startMeeting(editor) {
     var selectedText = cm.getSelection();
     var text = selectedText || 'placeholder';
 
-    output = "|start|(" + new Date().toLocaleTimeString() + ")" ;
+    output = "|start|(" + new Date().toLocaleTimeString() + ")";
     cm.replaceSelection(output);
 }
