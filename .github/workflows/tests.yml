@@ -75,7 +75,6 @@ jobs:
         cp .env.example .env
         poetry run python manage.py compilemessages
         poetry run python manage.py collectstatic
-        poetry run python manage.py compilejsi18n
 
     - name: Setup postgres
       uses: harmon758/postgresql-action@v1
