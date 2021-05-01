@@ -1,13 +1,12 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 from django.db import models
-from django.db.models import DateField, ForeignKey, ManyToManyField, Model, CharField
+from django.db.models import CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from taggit.models import TaggedItemBase, TagBase, ItemBase
+from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.core.models import Page, Site
-from wagtail.snippets.models import register_snippet
 
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
 from myhpi.wagtail_markdown.fields import MarkdownField
@@ -17,9 +16,14 @@ class InformationPage(Page):
     body = MarkdownField()
 
     content_panels = Page.content_panels + [
-        MarkdownPanel('body', classname="full"),
+        MarkdownPanel("body", classname="full"),
     ]
-    parent_page_types = ["FirstLevelMenuItem", "SecondLevelMenuItem", "InformationPage", "RootPage"]
+    parent_page_types = [
+        "FirstLevelMenuItem",
+        "SecondLevelMenuItem",
+        "InformationPage",
+        "RootPage",
+    ]
 
 
 class MinutesList(Page):
@@ -28,13 +32,20 @@ class MinutesList(Page):
     content_panels = Page.content_panels + [
         FieldPanel("group"),
     ]
-    parent_page_types = ["FirstLevelMenuItem", "SecondLevelMenuItem", "InformationPage", "RootPage"]
+    parent_page_types = [
+        "FirstLevelMenuItem",
+        "SecondLevelMenuItem",
+        "InformationPage",
+        "RootPage",
+    ]
     subpage_types = ["Minutes"]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
-        context.setdefault("minutes_list", Minutes.objects.filter(id__in=minutes_ids, group=self.group))
+        context.setdefault(
+            "minutes_list", Minutes.objects.filter(id__in=minutes_ids, group=self.group)
+        )
         return context
 
 
@@ -48,7 +59,9 @@ class MinutesLabel(TagBase):
 
 class TaggedMinutes(ItemBase):
     tag = models.ForeignKey(MinutesLabel, on_delete=models.CASCADE)
-    content_object = ParentalKey('core.Minutes', on_delete=models.CASCADE, related_name='tagged_items')
+    content_object = ParentalKey(
+        "core.Minutes", on_delete=models.CASCADE, related_name="tagged_items"
+    )
 
 
 class Minutes(Page):
@@ -68,7 +81,7 @@ class Minutes(Page):
         FieldPanel("author"),
         FieldPanel("participants"),
         FieldPanel("labels"),
-        MarkdownPanel('text', classname="full"),
+        MarkdownPanel("text", classname="full"),
     ]
     settings_panels = [
         PublishingPanel(),
@@ -81,7 +94,7 @@ class Minutes(Page):
 class RootPage(InformationPage):
     template = "core/information_page.html"
 
-    parent_page_types = ['wagtailcore.Page']
+    parent_page_types = ["wagtailcore.Page"]
 
 
 class FirstLevelMenuItem(Page):

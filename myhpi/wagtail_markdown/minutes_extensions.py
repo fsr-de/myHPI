@@ -26,7 +26,7 @@ class VotePreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
-            (r'\[(\d+)\|(\d+)\|(\d+)\]', self.votify),
+            (r"\[(\d+)\|(\d+)\|(\d+)\]", self.votify),
         ]
 
     def votify(self, match):
@@ -34,34 +34,34 @@ class VotePreprocessor(MinutesBasePreprocessor):
         num_negative_votes = match.group(2)
         num_abstentions = match.group(3)
 
-        return '**[{}|{}|{}]**'.format(num_positive_votes, num_negative_votes, num_abstentions)
+        return "**[{}|{}|{}]**".format(num_positive_votes, num_negative_votes, num_abstentions)
 
 
 class StartEndPreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
-            (r'\|start\|\((\d+):(\d+)\)', self.startify),
-            (r'\|end\|\((\d+):(\d+)\)', self.endify),
+            (r"\|start\|\((\d+):(\d+)\)", self.startify),
+            (r"\|end\|\((\d+):(\d+)\)", self.endify),
         ]
 
     def startify_or_endify(self, match, event):
         hour = match.group(1)
         minute = match.group(2)
-        return u'*{event}: {hour}:{minute}*  '.format(event=event, hour=hour, minute=minute)
+        return u"*{event}: {hour}:{minute}*  ".format(event=event, hour=hour, minute=minute)
 
     def startify(self, match):
-        return self.startify_or_endify(match, _('Begin of meeting'))
+        return self.startify_or_endify(match, _("Begin of meeting"))
 
     def endify(self, match):
-        return self.startify_or_endify(match, _('End of meeting'))
+        return self.startify_or_endify(match, _("End of meeting"))
 
 
 class BreakPreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
-            (r'\|break\|\(([0-9:]+)\)\(([0-9:]+)\)', self.breakify),
+            (r"\|break\|\(([0-9:]+)\)\(([0-9:]+)\)", self.breakify),
         ]
 
     def breakify(self, match):
@@ -78,13 +78,15 @@ class QuorumPrepocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
-            (r'\|quorum\|\((\d+)/(\d+)\)', self.quorumify),
+            (r"\|quorum\|\((\d+)/(\d+)\)", self.quorumify),
         ]
 
     def quorumify(self, match):
         num_participants = int(match.group(1))
         max_num_participants = int(match.group(2))
-        quorate = _("quorate") if num_participants / max_num_participants >= 0.5 else _("not quorate")
+        quorate = (
+            _("quorate") if num_participants / max_num_participants >= 0.5 else _("not quorate")
+        )
 
         return _("*{num_participants}/{max_num_participants} present → {quorate}*  ").format(
             num_participants=num_participants,
@@ -97,19 +99,26 @@ class EnterLeavePreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
-            (r'\|enter\|\(([0-9:]+)\)\(([\w,\ ]+)\)(\((?P<mean_of_participation>.*?)\))?', self.enterify),
-            (r'\|leave\|\(([0-9:]+)\)\(([\w,\ ]+)\)', self.leavify),
+            (
+                r"\|enter\|\(([0-9:]+)\)\(([\w,\ ]+)\)(\((?P<mean_of_participation>.*?)\))?",
+                self.enterify,
+            ),
+            (r"\|leave\|\(([0-9:]+)\)\(([\w,\ ]+)\)", self.leavify),
         ]
 
     def enter_or_leavify(self, match, event):
         time = match.group(1)
         name = match.group(2)
-        via_description = match.groupdict().get('mean_of_participation', None)
+        via_description = match.groupdict().get("mean_of_participation", None)
 
         if via_description is None:
-            message = _("*{time}: {name} {event} the meeting*  ").format(time=time, name=name, event=event)
+            message = _("*{time}: {name} {event} the meeting*  ").format(
+                time=time, name=name, event=event
+            )
         else:
-            message = _("*{time}: {name} {event} the meeting via {mean_of_participation}*  ").format(
+            message = _(
+                "*{time}: {name} {event} the meeting via {mean_of_participation}*  "
+            ).format(
                 time=time,
                 name=name,
                 event=event,
@@ -125,14 +134,13 @@ class EnterLeavePreprocessor(MinutesBasePreprocessor):
 
 
 class InternalLinkPattern(LinkInlineProcessor):
-
     def handleMatch(self, m, data=None):
         el = markdown.util.etree.Element("a")
         try:
-            el.set('href', self.url(m.group('id')))
-            el.text = markdown.util.AtomicString(m.group('title'))
+            el.set("href", self.url(m.group("id")))
+            el.text = markdown.util.AtomicString(m.group("title"))
         except ObjectDoesNotExist:
-            el.text = markdown.util.AtomicString(_('[missing link]'))
+            el.text = markdown.util.AtomicString(_("[missing link]"))
         return el, m.start(0), m.end(0)
 
     def url(self, id):
@@ -142,12 +150,16 @@ class InternalLinkPattern(LinkInlineProcessor):
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
         md.registerExtension(self)
-        md.preprocessors.register(VotePreprocessor(md), 'votify', 200)
-        md.preprocessors.register(StartEndPreprocessor(md), 'start_or_endify', 200)
-        md.preprocessors.register(BreakPreprocessor(md), 'breakify', 200)
-        md.preprocessors.register(QuorumPrepocessor(md), 'quorumify', 200)
-        md.preprocessors.register(EnterLeavePreprocessor(md), 'enter_or_leavify', 200)
-        md.inlinePatterns.register(InternalLinkPattern(r'\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)', md), "InternalLinkPattern", 200)
+        md.preprocessors.register(VotePreprocessor(md), "votify", 200)
+        md.preprocessors.register(StartEndPreprocessor(md), "start_or_endify", 200)
+        md.preprocessors.register(BreakPreprocessor(md), "breakify", 200)
+        md.preprocessors.register(QuorumPrepocessor(md), "quorumify", 200)
+        md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
+        md.inlinePatterns.register(
+            InternalLinkPattern(r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)", md),
+            "InternalLinkPattern",
+            200,
+        )
 
 
 def makeExtension():
