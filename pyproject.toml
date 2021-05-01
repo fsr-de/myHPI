@@ -15,6 +15,8 @@ wagtail-localize = "^0.9.5"
 html2text = "^2020.1.16"
 
 [tool.poetry.dev-dependencies]
+pylint = "^2.8.2"
+black = "^21.4b2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -9,8 +9,8 @@ from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.core.models import Page, Site
 from wagtail.snippets.models import register_snippet
 
-from wagtail_markdown.edit_handlers import MarkdownPanel
-from wagtail_markdown.fields import MarkdownField
+from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
+from myhpi.wagtail_markdown.fields import MarkdownField
 
 
 class InformationPage(Page):

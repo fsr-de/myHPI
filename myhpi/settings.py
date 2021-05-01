@@ -2,7 +2,7 @@ import os
 
 from environ import environ
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env()
 # for syntax see https://django-environ.readthedocs.io/en/latest/
@@ -30,8 +30,8 @@ if not DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
-    'core',
-    'search',
+    'myhpi.core',
+    'myhpi.search',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
-    'wagtail_markdown',
+    'myhpi.wagtail_markdown',
     "wagtail_localize",
     "wagtail_localize.locales",
 
@@ -72,16 +72,16 @@ MIDDLEWARE = [
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
-    "core.middleware.IPRangeUserMiddleware",
+    "myhpi.core.middleware.IPRangeUserMiddleware",
 ]
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'myhpi.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'myhpi/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -90,13 +90,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "core.context.base_context",
+                "myhpi.core.context.base_context",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = 'myhpi.wsgi.application'
 
 
 # Database

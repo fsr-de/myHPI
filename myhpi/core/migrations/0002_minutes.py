@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail_markdown.fields
+import myhpi.wagtail_markdown.fields
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
                 ('date', models.DateField()),
-                ('text', wagtail_markdown.fields.MarkdownField()),
+                ('text', myhpi.wagtail_markdown.fields.MarkdownField()),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='author', to=settings.AUTH_USER_MODEL)),
                 ('moderator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='moderator', to=settings.AUTH_USER_MODEL)),
                 ('participants', models.ManyToManyField(related_name='participants', to=settings.AUTH_USER_MODEL)),

@@ -1,0 +1,103 @@
+name: tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: [ 3.9 ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - uses: Gr1N/setup-poetry@v4
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/pypoetry/virtualenvs
+        key: myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
+        restore-keys: |
+          myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-
+    - name: Install dependencies
+      run: poetry install
+    - name: check format with black
+      run: |
+        poetry run black --version
+        poetry run black --check .
+    - name: check import order with isort
+      run: |
+        poetry run isort --version
+        poetry run isort -c .
+    - name: Lint with pylint
+      run: |
+        poetry run pylint --version
+        poetry run pylint .
+
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: [ 3.8, 3.9 ]
+        database: [ sqlite, mysql, postgres ]
+        include:
+          - database: sqlite
+            database_url: "sqlite:///data/db.sqlite3"
+          - database: mysql
+            database_url: "mysql://root:root@127.0.0.1:3306/myHPI"
+          - database: postgres
+            database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - uses: Gr1N/setup-poetry@v4
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/pypoetry/virtualenvs
+        key: myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
+        restore-keys: |
+          myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-
+    - name: Install dependencies
+      # always install all -E extras to use a single cache
+      run: |
+        sudo apt-get install gettext
+        poetry install -E mysql -E pgsql
+    - name: Prepare files for test run
+      run: |
+        cp .env.example .env
+        poetry run python manage.py compilemessages
+        poetry run python manage.py collectstatic
+        poetry run python manage.py compilejsi18n
+
+    - name: Setup postgres
+      uses: harmon758/postgresql-action@v1
+      with:
+        postgresql version: '11'  # See https://hub.docker.com/_/postgres for available versions
+        postgresql db: myHPI
+        postgresql user: user
+        postgresql password: pass
+      if: matrix.database == 'postgres'
+
+    - name: Setup mysql
+      run: |
+        sudo systemctl start mysql.service
+        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -uroot -proot -Dmysql
+      if: matrix.database == 'mysql'
+
+    - name: Test apps
+      env:
+        DATABASE_URL: ${{ matrix.database_url }}
+      run: poetry run coverage run --source=myhpi -m pytest tests/
+    - name: Coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: poetry run coveralls
+      if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
