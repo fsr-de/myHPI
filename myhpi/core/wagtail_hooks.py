@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.core import hooks
 
-from core.models import MinutesLabel, AbbreviationExplanation, Minutes
+from myhpi.core.models import MinutesLabel, AbbreviationExplanation, Minutes
 
 
 class MinutesLabelAdmin(ModelAdmin):

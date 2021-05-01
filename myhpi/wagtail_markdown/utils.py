@@ -32,7 +32,7 @@ def render_markdown(text, context=None, with_abbreveations=True):
 
 
 def _transform_markdown_into_html(text, with_abbreveations):
-    from core.models import AbbreviationExplanation
+    from myhpi.core.models import AbbreviationExplanation
 
     md = markdown.Markdown(**_get_markdown_kwargs())
     abbreveations = "\n" + ("\n".join([f"*[{abbr.abbreviation}]: {abbr.explanation}" for abbr in AbbreviationExplanation.objects.all()]))
