@@ -8,12 +8,11 @@
 # warranty.
 #
 
+import bleach
+import markdown
 from django.conf import settings
 from django.utils.encoding import smart_text
 from django.utils.safestring import mark_safe
-
-import bleach
-import markdown
 from markdown.extensions.toc import TocExtension
 
 from .mdx import linker, tables
@@ -35,7 +34,14 @@ def _transform_markdown_into_html(text, with_abbreveations):
     from myhpi.core.models import AbbreviationExplanation
 
     md = markdown.Markdown(**_get_markdown_kwargs())
-    abbreveations = "\n" + ("\n".join([f"*[{abbr.abbreviation}]: {abbr.explanation}" for abbr in AbbreviationExplanation.objects.all()]))
+    abbreveations = "\n" + (
+        "\n".join(
+            [
+                f"*[{abbr.abbreviation}]: {abbr.explanation}"
+                for abbr in AbbreviationExplanation.objects.all()
+            ]
+        )
+    )
     text = smart_text(text) + abbreveations if with_abbreveations else smart_text(text)
     return md.convert(text), md.toc
 
@@ -46,124 +52,124 @@ def _sanitise_markdown_html(markdown_html):
 
 def _get_bleach_kwargs():
     bleach_kwargs = {}
-    bleach_kwargs['tags'] = [
+    bleach_kwargs["tags"] = [
         "abbr",
-        'p',
-        'div',
-        'span',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'tt',
-        'pre',
-        'em',
-        'strong',
-        'ul',
-        'sup',
-        'li',
-        'dl',
-        'dd',
-        'dt',
-        'code',
-        'img',
-        'a',
-        'table',
-        'tr',
-        'th',
-        'td',
-        'tbody',
-        'caption',
-        'colgroup',
-        'thead',
-        'tfoot',
-        'blockquote',
-        'ol',
-        'hr',
-        'br',
+        "p",
+        "div",
+        "span",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "tt",
+        "pre",
+        "em",
+        "strong",
+        "ul",
+        "sup",
+        "li",
+        "dl",
+        "dd",
+        "dt",
+        "code",
+        "img",
+        "a",
+        "table",
+        "tr",
+        "th",
+        "td",
+        "tbody",
+        "caption",
+        "colgroup",
+        "thead",
+        "tfoot",
+        "blockquote",
+        "ol",
+        "hr",
+        "br",
     ]
-    bleach_kwargs['attributes'] = {
-        '*': [
-            'class',
-            'style',
-            'id',
+    bleach_kwargs["attributes"] = {
+        "*": [
+            "class",
+            "style",
+            "id",
         ],
-        "abbr": [
-            "title"
+        "abbr": ["title"],
+        "a": [
+            "href",
+            "target",
+            "rel",
         ],
-        'a': [
-            'href',
-            'target',
-            'rel',
+        "img": [
+            "src",
+            "alt",
         ],
-        'img': [
-            'src',
-            'alt',
+        "tr": [
+            "rowspan",
+            "colspan",
         ],
-        'tr': [
-            'rowspan',
-            'colspan',
-        ],
-        'td': [
-            'rowspan',
-            'colspan',
-            'align',
+        "td": [
+            "rowspan",
+            "colspan",
+            "align",
         ],
     }
-    bleach_kwargs['styles'] = [
-        'color',
-        'background-color',
-        'font-family',
-        'font-weight',
-        'font-size',
-        'width',
-        'height',
-        'text-align',
-        'border',
-        'border-top',
-        'border-bottom',
-        'border-left',
-        'border-right',
-        'padding',
-        'padding-top',
-        'padding-bottom',
-        'padding-left',
-        'padding-right',
-        'margin',
-        'margin-top',
-        'margin-bottom',
-        'margin-left',
-        'margin-right',
+    bleach_kwargs["styles"] = [
+        "color",
+        "background-color",
+        "font-family",
+        "font-weight",
+        "font-size",
+        "width",
+        "height",
+        "text-align",
+        "border",
+        "border-top",
+        "border-bottom",
+        "border-left",
+        "border-right",
+        "padding",
+        "padding-top",
+        "padding-bottom",
+        "padding-left",
+        "padding-right",
+        "margin",
+        "margin-top",
+        "margin-bottom",
+        "margin-left",
+        "margin-right",
     ]
     return bleach_kwargs
 
 
 def _get_markdown_kwargs():
     markdown_kwargs = {}
-    markdown_kwargs['extensions'] = [
-        'extra',
-        'codehilite',
+    markdown_kwargs["extensions"] = [
+        "extra",
+        "codehilite",
         tables.TableExtension(),
-        linker.LinkerExtension({
-             '__default__': 'wagtail_markdown.mdx.linkers.page',
-             'page:': 'wagtail_markdown.mdx.linkers.page',
-             'image:': 'wagtail_markdown.mdx.linkers.image',
-             'doc:': 'wagtail_markdown.mdx.linkers.document',
-         }),
+        linker.LinkerExtension(
+            {
+                "__default__": "wagtail_markdown.mdx.linkers.page",
+                "page:": "wagtail_markdown.mdx.linkers.page",
+                "image:": "wagtail_markdown.mdx.linkers.image",
+                "doc:": "wagtail_markdown.mdx.linkers.document",
+            }
+        ),
         MinuteExtension(),
         TocExtension(),
-        'markdown.extensions.abbr',
+        "markdown.extensions.abbr",
     ]
 
-    if hasattr(settings, 'WAGTAILMARKDOWN_EXTENSIONS'):
-        markdown_kwargs['extensions'] += settings.WAGTAILMARKDOWN_EXTENSIONS
+    if hasattr(settings, "WAGTAILMARKDOWN_EXTENSIONS"):
+        markdown_kwargs["extensions"] += settings.WAGTAILMARKDOWN_EXTENSIONS
 
-    markdown_kwargs['extension_configs'] = {
-        'codehilite': [
-            ('guess_lang', False),
+    markdown_kwargs["extension_configs"] = {
+        "codehilite": [
+            ("guess_lang", False),
         ]
     }
-    markdown_kwargs['output_format'] = 'html5'
+    markdown_kwargs["output_format"] = "html5"
     return markdown_kwargs

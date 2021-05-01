@@ -9,7 +9,6 @@
 #
 
 from django import forms
-
 from wagtail.utils.widgets import WidgetWithScript
 
 
@@ -23,15 +22,11 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
     @property
     def media(self):
         return forms.Media(
-            css={
-                'all': (
-                    'wagtail_markdown/css/easymde.min.css',
-                )
-            },
+            css={"all": ("wagtail_markdown/css/easymde.min.css",)},
             js=(
-                'wagtail_markdown/js/easymde.min.js',
-                'wagtail_markdown/js/easymde.attach.js',
+                "wagtail_markdown/js/easymde.min.js",
+                "wagtail_markdown/js/easymde.attach.js",
                 "wagtailadmin/js/page-chooser-modal.js",
                 "wagtailimages/js/image-chooser-modal.js",
-            )
+            ),
         )

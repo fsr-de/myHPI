@@ -8,7 +8,6 @@
 # warranty.
 #
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-
 from markdown.util import etree
 
 try:
@@ -29,8 +28,8 @@ class Linker(object):
 
             page = Page.objects.get(title=name)
             url = page.url
-            a = etree.Element('a')
-            a.set('href', url)
+            a = etree.Element("a")
+            a.set("href", url)
             a.text = text
             return a
         except ObjectDoesNotExist:

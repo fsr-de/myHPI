@@ -1,15 +1,16 @@
-from ipaddress import ip_network, ip_address
+from ipaddress import ip_address, ip_network
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 
 class IPRangeUserMiddleware:
-
     def __init__(self, get_response):
         self.get_response = get_response
         try:
-            self.ip_ranges = {ip_network(k): v for k, v in settings.ANONYMOUS_IP_RANGE_GROUPS.items()}
+            self.ip_ranges = {
+                ip_network(k): v for k, v in settings.ANONYMOUS_IP_RANGE_GROUPS.items()
+            }
         except ValueError as e:
             raise ImproperlyConfigured from e
 
@@ -20,7 +21,7 @@ class IPRangeUserMiddleware:
 
     def process_request(self, request):
         if request.user.is_anonymous:
-            address = ip_address(request.META.get('REMOTE_ADDR'))
+            address = ip_address(request.META.get("REMOTE_ADDR"))
             for ip_range, group_name in self.ip_ranges.items():
                 if address in ip_range:
                     # user is in this IP range
