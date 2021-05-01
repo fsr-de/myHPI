@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "wagtail_1327"
+name = "myHPI"
 version = "0.1.0"
 description = ""
 authors = ["Julian B. <jeriox@users.noreply.github.com>"]

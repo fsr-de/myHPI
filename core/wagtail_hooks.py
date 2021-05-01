@@ -34,4 +34,4 @@ def check_view_permissions(page, request, serve_args, serve_kwargs):
 
 @hooks.register('insert_global_admin_css')
 def global_admin_css():
-    return format_html('<link rel="stylesheet" href="{}">', static('css/wagtail_1327_admin.css'))
+    return format_html('<link rel="stylesheet" href="{}">', static('css/myHPI_admin.css'))
