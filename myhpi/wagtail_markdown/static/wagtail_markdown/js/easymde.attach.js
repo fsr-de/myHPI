@@ -24,6 +24,18 @@ function easymdeAttach(id) {
                 title: "start meeting (Ctrl/Cmd-Alt-R)",
             },
             {
+               name: "end meeting",
+               action: endMeeting,
+               className: "fa fa-stop",
+               title: "end meeting"
+            },
+            {
+                name: "pause",
+                action: pauseMeeting,
+                className: "fa fa-pause",
+                title: "pause meeting"
+            },
+            {
                 name: "Internal link",
                 action: function (editor) {
                     ModalWorkflow({
@@ -101,8 +113,25 @@ function startMeeting(editor) {
     var cm = editor.codemirror;
     var output = '';
     var selectedText = cm.getSelection();
-    var text = selectedText || 'placeholder';
 
     output = "|start|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
     cm.replaceSelection(output);
+}
+
+function endMeeting(editor) {
+    var cm = editor.codemirror;
+    var output = '';
+    var selectedText = cm.getSelection();
+
+    output = "|end|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
+    cm.replaceSelection(output)
+}
+
+function pauseMeeting(editor){
+    var cm = editor.codemirror;
+    var output = '';
+    var selectedText = cm.getSelection();
+
+    output = "|break|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()"
+    cm.replaceSelection(output)
 }
