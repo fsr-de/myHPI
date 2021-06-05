@@ -103,6 +103,6 @@ function startMeeting(editor) {
     var selectedText = cm.getSelection();
     var text = selectedText || 'placeholder';
 
-    output = "|start|(" + new Date().toLocaleTimeString() + ")";
+    output = "|start|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
     cm.replaceSelection(output);
 }
