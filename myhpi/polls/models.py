@@ -2,7 +2,8 @@ import datetime
 
 from django.contrib import messages
 from django.db import models
-from django.db.models import F
+from django.db.models import F, Sum
+from django.shortcuts import redirect
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import InlinePanel, FieldPanel
 from wagtail.core.models import Page, Orderable
@@ -10,6 +11,21 @@ from django.contrib.auth.models import User
 
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
 from myhpi.wagtail_markdown.fields import MarkdownField
+
+
+class PollList(Page):
+    parent_page_types = [
+        "core.RootPage",
+    ]
+    subpage_types = ["Poll"]
+    max_count = 1
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context.setdefault(
+            "poll_list", self.get_children().exact_type(Poll)
+        )
+        return context
 
 
 class Poll(Page):
@@ -29,9 +45,13 @@ class Poll(Page):
         FieldPanel('end_date'),
         FieldPanel("max_allowed_answers"),
         FieldPanel("results_visible"),
+        FieldPanel("participants"),
         InlinePanel("choices", label="Choices")
     ]
-    # subpage_types = []
+    parent_page_types = [
+        "PollList",
+    ]
+    subpage_types = []
 
     def can_vote(self, user):
         return self.end_date > datetime.date.today() and user not in self.participants.all()
@@ -39,7 +59,7 @@ class Poll(Page):
     def serve(self, request, *args, **kwargs):
         if self.start_date > datetime.date.today():
             messages.warning(request, "This poll has not yet started.")
-            # redirect to poll list page
+            return redirect(self.get_parent().relative_url(self.get_site()))
         elif request.method == "POST" and self.can_vote(request.user):
             choices = request.POST.getlist("choice")
             if len(choices) == 0:
@@ -50,15 +70,20 @@ class Poll(Page):
                 for choice_id in choices:
                     choice = self.choices.filter(id=choice_id)
                     choice.update(votes=F("votes") + 1)
-
                 self.participants.add(request.user)
                 messages.success(request, "Your vote has been counted.")
+                return redirect(self.relative_url(self.get_site()))
+
         return super().serve(request, *args, **kwargs)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["can_vote"] = self.can_vote(request.user)
         return context
+
+    @property
+    def num_votes(self):
+        return self.choices.aggregate(Sum('votes')).get('votes__sum')
 
 
 class Choice(models.Model):
