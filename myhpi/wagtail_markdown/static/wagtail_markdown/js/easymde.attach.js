@@ -140,7 +140,7 @@ function startMeeting(editor) {
 
     const unfinishedBreak = cm.getValue().match(/\|break\|\((\d+):(\d+)\)\(\)/);
     const startedMeeting = cm.getValue().match(/\|start\|\((\d+):(\d+)\)/);
-    
+
     if (unfinishedBreak) {
         const cursor = cm.getSearchCursor(/\|break\|\((\d+):(\d+)\)\(\)/);
         cursor.findNext();
@@ -160,45 +160,40 @@ function startMeeting(editor) {
 }
 
 function endMeeting(editor) {
-    var cm = editor.codemirror;
-    var output = '';
-    var selectedText = cm.getSelection();
+    const cm = editor.codemirror;
+    let output = '';
 
     output = "\n|end|(" + getCurrentTime() + ")";
     cm.replaceSelection(output);
 }
 
 function pauseMeeting(editor){
-    var cm = editor.codemirror;
-    var output = '';
-    var selectedText = cm.getSelection();
+    const cm = editor.codemirror;
+    let output = '';
 
     output = "\n|break|(" + getCurrentTime() + ")()";
     cm.replaceSelection(output);
 }
 
 function enterMeeting(editor){
-    var cm = editor.codemirror;
-    var output = '';
-    var selectedText = cm.getSelection();
+    const cm = editor.codemirror;
+    let output = '';
 
     output = "\n|enter|(" + getCurrentTime() + ")()";
     cm.replaceSelection(output);
 }
 
 function leaveMeeting(editor){
-    var cm = editor.codemirror;
-    var output = '';
-    var selectedText = cm.getSelection();
+    const cm = editor.codemirror;
+    let output = '';
 
     output = "\n|leave|(" + getCurrentTime() + ")()";
     cm.replaceSelection(output);
 }
 
 function addQuorum(editor){
-     var cm = editor.codemirror;
-    var output = '';
-    var selectedText = cm.getSelection();
+    const cm = editor.codemirror;
+    let output = '';
 
     output = "\n|quorum|(/)";
     cm.replaceSelection(output);
