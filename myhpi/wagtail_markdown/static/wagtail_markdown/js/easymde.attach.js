@@ -125,16 +125,38 @@ $(document).on('shown.bs.tab', function (e) {
     });
 });
 
+// convenience function
+function getCurrentTime(){
+    return new Date().toLocaleTimeString([], {timeStyle: 'short'})
+}
+
 // Custom button actions
 
 function startMeeting(editor) {
 
-    var cm = editor.codemirror;
-    var output = '';
-    var selectedText = cm.getSelection();
+    const cm = editor.codemirror;
+    let output = '';
+    const currentTime = getCurrentTime()
 
-    output = "\n|start|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
-    cm.replaceSelection(output);
+    const unfinishedBreak = cm.getValue().match(/\|break\|\((\d+):(\d+)\)\(\)/);
+    const startedMeeting = cm.getValue().match(/\|start\|\((\d+):(\d+)\)/);
+    
+    if (unfinishedBreak) {
+        const cursor = cm.getSearchCursor(/\|break\|\((\d+):(\d+)\)\(\)/);
+        cursor.findNext();
+        const unfinishedBreakPosition = cursor.from();
+        const relativeInsertPosition = unfinishedBreak[0].search(/\(\)/) + 1;
+
+        // set cursor position to absolute insert position
+        cm.setCursor({line: unfinishedBreakPosition.line, ch: unfinishedBreakPosition.ch + relativeInsertPosition});
+
+        output = currentTime;
+        cm.replaceSelection(output);
+    }
+    else if (!startedMeeting) {
+        output = "\n|start|(" + getCurrentTime() + ")";
+        cm.replaceSelection(output);
+    }
 }
 
 function endMeeting(editor) {
@@ -142,7 +164,7 @@ function endMeeting(editor) {
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "\n|end|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
+    output = "\n|end|(" + getCurrentTime() + ")";
     cm.replaceSelection(output);
 }
 
@@ -151,7 +173,7 @@ function pauseMeeting(editor){
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "\n|break|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()";
+    output = "\n|break|(" + getCurrentTime() + ")()";
     cm.replaceSelection(output);
 }
 
@@ -160,7 +182,7 @@ function enterMeeting(editor){
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "\n|enter|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()";
+    output = "\n|enter|(" + getCurrentTime() + ")()";
     cm.replaceSelection(output);
 }
 
@@ -169,7 +191,7 @@ function leaveMeeting(editor){
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "\n|leave|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()";
+    output = "\n|leave|(" + getCurrentTime() + ")()";
     cm.replaceSelection(output);
 }
 
