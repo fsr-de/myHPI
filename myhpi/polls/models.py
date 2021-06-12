@@ -2,9 +2,8 @@ import datetime
 
 from django.contrib import messages
 from django.db import models
-from django.http import Http404
-from django.template.response import TemplateResponse
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from django.db.models import F
+from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import InlinePanel, FieldPanel
 from wagtail.core.models import Page, Orderable
 from django.contrib.auth.models import User
@@ -18,15 +17,19 @@ class Poll(Page):
     description = MarkdownField()
     start_date = models.DateField()
     end_date = models.DateField()
+    max_allowed_answers = models.IntegerField(default=1)
+    results_visible = models.BooleanField(default=False)
 
-    participants = ParentalManyToManyField(User, related_name="polls")
+    participants = models.ManyToManyField(User, related_name="polls")
 
     content_panels = Page.content_panels + [
         MarkdownPanel("description", classname="full"),
         FieldPanel('question'),
         FieldPanel('start_date'),
         FieldPanel('end_date'),
-        InlinePanel('choices', label="Choices")
+        FieldPanel("max_allowed_answers"),
+        FieldPanel("results_visible"),
+        InlinePanel("choices", label="Choices")
     ]
     # subpage_types = []
 
@@ -34,15 +37,23 @@ class Poll(Page):
         return self.end_date > datetime.date.today() and user not in self.participants.all()
 
     def serve(self, request, *args, **kwargs):
-        # has user permissions?
         if self.start_date > datetime.date.today():
             messages.warning(request, "This poll has not yet started.")
             # redirect to poll list page
-        elif request.method == "POST":
-            ...
-            # handle vote
-        else:
-            return super().serve(request, *args, **kwargs)
+        elif request.method == "POST" and self.can_vote(request.user):
+            choices = request.POST.getlist("choice")
+            if len(choices) == 0:
+                messages.error(request, "You must at least select one choice.")
+            elif len(choices) > self.max_allowed_answers:
+                messages.error(request, "You can only select up to {} options.".format(self.max_allowed_answers))
+            else:
+                for choice_id in choices:
+                    choice = self.choices.filter(id=choice_id)
+                    choice.update(votes=F("votes") + 1)
+
+                self.participants.add(request.user)
+                messages.success(request, "Your vote has been counted.")
+        return super().serve(request, *args, **kwargs)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
