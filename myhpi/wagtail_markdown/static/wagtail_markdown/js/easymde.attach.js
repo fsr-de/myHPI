@@ -16,12 +16,12 @@ function easymdeAttach(id) {
     var mde = new EasyMDE({
         element: document.getElementById(id),
         autofocus: false,
-        toolbar: ["bold", "italic", "heading-1", "heading-2", "unordered-list", // TODO: think about "fullscreen"
+        toolbar: ["bold", "italic", "heading-1", "heading-2", "unordered-list",
             {
                 name: "start meeting",
                 action: startMeeting,
                 className: "fa fa-play", // Look for a suitable icon
-                title: "start meeting (Ctrl/Cmd-Alt-R)",
+                title: "start or continue meeting (Ctrl/Cmd-Alt-R)",
             },
             {
                name: "end meeting",
@@ -92,7 +92,8 @@ function easymdeAttach(id) {
                 },
                 className: "fa fa-image",
                 title: "Add image"
-            }
+            },
+             "fullscreen"
         ],
     });
     mde.render();
