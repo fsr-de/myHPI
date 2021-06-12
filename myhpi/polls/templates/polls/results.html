@@ -1,0 +1,16 @@
+{% load i18n %}
+<table class="table table-striped">
+		<tr>
+			<th class="col-sm-3">{% trans "Choice" %}</th>
+			{% if has_choice_descriptions %}<th class="col-sm-5">{% trans "Description" %}</th>{% endif %}
+			<th class="col-sm-1 text-right">{% trans "Votes" %}</th>
+			<th class="col-sm-1 text-right">{% trans "Percentage" %}</th>
+		</tr>
+		{% for choice in page.choices.all %}
+			<tr class="choice-row">
+				<td>{{ choice.text }}</td>
+				<td class="text-right">{{ choice.votes }}</td>
+				<td class="text-right">{{ choice.percentage }}%</td>
+			</tr>
+		{% endfor %}
+	</table>

@@ -31,6 +31,7 @@ if not DEBUG:
 
 INSTALLED_APPS = [
     "myhpi.core",
+    "myhpi.polls",
     "myhpi.search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",

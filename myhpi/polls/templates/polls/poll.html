@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load wagtailmarkdown %}
+
+{% block content %}
+    <div class="row">
+        {% with page.description|markdown as parsed_md %}
+        <div class="col-9">
+            <h1> {{ page.title }} </h1>
+            {{ parsed_md.0 }}
+            <h2> {{ page.question }} </h2>
+            {% if can_vote %}
+                {% include "polls/vote.html" %}
+            {% else %}
+                {% include "polls/results.html" %}
+            {% endif %}
+        </div>
+        <div class="col-3">
+            <h4>Start Date</h4>
+            <p>{{ page.start_date }}</p>
+            <h4>End Date</h4>
+            <p>{{ page.end_date }}</p>
+            <h4>Date</h4>
+            <p>{{ page.date }}</p>
+            <h4>Table of contents</h4>
+            {{ parsed_md.1 }}
+        </div>
+        {% endwith %}
+    </div>
+{% endblock %}

@@ -69,7 +69,7 @@ class Minutes(Page):
     date = DateField()
     moderator = ForeignKey(User, on_delete=models.CASCADE, related_name="moderator")
     author = ForeignKey(User, on_delete=models.CASCADE, related_name="author")
-    participants = ParentalManyToManyField(User, related_name="participants")
+    participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     visible_for = ParentalManyToManyField(Group, related_name="visible_for")
     text = MarkdownField()
