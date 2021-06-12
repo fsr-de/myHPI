@@ -16,7 +16,7 @@ function easymdeAttach(id) {
     var mde = new EasyMDE({
         element: document.getElementById(id),
         autofocus: false,
-        toolbar: ["bold", "italic", "heading-1",
+        toolbar: ["bold", "italic", "heading-1", "heading-2", "unordered-list", // TODO: think about "fullscreen"
             {
                 name: "start meeting",
                 action: startMeeting,
@@ -34,6 +34,24 @@ function easymdeAttach(id) {
                 action: pauseMeeting,
                 className: "fa fa-pause",
                 title: "pause meeting"
+            },
+            {
+                name: "enter",
+                action: enterMeeting,
+                className: "fa fa-user-plus",
+                title: "Enter the meeting"
+            },
+            {
+               name: "leave",
+               action: leaveMeeting,
+               className: "fa fa-user-times",
+               title: "Leave the meeting"
+            },
+            {
+                name: "quorum",
+                action: addQuorum,
+                className: "fa fa-users",
+                title: "Add quorum text"
             },
             {
                 name: "Internal link",
@@ -114,7 +132,7 @@ function startMeeting(editor) {
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "|start|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
+    output = "\n|start|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
     cm.replaceSelection(output);
 }
 
@@ -123,8 +141,8 @@ function endMeeting(editor) {
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "|end|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
-    cm.replaceSelection(output)
+    output = "\n|end|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")";
+    cm.replaceSelection(output);
 }
 
 function pauseMeeting(editor){
@@ -132,6 +150,33 @@ function pauseMeeting(editor){
     var output = '';
     var selectedText = cm.getSelection();
 
-    output = "|break|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()"
-    cm.replaceSelection(output)
+    output = "\n|break|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()";
+    cm.replaceSelection(output);
+}
+
+function enterMeeting(editor){
+    var cm = editor.codemirror;
+    var output = '';
+    var selectedText = cm.getSelection();
+
+    output = "\n|enter|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()";
+    cm.replaceSelection(output);
+}
+
+function leaveMeeting(editor){
+    var cm = editor.codemirror;
+    var output = '';
+    var selectedText = cm.getSelection();
+
+    output = "\n|leave|(" + new Date().toLocaleTimeString([], {timeStyle: 'short'}) + ")()";
+    cm.replaceSelection(output);
+}
+
+function addQuorum(editor){
+     var cm = editor.codemirror;
+    var output = '';
+    var selectedText = cm.getSelection();
+
+    output = "\n|quorum|(/)";
+    cm.replaceSelection(output);
 }
