@@ -45,7 +45,6 @@ class Poll(Page):
         FieldPanel('end_date'),
         FieldPanel("max_allowed_answers"),
         FieldPanel("results_visible"),
-        FieldPanel("participants"),
         InlinePanel("choices", label="Choices")
     ]
     parent_page_types = [
