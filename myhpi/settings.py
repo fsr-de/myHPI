@@ -1,5 +1,6 @@
 import os
 
+from django.contrib.messages import constants
 from environ import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,6 +32,7 @@ if not DEBUG:
 
 INSTALLED_APPS = [
     "myhpi.core",
+    "myhpi.polls",
     "myhpi.search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -171,3 +173,12 @@ WAGTAIL_SITE_NAME = "myHPI"
 BASE_URL = "http://example.com"
 
 ANONYMOUS_IP_RANGE_GROUPS = {"127.0.0.1": "Moderators"}
+
+# django.contrib.messages
+MESSAGE_TAGS = {
+    constants.DEBUG: "alert-info",
+    constants.INFO: "alert-info",
+    constants.SUCCESS: "alert-success",
+    constants.WARNING: "alert-warning",
+    constants.ERROR: "alert-danger",
+}
