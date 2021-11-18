@@ -52,6 +52,8 @@ jobs:
             database_url: "mysql://root:root@127.0.0.1:3306/myHPI"
           - database: postgres
             database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
+    env:
+      DJANGO_SETTINGS_MODULE: myhpi.settings
 
     steps:
     - uses: actions/checkout@v2
