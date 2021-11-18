@@ -37,7 +37,7 @@ jobs:
     - name: Lint with pylint
       run: |
         poetry run pylint --version
-        poetry run pylint .
+        poetry run pylint myhpi
 
   test:
     runs-on: ubuntu-20.04
