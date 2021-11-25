@@ -6,7 +6,13 @@ from django.utils.html import format_html
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.core import hooks
 
-from myhpi.core.models import AbbreviationExplanation, Minutes, MinutesLabel
+from myhpi.core.models import (
+    AbbreviationExplanation,
+    InformationPage,
+    Minutes,
+    MinutesLabel,
+    MinutesList,
+)
 
 
 class MinutesLabelAdmin(ModelAdmin):
@@ -25,7 +31,7 @@ modeladmin_register(AbbreviationExplanationAdmin)
 
 @hooks.register("before_serve_page")
 def check_view_permissions(page, request, serve_args, serve_kwargs):
-    if isinstance(page, Minutes):
+    if isinstance(page, (Minutes, MinutesList, InformationPage)):
         target_groups = request.user.groups.all()
         if getattr(request.user, "_ip_range_group_name", None):
             target_groups = Group.objects.filter(
