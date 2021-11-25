@@ -54,6 +54,10 @@ class MinutesList(Page):
         PublishingPanel(),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("visible_for"),
+    ]
     parent_page_types = [
         "FirstLevelMenuItem",
         "SecondLevelMenuItem",
