@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "myhpi.core.auth.MyHPIOIDCAB"
+    "myhpi.core.auth.MyHPIOIDCAB",
 ]
 
 OIDC_RP_SIGN_ALGO = "RS256"

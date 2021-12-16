@@ -1,5 +1,5 @@
-from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 from django.contrib.auth.models import Group
+from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 
 def mail_replacement(email):
@@ -7,14 +7,15 @@ def mail_replacement(email):
 
 
 class MyHPIOIDCAB(OIDCAuthenticationBackend):
-
     def create_user(self, claims):
-        email = mail_replacement(claims.get('email'))
-        first_name = claims.get('given_name', '')
-        last_name = claims.get('family_name', '')
-        username = claims.get('sub')
+        email = mail_replacement(claims.get("email"))
+        first_name = claims.get("given_name", "")
+        last_name = claims.get("family_name", "")
+        username = claims.get("sub")
 
-        user = self.UserModel.objects.create_user(username, email=email, first_name=first_name, last_name=last_name)
+        user = self.UserModel.objects.create_user(
+            username, email=email, first_name=first_name, last_name=last_name
+        )
 
         try:
             hpi = Group.objects.get(name="HPI")
@@ -32,9 +33,9 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         return user
 
     def update_user(self, user, claims):
-        user.first_name = claims.get('given_name', '')
-        user.last_name = claims.get('family_name', '')
-        user.email = mail_replacement(claims.get('email'))
+        user.first_name = claims.get("given_name", "")
+        user.last_name = claims.get("family_name", "")
+        user.email = mail_replacement(claims.get("email"))
 
         user.save()
 
@@ -42,7 +43,7 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
 
     def filter_users_by_claims(self, claims):
         """Return all users matching the specified username."""
-        username = claims.get('sub')
+        username = claims.get("sub")
         if not username:
             return self.UserModel.objects.none()
         return self.UserModel.objects.filter(username__iexact=username)
