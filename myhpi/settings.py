@@ -60,17 +60,22 @@ INSTALLED_APPS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    "mozilla_django_oidc.auth.OIDCAuthenticationBackend"
+    "django.contrib.auth.backends.ModelBackend",
+    "myhpi.core.auth.MyHPIOIDCAB"
 ]
 
-# TODO: Change these
-OIDC_RP_CLIENT_ID = os.environ['myHPI']
-OIDC_RP_CLIENT_SECRET = os.environ['myHPI-secret']
-
-OIDC_OP_AUTHORIZATION_ENDPOINT = "https://example.com/auth"
-OIDC_OP_TOKEN_ENDPOINT = "https://example.com/token"
-OIDC_OP_USER_ENDPOINT = "https://example.com/me"
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_RP_SCOPES = "openid email profile"
 OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = 3600  # renew auth after 1 hour
+
+OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID")
+OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET")
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "https://oidc.hpi.de/auth"
+OIDC_OP_TOKEN_ENDPOINT = "https://oidc.hpi.de/token"
+OIDC_OP_USER_ENDPOINT = "https://oidc.hpi.de/me"
+OIDC_OP_JWKS_ENDPOINT = "https://oidc.hpi.de/certs"
+
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
