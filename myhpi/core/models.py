@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group, User
+from django import forms
 from django.db import models
 from django.db.models import CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
@@ -21,7 +22,7 @@ class InformationPage(Page):
     ]
     settings_panels = [
         PublishingPanel(),
-        FieldPanel("visible_for"),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -36,11 +37,11 @@ class MinutesList(Page):
     visible_for = ParentalManyToManyField(Group, related_name="visible_minuteslist")
 
     content_panels = Page.content_panels + [
-        FieldPanel("group"),
+        FieldPanel("group", widget=forms.CheckboxSelectMultiple),
     ]
     settings_panels = [
         PublishingPanel(),
-        FieldPanel("visible_for"),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -95,7 +96,7 @@ class Minutes(Page):
     ]
     settings_panels = [
         PublishingPanel(),
-        FieldPanel("visible_for"),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
