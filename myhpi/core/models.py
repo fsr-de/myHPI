@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group, User
+from django import forms
 from django.db import models
 from django.db.models import CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
@@ -14,9 +15,14 @@ from myhpi.wagtail_markdown.fields import MarkdownField
 
 class InformationPage(Page):
     body = MarkdownField()
+    visible_for = ParentalManyToManyField(Group, related_name="visible_informationpages")
 
     content_panels = Page.content_panels + [
         MarkdownPanel("body", classname="full"),
+    ]
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -28,9 +34,14 @@ class InformationPage(Page):
 
 class MinutesList(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT)
+    visible_for = ParentalManyToManyField(Group, related_name="visible_minuteslist")
 
     content_panels = Page.content_panels + [
-        FieldPanel("group"),
+        FieldPanel("group", widget=forms.CheckboxSelectMultiple),
+    ]
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -71,7 +82,7 @@ class Minutes(Page):
     author = ForeignKey(User, on_delete=models.CASCADE, related_name="author")
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
-    visible_for = ParentalManyToManyField(Group, related_name="visible_for")
+    visible_for = ParentalManyToManyField(Group, related_name="visible_minutes")
     text = MarkdownField()
 
     content_panels = Page.content_panels + [
@@ -85,7 +96,7 @@ class Minutes(Page):
     ]
     settings_panels = [
         PublishingPanel(),
-        FieldPanel("visible_for"),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []

@@ -6,12 +6,19 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
+from django.contrib.auth import views as auth_views
+
 from myhpi.search import views as search_views
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
+    path("oidc/", include("mozilla_django_oidc.urls")),
+    path("login/", auth_views.LoginView.as_view(
+        template_name="login.html",
+        redirect_authenticated_user=True,
+    ), name="login"),
 ]
 
 
