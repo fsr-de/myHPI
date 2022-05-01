@@ -1,0 +1,60 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "./bootstrap/functions";
+
+// 2. Include any default variable overrides here
+$primary: #B71B31FF;
+$secondary: #FFB530FF;
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "./bootstrap/variables";
+@import "./bootstrap/mixins";
+
+$custom-colors: ("gray-light": #EBEBEBFF,
+    "gray-lighter": rgb(221, 221, 221));
+$colors: map-merge($colors, $custom-colors);
+
+@import "./bootstrap/root";
+
+// 4. Include any optional Bootstrap CSS as needed
+@import "./bootstrap/utilities";
+@import "./bootstrap/reboot";
+@import "./bootstrap/type";
+@import "./bootstrap/images";
+@import "./bootstrap/containers";
+@import "./bootstrap/grid";
+
+@import "./bootstrap/tables";
+@import "./bootstrap/forms";
+@import "./bootstrap/buttons";
+@import "./bootstrap/transitions";
+@import "./bootstrap/dropdown";
+@import "./bootstrap/button-group";
+@import "./bootstrap/nav";
+@import "./bootstrap/navbar";
+@import "./bootstrap/card";
+@import "./bootstrap/accordion";
+@import "./bootstrap/breadcrumb";
+@import "./bootstrap/pagination";
+@import "./bootstrap/badge";
+@import "./bootstrap/alert";
+@import "./bootstrap/progress";
+@import "./bootstrap/list-group";
+@import "./bootstrap/close";
+@import "./bootstrap/toasts";
+@import "./bootstrap/modal";
+@import "./bootstrap/tooltip";
+@import "./bootstrap/popover";
+@import "./bootstrap/carousel";
+@import "./bootstrap/spinners";
+@import "./bootstrap/offcanvas";
+
+@import "./bootstrap/helpers";
+
+// 5. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "./bootstrap/utilities/api";
+
+// 6. Add additional custom code here
+
+:root {
+    --bs-p-2: 0.5rem;
+}
