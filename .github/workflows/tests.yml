@@ -37,7 +37,7 @@ jobs:
     - name: Lint with pylint
       run: |
         poetry run pylint --version
-        poetry run pylint .
+        poetry run pylint myhpi
 
   test:
     runs-on: ubuntu-20.04
@@ -52,6 +52,8 @@ jobs:
             database_url: "mysql://root:root@127.0.0.1:3306/myHPI"
           - database: postgres
             database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
+    env:
+      DJANGO_SETTINGS_MODULE: myhpi.settings
 
     steps:
     - uses: actions/checkout@v2
@@ -75,7 +77,6 @@ jobs:
         cp .env.example .env
         poetry run python manage.py compilemessages
         poetry run python manage.py collectstatic
-        poetry run python manage.py compilejsi18n
 
     - name: Setup postgres
       uses: harmon758/postgresql-action@v1
