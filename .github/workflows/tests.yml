@@ -108,10 +108,10 @@ jobs:
       run: |
         source env/bin/activate
         poetry run coverage run --source=myhpi -m pytest tests/
-    - name: Coveralls
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        source env/bin/activate
-        poetry run coveralls
-      if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
+    #- name: Coveralls
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #  run: |
+    #    source env/bin/activate
+    #    poetry run coveralls
+    #  if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
