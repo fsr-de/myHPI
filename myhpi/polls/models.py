@@ -1,13 +1,13 @@
 import datetime
 
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import F, Sum
 from django.shortcuts import redirect
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import InlinePanel, FieldPanel
-from wagtail.core.models import Page, Orderable
-from django.contrib.auth.models import User
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
+from wagtail.core.models import Orderable, Page
 
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
 from myhpi.wagtail_markdown.fields import MarkdownField
