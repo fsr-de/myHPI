@@ -9,7 +9,6 @@ env = environ.Env()
 # for syntax see https://django-environ.readthedocs.io/en/latest/
 environ.Env.read_env(env_file=os.path.join(BASE_DIR, ".env"))
 
-
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
@@ -57,7 +56,30 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "mozilla_django_oidc",
 ]
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "myhpi.core.auth.MyHPIOIDCAB",
+]
+
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_RP_SCOPES = "openid email profile"
+OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = 3600  # renew auth after 1 hour
+
+OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID")
+OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET")
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "https://oidc.hpi.de/auth"
+OIDC_OP_TOKEN_ENDPOINT = "https://oidc.hpi.de/token"
+OIDC_OP_USER_ENDPOINT = "https://oidc.hpi.de/me"
+OIDC_OP_JWKS_ENDPOINT = "https://oidc.hpi.de/certs"
+
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "login"
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -70,6 +92,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "myhpi.core.middleware.IPRangeUserMiddleware",
+    "mozilla_django_oidc.middleware.SessionRefresh",
 ]
 
 ROOT_URLCONF = "myhpi.urls"
@@ -95,12 +118,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "myhpi.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {"default": env.db_url()}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -119,7 +140,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -142,7 +162,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -162,7 +181,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "myhpi/static"),)
 
 MEDIA_ROOT = env.str("MEDIA_ROOT")
 MEDIA_URL = env.str("MEDIA_URL")
-
 
 # Wagtail settings
 
