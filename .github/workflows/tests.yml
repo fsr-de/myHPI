@@ -37,7 +37,7 @@ jobs:
     - name: Lint with pylint
       run: |
         poetry run pylint --version
-        poetry run pylint .
+        poetry run pylint --fail-under=9 myhpi
 
   test:
     runs-on: ubuntu-20.04
@@ -52,30 +52,40 @@ jobs:
             database_url: "mysql://root:root@127.0.0.1:3306/myHPI"
           - database: postgres
             database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
+    env:
+      DJANGO_SETTINGS_MODULE: myhpi.settings
 
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: Gr1N/setup-poetry@v4
-    - uses: actions/cache@v1
-      with:
-        path: ~/.cache/pypoetry/virtualenvs
-        key: myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
-        restore-keys: |
-          myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-
+    #- uses: Gr1N/setup-poetry@v4
+    #- uses: actions/cache@v1
+    #  with:
+    #    path: ~/.cache/pypoetry/virtualenvs
+    #    key: myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
+    #    restore-keys: |
+    #      myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-
+    - name: Setup python venv and poetry
+      run: |
+        #sudo apt-get install python-venv
+        python -m venv env
+        source env/bin/activate
+        pip install poetry
     - name: Install dependencies
       # always install all -E extras to use a single cache
       run: |
         sudo apt-get install gettext
+        source env/bin/activate
         poetry install -E mysql -E pgsql
     - name: Prepare files for test run
+      continue-on-error: true
       run: |
         cp .env.example .env
-        poetry run python manage.py compilemessages
-        poetry run python manage.py collectstatic
-        poetry run python manage.py compilejsi18n
+        source env/bin/activate
+        poetry run python manage.py compilemessages --settings myhpi.settings
+        poetry run python manage.py collectstatic --settings myhpi.settings
 
     - name: Setup postgres
       uses: harmon758/postgresql-action@v1
@@ -95,9 +105,13 @@ jobs:
     - name: Test apps
       env:
         DATABASE_URL: ${{ matrix.database_url }}
-      run: poetry run coverage run --source=myhpi -m pytest tests/
-    - name: Coveralls
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: poetry run coveralls
-      if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
+      run: |
+        source env/bin/activate
+        poetry run coverage run --source=myhpi -m pytest tests/
+    #- name: Coveralls
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #  run: |
+    #    source env/bin/activate
+    #    poetry run coveralls
+    #  if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
