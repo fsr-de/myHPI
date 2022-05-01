@@ -3,6 +3,7 @@ from datetime import date
 
 from django import forms
 from django.contrib.auth.models import Group, User
+from django import forms
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
@@ -48,15 +49,11 @@ class MinutesList(Page):
     visible_for = ParentalManyToManyField(Group, related_name="visible_minuteslist")
 
     content_panels = Page.content_panels + [
-        FieldPanel("group", widget=forms.Select),
+        FieldPanel("group", widget=forms.CheckboxSelectMultiple),
     ]
     settings_panels = [
         PublishingPanel(),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
-    ]
-    settings_panels = [
-        PublishingPanel(),
-        FieldPanel("visible_for"),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
