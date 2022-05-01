@@ -75,8 +75,8 @@ jobs:
     - name: Prepare files for test run
       run: |
         cp .env.example .env
-        poetry run python manage.py compilemessages
-        poetry run python manage.py collectstatic
+        poetry run python manage.py compilemessages --settings myhpi.settings
+        poetry run python manage.py collectstatic --settings myhpi.settings
 
     - name: Setup postgres
       uses: harmon758/postgresql-action@v1
