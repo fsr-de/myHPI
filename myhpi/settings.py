@@ -30,9 +30,16 @@ if not DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
+    "myhpi.wagtail_markdown",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.modeladmin",
@@ -45,18 +52,12 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
-    "myhpi.wagtail_markdown",
     "wagtail_localize",
     "wagtail_localize.locales",
+    "compressor",
     "modelcluster",
-    "taggit",
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
     "mozilla_django_oidc",
+    "taggit",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -162,12 +163,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+# SCSS Precompiler
+# To learn more see: https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
