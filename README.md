@@ -9,7 +9,7 @@ To set up a development version on your local machine, you need to execute the f
 2. Set up a virtualenv for the project with Python >=3.8 and activate it
 3. Install poetry (if not already installed): `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -`
 4. Install dependencies with `poetry install`
-5. Create env file by copying the `.env.example file to `.env`, e.g. `cp .env.example .env`
+5. Create env file by copying the `.env.example file to `.env`, e.g. `cp .env.example .env` (Notice that for some functionality like OIDC some settings must be changed)
 6. Migrate the database with `python manage.py migrate`
 7. Compile translations with `python manage.py compilemessages`
 8. Create a local superuser with `python manage.py createsuperuser`
