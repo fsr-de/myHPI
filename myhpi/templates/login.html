@@ -1,9 +1,25 @@
-{% if user.is_authenticated %}
-  <p>Current user: {{ user.email }}</p>
-  <form action="{% url 'oidc_logout' %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="logout">
-  </form>
-{% else %}
-  <a href="{% url 'oidc_authentication_init' %}">Login</a>
-{% endif %}
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+      <p>Current user: {{ user.email }}</p>
+      <form action="{% url 'oidc_logout' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="logout">
+      </form>
+    {% else %}
+        {% if 'next' in request.GET and not request.GET.user_initiated %}
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {% translate "Please login to see this page." %}
+            </div>
+        {% endif %}
+        <a href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
+    {% endif %}
+{% endblock %}

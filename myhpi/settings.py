@@ -79,6 +79,7 @@ OIDC_OP_JWKS_ENDPOINT = "https://oidc.hpi.de/certs"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "login"
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
