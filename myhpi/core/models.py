@@ -23,12 +23,14 @@ class InformationPage(Page):
     body = MarkdownField()
     visible_for = ParentalManyToManyField(Group, related_name="visible_informationpages")
     author_visible = BooleanField()
+    is_public = BooleanField()
 
     content_panels = Page.content_panels + [
         MarkdownPanel("body", classname="full"),
     ]
     settings_panels = [
         PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
         FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
     ]
@@ -47,12 +49,14 @@ class InformationPage(Page):
 class MinutesList(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT)
     visible_for = ParentalManyToManyField(Group, related_name="visible_minuteslist")
+    is_public = BooleanField()
 
     content_panels = Page.content_panels + [
-        FieldPanel("group", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("group", widget=forms.RadioSelect),
     ]
     settings_panels = [
         PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = [
@@ -133,6 +137,7 @@ class Minutes(Page):
     author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
+    is_public = BooleanField()
     visible_for = ParentalManyToManyField(Group, related_name="visible_minutes")
     text = MarkdownField()
 
@@ -147,6 +152,7 @@ class Minutes(Page):
     ]
     settings_panels = [
         PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = ["MinutesList"]
