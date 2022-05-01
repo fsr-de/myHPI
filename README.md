@@ -14,7 +14,7 @@ To set up a development version on your local machine, you need to execute the f
 7. Compile translations with `python manage.py compilemessages`
 8. Create a local superuser with `python manage.py createsuperuser`
 9. Start the development server with `python manage.py runserver`
-10. Open your web browser, visit `http://localhost:8000/admin` and log in with your user from step 9
+10. Open your web browser, visit `http://localhost:8000/admin` and log in with your user from step 8
 
 ### Tests
 
