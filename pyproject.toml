@@ -16,7 +16,7 @@ html2text = "^2020.1.16"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.8.2"
-black = "^21.4b2"
+black = "^22.3"
 isort = "^5.8.0"
 autoflake = "^1.4"
 pre-commit = "^2.12.1"

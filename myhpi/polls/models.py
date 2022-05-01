@@ -22,9 +22,7 @@ class PollList(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.setdefault(
-            "poll_list", self.get_children().exact_type(Poll)
-        )
+        context.setdefault("poll_list", self.get_children().exact_type(Poll))
         return context
 
 
@@ -40,12 +38,12 @@ class Poll(Page):
 
     content_panels = Page.content_panels + [
         MarkdownPanel("description", classname="full"),
-        FieldPanel('question'),
-        FieldPanel('start_date'),
-        FieldPanel('end_date'),
+        FieldPanel("question"),
+        FieldPanel("start_date"),
+        FieldPanel("end_date"),
         FieldPanel("max_allowed_answers"),
         FieldPanel("results_visible"),
-        InlinePanel("choices", label="Choices")
+        InlinePanel("choices", label="Choices"),
     ]
     parent_page_types = [
         "PollList",
@@ -64,7 +62,10 @@ class Poll(Page):
             if len(choices) == 0:
                 messages.error(request, "You must at least select one choice.")
             elif len(choices) > self.max_allowed_answers:
-                messages.error(request, "You can only select up to {} options.".format(self.max_allowed_answers))
+                messages.error(
+                    request,
+                    "You can only select up to {} options.".format(self.max_allowed_answers),
+                )
             else:
                 for choice_id in choices:
                     choice = self.choices.filter(id=choice_id)
@@ -82,7 +83,7 @@ class Poll(Page):
 
     @property
     def num_votes(self):
-        return self.choices.aggregate(Sum('votes')).get('votes__sum')
+        return self.choices.aggregate(Sum("votes")).get("votes__sum")
 
 
 class Choice(models.Model):
@@ -101,7 +102,7 @@ class Choice(models.Model):
 
 
 class PollChoice(Orderable, Choice):
-    page = ParentalKey('polls.Poll', on_delete=models.CASCADE, related_name='choices')
+    page = ParentalKey("polls.Poll", on_delete=models.CASCADE, related_name="choices")
 
     def percentage(self):
         participant_count = self.page.participants.count()

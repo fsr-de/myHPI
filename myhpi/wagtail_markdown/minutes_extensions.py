@@ -48,7 +48,7 @@ class StartEndPreprocessor(MinutesBasePreprocessor):
     def startify_or_endify(self, match, event):
         hour = match.group(1)
         minute = match.group(2)
-        return u"*{event}: {hour}:{minute}*  ".format(event=event, hour=hour, minute=minute)
+        return "*{event}: {hour}:{minute}*  ".format(event=event, hour=hour, minute=minute)
 
     def startify(self, match):
         return self.startify_or_endify(match, _("Begin of meeting"))

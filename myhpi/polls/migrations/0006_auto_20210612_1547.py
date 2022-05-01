@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0005_remove_pollchoice_description'),
+        ("polls", "0005_remove_pollchoice_description"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='poll',
-            name='max_allowed_answers',
+            model_name="poll",
+            name="max_allowed_answers",
             field=models.IntegerField(default=1),
         ),
         migrations.AddField(
-            model_name='poll',
-            name='results_visible',
+            model_name="poll",
+            name="results_visible",
             field=models.BooleanField(default=False),
         ),
     ]

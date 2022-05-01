@@ -7,25 +7,25 @@ import myhpi.wagtail_markdown.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0001_initial'),
+        ("polls", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='poll',
-            name='description',
-            field=myhpi.wagtail_markdown.fields.MarkdownField(default=''),
+            model_name="poll",
+            name="description",
+            field=myhpi.wagtail_markdown.fields.MarkdownField(default=""),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='poll',
-            name='question',
-            field=models.CharField(default='', max_length=254),
+            model_name="poll",
+            name="question",
+            field=models.CharField(default="", max_length=254),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='pollchoice',
-            name='text',
+            model_name="pollchoice",
+            name="text",
             field=models.CharField(max_length=254),
         ),
     ]

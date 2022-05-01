@@ -9,13 +9,15 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('polls', '0003_auto_20210612_1231'),
+        ("polls", "0003_auto_20210612_1231"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='poll',
-            name='participants',
-            field=modelcluster.fields.ParentalManyToManyField(related_name='polls', to=settings.AUTH_USER_MODEL),
+            model_name="poll",
+            name="participants",
+            field=modelcluster.fields.ParentalManyToManyField(
+                related_name="polls", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

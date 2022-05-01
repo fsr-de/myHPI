@@ -7,19 +7,19 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0002_auto_20210612_1217'),
+        ("polls", "0002_auto_20210612_1217"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='poll',
-            name='end_date',
+            model_name="poll",
+            name="end_date",
             field=models.DateField(default=django.utils.timezone.now),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='poll',
-            name='start_date',
+            model_name="poll",
+            name="start_date",
             field=models.DateField(default=django.utils.timezone.now),
             preserve_default=False,
         ),

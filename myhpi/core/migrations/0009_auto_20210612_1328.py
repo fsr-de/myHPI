@@ -9,13 +9,15 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('core', '0008_minutes_visible_for'),
+        ("core", "0008_minutes_visible_for"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='minutes',
-            name='participants',
-            field=modelcluster.fields.ParentalManyToManyField(related_name='minutes', to=settings.AUTH_USER_MODEL),
+            model_name="minutes",
+            name="participants",
+            field=modelcluster.fields.ParentalManyToManyField(
+                related_name="minutes", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]
