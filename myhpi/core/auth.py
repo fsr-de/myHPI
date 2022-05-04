@@ -3,7 +3,7 @@ from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 
 def mail_replacement(email):
-    return email.replace("uni-potsdam.", "")
+    return f"{email.split('@')[0]}@{email.split('@')[1].replace('uni-potsdam.', '')}"
 
 
 class MyHPIOIDCAB(OIDCAuthenticationBackend):
@@ -23,7 +23,7 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         except Group.DoesNotExist:
             pass
 
-        if "student" in email:
+        if "student" in email.split("@")[1]:
             try:
                 student = Group.objects.get(name="Student")
                 user.groups.add(student)
