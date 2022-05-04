@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "wagtail_localize",
     "wagtail_localize.locales",
     "compressor",
+    "django_bootstrap_icons",
     "modelcluster",
     "mozilla_django_oidc",
     "taggit",

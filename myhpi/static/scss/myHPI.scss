@@ -10,7 +10,8 @@ $secondary: #FFB530FF;
 @import "./bootstrap/mixins";
 
 $custom-colors: ("gray-light": #EBEBEBFF,
-    "gray-lighter": rgb(221, 221, 221));
+    "gray-lighter": rgb(221, 221, 221),
+    "gray-700": $gray-700);
 $colors: map-merge($colors, $custom-colors);
 
 @import "./bootstrap/root";
@@ -57,4 +58,80 @@ $colors: map-merge($colors, $custom-colors);
 
 :root {
     --bs-p-2: 0.5rem;
+    --myhpi-round-border: 2px;
+}
+
+.nav-item-container-root {
+    .nav-link {
+        margin-bottom: -3px;
+    }
+
+    .nav-link::after {
+        height: 3px;
+        width: 100%;
+        transform: scaleX(0);
+    }
+
+    .nav-link:hover:after,
+    .nav-link:focus-visible:after,
+    .nav-link[aria-expanded=true]:after {
+        transform: scaleX(1);
+    }
+}
+
+
+
+.nav-item-container:not(.nav-item-container-root) {
+    padding-right: var(--bs-p-2);
+    row-gap: 1px;
+
+    .nav-link {
+        transition: all 0.25s;
+        border-radius: var(--myhpi-round-border);
+        border: solid 3px var(--bs-gray-light);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+        border-color: var(--bs-gray-lighter);
+        background-color: var(--bs-gray-lighter);
+    }
+
+    .nav-link[aria-expanded=true] {
+        border-color: var(--bs-gray);
+        background-color: var(--bs-gray-lighter);
+    }
+
+    .nav-item:first-child {
+        padding-top: var(--bs-p-2);
+    }
+
+    .nav-item:last-child {
+        padding-bottom: var(--bs-p-2);
+    }
+
+    .nav-item.dropdown .nav-link {
+        display: flex;
+    }
+
+    .nav-item.dropdown {
+        .nav-link * {
+            transition: all 0.25s;
+            flex-grow: 0;
+        }
+
+        .nav-link:hover .nav-link-title,
+        .nav-link:focus-visible .nav-link-title,
+        .nav-link[aria-expanded=true] .nav-link-title {
+            flex-grow: 1;
+        }
+
+        .nav-link .nav-link-icon {
+            width: 1rem;
+        }
+
+        .nav-link[aria-expanded=true] .nav-link-icon {
+            transform: rotateZ(180deg);
+        }
+    }
 }

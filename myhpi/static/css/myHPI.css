@@ -1,72 +1,114 @@
-.nav-link {
-    margin-bottom: -3px;
+/**
+Notice the myHPI.scss in static/scss/myHPI.scss
+**/
+
+.page {
+    max-width: 1200px !important;
+    margin: auto;
+}
+
+.page-content {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+.navbar-myhpi {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-top,
+.navbar-bottom {
+    display: flex;
+}
+
+.navbar-bottom {
+    background-color: var(--bs-gray-light);
+}
+
+.nav-brand {
+    display: inline-block;
+    width: 4rem;
+    margin: 1rem;
+    margin-left: 0;
+}
+
+.nav-level-0 {
+    grid-area: menu-level-0;
+    background-color: var(--bs-white);
+    display: flex;
+    align-items: center;
+}
+
+.nav-level-1 {
+    /* equals .nav-brand width + margin,
+       minus the .nav-item border-width */
+    margin-left: calc(5rem - 3px);
+}
+
+.nav-level-1,
+.nav-level-2 {
+    width: 20rem;
+}
+
+.nav-item-container {
+    display: flex;
+}
+
+.nav-level-1 .nav-item-container,
+.nav-level-2 .nav-item-container {
+    flex-direction: column;
+}
+
+nav .nav-link,
+nav .nav-link:focus {
+    color: var(--bs-gray-700);
+}
+
+nav .nav-link:hover,
+nav .nav-link:focus-visible,
+nav .nav-link[aria-expanded=true] {
+    color: var(--bs-dark);
+}
+
+.page:not(.navbar-myhpi) .page-content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 h1::after,
-.nav-link::after {
+.nav-item-container-root .nav-link::after {
     display: block;
     content: '';
     background: linear-gradient(to right, var(--bs-secondary), var(--bs-primary));
     transition: transform 0.25s;
     transform-origin: 0% 50%;
+    border-radius: var(--myhpi-round-border);
 }
 
 h1::after {
     margin: 1rem 0;
     height: 5px;
     width: 5rem;
+    border-radius: var(--myhpi-round-border);
 }
 
-.nav-link::after {
+.toc-container {
+    position: sticky;
+    box-shadow: 0 0 5px var(--bs-gray-light);
+    padding: 0.7rem 1rem;
+    border-radius: 5px;
+}
+
+.toc-title {
+    font-size: 1.05rem;
+    line-height: 1.1;
+    font-weight: bold;
+}
+
+h1.toc-title::after {
+    margin: 0.5rem 0;
     height: 3px;
-    width: 100%;
-    transform: scaleX(0);
 }
 
-.nav-link:hover:after,
-.nav-link:focus-visible:after,
-.nav-link[aria-expanded=true]:after {
-    transform: scaleX(1);
-}
-
-#navbar {
-    display: inline-block !important;
-}
-
-.nav-half-bottom {
-    background-color: var(--bs-gray-light);
-
-}
-
-.nav-submenu-container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch !important;
-}
-
-.nav-submenu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-submenu-item {
-    color: rgba(0, 0, 0, 0.55);
-    text-decoration: none;
-    transition: all 0.25s;
-    display: inline-block;
-}
-
-.nav-submenu>li:first-child {
-    padding-top: var(--bs-p-2);
-}
-
-.nav-submenu>li:last-child {
-    padding-bottom: var(--bs-p-2);
-}
-
-.nav-submenu-item:hover,
-.nav-submenu-item:focus-visible {
-    color: rgba(0, 0, 0, 0.7);
-    background-color: var(--bs-gray-lighter);
-}
+/* TODO: Page Title vs normal <h1> */

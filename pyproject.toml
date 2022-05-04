@@ -16,6 +16,7 @@ html2text = "^2020.1.16"
 mozilla-django-oidc = "^2.0.0"
 django-compressor = "^4.0"
 django-libsass = "^0.9"
+django-bootstrap-icons = "^0.7.8"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.8.2"

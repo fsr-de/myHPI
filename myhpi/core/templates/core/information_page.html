@@ -2,15 +2,20 @@
 {% load wagtailmarkdown %}
 
 {% block content %}
-    {% with page.body|markdown as parsed_md %}
-        <div class="row">
-            <div class="col-9">
-                {{ parsed_md.0 }}
-            </div>
-            <div class="col-3">
-                <h4>Table of contents</h4>
-                {{ parsed_md.1 }}
-            </div>
-        </div>
-    {% endwith %}
+{% with page.body|markdown as parsed_md %}
+<div class="row">
+    <div class="col-9">
+        <h1 class="page-title">
+            {{ page.title }}
+        </h1>
+        {{ parsed_md.0 }}
+    </div>
+    <div class="col-3">
+        <aside class="toc-container">
+            <h1 class="toc-title">Table of Contents</h1>
+            {{ parsed_md.1 }}
+        </aside>
+    </div>
+</div>
+{% endwith %}
 {% endblock %}

@@ -1,5 +1,6 @@
-{% load static wagtailuserbar %}
+{% load static %}
 {% load wagtailcore_tags %}
+{% load wagtailuserbar %}
 {% load core_extras %}
 {% load compress %}
 
@@ -32,87 +33,28 @@
     {% endblock %}
 </head>
 
-<body class="{% block body_class %}{% endblock %} container">
+<body class="{% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-light container p-0 mb-2">
-        <div class="row py-3">
-            <div class="col-1">
-                <a class="navbar-brand" href="{% pageurl root_page %}">
-                    <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100 align-middle" alt="">
+    <nav class="navbar-myhpi-container container-fluid bg-white">
+        <div class="navbar-myhpi container-lg page">
+            {% with all_pages|all_sub_menu_pages_by_id as sub_pages_by_level_and_id %}
+            <div class="navbar-top page-content ">
+                <a class="nav-brand" href="{% pageurl root_page %}">
+                    <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="">
                 </a>
+                {% build_menu_level sub_pages_by_level_and_id 0 %}
             </div>
-            <div class="col">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav me-auto mb-3 mb-lg-0">
-                        {% for page in all_pages %}
-                        {% with page|menu_children as menu_children %}
-                        {% if menu_children %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link"
-                                id="nav-dropdown-{{ page.id }}"
-                                href="#nav-submenu-{{ page.id }}"
-                                data-bs-toggle="collapse"
-                                aria-controls="nav-submenu-{{ page.id }}"
-                                aria-expanded="false">
-                                <span class="dropdown-toggle">{{ page.title }}</span>
-                            </a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% pageurl page %}">{{ page.title }} </a>
-                        </li>
-                        {% endif %}
-                        {% endwith %}
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="navbar-bottom page-content">
+                {% build_menu_level sub_pages_by_level_and_id 1 %}
+                {% build_menu_level sub_pages_by_level_and_id 2 %}
             </div>
-        </div>
-        <div class="nav-half-bottom row mx-0">
-            <div class="col-1"></div>
-            <div class="col">
-                <div class="nav-submenu-container col-5">
-                    {% for page in all_pages %}
-                    {% with page|menu_children as menu_children %}
-                    {% if menu_children %}
-                    <ul id="nav-submenu-{{ page.id }}"
-                        class="nav-submenu container p-0 collapse"
-                        aria-labelledby="nav-dropdown-{{ page.id }}"
-                        data-bs-parent="#navbar">
-                        {% for child in menu_children %}
-                        {% with child|menu_children as sub_children %}
-                        {% if sub_children %}
-                        <li class="row">
-                            <a
-                                class="nav-submenu-item nav-head col py-1"
-                                href="{% pageurl child %}">
-                                {{ child.title}}
-                            </a>
-                        </li>
-                        {% else %}
-                        <li class="row">
-                            <a class="nav-submenu-item col py-1" href="{% pageurl child %}">{{ child.title }}</a>
-                        </li>
-                        {% endif %}
-                        {% endwith %}
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    {% endwith %}
-                    {% endfor %}
-                </div>
-            </div>
+            {% endwith %}
         </div>
     </nav>
 
-    <div class="row">
-        <div class="col-12">
+    <div class="container-lg page">
+        <div class="row page-content">
             <div id="messages">
                 {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible" role="alert">
@@ -126,11 +68,10 @@
             {% block content %}{% endblock %}
         </div>
     </div>
-    </div>
 
     {# Global javascript #}
-    <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
 
     {% block extra_js %}
     {# Override this in templates to add extra javascript #}
