@@ -2,16 +2,20 @@
 @import "./bootstrap/functions";
 
 // 2. Include any default variable overrides here
-$primary: #B71B31FF;
-$secondary: #FFB530FF;
+$primary: #F5631E; // #B71B31;  // FFB530
+$secondary: #F5631E;
+$body-bg: #F5F5F5;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "./bootstrap/variables";
 @import "./bootstrap/mixins";
 
-$custom-colors: ("gray-light": #EBEBEBFF,
-    "gray-lighter": rgb(221, 221, 221),
-    "gray-700": $gray-700);
+$custom-colors: ("gray-700": $gray-700,
+    "text-muted": $text-muted,
+    "border": #EEE,
+    "border-dark": #B2B2B2,
+    "body-bg-light": #FBFBFB,
+    "body-bg-overlay": #EEE);
 $colors: map-merge($colors, $custom-colors);
 
 @import "./bootstrap/root";
@@ -79,8 +83,6 @@ $colors: map-merge($colors, $custom-colors);
     }
 }
 
-
-
 .nav-item-container:not(.nav-item-container-root) {
     padding-right: var(--bs-p-2);
     row-gap: 1px;
@@ -88,18 +90,18 @@ $colors: map-merge($colors, $custom-colors);
     .nav-link {
         transition: all 0.25s;
         border-radius: var(--myhpi-round-border);
-        border: solid 3px var(--bs-gray-light);
+        border: solid 2px var(--bs-body-bg-light);
     }
 
     .nav-link:hover,
     .nav-link:focus-visible {
-        border-color: var(--bs-gray-lighter);
-        background-color: var(--bs-gray-lighter);
+        border-color: var(--bs-body-bg-overlay);
+        background-color: var(--bs-body-bg-overlay);
     }
 
     .nav-link[aria-expanded=true] {
-        border-color: var(--bs-gray);
-        background-color: var(--bs-gray-lighter);
+        border-color: var(--bs-border-dark);
+        background-color: var(--bs-body-bg-overlay);
     }
 
     .nav-item:first-child {
