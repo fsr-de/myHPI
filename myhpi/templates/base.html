@@ -3,6 +3,7 @@
 {% load wagtailuserbar %}
 {% load core_extras %}
 {% load compress %}
+{% load bootstrap_icons %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,38 +24,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {# Global stylesheets #}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/myHPI.css' %}">
     {% compress css %}
     <link type="text/x-scss" href="{% static 'scss/myHPI.scss' %}" rel="stylesheet" media="screen">
     {% endcompress %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/myHPI.css' %}">
 
     {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
     {% endblock %}
 </head>
 
-<body class="{% block body_class %}{% endblock %}">
+<body class="bg-background myhpi-accent-yellow {% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav class="navbar-myhpi-container container-fluid bg-white">
-        <div class="navbar-myhpi container-lg page">
+    <nav class="navbar-myhpi container-lg page">
+        <div class="navbar-top bg-white">
             {% with all_pages|all_sub_menu_pages_by_id as sub_pages_by_level_and_id %}
-            <div class="navbar-top page-content ">
+            <div class="page-content d-flex">
                 <a class="nav-brand" href="{% pageurl root_page %}">
-                    <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="">
+                    <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="Zur Startseite">
                 </a>
                 {% build_menu_level sub_pages_by_level_and_id 0 %}
             </div>
-            <div class="navbar-bottom page-content">
+        </div>
+        <div class="navbar-bottom">
+            <div class="navbar-bottom-content page-content d-flex">
                 {% build_menu_level sub_pages_by_level_and_id 1 %}
                 {% build_menu_level sub_pages_by_level_and_id 2 %}
             </div>
-            {% endwith %}
+            <div class="navbar-bottom-line"></div>
         </div>
+        {% endwith %}
     </nav>
 
-    <div class="container-lg page">
-        <div class="row page-content">
+    <div class="container-lg page bg-white">
+        <div class="page-content">
             <div id="messages">
                 {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible" role="alert">
@@ -65,6 +69,21 @@
                 </div>
                 {% endfor %}
             </div>
+
+            {% if self.get_ancestors|length > 1 %}
+            <nav aria-label="breadcrumb"
+                style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,{% filter urlencode|slice:" 43:" %}{% bs_icon 'chevron-right' size="8" %}{% endfilter %} &#34;);">
+                <ol class="breadcrumb">
+                    {% for ancestor_page in self.get_ancestors %}
+                    {% if ancestor_page.is_root == False %}
+                    <li class="breadcrumb-item"><a href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ self.title }}</li>
+                </ol>
+            </nav>
+            {% endif %}
+
             {% block content %}{% endblock %}
         </div>
     </div>

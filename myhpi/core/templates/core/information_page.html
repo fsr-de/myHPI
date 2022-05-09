@@ -6,15 +6,23 @@
 <div class="row">
     <div class="col-9">
         <h1 class="page-title">
-            {{ page.title }}
+            <span class="underline">
+                {{ page.title }}
+            </span>
         </h1>
         {{ parsed_md.0 }}
     </div>
     <div class="col-3">
-        <aside class="toc-container">
-            <h1 class="toc-title">Table of Contents</h1>
-            {{ parsed_md.1 }}
-        </aside>
+        <div class="side-panel-container">
+            <aside class="side-panel border-accent">
+                <h1 class="toc-title">Zuletzt bearbeitet</h1>
+                {{ page.last_published_at|date:"d.m.Y, H:i" }}
+            </aside>
+            <aside class="side-panel border-accent toc-container">
+                <h1 class="toc-title">Inhaltsverzeichnis</h1>
+                {{ parsed_md.1 }}
+            </aside>
+        </div>
     </div>
 </div>
 {% endwith %}
