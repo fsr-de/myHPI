@@ -135,5 +135,9 @@ cython_debug/
 # IDEA files
 .idea/
 
+# Visual Studio Code files
+
+.vscode/
+
 # Database files
 *.sqlite3
