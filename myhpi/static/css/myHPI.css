@@ -136,17 +136,8 @@ nav .nav-link[aria-expanded=true] {
     display: inline-block;
     font-weight: 600;
     margin-bottom: 2.3rem;
-    /*   color: #FFF;
-    background-color: var(--bs-primary);
-    padding: 0.8rem 1.5rem;
-    padding-left: 10rem;
-    margin-left: -10rem;
-    margin-bottom: 1rem;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px; */
 }
 
-/* .page-title::after, */
 .nav-item-container-root .nav-link::after {
     display: block;
     content: '';
@@ -213,5 +204,3 @@ h1.toc-title::after {
     margin: 0;
     height: 0px;
 }
-
-/* TODO: Page Title vs normal <h1> */
