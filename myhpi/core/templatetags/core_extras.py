@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+# logic for this was moved to context.py
 
 @register.inclusion_tag("menu_level.html")
 def build_menu_level(sub_pages_by_level_and_id, level):
