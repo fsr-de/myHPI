@@ -3,7 +3,6 @@ from datetime import date
 
 from django import forms
 from django.contrib.auth.models import Group, User
-from django import forms
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
