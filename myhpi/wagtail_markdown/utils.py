@@ -11,7 +11,7 @@
 import bleach
 import markdown
 from django.conf import settings
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from markdown.extensions.toc import TocExtension
 
@@ -42,7 +42,7 @@ def _transform_markdown_into_html(text, with_abbreveations):
             ]
         )
     )
-    text = smart_text(text) + abbreveations if with_abbreveations else smart_text(text)
+    text = smart_str(text) + abbreveations if with_abbreveations else smart_str(text)
     return md.convert(text), md.toc
 
 
