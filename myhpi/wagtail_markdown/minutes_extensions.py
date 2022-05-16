@@ -2,7 +2,7 @@ import re
 
 import markdown
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from markdown import Extension
 from markdown.inlinepatterns import LinkInlineProcessor
 from markdown.preprocessors import Preprocessor
