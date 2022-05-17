@@ -167,9 +167,7 @@ USE_TZ = True
 # SCSS Precompiler
 # To learn more see: https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
 
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
+COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
