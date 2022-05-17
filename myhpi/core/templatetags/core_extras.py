@@ -3,12 +3,9 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag('menu_level.html')
+@register.inclusion_tag("menu_level.html")
 def build_menu_level(sub_pages_by_level_and_id, level):
-    return {
-        'sub_pages_by_id': sub_pages_by_level_and_id.get(level, {}),
-        'level': level
-    }
+    return {"sub_pages_by_id": sub_pages_by_level_and_id.get(level, {}), "level": level}
 
 
 @register.filter
@@ -38,11 +35,10 @@ def traverse_page_tree(curr_page, id_history, all_sub_pages):
     all_sub_pages[level_id] = same_level_sub_pages
     sub_pages = sub_menu_pages(curr_page)
     for sub_page in sub_pages:
-        traverse_page_tree(sub_page, id_history +
-                           [curr_page.id], all_sub_pages)
+        traverse_page_tree(sub_page, id_history + [curr_page.id], all_sub_pages)
 
 
 def format_id_history(id_history):
     if not id_history:
-        return 'root'
+        return "root"
     return str(id_history[-1])
