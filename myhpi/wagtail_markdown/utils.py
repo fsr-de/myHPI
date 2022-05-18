@@ -10,6 +10,7 @@
 
 import bleach
 import markdown
+from bleach.css_sanitizer import CSSSanitizer
 from django.conf import settings
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
@@ -47,12 +48,7 @@ def _transform_markdown_into_html(text, with_abbreveations):
 
 
 def _sanitise_markdown_html(markdown_html):
-    return bleach.clean(markdown_html, **_get_bleach_kwargs())
-
-
-def _get_bleach_kwargs():
-    bleach_kwargs = {}
-    bleach_kwargs["tags"] = [
+    tags = [
         "abbr",
         "p",
         "div",
@@ -90,7 +86,7 @@ def _get_bleach_kwargs():
         "hr",
         "br",
     ]
-    bleach_kwargs["attributes"] = {
+    attrs = {
         "*": [
             "class",
             "style",
@@ -116,7 +112,7 @@ def _get_bleach_kwargs():
             "align",
         ],
     }
-    bleach_kwargs["styles"] = [
+    allowed_props = [
         "color",
         "background-color",
         "font-family",
@@ -141,7 +137,8 @@ def _get_bleach_kwargs():
         "margin-left",
         "margin-right",
     ]
-    return bleach_kwargs
+    css_sanitizer = CSSSanitizer(allowed_css_properties=allowed_props)
+    return bleach.clean(markdown_html, tags=tags, attributes=attrs, css_sanitizer=css_sanitizer)
 
 
 def _get_markdown_kwargs():
