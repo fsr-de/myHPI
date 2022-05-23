@@ -136,7 +136,6 @@ cython_debug/
 .idea/
 
 # Visual Studio Code files
-
 .vscode/
 
 # Database files
