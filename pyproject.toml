@@ -11,7 +11,7 @@ wagtail = ">=2.16.2"
 django-environ = "^0.4.5"
 bleach = {extras = ["css"], version = "^5.0.0"}
 Markdown = "^3.3.7"
-wagtail-localize = "^1.1.2"
+wagtail-localize = "^1.2"
 html2text = "^2020.1.16"
 mozilla-django-oidc = "^2.0.0"
 django-compressor = "^4.0"
