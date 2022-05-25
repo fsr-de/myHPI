@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.8"
 wagtail = ">=2.16.2"
-django-environ = "^0.4.5"
+django-environ = "^0.8.1"
 bleach = {extras = ["css"], version = "^5.0.0"}
 Markdown = "^3.3.7"
 wagtail-localize = "^1.2"
