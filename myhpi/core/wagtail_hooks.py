@@ -37,8 +37,8 @@ def check_view_permissions(page, request, serve_args, serve_kwargs):
             target_groups = Group.objects.filter(
                 Q(name=request.user._ip_range_group_name) | Q(id__in=request.user.groups.all())
             )
-        matchesGroup = any(group in page.visible_for.all() for group in target_groups)
-        if not (matchesGroup or page.is_public):
+        is_matching_group = any(group in page.visible_for.all() for group in target_groups)
+        if not (is_matching_group or page.is_public):
             raise PermissionDenied
 
 

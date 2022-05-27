@@ -13,8 +13,8 @@ def base_context(request):
         for page in pages:
             subpages = page.get_children().in_menu().specific()
             if len(subpages) == 0:  # no subpages - add to list if visible
-                matches_group = any(group in page.visible_for.all() for group in usergroups)
-                if matches_group or page.is_public:
+                is_matching_group = any(group in page.visible_for.all() for group in usergroups)
+                if is_matching_group or page.is_public:
                     page_list.append(page)
             else:  # check subpages - add only if at least 1 subpage visible
                 visible_subpages = can_view(subpages, usergroups)
