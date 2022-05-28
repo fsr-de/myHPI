@@ -13,6 +13,8 @@ def base_context(request):
         for page in pages:
             subpages = page.get_children().in_menu().specific()
             if len(subpages) == 0:  # no subpages - add to list if visible
+                if not hasattr(page, "visible_for"):
+                    continue  # level menu item without content have no visibility for now (might change in future)
                 is_matching_group = any(group in page.visible_for.all() for group in usergroups)
                 if is_matching_group or page.is_public:
                     page.menu_children = []
