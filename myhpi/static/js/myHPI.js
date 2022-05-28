@@ -17,7 +17,7 @@ function addCollapseToLevel2NavContainers() {
     levelOneItemContainers.forEach(itemContainer => {
         itemContainer.addEventListener('hide.bs.collapse', () => {
             const levelTwoItemContainers = document.querySelectorAll('.nav-level-2 .nav-item-container')
-            levelTwoItemContainers.forEach(itemContainer => bootstrap.Collapse.getOrCreateInstance(itemContainer, { toggle: false }).hide())
+            levelTwoItemContainers.forEach(itemContainer => bootstrap.Collapse.getOrCreateInstance(itemContainer, { toggle: false, parent: '.nav-level-2' }).hide())
         })
     })
 }
