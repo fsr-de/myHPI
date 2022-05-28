@@ -30,7 +30,6 @@ if not DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
-    "compressor",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -60,6 +59,8 @@ INSTALLED_APPS = [
     "myhpi.polls",
     "myhpi.search",
     "myhpi.wagtail_markdown",
+    "debug_toolbar",
+    "static_precompiler",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -85,6 +86,7 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "login"
 
 MIDDLEWARE = [
+    # "debug_toolbar.middleware.DebugToolbarMiddleware", # Enable this line to get debug toolbar
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -166,9 +168,16 @@ USE_L10N = True
 USE_TZ = True
 
 # SCSS Precompiler
-# To learn more see: https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
+# To learn more see: https://django-static-precompiler.readthedocs.io/en/stable/index.html
 
-COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+STATIC_PRECOMPILER_COMPILERS = (
+    (
+        "static_precompiler.compilers.libsass.SCSS",
+        {
+            "precision": 8,
+        },
+    ),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -176,7 +185,7 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
+    "static_precompiler.finders.StaticPrecompilerFinder",
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
@@ -211,3 +220,4 @@ MESSAGE_TAGS = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+INTERNAL_IPS = env.str("INTERNAL_IPS")
