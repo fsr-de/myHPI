@@ -100,10 +100,10 @@ class EnterLeavePreprocessor(MinutesBasePreprocessor):
         super().__init__(*args, **kwargs)
         self.patterns = [
             (
-                r"\|enter\|\(([0-9:]+)\)\(([^\)\(]+)\)(\((?P<mean_of_participation>.*?)\))?",
+                r"\|enter\|\(([0-9:]+)\)\(((?:[^\)\(]+(?:\([^\)]+\))?)+)\)(\((?P<mean_of_participation>.*?)\))?",
                 self.enterify,
             ),
-            (r"\|leave\|\(([0-9:]+)\)\(([^\)\(]+)\)", self.leavify),
+            (r"\|leave\|\(([0-9:]+)\)\(((?:[^\)\(]+(?:\([^\)]+\))?)+)\)", self.leavify),
         ]
 
     def enter_or_leavify(self, match, event):
