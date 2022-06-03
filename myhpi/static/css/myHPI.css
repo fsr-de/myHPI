@@ -205,20 +205,8 @@ h1.toc-title::after {
     height: 0px;
 }
 
-.print-shown {
-    display: none;
-}
-
 @media print {
-    .print-none {
-        display: none !important;
-    }
-
-    .print-shown {
-        display: block !important;
-    }
-
-    nav, .toc, .toc-container {
+    .toc {
         display: none;
     }
 

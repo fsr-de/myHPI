@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row minutes-container">
         {% with page.text|markdown as parsed_md %}
-        <div class="print-shown minutes-title">
+        <div class="d-none d-print-block minutes-title">
         <h1>{{  page.title }}</h1>
         </div>
         <div class="col-9 minutes-text">
@@ -23,7 +23,7 @@
                     <li>{{ participant.get_full_name }}</li>
                 {% endfor %}
             </ul>
-            <h4 class="print-none">Table of contents</h4>
+            <h4 class="d-print-none">Table of contents</h4>
             {{ parsed_md.1 }}
         </div>
         {% endwith %}
