@@ -204,3 +204,38 @@ h1.toc-title::after {
     margin: 0;
     height: 0px;
 }
+
+.print-shown {
+    display: none;
+}
+
+@media print {
+    .print-none {
+        display: none !important;
+    }
+
+    .print-shown {
+        display: block !important;
+    }
+
+    nav, .toc, .toc-container {
+        display: none;
+    }
+
+    .minutes-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .minutes-title {
+        order: 0
+    }
+
+    .minutes-meta {
+        order: 1;
+    }
+
+    .minutes-text {
+        order: 2;
+    }
+}

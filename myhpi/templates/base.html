@@ -37,7 +37,7 @@
 <body class="bg-background myhpi-accent-yellow {% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav class="navbar-myhpi container-lg page">
+    <nav class="navbar-myhpi container-lg page print-none">
         <div class="navbar-top bg-white">
             {% with all_pages|all_sub_menu_pages_by_id as sub_pages_by_level_and_id %}
             <div class="page-content d-flex">
