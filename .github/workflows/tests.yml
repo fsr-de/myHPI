@@ -96,10 +96,19 @@ jobs:
         postgresql password: pass
       if: matrix.database == 'postgres'
 
+    - name: Setup postgres dependency
+      run: |
+        source env/bin/activate
+        poetry add psycopg2
+      if: matrix.database == 'postgres'
+
     - name: Setup mysql
       run: |
         sudo systemctl start mysql.service
         mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -uroot -proot -Dmysql
+        echo "CREATE DATABASE myHPI;" | mysql -uroot -proot
+        source env/bin/activate
+        poetry add mysqlclient
       if: matrix.database == 'mysql'
 
     - name: Test apps
