@@ -999,7 +999,7 @@ testing = ["python-dateutil (>=2.7)", "pytz (>=2014.7)", "elasticsearch (>=5.0,<
 
 [[package]]
 name = "wagtail-localize"
-version = "1.2"
+version = "1.2.1"
 description = "Translation plugin for Wagtail CMS"
 category = "main"
 optional = false
@@ -1013,6 +1013,7 @@ Wagtail = ">=2.11,<4.0"
 
 [package.extras]
 documentation = ["mkdocs (==1.1.2)", "mkdocs-material (==6.2.8)", "mkdocs-mermaid2-plugin (==0.5.1)", "mkdocstrings (==0.14.0)", "mkdocs-include-markdown-plugin (==2.8.0)", "pygments (==2.11.2)"]
+google = ["google-cloud-translate (>=3.0.0)"]
 testing = ["dj-database-url (==0.5.0)", "freezegun (==1.1.0)", "django-rq (>=2.5,<3.0)"]
 
 [[package]]
@@ -1718,8 +1719,8 @@ wagtail = [
     {file = "wagtail-2.16.2.tar.gz", hash = "sha256:ee23dc1ba39d4785d20acc95274b29dbcf83f5d9fd670555f541f2a88eec9daa"},
 ]
 wagtail-localize = [
-    {file = "wagtail-localize-1.2.tar.gz", hash = "sha256:e078da7ac5403c9be7ef688491d10b38bbace8cc37b4ca75b74c54cb567bbd61"},
-    {file = "wagtail_localize-1.2-py3-none-any.whl", hash = "sha256:e70e16f5078c17ec86aece5ad59820fee4b7e3c01282b9c99e39ec82ffb6e738"},
+    {file = "wagtail-localize-1.2.1.tar.gz", hash = "sha256:7873ec1b7b85d092f2070667286b96a1202a5362cbb9dce9905c9521af5224ad"},
+    {file = "wagtail_localize-1.2.1-py3-none-any.whl", hash = "sha256:8102dd749465724bf429bb8e036fb566905521e70e65b912897ffcc202d93ca0"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},
