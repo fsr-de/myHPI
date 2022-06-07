@@ -226,4 +226,9 @@ h1.toc-title::after {
     .minutes-text {
         order: 2;
     }
+
+    #minutes-footer {
+        margin-top: 50px;
+        order: 3;
+    }
 }
