@@ -31,6 +31,10 @@ class InformationPage(Page):
         "RootPage",
     ]
 
+    @property
+    def last_edited_by(self):
+        return self.get_latest_revision().user
+
 
 class MinutesList(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT)
