@@ -12,12 +12,12 @@ function moveLinksToFooter() {
     let linkList = document.createElement("ol");
 
     let articleLinks = content.getElementsByTagName("a");
-    for(let i=0; i<articleLinks.length; i++){
-          const articleLink = articleLinks[i];
-          articleLink.innerHTML += "<sup class='print-generated-tag'>["+(i + 1)+"]</sup>";
-          let footnote = document.createElement("li");
-          footnote.innerText = articleLink.href;
-          linkList.appendChild(footnote);
+    for (let i = 0; i < articleLinks.length; i++) {
+        const articleLink = articleLinks[i];
+        articleLink.innerHTML += "<sup class='print-generated-tag'>[" + (i + 1) + "]</sup>";
+        let footnote = document.createElement("li");
+        footnote.innerText = articleLink.href;
+        linkList.appendChild(footnote);
     }
     footer.appendChild(linkList);
 }
@@ -26,7 +26,7 @@ function expandAbbreviations() {
     let content = document.getElementsByClassName("minutes-text")[0];
     if (!content) return;
     let abbreviations = content.getElementsByTagName("abbr");
-    for(let i=0; i<abbreviations.length; i++) {
+    for (let i = 0; i < abbreviations.length; i++) {
         let short = abbreviations[i].innerText;
         let long = abbreviations[i].getAttribute("title");
 
@@ -51,7 +51,7 @@ function removePrintingProcessing() {
     }
 
     let abbreviationReplacements = content.getElementsByClassName("print-expanded-abbr");
-    for(let i=0; i<abbreviationReplacements.length; i++) {
+    for (let i = 0; i < abbreviationReplacements.length; i++) {
         let replacement = abbreviationReplacements[i];
         let short = replacement.getAttribute("short");
         let long = replacement.getAttribute("long");
@@ -63,21 +63,5 @@ function removePrintingProcessing() {
     }
 }
 
-
-// Is triggered when debugging printing (Firefox)
-let mql = window.matchMedia('print');
-// mql.addEventListener('change', checkPrintStatus);
-
-function checkPrintStatus(e) {
-  if (e.matches) {
-    processPageForPrinting();
-  } else {
-    removePrintingProcessing();
-  }
-}
-
-// Is triggered when actually printing
 addEventListener("beforeprint", processPageForPrinting);
 addEventListener("afterprint", removePrintingProcessing);
-
-
