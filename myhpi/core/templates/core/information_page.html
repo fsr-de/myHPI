@@ -17,6 +17,8 @@
             <aside class="side-panel border-accent">
                 <h1 class="toc-title">Zuletzt bearbeitet</h1>
                 {{ page.last_published_at|date:"d.m.Y, H:i" }}
+                <i>von</i>
+                {{ page.last_edited_by }}
             </aside>
             <aside class="side-panel border-accent toc-container d-print-none">
                 <h1 class="toc-title">Inhaltsverzeichnis</h1>
