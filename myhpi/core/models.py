@@ -37,7 +37,7 @@ class MinutesList(Page):
     visible_for = ParentalManyToManyField(Group, related_name="visible_minuteslist")
 
     content_panels = Page.content_panels + [
-        FieldPanel("group", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("group", widget=forms.Select),
     ]
     settings_panels = [
         PublishingPanel(),
