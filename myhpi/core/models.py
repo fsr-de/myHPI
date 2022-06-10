@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
-from django.db.models import CharField, DateField, ForeignKey, Model
+from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -16,6 +16,7 @@ from myhpi.wagtail_markdown.fields import MarkdownField
 class InformationPage(Page):
     body = MarkdownField()
     visible_for = ParentalManyToManyField(Group, related_name="visible_informationpages")
+    author_visible = BooleanField()
 
     content_panels = Page.content_panels + [
         MarkdownPanel("body", classname="full"),
@@ -23,6 +24,7 @@ class InformationPage(Page):
     settings_panels = [
         PublishingPanel(),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
