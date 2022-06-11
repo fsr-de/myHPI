@@ -5,7 +5,7 @@ from environ import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.Env()
+env = environ.Env(interpolate=True)
 # for syntax see https://django-environ.readthedocs.io/en/latest/
 environ.Env.read_env(env_file=os.path.join(BASE_DIR, ".env"))
 
@@ -185,7 +185,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 STATIC_URL = env.str("STATIC_URL")
 STATIC_ROOT = env.str("STATIC_ROOT")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "myhpi/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 MEDIA_ROOT = env.str("MEDIA_ROOT")
 MEDIA_URL = env.str("MEDIA_URL")
