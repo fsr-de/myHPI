@@ -205,6 +205,10 @@ h1.toc-title::after {
     height: 0px;
 }
 
+.label-badge {
+    background-color: var(--bs-secondary);
+}
+
 @media print {
     .toc {
         display: none;
