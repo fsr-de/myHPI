@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load wagtailmarkdown %}
 
 {% block content %}
@@ -26,6 +27,11 @@
             <h4 class="d-print-none">Table of contents</h4>
             {{ parsed_md.1 }}
         </div>
+        <div id="minutes-footer" class="d-none d-print-block"></div>
         {% endwith %}
     </div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/print_processor.js' %}"></script>
 {% endblock %}
