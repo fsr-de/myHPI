@@ -28,6 +28,21 @@
             {{ parsed_md.1 }}
         </div>
         <div id="minutes-footer" class="d-none d-print-block"></div>
+            <div id="minutes-navigation" class="row d-print-none">
+                <div class="col-6">
+                    {%  with page.previous_minutes as prev %}
+                        {% if prev %}
+                            <a href="{{ prev.url }}">< Previous minutes</a>
+                        {%  endif %}
+                    {% endwith %}
+                </div>
+                <div class="col-6">
+                    {%  with page.next_minutes as next %}
+                        {% if next %}
+                            <a href="{{ next.url }}">Next minutes ></a>
+                        {%  endif %}
+                    {% endwith %}
+                </div>
         {% endwith %}
     </div>
 {% endblock %}
