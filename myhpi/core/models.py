@@ -88,11 +88,12 @@ class MinutesForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        date_field = self.fields["date"]
-        date_field.widget.attrs["value"] = date.today()
+        self.initial["date"] = date.today()
+        self.initial["slug"] = date.today().isoformat()
 
-        slug_field = self.fields["slug"]
-        slug_field.widget.attrs["value"] = date.today().isoformat()
+        group_name = kwargs["parent_page"].group
+        group_members = list(User.objects.filter(groups=group_name))
+        self.initial["participants"] = group_members
 
 
 class Minutes(Page):
