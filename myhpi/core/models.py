@@ -91,6 +91,9 @@ class MinutesForm(WagtailAdminPageForm):
         date_field = self.fields["date"]
         date_field.widget.attrs["value"] = date.today()
 
+        slug_field = self.fields["slug"]
+        slug_field.widget.attrs["value"] = date.today().isoformat()
+
 
 class Minutes(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
