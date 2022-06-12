@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
@@ -60,9 +62,14 @@ class MinutesList(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
-        context.setdefault(
-            "minutes_list", Minutes.objects.filter(id__in=minutes_ids, group=self.group)
+        minutes_list = (
+            Minutes.objects.filter(id__in=minutes_ids, group=self.group).order_by("date").reverse()
         )
+        context.setdefault("minutes_list", minutes_list)
+        minutes_by_years = defaultdict(lambda: [])
+        for minute in minutes_list:
+            minutes_by_years[minute.date.year].append(minute)
+        context["minutes_by_years"] = dict(minutes_by_years)
         return context
 
 
