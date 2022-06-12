@@ -88,12 +88,27 @@ class MinutesForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.initial["date"] = date.today()
-        self.initial["slug"] = date.today().isoformat()
+        self.minutes_list = kwargs["parent_page"]
 
-        group_name = kwargs["parent_page"].group
-        group_members = list(User.objects.filter(groups=group_name))
-        self.initial["participants"] = group_members
+        if not kwargs["instance"].title:  # Check if page has been created
+            self.initial["date"] = date.today()
+            self.initial["slug"] = date.today().isoformat()
+
+            group_name = self.minutes_list.specific.group
+            group_members = list(User.objects.filter(groups=group_name))
+            self.initial["participants"] = group_members
+
+            last_minutes = self.get_last_minutes()
+            if last_minutes:
+                self.initial["title"] = last_minutes.title
+                self.initial["moderator"] = last_minutes.moderator
+                self.initial["author"] = last_minutes.author
+
+    def get_last_minutes(self):
+        # Since the minutes aren't created yet, they are not yet in the tree
+        existing_minutes = self.minutes_list.get_children().live()
+        if existing_minutes:
+            return existing_minutes.last().specific
 
 
 class Minutes(Page):
