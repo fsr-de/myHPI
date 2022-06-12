@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
@@ -7,6 +9,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
+from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
@@ -81,6 +84,14 @@ class TaggedMinutes(ItemBase):
     )
 
 
+class MinutesForm(WagtailAdminPageForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        date_field = self.fields["date"]
+        date_field.widget.attrs["value"] = date.today()
+
+
 class Minutes(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
     date = DateField()
@@ -106,6 +117,8 @@ class Minutes(Page):
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
+
+    base_form_class = MinutesForm
 
 
 class RootPage(InformationPage):
