@@ -100,8 +100,8 @@ class MinutesForm(WagtailAdminPageForm):
             self.initial["date"] = date.today()
             self.initial["slug"] = date.today().isoformat()
 
-            group_name = self.minutes_list.specific.group
-            group_members = list(User.objects.filter(groups=group_name))
+            group = self.minutes_list.specific.group
+            group_members = list(User.objects.filter(groups=group))
             self.initial["participants"] = group_members
 
             last_minutes = self.get_last_minutes()
