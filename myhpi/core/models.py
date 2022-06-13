@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import date
 
 from django import forms
 from django.contrib.auth.models import Group, User
@@ -9,6 +10,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
+from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
@@ -88,6 +90,33 @@ class TaggedMinutes(ItemBase):
     )
 
 
+class MinutesForm(WagtailAdminPageForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.minutes_list = kwargs["parent_page"]
+
+        if not kwargs["instance"].title:  # Check if page has been created
+            self.initial["date"] = date.today()
+            self.initial["slug"] = date.today().isoformat()
+
+            group = self.minutes_list.specific.group
+            group_members = list(User.objects.filter(groups=group))
+            self.initial["participants"] = group_members
+
+            last_minutes = self.get_last_minutes()
+            if last_minutes:
+                self.initial["title"] = last_minutes.title
+                self.initial["moderator"] = last_minutes.moderator
+                self.initial["author"] = last_minutes.author
+
+    def get_last_minutes(self):
+        # Since the minutes aren't created yet, they are not yet in the tree
+        existing_minutes = self.minutes_list.get_children().live()
+        if existing_minutes:
+            return existing_minutes.last().specific
+
+
 class Minutes(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
     date = DateField()
@@ -113,6 +142,8 @@ class Minutes(Page):
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
+
+    base_form_class = MinutesForm
 
 
 class RootPage(InformationPage):
