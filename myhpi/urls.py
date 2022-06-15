@@ -2,7 +2,8 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import include, path
+from django.urls import include, path, reverse_lazy
+from django.views.generic import RedirectView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
@@ -39,3 +40,14 @@ urlpatterns += i18n_patterns(
     path("search/", search_views.search, name="search"),
     path("", include(wagtail_urls)),
 )
+
+if settings.ENABLE_MAILING_LISTS:
+    urlpatterns = [
+        path("lists/", include("myhpi.tenca_django.urls")),
+        # This is done manually, but shouldn't. It's all due to the ominous "problems with trailing slashes"
+        path(
+            "lists",
+            RedirectView.as_view(url=reverse_lazy("tenca_django:tenca_dashboard")),
+            name="tenca_index",
+        ),
+    ] + urlpatterns

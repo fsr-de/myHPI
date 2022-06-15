@@ -19,6 +19,7 @@ django-select2 = "^7.10.0"
 django-static-precompiler = {extras = ["libsass"], version = "^2.1"}
 django-debug-toolbar = "^3.5.0"
 django-permissionedforms = "^0.1"
+tenca = "^0.0.2"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.5"
@@ -34,7 +35,7 @@ pgsql = ["psycopg2"]
 mysql = ["mysqlclient"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["setuptools", "poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
