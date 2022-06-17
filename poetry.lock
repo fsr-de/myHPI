@@ -290,7 +290,7 @@ rjsmin = "1.2.0"
 
 [[package]]
 name = "django-environ"
-version = "0.8.1"
+version = "0.9.0"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
 category = "main"
 optional = false
@@ -1107,7 +1107,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "fbc83a63721252ca24e9cf65fdd45267a7a4c9ea1725d1f0652d834fc55b95e9"
+content-hash = "0f2b6a2d0038a559d75509ce15b7288f29d4141fbf9ed6109698d33e341c6bc5"
 
 [metadata.files]
 anyascii = [
@@ -1349,8 +1349,8 @@ django-compressor = [
     {file = "django_compressor-4.0.tar.gz", hash = "sha256:1db91b6d04293636a68bd1328dc7bb90d636b0295f67b1cc6d4fa102b9fd25f6"},
 ]
 django-environ = [
-    {file = "django-environ-0.8.1.tar.gz", hash = "sha256:6f0bc902b43891656b20486938cba0861dc62892784a44919170719572a534cb"},
-    {file = "django_environ-0.8.1-py2.py3-none-any.whl", hash = "sha256:42593bee519a527602a467c7b682aee1a051c2597f98c45f4f4f44169ecdb6e5"},
+    {file = "django-environ-0.9.0.tar.gz", hash = "sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21"},
+    {file = "django_environ-0.9.0-py2.py3-none-any.whl", hash = "sha256:f21a5ef8cc603da1870bbf9a09b7e5577ab5f6da451b843dbcc721a7bca6b3d9"},
 ]
 django-filter = [
     {file = "django-filter-21.1.tar.gz", hash = "sha256:632a251fa8f1aadb4b8cceff932bb52fe2f826dd7dfe7f3eac40e5c463d6836e"},
