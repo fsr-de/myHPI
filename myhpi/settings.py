@@ -237,6 +237,14 @@ MESSAGE_TAGS = {
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INTERNAL_IPS = env.str("INTERNAL_IPS")
 
+# Create a localsettings.py to override settings per machine or user, e.g. for
+# development or different settings in deployments using multiple servers.
+_LOCAL_SETTINGS_FILENAME = os.path.join(BASE_DIR, "localsettings.py")
+if os.path.exists(_LOCAL_SETTINGS_FILENAME):
+    with open(_LOCAL_SETTINGS_FILENAME, "rb") as f:
+        exec(compile(f.read(), _LOCAL_SETTINGS_FILENAME, 'exec'))
+del _LOCAL_SETTINGS_FILENAME
+
 # The mailing lists library (Tenca) has a django-like settings module.
 # This code will read in all correctly prefixed settings from the
 # current module, e.g. `TENCA_API_USER` -> `tenca.settings.API_USER`
