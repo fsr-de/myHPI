@@ -36,13 +36,8 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += i18n_patterns(
-    path("search/", search_views.search, name="search"),
-    path("", include(wagtail_urls)),
-)
-
 if settings.ENABLE_MAILING_LISTS:
-    urlpatterns = [
+    urlpatterns += i18n_patterns(
         path("lists/", include("myhpi.tenca_django.urls")),
         # This is done manually, but shouldn't. It's all due to the ominous "problems with trailing slashes"
         path(
@@ -50,4 +45,11 @@ if settings.ENABLE_MAILING_LISTS:
             RedirectView.as_view(url=reverse_lazy("tenca_django:tenca_dashboard")),
             name="tenca_index",
         ),
-    ] + urlpatterns
+    )
+
+urlpatterns += i18n_patterns(
+    path("search/", search_views.search, name="search"),
+    path("", include(wagtail_urls)),
+)
+
+
