@@ -1,0 +1,13 @@
+name: dependabot-assign
+on:
+  pull_request:
+    types: [opened]
+jobs:
+  assign:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: delivery-much/actions-assigner@v1
+        with:
+          token: ${{ secrets.ADMIN_PAT }}
+          team-reviewers: myhpi-dependencies
