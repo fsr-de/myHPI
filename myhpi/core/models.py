@@ -53,12 +53,23 @@ class InformationPage(BasePage):
     def last_edited_by(self):
         return self.get_latest_revision().user
 
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
+    ]
+
+    @property
+    def last_edited_by(self):
+        return self.get_latest_revision().user
+
 
 class MinutesList(BasePage):
     group = ForeignKey(Group, on_delete=models.PROTECT)
 
     content_panels = Page.content_panels + [
-        FieldPanel("group", widget=forms.RadioSelect),
+        FieldPanel("group", widget=forms.Select),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
