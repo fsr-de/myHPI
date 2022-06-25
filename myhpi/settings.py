@@ -208,3 +208,5 @@ MESSAGE_TAGS = {
     constants.WARNING: "alert-warning",
     constants.ERROR: "alert-danger",
 }
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

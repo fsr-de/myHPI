@@ -120,8 +120,8 @@ class MinutesForm(WagtailAdminPageForm):
 class Minutes(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
     date = DateField()
-    moderator = ForeignKey(User, on_delete=models.CASCADE, related_name="moderator")
-    author = ForeignKey(User, on_delete=models.CASCADE, related_name="author")
+    moderator = ForeignKey(User, on_delete=models.PROTECT, related_name="moderator")
+    author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     visible_for = ParentalManyToManyField(Group, related_name="visible_minutes")

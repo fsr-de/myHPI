@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 (
                     "author",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
+                        on_delete=models.PROTECT,
                         related_name="author",
                         to=settings.AUTH_USER_MODEL,
                     ),
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 (
                     "moderator",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
+                        on_delete=models.PROTECT,
                         related_name="moderator",
                         to=settings.AUTH_USER_MODEL,
                     ),
