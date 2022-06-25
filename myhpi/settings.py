@@ -30,14 +30,6 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_REFERRER_POLICY = "same-origin"
 
-# Enables the mailman3 frontend "tenca" on this site. If you do,
-# check `tenca.settings.defaults` for available options and define at least:
-#   * TENCA_ADMIN_USER
-#   * TENCA_ADMIN_PASS
-#   * TENCA_LIST_HASH_ID_SALT
-#   * TENCA_WEB_UI_HOSTNAME
-ENABLE_MAILING_LISTS = False
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -237,19 +229,23 @@ MESSAGE_TAGS = {
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INTERNAL_IPS = env.str("INTERNAL_IPS")
 
-# Create a localsettings.py to override settings per machine or user, e.g. for
-# development or different settings in deployments using multiple servers.
-_LOCAL_SETTINGS_FILENAME = os.path.join(BASE_DIR, "localsettings.py")
-if os.path.exists(_LOCAL_SETTINGS_FILENAME):
-    with open(_LOCAL_SETTINGS_FILENAME, "rb") as f:
-        exec(compile(f.read(), _LOCAL_SETTINGS_FILENAME, 'exec'))
-del _LOCAL_SETTINGS_FILENAME
+ENABLE_MAILING_LISTS = env.str("ENABLE_MAILING_LISTS")
 
 # The mailing lists library (Tenca) has a django-like settings module.
 # This code will read in all correctly prefixed settings from the
 # current module, e.g. `TENCA_API_USER` -> `tenca.settings.API_USER`
 if ENABLE_MAILING_LISTS:
     import tenca.settings
+
+    TENCA_API_HOST = env.str("TENCA_API_HOST")
+    TENCA_API_PORT = env.int("TENCA_API_PORT")
+    TENCA_API_SCHEME = env.str("TENCA_API_SCHEME")
+    TENCA_ADMIN_USER = env.str("TENCA_ADMIN_USER")
+    TENCA_ADMIN_PASS = env.str("TENCA_ADMIN_PASS")
+    TENCA_LIST_HASH_ID_SALT = env.str("TENCA_LIST_HASH_ID_SALT")
+    TENCA_WEB_UI_HOSTNAME = env.url("TENCA_WEB_UI_HOSTNAME")
+    TENCA_DISABLE_GOODBYE_MESSAGES = env.bool("TENCA_DISABLE_GOODBYE_MESSAGES")
+    TENCA_HASH_STORAGE_CLASS = env.str("TENCA_HASH_STORAGE_CLASS")
 
     tenca.settings.load_from_module(sys.modules[__name__])
 
