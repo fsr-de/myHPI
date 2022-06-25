@@ -143,5 +143,3 @@ cython_debug/
 
 bootstrap/
 bootstrap.bundle.min.js*
-
-localsettings.py
