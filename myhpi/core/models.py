@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
+from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
@@ -117,6 +118,13 @@ class MinutesForm(WagtailAdminPageForm):
             return existing_minutes.last().specific
 
 
+class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
+    search_fields = [
+        "username__icontains",
+        "email__icontains",
+    ]
+
+
 class Minutes(Page):
     group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
     date = DateField()
@@ -132,7 +140,7 @@ class Minutes(Page):
         FieldPanel("date"),
         FieldPanel("moderator"),
         FieldPanel("author"),
-        FieldPanel("participants"),
+        FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
         MarkdownPanel("text", classname="full"),
     ]
