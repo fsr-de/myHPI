@@ -11,6 +11,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
+DJANGO_DEBUG = env.bool("DJANGO_DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 SITE_URL = env.str("SITE_URL")
 if SITE_URL.endswith("/"):
@@ -86,7 +87,6 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "login"
 
 MIDDLEWARE = [
-    # "debug_toolbar.middleware.DebugToolbarMiddleware", # Enable this line to get debug toolbar
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -99,6 +99,9 @@ MIDDLEWARE = [
     "myhpi.core.middleware.IPRangeUserMiddleware",
     "mozilla_django_oidc.middleware.SessionRefresh",
 ]
+
+if DJANGO_DEBUG:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "myhpi.urls"
 
