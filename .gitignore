@@ -140,5 +140,3 @@ cython_debug/
 
 # Database files
 *.sqlite3
-
-localsettings.py
