@@ -1,39 +1,65 @@
 from django.contrib.auth.models import Group
 from django.db.models import Q
-from wagtail.core.models import Page, Site
+from wagtail.core.models import Site
+
+from .models import BasePage
 
 
 def base_context(request):
+
+    # How wagtail page trees work: https://www.accordbox.com/blog/how-to-create-and-manage-menus-in-wagtail/
+
+    # Fetch all pages
     root_page = getattr(Site.find_for_request(request), "root_page", None)
-    pages = Page.objects.in_menu().child_of(root_page).specific()
+    pages = BasePage.objects.in_menu().live()
+    pages_visible_for_user = []
+    path_map = {}
+    depth_levels = set()
 
-    # filter menu items based on which pages the user can view
-    def can_view(pages, usergroups):
-        page_list = []
-        for page in pages:
-            subpages = page.get_children().in_menu().specific()
-            if len(subpages) == 0:  # no subpages - add to list if visible
-                if not hasattr(page, "visible_for"):
-                    continue  # level menu item without content have no visibility for now (might change in future)
-                is_matching_group = any(group in page.visible_for.all() for group in usergroups)
-                if is_matching_group or page.is_public:
-                    page.menu_children = []
-                    page_list.append(page)
-            else:  # check subpages - add only if at least 1 subpage visible
-                visible_subpages = can_view(subpages, usergroups)
-                if len(visible_subpages) > 0:
-                    page.menu_children = visible_subpages
-                    page_list.append(page)
-        return page_list
+    if not root_page:
+        return {"root_page": None, "all_pages": None}
 
-    usergroups = request.user.groups.all()
-    if getattr(request.user, "_ip_range_group_name", None):
+    # Determine all pages the user may view based on his groups
+    usergroups = {}
+    if getattr(request.user, "_ip_range_group_name", False):
+        # join user groups together with the groups they have based on their IP address
         usergroups = Group.objects.filter(
             Q(name=request.user._ip_range_group_name) | Q(id__in=request.user.groups.all())
         )
+    else:
+        # use the users groups only
+        usergroups = request.user.groups.all()
+    pages_visible_for_user = pages.filter(visible_for__in=usergroups)
 
-    shownPages = can_view(pages, usergroups)
+    # Add additional properties to each page and save in path_map
+    # The path of each page is represented by a string, each level labeled with 4 chars
+    for page in pages:
+        page.menu_children = []
+        page.is_leaf = True
+        path_map[page.path] = page
+        depth_levels.add(page.depth)
+
+    # Iterate over all depth of the tree, going from leaves to root
+    # Mark any parent nodes as non-leaves
+    # If page is allowed to be viewed and (it has viewable children or is a leaf), add it to the parent's viewable children
+    while depth_levels:
+        deepest_level = max(depth_levels)
+        for path in path_map:
+            page = path_map[path]
+            if page.depth != deepest_level:
+                continue
+            parent_path = page.path[:-4]
+            if parent_path in path_map:
+                path_map[parent_path].is_leaf = False
+                page_allowed_to_be_viewed = page in pages_visible_for_user or page.is_public
+                page_has_children_or_is_leaf = len(page.menu_children) > 0 or page.is_leaf
+                if page_allowed_to_be_viewed and page_has_children_or_is_leaf:
+                    path_map[parent_path].menu_children.append(page)
+        depth_levels.remove(deepest_level)
+
+    # Return root page and all of its children
+    root_children = path_map[root_page.path].menu_children
     return {
         "root_page": root_page,
-        "all_pages": shownPages if root_page else None,
+        "all_pages": root_children,
     }

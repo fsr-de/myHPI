@@ -23,7 +23,6 @@ def all_sub_menu_pages_by_id(pages):
     all_sub_pages_by_id = {}
     for page in pages:
         traverse_page_tree(page, [], all_sub_pages_by_id)
-    print(all_sub_pages_by_id)
     return all_sub_pages_by_id
 
 
