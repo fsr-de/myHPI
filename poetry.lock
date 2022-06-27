@@ -983,7 +983,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 
 [[package]]
 name = "wagtail"
-version = "3.0"
+version = "3.0.1"
 description = "A Django content management system."
 category = "main"
 optional = false
@@ -1735,8 +1735,8 @@ virtualenv = [
     {file = "virtualenv-20.14.1.tar.gz", hash = "sha256:ef589a79795589aada0c1c5b319486797c03b67ac3984c48c669c0e4f50df3a5"},
 ]
 wagtail = [
-    {file = "wagtail-3.0-py3-none-any.whl", hash = "sha256:4a844d2d1cf5cbc9c48344c6ae9cc5c9f0d1134cd45cd2c484afdedc1164043a"},
-    {file = "wagtail-3.0.tar.gz", hash = "sha256:d54d0742c5cebf92b021c04a6ac93312b8cb5f55e7c10f37199938033bda905d"},
+    {file = "wagtail-3.0.1-py3-none-any.whl", hash = "sha256:107d7a1ac9a4fde0fa2e454cc84f548dc41581cc627881abf4bbac3d5a30244c"},
+    {file = "wagtail-3.0.1.tar.gz", hash = "sha256:917393fcea8644734beb323d607e02e4316370982ba0b4ea689a576567247bc8"},
 ]
 wagtail-localize = [
     {file = "wagtail-localize-1.2.1.tar.gz", hash = "sha256:7873ec1b7b85d092f2070667286b96a1202a5362cbb9dce9905c9521af5224ad"},
