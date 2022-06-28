@@ -9,5 +9,4 @@ jobs:
     steps:
       - uses: delivery-much/actions-assigner@v1
         with:
-          token: ${{ secrets.ADMIN_PAT }}
-          team-reviewers: myhpi-dependencies
+          reviewers: Paula-Kli
