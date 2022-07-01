@@ -9,7 +9,7 @@ license = "MIT"
 python = "^3.8"
 wagtail = ">=2.16.2"
 django-environ = "^0.9.0"
-bleach = {extras = ["css"], version = "^5.0.0"}
+bleach = {extras = ["css"], version = "^5.0.1"}
 Markdown = "^3.3.7"
 wagtail-localize = "^1.2"
 html2text = "^2020.1.16"
