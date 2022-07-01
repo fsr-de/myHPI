@@ -21,7 +21,7 @@ django-select2 = "^7.10.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.3"
-black = "^22.3"
+black = "^22.6"
 isort = "^5.8.0"
 autoflake = "^1.4"
 pre-commit = "^2.12.1"
