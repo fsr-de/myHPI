@@ -56,10 +56,10 @@ INSTALLED_APPS = [
     "wagtail.users",
     "wagtail_localize",
     "wagtail_localize.locales",
+    "wagtailmarkdown",
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
-    "myhpi.wagtail_markdown",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -211,3 +211,5 @@ MESSAGE_TAGS = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+WAGTAILMARKDOWN = {"extensions": ["toc", "abbr"]}

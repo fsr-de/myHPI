@@ -2,7 +2,6 @@
 {% load wagtailmarkdown %}
 
 {% block content %}
-{% with page.body|markdown as parsed_md %}
 <div class="row">
     <div class="col-9">
         <h1 class="page-title">
@@ -10,7 +9,7 @@
                 {{ page.title }}
             </span>
         </h1>
-        {{ parsed_md.0 }}
+        {{ page.body|markdown }}
     </div>
     <div class="col-3">
         <div class="side-panel-container">
@@ -24,10 +23,9 @@
             </aside>
             <aside class="side-panel border-accent toc-container d-print-none">
                 <h1 class="toc-title">Inhaltsverzeichnis</h1>
-                {{ parsed_md.1 }}
+
             </aside>
         </div>
     </div>
 </div>
-{% endwith %}
 {% endblock %}

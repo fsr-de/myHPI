@@ -10,7 +10,6 @@
 
 import bleach
 import markdown
-from bleach.css_sanitizer import CSSSanitizer
 from django.conf import settings
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
@@ -138,7 +137,7 @@ def _sanitise_markdown_html(markdown_html):
         "margin-right",
     ]
     css_sanitizer = CSSSanitizer(allowed_css_properties=allowed_props)
-    return bleach.clean(markdown_html, tags=tags, attributes=attrs, css_sanitizer=css_sanitizer)
+    return bleach.clean(markdown_html, tags=tags, attributes=attrs)
 
 
 def _get_markdown_kwargs():
