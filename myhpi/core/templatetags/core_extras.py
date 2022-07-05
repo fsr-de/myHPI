@@ -1,6 +1,6 @@
 from django import template
 
-from myhpi.core.markdown_utils import render_markdown
+from myhpi.core.markdown.utils import render_markdown
 
 register = template.Library()
 

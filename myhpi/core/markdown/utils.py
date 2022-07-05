@@ -3,6 +3,8 @@ from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from wagtailmarkdown.utils import _get_markdown_kwargs, _sanitise_markdown_html
 
+from myhpi.core.markdown.extensions import MinuteExtension
+
 
 def render_markdown(text, context=None, with_abbreveations=True):
     """
@@ -18,7 +20,11 @@ def render_markdown(text, context=None, with_abbreveations=True):
 def _transform_markdown_into_html(text, with_abbreveations):
     from myhpi.core.models import AbbreviationExplanation
 
-    md = markdown.Markdown(**_get_markdown_kwargs())
+    markdown_kwargs = _get_markdown_kwargs()
+    markdown_kwargs["extensions"].append(
+        MinuteExtension()
+    )  # should be in settings.py, but module lookup doesn't work
+    md = markdown.Markdown(**markdown_kwargs)
     abbreveations = "\n" + (
         "\n".join(
             [
