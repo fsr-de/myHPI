@@ -13,9 +13,7 @@ from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
-
-from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
-from myhpi.wagtail_markdown.fields import MarkdownField
+from wagtailmarkdown.fields import MarkdownField
 
 
 class InformationPage(Page):
@@ -24,7 +22,7 @@ class InformationPage(Page):
     author_visible = BooleanField()
 
     content_panels = Page.content_panels + [
-        MarkdownPanel("body", classname="full"),
+        FieldPanel("body", classname="full"),
     ]
     settings_panels = [
         PublishingPanel(),
@@ -142,7 +140,7 @@ class Minutes(Page):
         FieldPanel("author"),
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
-        MarkdownPanel("text", classname="full"),
+        FieldPanel("text"),
     ]
     settings_panels = [
         PublishingPanel(),
