@@ -8,9 +8,7 @@ from django.shortcuts import redirect
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.core.models import Orderable, Page
-
-from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
-from myhpi.wagtail_markdown.fields import MarkdownField
+from wagtailmarkdown.fields import MarkdownField
 
 
 class PollList(Page):
@@ -37,7 +35,7 @@ class Poll(Page):
     participants = models.ManyToManyField(User, related_name="polls")
 
     content_panels = Page.content_panels + [
-        MarkdownPanel("description", classname="full"),
+        FieldPanel("description", classname="full"),
         FieldPanel("question"),
         FieldPanel("start_date"),
         FieldPanel("end_date"),

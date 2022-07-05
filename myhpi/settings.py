@@ -212,4 +212,8 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-WAGTAILMARKDOWN = {"extensions": ["toc", "abbr"]}
+WAGTAILMARKDOWN = {
+    "allowed_tags": ["abbr"],
+    "allowed_attributes": {"abbr": ["title"]},
+    "extensions": ["toc", "abbr"],
+}
