@@ -229,7 +229,7 @@ MESSAGE_TAGS = {
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INTERNAL_IPS = env.str("INTERNAL_IPS")
 
-ENABLE_MAILING_LISTS = env.str("ENABLE_MAILING_LISTS")
+ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS")
 
 # The mailing lists library (Tenca) has a django-like settings module.
 # This code will read in all correctly prefixed settings from the
