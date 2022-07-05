@@ -7,7 +7,7 @@ This tool is used to manage the student representative website at https://myhpi.
 To set up a development version on your local machine, you need to execute the following steps:
 1. Check out repository and cd to it
 2. Set up a virtualenv for the project with Python >=3.8 and activate it
-3. Install poetry (if not already installed): `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -`
+3. Install poetry (if not already installed): `curl -sSL https://install.python-poetry.org | python -`
 4. Install dependencies with `poetry install`
 5. Create env file by copying the `.env.example` file to `.env`, e.g. `cp .env.example .env` (Notice that for some functionality like OIDC some settings must be changed)
 6. Migrate the database with `python manage.py migrate`
