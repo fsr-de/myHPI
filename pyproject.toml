@@ -2,7 +2,7 @@
 name = "myHPI"
 version = "0.1.0"
 description = ""
-authors = ["Julian B. <jeriox@users.noreply.github.com>"]
+authors = ["FSR DE <fachschaftsrat@hpi.de>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
