@@ -253,6 +253,17 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-appconf"
+version = "1.0.5"
+description = "A helper class for handling configuration defaults of packaged apps gracefully."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = "*"
+
+[[package]]
 name = "django-bootstrap-icons"
 version = "0.7.9"
 description = "A quick way to add Bootstrap Icons with Django template tags."
@@ -343,6 +354,22 @@ django-appconf = ">=0.6.0"
 
 [package.extras]
 test = ["pytest", "pytest-cov", "pytest-django", "selenium"]
+
+[[package]]
+name = "django-static-precompiler"
+version = "2.1"
+description = "Django template tags to compile all kinds of static files (SASS, LESS, Stylus, CoffeeScript, Babel, LiveScript, Handlebars)."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.0"
+libsass = {version = "*", optional = true, markers = "extra == \"libsass\""}
+
+[package.extras]
+libsass = ["libsass"]
+watch = ["watchdog"]
 
 [[package]]
 name = "django-taggit"
@@ -1082,7 +1109,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2443841d53fd6136718a8c15891f2205c7842d9a11308571a252e44b6d9b6e40"
+content-hash = "847ec54c0f9ab0075fa869c638a57ba73ebd559342f93c84348ef5468b842cc6"
 
 [metadata.files]
 anyascii = [
@@ -1310,6 +1337,10 @@ distlib = [
 django = [
     {file = "Django-4.0.4-py3-none-any.whl", hash = "sha256:07c8638e7a7f548dc0acaaa7825d84b7bd42b10e8d22268b3d572946f1e9b687"},
     {file = "Django-4.0.4.tar.gz", hash = "sha256:4e8177858524417563cc0430f29ea249946d831eacb0068a1455686587df40b5"},
+]
+django-appconf = [
+    {file = "django-appconf-1.0.5.tar.gz", hash = "sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4"},
+    {file = "django_appconf-1.0.5-py3-none-any.whl", hash = "sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d"},
 ]
 django-bootstrap-icons = [
     {file = "django-bootstrap-icons-0.7.9.tar.gz", hash = "sha256:7a68d2dfe9aee80dd8db858ce7b76ab1725e396723ddef146c39c62cbec4deb0"},
