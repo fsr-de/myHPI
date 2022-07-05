@@ -1,5 +1,5 @@
 {% if minutes.labels.all %}
     {% for label in minutes.labels.all %}
-        <span class="badge label-badge">{{ label }}</span>
+        <span class="badge label-badge" style="background-color: {{ label.color }};">{{ label }}</span>
     {% endfor %}
 {% endif %}
