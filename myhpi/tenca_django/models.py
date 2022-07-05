@@ -25,13 +25,6 @@ class HashEntry(TencaModel):
         verbose_name_plural = "Invite links"
 
 
-class LegacyAdminURL(TencaModel):
-    hash_id = models.ForeignKey(
-        HashEntry, related_name="legacy_admin_url", on_delete=models.CASCADE
-    )
-    admin_url = models.CharField(max_length=32, blank=False, null=False)
-
-
 class DjangoModelHashStorage(HashStorage):
     def __contains__(self, hash_id):
         try:

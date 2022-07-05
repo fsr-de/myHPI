@@ -271,61 +271,6 @@ class TencaReportView(TencaSingleListMixin, TemplateView):
         return super().get_context_data(**kwargs)
 
 
-class TencaLegacyAdminLinkView(LoginRequiredMixin, RedirectView):
-    def _all_mails(self, email):
-        yield email
-
-    # yield from alternative_emails(email)
-
-    def get_redirect_url(self, *args, **kwargs):
-        try:
-            LegacyAdminURL.objects.get(
-                hash_id__hash_id=kwargs.get("hash_id"), admin_url=kwargs.get("admin_url")
-            )
-            mailing_list = connection.get_list_by_hash_id(kwargs.get("hash_id"))
-            if mailing_list is None:
-                raise Http404
-            if self.request.user.is_staff:
-                messages.warning(
-                    self.request,
-                    _(
-                        "Please manage this list from the admin interface. This link will "
-                        "stop working in the future."
-                    ),
-                )
-            else:
-                user_email = self.request.user.email
-                for test_mail in self._all_mails(user_email):
-                    if mailing_list.is_member(test_mail):
-                        user_email = test_mail
-                        break
-                else:
-                    mailing_list.add_member_silently(user_email)
-
-                if not mailing_list.is_owner(user_email):
-                    mailing_list.promote_to_owner(user_email)
-                    messages.success(
-                        self.request,
-                        _(
-                            "You have been promoted to a list owner. From now on, you can "
-                            "manage this list from your dashboard. This link is obsolete."
-                        ),
-                    )
-                else:
-                    messages.warning(
-                        self.request,
-                        _(
-                            "You are already a list owner and can manage this list from you "
-                            "dashboard. This link will stop working in the future."
-                        ),
-                    )
-            return reverse(
-                "tenca_django:tenca_manage_list", kwargs=dict(list_id=mailing_list.list_id)
-            )
-        except LegacyAdminURL.DoesNotExist:
-            raise Http404
-
-
 def tenca_template_server(request, name):
     try:
         template = tenca.templates.templates_dict[name]
