@@ -8,7 +8,8 @@ from django.shortcuts import redirect
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.core.models import Orderable, Page
-from wagtailmarkdown.fields import MarkdownField
+
+from myhpi.wagtail_markdown.fields import CustomMarkdownField
 
 
 class PollList(Page):
@@ -26,7 +27,7 @@ class PollList(Page):
 
 class Poll(Page):
     question = models.CharField(max_length=254)
-    description = MarkdownField()
+    description = CustomMarkdownField()
     start_date = models.DateField()
     end_date = models.DateField()
     max_allowed_answers = models.IntegerField(default=1)

@@ -16,6 +16,7 @@ django-libsass = "^0.9"
 django-bootstrap-icons = "^0.7.8"
 django-select2 = "^7.10.0"
 wagtail-markdown = "^0.9.0"
+html2text = "^2020.1.16"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
