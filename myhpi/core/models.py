@@ -18,18 +18,23 @@ from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
 from myhpi.wagtail_markdown.fields import MarkdownField
 
 
-class InformationPage(Page):
+class BasePage(Page):
+    visible_for = ParentalManyToManyField(Group, blank=True, related_name="visible_basepages")
+    is_public = BooleanField()
+
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
+    ]
+
+
+class InformationPage(BasePage):
     body = MarkdownField()
-    visible_for = ParentalManyToManyField(Group, related_name="visible_informationpages")
     author_visible = BooleanField()
 
     content_panels = Page.content_panels + [
         MarkdownPanel("body", classname="full"),
-    ]
-    settings_panels = [
-        PublishingPanel(),
-        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
-        FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -37,22 +42,34 @@ class InformationPage(Page):
         "InformationPage",
         "RootPage",
     ]
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
+    ]
+
+    @property
+    def last_edited_by(self):
+        return self.get_latest_revision().user
+
+    settings_panels = [
+        PublishingPanel(),
+        FieldPanel("is_public", widget=forms.CheckboxInput),
+        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
+    ]
 
     @property
     def last_edited_by(self):
         return self.get_latest_revision().user
 
 
-class MinutesList(Page):
+class MinutesList(BasePage):
     group = ForeignKey(Group, on_delete=models.PROTECT)
-    visible_for = ParentalManyToManyField(Group, related_name="visible_minuteslist")
 
     content_panels = Page.content_panels + [
         FieldPanel("group", widget=forms.Select),
-    ]
-    settings_panels = [
-        PublishingPanel(),
-        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -125,14 +142,13 @@ class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
     ]
 
 
-class Minutes(Page):
+class Minutes(BasePage):
     group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
     date = DateField()
     moderator = ForeignKey(User, on_delete=models.PROTECT, related_name="moderator")
     author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
-    visible_for = ParentalManyToManyField(Group, related_name="visible_minutes")
     text = MarkdownField()
 
     content_panels = Page.content_panels + [
@@ -143,10 +159,6 @@ class Minutes(Page):
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
         MarkdownPanel("text", classname="full"),
-    ]
-    settings_panels = [
-        PublishingPanel(),
-        FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
@@ -160,7 +172,7 @@ class RootPage(InformationPage):
     parent_page_types = ["wagtailcore.Page"]
 
 
-class FirstLevelMenuItem(Page):
+class FirstLevelMenuItem(BasePage):
     parent_page_types = ["RootPage"]
     subpage_types = ["SecondLevelMenuItem", "InformationPage", "MinutesList"]
     show_in_menus_default = True

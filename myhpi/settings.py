@@ -11,6 +11,7 @@ environ.Env.read_env(env_file=os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
+DJANGO_DEBUG = env.bool("DJANGO_DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 SITE_URL = env.str("SITE_URL")
 if SITE_URL.endswith("/"):
@@ -30,7 +31,6 @@ if not DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
-    "compressor",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     "myhpi.polls",
     "myhpi.search",
     "myhpi.wagtail_markdown",
+    "debug_toolbar",
+    "static_precompiler",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -97,6 +99,9 @@ MIDDLEWARE = [
     "myhpi.core.middleware.IPRangeUserMiddleware",
     "mozilla_django_oidc.middleware.SessionRefresh",
 ]
+
+if DJANGO_DEBUG:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "myhpi.urls"
 
@@ -166,9 +171,16 @@ USE_L10N = True
 USE_TZ = True
 
 # SCSS Precompiler
-# To learn more see: https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
+# To learn more see: https://django-static-precompiler.readthedocs.io/en/stable/index.html
 
-COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+STATIC_PRECOMPILER_COMPILERS = (
+    (
+        "static_precompiler.compilers.libsass.SCSS",
+        {
+            "precision": 8,
+        },
+    ),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -176,7 +188,7 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
+    "static_precompiler.finders.StaticPrecompilerFinder",
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
@@ -211,3 +223,4 @@ MESSAGE_TAGS = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+INTERNAL_IPS = env.str("INTERNAL_IPS")
