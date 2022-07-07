@@ -182,21 +182,6 @@ class Minutes(BasePage):
 
     base_form_class = MinutesForm
 
-    @property
-    def next_minutes(self):
-        siblings = self.get_next_siblings().live()
-        # TODO: When #57 is merged, iterate through pages and check if user can view them
-        if siblings:
-            return siblings[0]
-        return None
-
-    @property
-    def previous_minutes(self):
-        siblings = self.get_prev_siblings().live()
-        if siblings:
-            return siblings[0]
-        return None
-
 
 class RootPage(InformationPage):
     template = "core/information_page.html"

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load wagtailmarkdown %}
+{% load minutes_tags %}
 
 {% block content %}
     <div class="row minutes-container">
@@ -30,18 +31,16 @@
         <div id="minutes-footer" class="d-none d-print-block"></div>
             <div id="minutes-navigation" class="row d-print-none">
                 <div class="col-6">
-                    {%  with page.previous_minutes as prev %}
-                        {% if prev %}
-                            <a href="{{ prev.url }}">< Previous minutes</a>
-                        {%  endif %}
-                    {% endwith %}
+                    {%  prev_minutes page as prev %}
+                    {% if prev %}
+                        <a href="{{ prev.url }}">< Previous minutes</a>
+                    {%  endif %}
                 </div>
                 <div class="col-6">
-                    {%  with page.next_minutes as next %}
-                        {% if next %}
-                            <a href="{{ next.url }}">Next minutes ></a>
-                        {%  endif %}
-                    {% endwith %}
+                    {%  next_minutes page as next %}
+                    {% if next %}
+                        <a href="{{ next.url }}">Next minutes ></a>
+                    {%  endif %}
                 </div>
         {% endwith %}
     </div>
