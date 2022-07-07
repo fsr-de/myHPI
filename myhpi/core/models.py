@@ -4,7 +4,7 @@ from datetime import date
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
-from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
+from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
 from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -27,6 +27,15 @@ class BasePage(Page):
         FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
+
+
+def get_user_groups(user):
+    if getattr(user, "_ip_range_group_name", False):
+        # join user groups together with the groups they have based on their IP address
+        return Group.objects.filter(Q(name=user._ip_range_group_name) | Q(id__in=user.groups.all()))
+    else:
+        # use the users groups only
+        return user.groups.all()
 
 
 class InformationPage(BasePage):
@@ -79,12 +88,20 @@ class MinutesList(BasePage):
     ]
     subpage_types = ["Minutes"]
 
+    def get_visible_minutes(self, request):
+        minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
+        user_groups = get_user_groups(request.user)
+        minutes_list = (
+            Minutes.objects.filter(id__in=minutes_ids, group=self.group)
+            .filter(Q(visible_for__in=user_groups) | Q(is_public=True))
+            .order_by("date")
+            .reverse()
+        )
+        return minutes_list
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
-        minutes_list = (
-            Minutes.objects.filter(id__in=minutes_ids, group=self.group).order_by("date").reverse()
-        )
+        minutes_list = self.get_visible_minutes(request)
         context.setdefault("minutes_list", minutes_list)
         minutes_by_years = defaultdict(lambda: [])
         for minute in minutes_list:

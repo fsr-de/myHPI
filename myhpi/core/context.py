@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from django.db.models import Q
 from wagtail.core.models import Site
 
-from .models import BasePage
+from .models import BasePage, get_user_groups
 
 
 def base_context(request):
@@ -23,16 +23,9 @@ def base_context(request):
     path_map[root_page.path] = root_page
 
     # Determine all pages the user may view based on his groups
-    usergroups = {}
-    if getattr(request.user, "_ip_range_group_name", False):
-        # join user groups together with the groups they have based on their IP address
-        usergroups = Group.objects.filter(
-            Q(name=request.user._ip_range_group_name) | Q(id__in=request.user.groups.all())
-        )
-    else:
-        # use the users groups only
-        usergroups = request.user.groups.all()
-    pages_visible_for_user = pages.filter(visible_for__in=usergroups)
+    user_groups = get_user_groups(request.user)
+
+    pages_visible_for_user = pages.filter(visible_for__in=user_groups)
 
     # Add additional properties to each page and save in path_map
     # The path of each page is represented by a string, each level labeled with 4 chars
@@ -44,7 +37,8 @@ def base_context(request):
 
     # Iterate over all depth levels of the tree, going from leaves to root
     # Mark any parent nodes as non-leaves
-    # If page is allowed to be viewed and (it has viewable children or is a leaf), add it to the parent's viewable children
+    # If page is allowed to be viewed and (it has viewable children or is a leaf),
+    # add it to the parent's viewable children
     while depth_levels:
         deepest_level = max(depth_levels)
         for path, page in path_map.items():
