@@ -2,7 +2,8 @@ from django.contrib.auth.models import Group
 from django.db.models import Q
 from wagtail.core.models import Site
 
-from .models import BasePage, get_user_groups
+from .models import BasePage
+from .utils import get_user_groups
 
 
 def base_context(request):
