@@ -4,7 +4,7 @@ from datetime import date
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
-from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
+from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
 from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -84,10 +84,9 @@ class MinutesList(BasePage):
         minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
         user_groups = get_user_groups(request.user)
         minutes_list = (
-            Minutes.objects.filter(id__in=minutes_ids, group=self.group)
+            Minutes.objects.filter(id__in=minutes_ids)
             .filter(Q(visible_for__in=user_groups) | Q(is_public=True))
-            .order_by("date")
-            .reverse()
+            .order_by("-date")
         )
         return minutes_list
 
@@ -152,7 +151,6 @@ class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
 
 
 class Minutes(BasePage):
-    group = ForeignKey(Group, on_delete=models.PROTECT, null=True)
     date = DateField()
     moderator = ForeignKey(User, on_delete=models.PROTECT, related_name="moderator")
     author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
@@ -161,7 +159,6 @@ class Minutes(BasePage):
     text = MarkdownField()
 
     content_panels = Page.content_panels + [
-        FieldPanel("group"),
         FieldPanel("date"),
         FieldPanel("moderator"),
         FieldPanel("author"),
