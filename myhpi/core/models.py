@@ -4,7 +4,7 @@ from datetime import date
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
-from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
+from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model
 from django.http import HttpResponseRedirect
 from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -14,6 +14,7 @@ from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 
+from myhpi.core.utils import get_user_groups
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
 from myhpi.wagtail_markdown.fields import MarkdownField
 
@@ -27,15 +28,6 @@ class BasePage(Page):
         FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
-
-
-def get_user_groups(user):
-    if getattr(user, "_ip_range_group_name", False):
-        # join user groups together with the groups they have based on their IP address
-        return Group.objects.filter(Q(name=user._ip_range_group_name) | Q(id__in=user.groups.all()))
-    else:
-        # use the users groups only
-        return user.groups.all()
 
 
 class InformationPage(BasePage):
