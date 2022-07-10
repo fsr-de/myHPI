@@ -15,11 +15,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if minute.labels.all %}
-                        {% for label in minute.labels.all %}
-                            <span class="badge label-badge">{{ label }}</span>
-                        {% endfor %}
-                    {% endif %}
+                    {% include "core/label.html" with minutes=minute %}
                 </td>
                 <td><a href="{% pageurl minute %}">{{ minute.title }}</a></td>
             </tr>
