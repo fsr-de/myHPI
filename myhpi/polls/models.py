@@ -9,11 +9,12 @@ from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.core.models import Orderable, Page
 
+from myhpi.core.models import BasePage
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
 from myhpi.wagtail_markdown.fields import MarkdownField
 
 
-class PollList(Page):
+class PollList(BasePage):
     parent_page_types = [
         "core.RootPage",
     ]
@@ -26,7 +27,7 @@ class PollList(Page):
         return context
 
 
-class Poll(Page):
+class Poll(BasePage):
     question = models.CharField(max_length=254)
     description = MarkdownField()
     start_date = models.DateField()
