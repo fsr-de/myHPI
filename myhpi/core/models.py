@@ -22,6 +22,7 @@ from myhpi.wagtail_markdown.fields import MarkdownField
 class BasePage(Page):
     visible_for = ParentalManyToManyField(Group, blank=True, related_name="visible_basepages")
     is_public = BooleanField()
+    is_creatable = False
 
     settings_panels = [
         PublishingPanel(),
