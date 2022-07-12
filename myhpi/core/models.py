@@ -88,6 +88,7 @@ class MinutesList(BasePage):
             Minutes.objects.filter(id__in=minutes_ids)
             .filter(Q(visible_for__in=user_groups) | Q(is_public=True))
             .order_by("-date")
+            .distinct()
         )
         return minutes_list
 

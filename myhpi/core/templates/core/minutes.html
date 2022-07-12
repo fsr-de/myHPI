@@ -25,6 +25,15 @@
                     <li>{{ participant.get_full_name }}</li>
                 {% endfor %}
             </ul>
+
+            <h4>Labels</h4>
+                {%  if page.labels.all %}
+                    <p>
+                    {% include "core/label.html" with minutes=page %}
+                    </p>
+                    {% else %}
+                    <i>No labels</i>
+                {% endif %}
             <h4 class="d-print-none">Table of contents</h4>
             {{ parsed_md.1 }}
         </div>
