@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load bootstrap4 %}
 {% load tenca_extras %}
 
 {% block title %}
@@ -13,12 +12,24 @@
 
 {% block content %}
 	<h4>{% trans "Create new list" %}</h4>
-	<form method="post">
-		{% csrf_token %}
-		{% bootstrap_field form.list_name show_label=False addon_after=domain_addon %}
-		{% buttons %}
-			<button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
-		{% endbuttons %}
+    <form method="post">
+        {% csrf_token %}
+		<div class="form-group">
+            <label class="sr-only" for="id_list_name">
+                List name
+            </label>
+            <div class="input-group">
+                <input type="text" name="list_name" class="form-control" placeholder="List name" title="" required="" id="id_list_name">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        @lists.myhpi.de
+                    </span>
+                </div>
+            </div>
+        </div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary">Create</button>
+		</div>
 	</form>
 
 	{% if memberships %}

@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load bootstrap4 %}
 
 {% block title %}
 	{% trans "Manage subscription" %}
@@ -17,11 +16,19 @@
 	{% blocktrans %}
 		Enter the e-mail address you want to un-/subscribe from/to {{ list_name }}
 	{% endblocktrans %}
-	<form method="post">
-		{% csrf_token %}
-		{% bootstrap_form form layout="horizontal" %}
-		{% buttons %}
+
+    <form method="post">
+        {% csrf_token %}
+		<div class="form-group row">
+            <label class="col-md-3 col-form-label" for="id_email">
+                Email
+            </label>
+            <div class="col-md-9">
+                <input type="email" name="email" value="{{ form.email }}" class="form-control" placeholder="Email" title="" required="" id="id_email">
+            </div>
+        </div>
+		<div class="form-group">
 			<button type="submit" class="btn btn-primary">{% trans 'Un-/Subscribe' %}</button>
-		{% endbuttons %}
+		</div>
 	</form>
 {% endblock %}

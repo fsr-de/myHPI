@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views import View
-from django.views.generic import FormView, RedirectView, TemplateView
+from django.views.generic import FormView, TemplateView
 
 # from _1327.main.utils import alternative_emails
 from myhpi.tenca_django.connection import connection
@@ -20,7 +20,6 @@ from myhpi.tenca_django.forms import (
     TencaSubscriptionForm,
 )
 from myhpi.tenca_django.mixins import TencaListAdminMixin, TencaSingleListMixin
-from myhpi.tenca_django.models import LegacyAdminURL
 
 
 class TencaDashboard(LoginRequiredMixin, FormView):
