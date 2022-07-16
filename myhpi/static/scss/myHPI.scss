@@ -140,3 +140,19 @@ $colors: map-merge($colors, $custom-colors);
         }
     }
 }
+
+.userGroupItem {
+    list-style: none;
+}
+
+#userGroupsHeader {
+    font-style: italic;
+    &:hover {
+        color: $dropdown-link-color;
+        background-color: transparent; // For `<button>`s
+    }
+}
+
+#userMenu {
+    padding-right: 0;
+}

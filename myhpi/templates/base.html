@@ -34,19 +34,45 @@
 
 <body class="bg-background myhpi-accent-yellow {% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
-
-    <!-- TODO: Implement design and proper arrangement for these items.-->
-    <nav class="navbar-myhpi container-lg page d-print-none container flex-row">
-        <div class="p-2 mr-auto">
-            <div class="navbar-top bg-white">
+    <nav class="navbar-myhpi container-lg d-print-none page">
+        <div class="bg-white">
+            <div class="navbar-top d-flex flex-between page-content">
                 {% with all_pages|all_sub_menu_pages_by_id as sub_pages_by_level_and_id %}
-                <div class="page-content d-flex">
+                <div class="d-flex flex-between">
                     <a class="nav-brand" href="{% pageurl root_page %}">
                         <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="Zur Startseite">
                     </a>
                     {% build_menu_level sub_pages_by_level_and_id 0 %}
                 </div>
+                <div class="align-self-center ms-auto">
+                    {% if user.is_anonymous %}
+                        <a href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
+                    {% else %}
+                    <div class="dropdown">
+                        <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="userMenu">
+                            {{ user.get_full_name }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li class="dropdown-item" id="userGroupsHeader">Deine Gruppen</li>
+                            <ul>
+                                {% for group in user.groups.all %}
+                                <li class="userGroupItem">
+                                    {{ group }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <li>
+                                <a class="dropdown-item" href="/" id="navbarLogoutLink">Logout</a> 
+                                <form action="{% url 'oidc_logout' %}" method="post" id="logoutForm" hidden>
+                                    {% csrf_token %}
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
+        </div>
             <div class="navbar-bottom">
                 <div class="navbar-bottom-content page-content d-flex">
                     {% build_menu_level sub_pages_by_level_and_id 1 %}
@@ -55,36 +81,6 @@
                 <div class="navbar-bottom-line"></div>
             </div>
             {% endwith %}
-        </div>
-        <div class="collapse navbar-collapse d-flex" id="navbarNav">
-            <ul class="navbar-nav my-2 my-sm-0">
-                {% if user.is_anonymous %}
-                    <li class="nav-item">
-                        <a href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarUserDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Logged in as <strong>{{ user.get_full_name }}</strong>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarUserDropdown">
-                            <em class="dropdown-item">Groups ({{user.groups.all.count}}):</em>
-                            {% for group in user.groups.all %}
-                                <div class="dropdown-item">
-                                {{ group }}
-                                </div>
-                            {% endfor %}
-                            <hr/>
-                            <a class="dropdown-item" href="/" id="navbarLogoutLink">Logout</a> 
-                            <form action="{% url 'oidc_logout' %}" method="post" id="logoutForm" hidden>
-                                {% csrf_token %}
-                            </form>
-                        </div>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
     </nav>
 
     <div class="container-lg page bg-white">
