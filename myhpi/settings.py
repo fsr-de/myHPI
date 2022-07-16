@@ -1,5 +1,7 @@
 import os
+import sys
 
+import tenca
 from django.contrib.messages import constants
 from environ import environ
 
@@ -80,7 +82,6 @@ OIDC_OP_AUTHORIZATION_ENDPOINT = "https://oidc.hpi.de/auth"
 OIDC_OP_TOKEN_ENDPOINT = "https://oidc.hpi.de/token"
 OIDC_OP_USER_ENDPOINT = "https://oidc.hpi.de/me"
 OIDC_OP_JWKS_ENDPOINT = "https://oidc.hpi.de/certs"
-
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
@@ -224,3 +225,26 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INTERNAL_IPS = env.str("INTERNAL_IPS")
+
+ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS", False)
+
+# The mailing lists library (Tenca) has a django-like settings module.
+# This code will read in all correctly prefixed settings from the
+# current module, e.g. `TENCA_API_USER` -> `tenca.settings.API_USER`
+if ENABLE_MAILING_LISTS:
+    import tenca.settings
+
+    TENCA_API_HOST = env.str("TENCA_API_HOST")
+    TENCA_API_PORT = env.int("TENCA_API_PORT")
+    TENCA_API_SCHEME = env.str("TENCA_API_SCHEME")
+    TENCA_ADMIN_USER = env.str("TENCA_ADMIN_USER")
+    TENCA_ADMIN_PASS = env.str("TENCA_ADMIN_PASS")
+    TENCA_LIST_HASH_ID_SALT = env.str("TENCA_LIST_HASH_ID_SALT")
+    TENCA_WEB_UI_HOSTNAME = env.url("TENCA_WEB_UI_HOSTNAME")
+    TENCA_DISABLE_GOODBYE_MESSAGES = env.bool("TENCA_DISABLE_GOODBYE_MESSAGES")
+    TENCA_HASH_STORAGE_CLASS = env.str("TENCA_HASH_STORAGE_CLASS")
+
+    tenca.settings.load_from_module(sys.modules[__name__])
+
+    INSTALLED_APPS += ["myhpi.tenca_django"]
+    MIDDLEWARE += ["myhpi.tenca_django.middleware.TencaNoConnectionMiddleware"]
