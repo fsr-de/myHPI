@@ -8,10 +8,7 @@
 {% block content %}
     <h1>Search</h1>
 
-    <form action="{% url 'search' %}" method="get">
-        <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-        <input type="submit" value="Search" class="button">
-    </form>
+    {% include "search/search_field.html" %}
 
     {% if search_results %}
         <ul>
