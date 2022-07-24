@@ -13,6 +13,7 @@ from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
+from wagtail.search import index
 
 from myhpi.core.utils import get_user_groups
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
@@ -49,6 +50,9 @@ class InformationPage(BasePage):
         FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
         FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
+    ]
+    search_fields = BasePage.search_fields + [
+        index.SearchField('body'),
     ]
 
     @property
@@ -159,6 +163,11 @@ class Minutes(BasePage):
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
+    search_fields = BasePage.search_fields + [
+        index.SearchField('text'),
+        index.SearchField('participants'),
+        index.SearchField('moderator'),
+    ]
 
     base_form_class = MinutesForm
 
