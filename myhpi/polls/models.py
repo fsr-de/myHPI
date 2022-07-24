@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.core.models import Orderable, Page
+from wagtail.search import index
 
 from myhpi.core.models import BasePage
 from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
@@ -50,6 +51,10 @@ class Poll(BasePage):
         "PollList",
     ]
     subpage_types = []
+    search_fields = BasePage.search_fields + [
+        index.SearchField('description'),
+        index.SearchField('question'),
+    ]
 
     def can_vote(self, user):
         return self.end_date > datetime.date.today() and user not in self.participants.all()
