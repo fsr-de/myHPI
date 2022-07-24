@@ -52,8 +52,8 @@ class Poll(BasePage):
     ]
     subpage_types = []
     search_fields = BasePage.search_fields + [
-        index.SearchField('description'),
-        index.SearchField('question'),
+        index.SearchField("description"),
+        index.SearchField("question"),
     ]
 
     def can_vote(self, user):

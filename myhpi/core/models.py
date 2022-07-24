@@ -30,6 +30,11 @@ class BasePage(Page):
         FieldPanel("is_public", widget=forms.CheckboxInput),
         FieldPanel("visible_for", widget=forms.CheckboxSelectMultiple),
     ]
+    # FilterFields required for restricting search results
+    search_fields = Page.search_fields + [
+        index.FilterField("group_id"),
+        index.FilterField("is_public"),
+    ]
 
 
 class InformationPage(BasePage):
@@ -52,7 +57,7 @@ class InformationPage(BasePage):
         FieldPanel("author_visible", widget=forms.CheckboxInput(attrs={"checked": ""})),
     ]
     search_fields = BasePage.search_fields + [
-        index.SearchField('body'),
+        index.SearchField("body"),
     ]
 
     @property
@@ -164,9 +169,9 @@ class Minutes(BasePage):
     parent_page_types = ["MinutesList"]
     subpage_types = []
     search_fields = BasePage.search_fields + [
-        index.SearchField('text'),
-        index.SearchField('participants'),
-        index.SearchField('moderator'),
+        index.SearchField("text"),
+        index.SearchField("participants"),
+        index.SearchField("moderator"),
     ]
 
     base_form_class = MinutesForm
