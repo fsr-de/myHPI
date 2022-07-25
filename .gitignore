@@ -140,3 +140,5 @@ cython_debug/
 
 # Database files
 *.sqlite3
+
+bootstrap/
