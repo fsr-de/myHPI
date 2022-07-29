@@ -22,4 +22,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/fsr-de/myHPI:latest
+          tags: ghcr.io/fsr-de/myhpi:latest
