@@ -1,0 +1,23 @@
+name: build-container
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'docker'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: https://ghcr.io/fsr-de/myHPI:latest
