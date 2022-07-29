@@ -67,10 +67,6 @@ a {
     background-color: var(--bs-body-bg-light);
 }
 
-.navbar-bottom-content .nav-item-container {
-    margin-bottom: 3px;
-}
-
 .navbar-bottom-line {
     position: absolute;
     width: 100%;
@@ -203,6 +199,10 @@ nav .nav-link[aria-expanded=true] {
 h1.toc-title::after {
     margin: 0;
     height: 0px;
+}
+
+.label-badge {
+    background-color: var(--bs-secondary);
 }
 
 @media print {

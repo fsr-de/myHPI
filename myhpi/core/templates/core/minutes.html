@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load wagtailmarkdown %}
+{% load minutes_tags %}
 
 {% block content %}
     <div class="row minutes-container">
@@ -24,10 +25,32 @@
                     <li>{{ participant.get_full_name }}</li>
                 {% endfor %}
             </ul>
+
+            <h4>Labels</h4>
+                {%  if page.labels.all %}
+                    <p>
+                    {% include "core/label.html" with minutes=page %}
+                    </p>
+                    {% else %}
+                    <i>No labels</i>
+                {% endif %}
             <h4 class="d-print-none">Table of contents</h4>
             {{ parsed_md.1 }}
         </div>
         <div id="minutes-footer" class="d-none d-print-block"></div>
+            <div id="minutes-navigation" class="row d-print-none">
+                <div class="col-6">
+                    {%  prev_minutes page as prev %}
+                    {% if prev %}
+                        <a href="{{ prev.url }}">< Previous minutes</a>
+                    {%  endif %}
+                </div>
+                <div class="col-6">
+                    {%  next_minutes page as next %}
+                    {% if next %}
+                        <a href="{{ next.url }}">Next minutes ></a>
+                    {%  endif %}
+                </div>
         {% endwith %}
     </div>
 {% endblock %}
