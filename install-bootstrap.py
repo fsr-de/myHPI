@@ -43,13 +43,19 @@ def extract_zip(file_path):
 def move_files():
     source_dir = os.path.join(TEMP_DIRECTORY, "bootstrap-main", "scss")
     target_dir = os.path.join("myhpi", "static", "scss")
-    logger.info("Moving directory")
+    logger.info("Moving scss directory")
     shutil.move(source_dir, target_dir)
-    logger.info("Renaming directory")
+    logger.info("Renaming scss directory")
     os.rename(
         os.path.join("myhpi", "static", "scss", "scss"),
         os.path.join("myhpi", "static", "scss", "bootstrap"),
     )
+
+    logger.info("Moving js files")
+    min_js_path = os.path.join(TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js")
+    min_js_map_path = os.path.join(TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js.map")
+    shutil.move(min_js_path, os.path.join("myhpi", "static", "js"))
+    shutil.move(min_js_map_path, os.path.join("myhpi", "static", "js"))
 
 
 def remove_temporary_directory():
@@ -67,6 +73,7 @@ def install_bootstrap():
         Ensure that it is run in the top directory of the repository."
         )
         exit(1)
+
     file_path = download_zip()
     extract_zip(file_path)
     move_files()
