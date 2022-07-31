@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import shutil
@@ -52,8 +53,12 @@ def move_files():
     )
 
     logger.info("Moving js files")
-    min_js_path = os.path.join(TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js")
-    min_js_map_path = os.path.join(TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js.map")
+    min_js_path = os.path.join(
+        TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js"
+    )
+    min_js_map_path = os.path.join(
+        TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js.map"
+    )
     shutil.move(min_js_path, os.path.join("myhpi", "static", "js"))
     shutil.move(min_js_map_path, os.path.join("myhpi", "static", "js"))
 
@@ -63,9 +68,40 @@ def remove_temporary_directory():
     shutil.rmtree(TEMP_DIRECTORY)
 
 
+def remove_current_bootstrap():
+    logger.info("Removing current bootstrap installation")
+    bootstrap_scss_directory = os.path.join("myhpi", "static", "scss", "bootstrap")
+    if os.path.exists(bootstrap_scss_directory):
+        shutil.rmtree(bootstrap_scss_directory)
+    bootstrap_min_js_path = os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js")
+    if os.path.exists(bootstrap_min_js_path):
+        os.remove(bootstrap_min_js_path)
+    bootstrap_min_js_map_path = os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js.map")
+    if os.path.exists(bootstrap_min_js_map_path):
+        os.remove(bootstrap_min_js_map_path)
+
+
+def init_argparse() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [-u]", description="Install bootstrap for myHPI."
+    )
+    parser.add_argument(
+        "-u",
+        "--update",
+        action="store_true",
+        help="Update (Remove and reinstall) current bootstrap installation.",
+    )
+    parser.add_argument(
+        "-r", "--remove", action="store_true", help="Remove current bootstrap installation."
+    )
+    return parser
+
+
 def install_bootstrap():
     logger.setLevel(level=logging.INFO)
     logger.addHandler(logging.StreamHandler())
+    parser = init_argparse()
+    args = parser.parse_args()
     correct_dir = ensure_correct_directory()
     if not correct_dir:
         logger.error(
@@ -73,7 +109,10 @@ def install_bootstrap():
         Ensure that it is run in the top directory of the repository."
         )
         exit(1)
-
+    if args.update or args.remove:
+        remove_current_bootstrap()
+        if args.remove:
+            exit(0)
     file_path = download_zip()
     extract_zip(file_path)
     move_files()
