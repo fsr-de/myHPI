@@ -21,3 +21,14 @@ function addCollapseToLevel2NavContainers() {
         })
     })
 }
+
+
+// POST Request to handle logging out
+window.addEventListener("load",function() {
+    if (document.getElementById("navbarLogoutLink") !== null) {
+      document.getElementById("navbarLogoutLink").addEventListener("click",function(e) {
+        e.preventDefault();
+        document.getElementById("logoutForm").submit();
+      });
+    }
+  });

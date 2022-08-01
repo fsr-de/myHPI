@@ -1,5 +1,3 @@
-from django.contrib.auth.models import Group
-from django.db.models import Q
 from wagtail.core.models import Site
 
 from .models import BasePage
