@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     "myhpi.polls",
     "myhpi.search",
     "myhpi.wagtail_markdown",
-    "debug_toolbar",
     "static_precompiler",
 ]
 
@@ -101,6 +100,7 @@ MIDDLEWARE = [
 ]
 
 if DJANGO_DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "myhpi.urls"
