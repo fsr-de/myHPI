@@ -101,6 +101,7 @@ MIDDLEWARE = [
 ]
 
 if DJANGO_DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "myhpi.urls"
