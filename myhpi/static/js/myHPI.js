@@ -2,6 +2,8 @@ window.onload = () => {
     addCollapseToLevel2NavContainers()
 }
 
+window.onscroll = toggleElementVisibilityOnScroll;
+
 /**
  * Makes second level menu items collapse when a root level menu item is toggled.
  * 
@@ -20,4 +22,17 @@ function addCollapseToLevel2NavContainers() {
             levelTwoItemContainers.forEach(itemContainer => bootstrap.Collapse.getOrCreateInstance(itemContainer, { toggle: false, parent: '.nav-level-2' }).hide())
         })
     })
+}
+
+let previousScrollPosition = window.scrollY;
+
+function toggleElementVisibilityOnScroll() {
+    let currentScrollPosition = window.scrollY;
+    let elements = document.querySelectorAll('.sm-hide-on-scroll');
+    if (previousScrollPosition < currentScrollPosition) {
+        elements.forEach(el => el.classList.add('hide-now'));
+    } else {
+        elements.forEach(el => el.classList.remove('hide-now'));
+    }
+    previousScrollPosition = currentScrollPosition;
 }
