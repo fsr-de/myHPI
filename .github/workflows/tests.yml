@@ -25,7 +25,8 @@ jobs:
         restore-keys: |
           myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-
     - name: Install dependencies
-      run: poetry install
+      run: |
+        poetry install
     - name: check format with black
       run: |
         poetry run black --version
@@ -79,6 +80,7 @@ jobs:
         sudo apt-get install gettext
         source env/bin/activate
         poetry install -E mysql -E pgsql
+        python install-bootstrap.py
     - name: Prepare files for test run
       continue-on-error: true
       run: |
@@ -111,12 +113,19 @@ jobs:
         poetry add mysqlclient
       if: matrix.database == 'mysql'
 
+    - name: Migrate db
+      run: |
+        source env/bin/activate
+      # python manage.py migrate --run-syncdb
+
     - name: Test apps
       env:
         DATABASE_URL: ${{ matrix.database_url }}
       run: |
         source env/bin/activate
-        poetry run coverage run --source=myhpi -m pytest tests/
+        tree
+        python manage.py test  -v 3 tests
+    #    poetry run coverage run --source=myhpi -m pytest tests/
     #- name: Coveralls
     #  env:
     #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
