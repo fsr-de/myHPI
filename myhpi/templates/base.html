@@ -35,13 +35,15 @@
 <body class="bg-background myhpi-accent-yellow {% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav class="navbar-myhpi container-lg page d-print-none">
+    <nav class="navbar-myhpi container-lg page d-print-none sm-hide-on-scroll">
         <div class="navbar-top bg-white">
             {% with all_pages|all_sub_menu_pages_by_id as sub_pages_by_level_and_id %}
             <div class="page-content d-flex">
-                <a class="nav-brand" href="{% pageurl root_page %}">
-                    <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="Zur Startseite">
-                </a>
+                <div>
+                    <a class="nav-brand" href="{% pageurl root_page %}">
+                        <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="Zur Startseite">
+                    </a>
+                </div>
                 {% build_menu_level sub_pages_by_level_and_id 0 %}
             </div>
         </div>
@@ -70,7 +72,7 @@
 
             {% if self.get_ancestors|length > 1 %}
             <nav aria-label="breadcrumb"
-                 class="d-print-none"
+                class="d-print-none"
                 style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,{% filter urlencode|slice:" 43:" %}{% bs_icon 'chevron-right' size="8" %}{% endfilter %} &#34;);">
                 <ol class="breadcrumb">
                     {% for ancestor_page in self.get_ancestors %}

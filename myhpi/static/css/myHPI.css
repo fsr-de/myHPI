@@ -2,12 +2,17 @@
 Notice the myHPI.scss in static/scss/myHPI.scss
 **/
 
-body {
-    padding-top: 1rem;
-}
-
 a {
     text-decoration: none;
+}
+
+p {
+    text-align: justify;
+}
+
+.page-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .container-lg.page {
@@ -18,13 +23,8 @@ a {
     margin: auto;
 }
 
-.page-content {
-    width: 1000px;
-    margin: auto;
-}
-
 .navbar-myhpi {
-    position: sticky;
+    position: fixed;
     z-index: 999;
     top: 0;
     display: flex;
@@ -35,8 +35,6 @@ a {
     display: inline-block;
     content: '';
     height: 0.5rem;
-    border-top-left-radius: var(--myhpi-round-border);
-    border-top-right-radius: var(--myhpi-round-border);
 }
 
 .myhpi-accent-yellow .navbar-myhpi::before,

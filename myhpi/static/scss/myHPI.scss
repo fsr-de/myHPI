@@ -67,24 +67,6 @@ $colors: map-merge($colors, $custom-colors);
     --myhpi-round-border: 2px;
 }
 
-.nav-item-container-root {
-    .nav-link {
-        margin-bottom: -3px;
-    }
-
-    .nav-link::after {
-        height: 3px;
-        width: 100%;
-        transform: scaleX(0);
-    }
-
-    .nav-link:hover:after,
-    .nav-link:focus-visible:after,
-    .nav-link[aria-expanded=true]:after {
-        transform: scaleX(1);
-    }
-}
-
 .nav-item-container:not(.nav-item-container-root) {
     padding-right: var(--bs-p-2);
     row-gap: 1px;
