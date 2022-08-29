@@ -6,7 +6,7 @@ import modelcluster.fields
 from django.conf import settings
 from django.db import migrations, models
 
-import myhpi.wagtail_markdown.fields
+import myhpi.core.markdown.fields
 
 
 class Migration(migrations.Migration):
@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                         to="core.basepage",
                     ),
                 ),
-                ("body", myhpi.wagtail_markdown.fields.MarkdownField()),
+                ("body", myhpi.core.markdown.fields.MarkdownField()),
             ],
             options={
                 "abstract": False,
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("date", models.DateField()),
-                ("text", myhpi.wagtail_markdown.fields.MarkdownField()),
+                ("text", myhpi.core.markdown.fields.MarkdownField()),
                 (
                     "author",
                     models.ForeignKey(

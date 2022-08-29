@@ -15,14 +15,11 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 from wagtail.search import index
 
+from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
-from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
-from myhpi.wagtail_markdown.fields import MarkdownField
-from myhpi.wagtail_markdown.fields import CustomMarkdownField
 
 
 class BasePage(Page):
-    body = CustomMarkdownField()
     visible_for = ParentalManyToManyField(Group, blank=True, related_name="visible_basepages")
     is_public = BooleanField()
     is_creatable = False
@@ -40,7 +37,7 @@ class BasePage(Page):
 
 
 class InformationPage(BasePage):
-    body = MarkdownField()
+    body = CustomMarkdownField()
     author_visible = BooleanField()
 
     content_panels = Page.content_panels + [

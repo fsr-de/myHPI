@@ -10,7 +10,7 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.core.models import Orderable, Page
 from wagtail.search import index
 
-from myhpi.wagtail_markdown.fields import CustomMarkdownField
+from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.models import BasePage
 
 
