@@ -8,6 +8,7 @@ import requests
 
 TEMP_DIRECTORY = "tmp"
 ZIP_FILENAME = "bootstrap.zip"
+VERSION = "5.0.2"
 logger = logging.getLogger("myhpi_install_bootstrap")
 
 
@@ -17,7 +18,7 @@ def ensure_correct_directory():
 
 
 def download_zip():
-    bootstrap_zip_url = "https://github.com/twbs/bootstrap/archive/refs/heads/main.zip"
+    bootstrap_zip_url = f"https://github.com/twbs/bootstrap/archive/refs/tags/v{VERSION}.zip"
     r = requests.get(bootstrap_zip_url, allow_redirects=True)
     try:
         os.mkdir(TEMP_DIRECTORY)
@@ -42,7 +43,7 @@ def extract_zip(file_path):
 
 
 def move_files():
-    source_dir = os.path.join(TEMP_DIRECTORY, "bootstrap-main", "scss")
+    source_dir = os.path.join(TEMP_DIRECTORY, f"bootstrap-{VERSION}", "scss")
     target_dir = os.path.join("myhpi", "static", "scss")
     logger.info("Moving scss directory")
     shutil.move(source_dir, target_dir)
@@ -54,10 +55,10 @@ def move_files():
 
     logger.info("Moving js files")
     min_js_path = os.path.join(
-        TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js"
+        TEMP_DIRECTORY, f"bootstrap-{VERSION}", "dist", "js", "bootstrap.bundle.min.js"
     )
     min_js_map_path = os.path.join(
-        TEMP_DIRECTORY, "bootstrap-main", "dist", "js", "bootstrap.bundle.min.js.map"
+        TEMP_DIRECTORY, f"bootstrap-{VERSION}", "dist", "js", "bootstrap.bundle.min.js.map"
     )
     shutil.move(min_js_path, os.path.join("myhpi", "static", "js"))
     shutil.move(min_js_map_path, os.path.join("myhpi", "static", "js"))
