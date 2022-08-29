@@ -67,10 +67,6 @@ a {
     background-color: var(--bs-body-bg-light);
 }
 
-.navbar-bottom-content .nav-item-container {
-    margin-bottom: 3px;
-}
-
 .navbar-bottom-line {
     position: absolute;
     width: 100%;

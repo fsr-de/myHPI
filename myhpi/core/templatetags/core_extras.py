@@ -17,7 +17,7 @@ def get(dict, key):
 
 @register.filter
 def sub_menu_pages(page):
-    return page.get_children().in_menu()
+    return page.menu_children
 
 
 @register.filter
@@ -25,7 +25,6 @@ def all_sub_menu_pages_by_id(pages):
     all_sub_pages_by_id = {}
     for page in pages:
         traverse_page_tree(page, [], all_sub_pages_by_id)
-    print(all_sub_pages_by_id)
     return all_sub_pages_by_id
 
 

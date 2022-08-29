@@ -111,11 +111,12 @@ $colors: map-merge($colors, $custom-colors);
     }
 
     .nav-item:last-child {
-        padding-bottom: var(--bs-p-2);
+        padding-bottom: calc(var(--bs-p-2) + 3px);
     }
 
     .nav-item.dropdown .nav-link {
         display: flex;
+        align-items: center;
     }
 
     .nav-item.dropdown {

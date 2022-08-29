@@ -2,7 +2,7 @@
 name = "myHPI"
 version = "0.1.0"
 description = ""
-authors = ["Julian B. <jeriox@users.noreply.github.com>"]
+authors = ["FSR DE <fachschaftsrat@hpi.de>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
@@ -11,21 +11,22 @@ wagtail = ">=2.16.2"
 django-environ = "^0.9.0"
 wagtail-localize = "^1.2"
 mozilla-django-oidc = "^2.0.0"
-django-compressor = "^4.0"
-django-libsass = "^0.9"
 django-bootstrap-icons = "^0.7.8"
 django-select2 = "^7.10.0"
+django-static-precompiler = {extras = ["libsass"], version = "^2.1"}
+django-debug-toolbar = "^3.5.0"
+django-permissionedforms = "^0.1"
 wagtail-markdown = "^0.9.0"
 html2text = "^2020.1.16"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.14.4"
+pylint = "^2.14.5"
 black = "^22.6"
 isort = "^5.8.0"
 autoflake = "^1.4"
-pre-commit = "^2.12.1"
+pre-commit = "^2.20.0"
 pytest = "^7.1.2"
-coverage = "^6.4.1"
+coverage = "^6.4.2"
 
 [tool.poetry.extras]
 pgsql = ["psycopg2"]
