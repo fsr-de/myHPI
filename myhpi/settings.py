@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
-    "debug_toolbar",
     "static_precompiler",
 ]
 
