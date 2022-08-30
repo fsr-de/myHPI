@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("wagtailcore", "0069_log_entry_jsonfield"),
+        ("wagtailcore", "0052_pagelogentry"),
         ("auth", "0012_alter_user_first_name_max_length"),
     ]
 
