@@ -45,12 +45,10 @@ jobs:
     strategy:
       matrix:
         python-version: [ 3.8, 3.9 ]
-        database: [ sqlite, mysql, postgres ]
+        database: [ sqlite, postgres ]
         include:
           - database: sqlite
             database_url: "sqlite:///data/db.sqlite3"
-          - database: mysql
-            database_url: "mysql://root:root@127.0.0.1:3306/myHPI"
           - database: postgres
             database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
     env:
@@ -79,7 +77,7 @@ jobs:
       run: |
         sudo apt-get install gettext
         source env/bin/activate
-        poetry install -E mysql -E pgsql
+        poetry install -E pgsql
         python install-bootstrap.py
     - name: Prepare files for test run
       continue-on-error: true
@@ -104,26 +102,16 @@ jobs:
         poetry add psycopg2
       if: matrix.database == 'postgres'
 
-    - name: Setup mysql
-      run: |
-        sudo systemctl start mysql.service
-        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -uroot -proot -Dmysql
-        echo "CREATE DATABASE myHPI;" | mysql -uroot -proot
-        source env/bin/activate
-        poetry add mysqlclient
-      if: matrix.database == 'mysql'
-
-    - name: Migrate db
-      run: |
-        source env/bin/activate
-      # python manage.py migrate --run-syncdb
+    #- name: Migrate db
+    #  run: |
+    #    source env/bin/activate
+    #  # python manage.py migrate --run-syncdb
 
     - name: Test apps
       env:
         DATABASE_URL: ${{ matrix.database_url }}
       run: |
         source env/bin/activate
-        tree
         python manage.py test  -v 3 tests
     #    poetry run coverage run --source=myhpi -m pytest tests/
     #- name: Coveralls
