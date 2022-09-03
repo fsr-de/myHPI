@@ -4,16 +4,33 @@ const isMobileLayoutActive = () => {
     return window.innerWidth < 1200
 }
 
-const navbarHeight = remToPx(4.3)
 const numberOfSupportedLevels = 3
+const defaultPagePadding = 1.5
+const navbarBarHeight = 0.3
 let previousScrollPosition = window.scrollY
 
 /* Logic */
 
-const toggleHideOnScrollBlock = (e) => {
-    e.target.classList.toggle("block-parent-hide")
+/**
+ * Toggles whether the given element prevents an ancestor from being hidden when scrolling down.
+ *
+ * If the element has the class `block-ancestor-hide`, any ancestor may not be hidden when scrolling down.
+ *
+ * @param {Node} element Node to toggle the prevention on.
+ */
+const toggleHideOnScrollBlock = (element) => {
+    element.classList.toggle("block-ancestor-hide")
 }
 
+/**
+ * Hides all nodes with the class `xl-hide-on-scroll` when scrolling down.
+ * When scrolling up, the nodes are displayed again.
+ *
+ * Exception: Elements having a descendant with the class `block-ancestor-hide` will always be displayed.
+ *
+ * @param {number} minScrollPosition The hide/show behaviour will only be activated after scrolling past this position.
+ *   Before, the elements will always be displayed.
+ */
 const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
     let currentScrollPosition = window.scrollY
     let elements = document.querySelectorAll(".xl-hide-on-scroll")
@@ -22,7 +39,7 @@ const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
         currentScrollPosition > minScrollPosition
     ) {
         elements.forEach((el) => {
-            if (el.querySelector(".block-parent-hide")) return
+            if (el.querySelector(".block-ancestor-hide")) return
             el.classList.add("hide-now")
         })
     } else {
@@ -32,10 +49,17 @@ const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
 }
 
 window.onload = () => {
+    updateNavbarPosition()
     addNavbarCollapses()
     adaptNavbarToWindowSize()
     toggleElementVisibilityOnScroll()
+    respectNavbarHeight()
 }
-window.onscroll = () =>
-    toggleElementVisibilityOnScroll(navbarHeight - remToPx(0.5))
-window.onresize = adaptNavbarToWindowSize
+window.onscroll = () => {
+    updateNavbarPosition()
+    toggleElementVisibilityOnScroll(_navbarTop.offsetHeight)
+}
+window.onresize = () => {
+    adaptNavbarToWindowSize()
+    updateNavbarPosition()
+}

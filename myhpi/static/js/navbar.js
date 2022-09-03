@@ -86,6 +86,49 @@ const collapseOthersOnSameLevel = (navItemContainer) => {
 }
 
 /**
+ * Gives the wanted collapse behaviour to a navItemContainer.
+ *
+ * With that behaviour, the container for example collapses other containers on the same navbar level
+ *   when it expands.
+ *
+ * @param {*} navItemContainer Container to apply behaviour to.
+ * @param {*} sender Node (usually navItem) that toggles the collapse of the navItemContainer.
+ */
+const applyCollapseBehaviour = (navItemContainer, sender) => {
+    navItemContainer.addEventListener("hide.bs.collapse", (e) => {
+        sender.setAttribute("aria-expanded", "false")
+        e.stopPropagation()
+        collapseChildren(e.target)
+        toggleHideOnScrollBlock(sender)
+    })
+    navItemContainer.addEventListener("show.bs.collapse", (e) => {
+        sender.setAttribute("aria-expanded", "true")
+        e.stopPropagation()
+        collapseOthersOnSameLevel(e.target)
+        toggleHideOnScrollBlock(sender)
+    })
+}
+
+/**
+ * Toggles the right-aligned user navbar.
+ */
+const toggleUserNavbar = (e) => {
+    const userNavContainer = document.querySelector("#nav-item-container-user")
+    bootstrap.Collapse.getOrCreateInstance(userNavContainer).toggle()
+    e.stopPropagation()
+}
+
+/**
+ * Toggles the navbar in mobile mode.
+ */
+const toggleMobileNavbar = (e) => {
+    if (isNavbarInDesktopMode) return
+    const rootNavContainer = document.querySelector("#nav-item-container-root")
+    bootstrap.Collapse.getOrCreateInstance(rootNavContainer).toggle()
+    e.stopPropagation()
+}
+
+/**
  * Adds the collapse behaviour to the navbar.
  *
  * Despite using the Bootstrap Collapse feature, we control the collapses entirely on our own.
@@ -108,17 +151,19 @@ const addNavbarCollapses = () => {
             ).toggle()
             e.stopPropagation()
         })
-        controlledNavContainer.addEventListener("hide.bs.collapse", (e) => {
-            navDropdown.setAttribute("aria-expanded", "false")
-            e.stopPropagation()
-            collapseChildren(e.target)
-        })
-        controlledNavContainer.addEventListener("show.bs.collapse", (e) => {
-            navDropdown.setAttribute("aria-expanded", "true")
-            e.stopPropagation()
-            collapseOthersOnSameLevel(e.target)
-        })
+        applyCollapseBehaviour(controlledNavContainer, navDropdown)
     })
+
+    const userNavToggle = document.querySelector("#nav-user-toggle")
+    const userNavContainer = document.querySelector("#nav-item-container-user")
+    applyCollapseBehaviour(userNavContainer, userNavToggle)
+
+    const mobileNavToggle = document.querySelector("#nav-mobile-toggle")
+    const mobileNavContainer = document.querySelector(
+        "#nav-item-container-root"
+    )
+
+    applyCollapseBehaviour(mobileNavContainer, mobileNavToggle)
 }
 
 /**
@@ -130,6 +175,32 @@ const addNavbarCollapses = () => {
  */
 let isNavbarInDesktopMode = false
 
+const adjustUserNavContainerLevel = () => {
+    const userNavContainer = document.querySelector("#nav-item-container-user")
+    userNavContainer.setAttribute(
+        "data-navbar-level",
+        isNavbarInDesktopMode ? "#nav-level-1" : "#nav-level-0"
+    )
+}
+
+const adjustNavbarCollapseOnLayoutChange = () => {
+    const rootNavContainer = document.querySelector("#nav-item-container-root")
+    const expandedContainer = rootNavContainer.querySelector(
+        ".nav-item-container.show"
+    )
+    if (expandedContainer && isCollapsed(rootNavContainer)) {
+        bootstrap.Collapse.getOrCreateInstance(rootNavContainer).show()
+    } else if (!expandedContainer && !isCollapsed(rootNavContainer)) {
+        // By temporarily setting the transition duration to 0s we prevent
+        //   the navbar items from shortly disappearing when collapsing the container.
+        const originalTransitionDuration =
+            rootNavContainer.style.transitionDuration
+        rootNavContainer.style.transitionDuration = "0s"
+        bootstrap.Collapse.getOrCreateInstance(rootNavContainer).hide()
+        rootNavContainer.style.transitionDuration = originalTransitionDuration
+    }
+}
+
 /**
  * Moves the nodes of navbar level 1 and higher from the mobile to the desktop layout.
  * The number of levels is determined by `numberOfSupportedLevels`.
@@ -138,7 +209,7 @@ const moveNonRootLevelsToDesktopLayout = () => {
     const levels = [...Array(numberOfSupportedLevels).keys()].slice(1)
     levels.forEach((levelId) => {
         const navItemContainers = document.querySelectorAll(
-            `.nav-item-container[data-navbar-level='#nav-level-${levelId}']`
+            `*:not(#nav-level-right)>.nav-item-container[data-navbar-level='#nav-level-${levelId}']`
         )
         const bottomNavLevelContainer = document.querySelector(
             `#nav-level-${levelId}`
@@ -165,6 +236,7 @@ const moveRootLevelToDesktopLayout = () => {
 const setDesktopNavbar = () => {
     if (isNavbarInDesktopMode) return
     isNavbarInDesktopMode = true
+    adjustNavbarCollapseOnLayoutChange()
     moveNonRootLevelsToDesktopLayout()
     moveRootLevelToDesktopLayout()
 }
@@ -209,6 +281,7 @@ const setMobileNavbar = () => {
     isNavbarInDesktopMode = false
     moveNonRootLevelsToMobileLayout()
     moveRootLevelToMobileLayout()
+    adjustNavbarCollapseOnLayoutChange()
 }
 
 /**
@@ -216,4 +289,31 @@ const setMobileNavbar = () => {
  */
 const adaptNavbarToWindowSize = () => {
     isMobileLayoutActive() ? setMobileNavbar() : setDesktopNavbar()
+    adjustUserNavContainerLevel()
+}
+
+const _navbar = document.querySelector("#navbar")
+const _navbarTop = _navbar.querySelector(".navbar-top")
+const _page = document.querySelector("#page")
+
+/**
+ * Emulate sticky position on Desktop.
+ */
+const updateNavbarPosition = () => {
+    const pageClientY = _page.getBoundingClientRect().top
+    _navbar.style.top = (pageClientY < 0 ? 0 : pageClientY) + "px"
+}
+
+/**
+ * Make sure the page always has enough padding to not be overlayed by the navbar.
+ */
+const respectNavbarHeight = () => {
+    const resizeObserver = new ResizeObserver((entries) => {
+        _page.style.paddingTop = isNavbarInDesktopMode
+            ? _navbarTop.offsetHeight + "px"
+            : _navbarTop.offsetHeight +
+              remToPx(defaultPagePadding + navbarBarHeight) +
+              "px"
+    })
+    resizeObserver.observe(_navbarTop)
 }

@@ -81,17 +81,12 @@ p {
 }
 
 .container-lg.page {
-    padding: 0 !important;
+    padding: 0;
 }
 
 .page-content {
     padding-left: 2rem;
     padding-right: 2rem;
-}
-
-.page:not(.navbar-myhpi) .page-content {
-    padding-top: calc(1.5rem + 4.3rem); // default padding + approx. height of navbar
-    padding-bottom: 1.5rem;
 }
 
 .page-title .underline {

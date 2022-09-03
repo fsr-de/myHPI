@@ -80,7 +80,8 @@
         margin-bottom: 3px;
     }
 
-    #nav-item-container-root {
+    #nav-item-container-root,
+    #nav-level-right .nav-item-container {
         padding-left: 0;
         max-height: 90vh;
     }
@@ -171,15 +172,23 @@
         margin-left: calc(5rem - 3px);
     }
 
-    #nav-level-1,
-    #nav-level-2 {
-        width: 20rem;
-    }
-
     .navbar-bottom {
+
+        .nav-level {
+            width: 20rem;
+        }
+
+        #nav-level-right .nav-item-container {
+            width: 18rem;
+        }
+
         .nav-item-container {
             padding-left: 0;
             padding-right: var(--bs-p-2);
+        }
+
+        #nav-level-right .nav-item-container {
+            padding-right: 0;
         }
 
         .nav-link[aria-expanded=true] .nav-link-icon {
