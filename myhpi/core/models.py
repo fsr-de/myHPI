@@ -62,7 +62,8 @@ class InformationPage(BasePage):
 
     @property
     def last_edited_by(self):
-        return self.get_latest_revision().user
+        if self.get_latest_revision():
+            return self.get_latest_revision().user
 
 
 class MinutesList(BasePage):

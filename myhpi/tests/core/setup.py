@@ -1,7 +1,6 @@
 from django.contrib.auth.models import Group, User
 from wagtail.models import Site
 
-from myhpi import settings
 from myhpi.core.models import FirstLevelMenuItem, InformationPage, RootPage
 
 
@@ -61,50 +60,61 @@ def create_basic_page_structure():
     Site.objects.create(
         hostname="localhost", port=80, site_name="myHPI", root_page=root_page, is_default_site=True
     )
-    FirstLevelMenuItem.objects.create(
-        title="Information", show_in_menus=True, path="000100020001", depth=3, is_public=True
+    first_level_menu_item = FirstLevelMenuItem(
+        title="Information",
+        show_in_menus=True,
+        path="000100020001",
+        depth=3,
+        is_public=True,
+        slug="information",
     )
+    root_page.add_child(instance=first_level_menu_item)
+    return {"root_page": root_page, "first_level_menu_item": first_level_menu_item}
 
 
-def create_information_pages(groups):
+def create_information_pages(groups, parent):
     students, fsr = groups
 
-    return [
-        InformationPage.objects.create(
-            title="Common Page",
-            body="A common page for all students.",
-            visible_for=[students, fsr],
-            depth=4,
-            path="0001000200010001",
-            is_public=False,
-            author_visible=True,
-        ),
-        InformationPage.objects.create(
-            title="Private Page",
-            body="A page only for the student representative group.",
-            visible_for=[fsr],
-            depth=4,
-            path="0001000200010002",
-            is_public=False,
-            author_visible=True,
-        ),
-        InformationPage.objects.create(
-            title="Public Page",
-            body="A page for everyone.",
-            is_public=True,
-            depth=4,
-            path="0001000200010003",
-            author_visible=False,
-        ),
-    ]
+    common_page = InformationPage(
+        title="Common Page",
+        body="A common page for all students.",
+        slug="common-page",
+        visible_for=[students, fsr],
+        depth=4,
+        path="0001000200010001",
+        is_public=False,
+        author_visible=True,
+    )
+    private_page = InformationPage(
+        title="Private Page",
+        body="A page only for the student representative group.",
+        slug="private-page",
+        visible_for=[fsr],
+        depth=4,
+        path="0001000200010002",
+        is_public=False,
+        author_visible=True,
+    )
+    public_page = InformationPage(
+        title="Public Page",
+        body="A page for everyone.",
+        slug="public-page",
+        is_public=True,
+        depth=4,
+        path="0001000200010003",
+        author_visible=False,
+    )
+    parent.add_child(instance=common_page)
+    parent.add_child(instance=private_page)
+    parent.add_child(instance=public_page)
+
+    return [common_page, private_page, public_page]
 
 
 def setup_data():
-    # settings.DEBUG = True
-    # settings.STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
     users = create_users()
     groups = create_groups(users)
-    create_basic_page_structure()
-    create_information_pages(groups)
+    basic_pages = create_basic_page_structure()
+    information_pages = create_information_pages(groups, basic_pages["first_level_menu_item"])
 
-    return {"users": users, "groups": groups}
+    return {"users": users, "groups": groups, "pages": information_pages}
