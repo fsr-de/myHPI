@@ -251,3 +251,13 @@ if ENABLE_MAILING_LISTS:
 
     INSTALLED_APPS += ["myhpi.tenca_django"]
     MIDDLEWARE += ["myhpi.tenca_django.middleware.TencaNoConnectionMiddleware"]
+
+INSTITUTION_EMAIL_REPLACEMENTS = [
+    ("hpi.uni-potsdam.de", "hpi.de"),
+    ("student.hpi.uni-potsdam.de", "student.hpi.de"),
+]
+
+ALUMNI_EMAIL_REPLACEMENTS = [
+    ("hpi.de", "student.hpi.de"),
+    ("hpi.uni-potsdam.de", "student.hpi.uni-potsdam.de"),
+]
