@@ -64,61 +64,176 @@ $colors: map-merge($colors, $custom-colors);
 
 :root {
     --bs-p-2: 0.5rem;
+    --bs-p-4: 1rem;
     --myhpi-round-border: 2px;
 }
 
-.nav-item-container:not(.nav-item-container-root) {
-    padding-right: var(--bs-p-2);
-    row-gap: 1px;
+a {
+    text-decoration: none;
+}
 
-    .nav-link {
-        transition: all 0.25s;
-        border-radius: var(--myhpi-round-border);
-        border: solid 2px var(--bs-body-bg-light);
+p {
+    text-align: justify;
+}
+
+.page {
+    margin: auto;
+}
+
+.container-lg.page {
+    padding: 0 !important;
+}
+
+.page-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.page:not(.navbar-myhpi) .page-content {
+    padding-top: calc(1.5rem + 4.3rem); // default padding + approx. height of navbar
+    padding-bottom: 1.5rem;
+}
+
+.page-title .underline {
+    border-bottom: solid 5px var(--bs-secondary);
+}
+
+.page-title {
+    display: inline-block;
+    font-weight: 600;
+    margin-bottom: 2.3rem;
+
+    &:after {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        height: 5px;
+        width: 14.5rem;
+        border-radius: 0;
+    }
+}
+
+.label-badge {
+    background-color: var(--bs-secondary);
+}
+
+
+.breadcrumb {
+    margin-bottom: 1.5rem;
+
+    a,
+    a:hover {
+        font-size: 0.8rem;
+        color: var(--bs-text-muted);
+        text-decoration: none;
     }
 
-    .nav-link:hover,
-    .nav-link:focus-visible {
-        border-color: var(--bs-body-bg-overlay);
-        background-color: var(--bs-body-bg-overlay);
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.side-panel-container {
+    position: sticky;
+    top: 6rem;
+}
+
+.side-panel {
+    border-top: solid 5px;
+    padding: 0.7rem 1rem;
+}
+
+.side-panel:not(:first-of-type) {
+    border-top: solid 2px var(--bs-border);
+}
+
+.toc-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-container ul li>ul {
+    margin-left: 0.5rem;
+}
+
+.toc-title {
+    font-size: 1.05rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+h1.toc-title::after {
+    margin: 0;
+    height: 0px;
+}
+
+.myhpi-accent .navbar-myhpi::before,
+.myhpi-accent .bg-accent {
+    background-color: var(--bs-secondary);
+}
+
+.myhpi-accent .border-accent {
+    border-color: var(--bs-secondary);
+}
+
+.myhpi-accent .breadcrumb .active {
+    color: var(--bs-secondary);
+}
+
+@import "./navbar.scss";
+
+@media screen and (max-width: 1200px) {
+    .xl-hide-on-scroll {
+        transition: top 0.3s, opacity 0.3s, transform 0.3s ease;
+        opacity: 1;
     }
 
-    .nav-link[aria-expanded=true] {
-        border-color: var(--bs-border-dark);
-        background-color: var(--bs-body-bg-overlay);
+    .xl-hide-on-scroll.hide-now {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    body {
+        padding-top: 1rem;
     }
 
-    .nav-item:first-child {
-        padding-top: var(--bs-p-2);
+    .page-content {
+        padding-left: 0;
+        padding-right: 0;
+        width: 1000px;
+        margin: auto;
     }
 
-    .nav-item:last-child {
-        padding-bottom: calc(var(--bs-p-2) + 3px);
+    .page:not(.navbar-myhpi) .page-content {
+        padding-top: 1.5rem; // default padding without height of navbar
+    }
+}
+
+@media print {
+    .toc {
+        display: none;
     }
 
-    .nav-item.dropdown .nav-link {
+    .minutes-container {
         display: flex;
-        align-items: center;
+        flex-direction: column;
     }
 
-    .nav-item.dropdown {
-        .nav-link * {
-            transition: all 0.25s;
-            flex-grow: 0;
-        }
+    .minutes-title {
+        order: 0
+    }
 
-        .nav-link:hover .nav-link-title,
-        .nav-link:focus-visible .nav-link-title,
-        .nav-link[aria-expanded=true] .nav-link-title {
-            flex-grow: 1;
-        }
+    .minutes-meta {
+        order: 1;
+    }
 
-        .nav-link .nav-link-icon {
-            width: 1rem;
-        }
+    .minutes-text {
+        order: 2;
+    }
 
-        .nav-link[aria-expanded=true] .nav-link-icon {
-            transform: rotateZ(180deg);
-        }
+    #minutes-footer {
+        margin-top: 50px;
+        order: 3;
     }
 }

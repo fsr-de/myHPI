@@ -1,0 +1,49 @@
+{% load static %}
+{% load wagtailcore_tags %}
+{% load core_extras %}
+{% load bootstrap_icons %}
+
+<div id="nav-level-{{ level }}" class="nav-level">
+    {% for page_id, sub_pages in sub_pages_by_id.items %}
+    {% if level > 0 %}
+    <div id="nav-item-container-{{ page_id }}"
+        class="nav-item-container collapse"
+        aria-labelledby="nav-item-{{ page.id }}"
+        data-bs-parent="#nav-level-{{ level }}"
+        layout-parent-desktop="#nav-level-{{ level }}">
+        {% else %}
+        <div id="nav-item-container-root"
+            class="nav-item-container d-xl-flex flex-xl-row flex-grow-1 flex-xl-grow-0 flex-xl-wrap collapse">
+            {% endif %}
+            {% for page in sub_pages %}
+            {% if page|sub_nav_pages %}
+            <div class="nav-item dropdown">
+                <a class="nav-link"
+                    id="nav-item-{{ page.id }}"
+                    href="#nav-item-container-{{ page.id }}"
+                    data-bs-toggle="collapse"
+                    aria-controls="nav-item-container-{{ page.id }}"
+                    aria-expanded="false">
+                    {% if level > 0 %}
+                    <span class="nav-link-title">
+                        {{ page.title }}
+                    </span>
+                    {% else %}
+                    <span class="nav-link-title dropdown-toggle">
+                        {{ page.title }}
+                    </span>
+                    {% endif %}
+                    {% bs_icon 'arrow-right-short' size="auto" extra_classes="nav-link-icon d-none" %}
+                </a>
+            </div>
+            {% else %}
+            <div class="nav-item">
+                <a class="nav-link" href="{% pageurl page %}">
+                    {{ page.title }}
+                </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
