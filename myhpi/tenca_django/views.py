@@ -11,7 +11,7 @@ from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import FormView, TemplateView
 
-# from _1327.main.utils import alternative_emails
+from myhpi.core.utils import alternative_emails
 from myhpi.tenca_django.connection import connection
 from myhpi.tenca_django.forms import (
     TencaListOptionsForm,
@@ -29,8 +29,8 @@ class TencaDashboard(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         email = self.request.user.email
         kwargs.setdefault(
-            "memberships", connection.get_owner_and_memberships(email)
-        )  # , *alternative_emails(email)))
+            "memberships", connection.get_owner_and_memberships(email, *alternative_emails(email))
+        )
         kwargs.setdefault("domain_addon", "@" + str(connection.domain))
         return super().get_context_data(**kwargs)
 
@@ -66,14 +66,14 @@ class TencaSubscriptionView(FormView):
     def get_initial(self):
         initial_mail = None
         if self.request.user.is_authenticated:
-            # try:
-            #     initial_mail = next(
-            #         test_mail for test_mail in alternative_emails(self.request.user.email)
-            #         if self.mailing_list.is_member(test_mail)
-            #     )
-            # except StopIteration:
-            #     initial_mail = self.request.user.email
-            initial_mail = self.request.user.email
+            try:
+                initial_mail = next(
+                    test_mail
+                    for test_mail in alternative_emails(self.request.user.email)
+                    if self.mailing_list.is_member(test_mail)
+                )
+            except StopIteration:
+                initial_mail = self.request.user.email
         return {"email": initial_mail}
 
     def form_valid(self, form):
