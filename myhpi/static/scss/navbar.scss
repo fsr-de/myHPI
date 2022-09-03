@@ -19,6 +19,12 @@
     color: var(--bs-dark);
 }
 
+.nav-item-container {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 .navbar-top {
     border-bottom: solid 2px var(--bs-border);
     z-index: 1;
@@ -109,14 +115,18 @@
         padding-bottom: var(--bs-p-2);
     }
 
-    .nav-item.dropdown .nav-link {
-        display: flex;
-    }
-
     .nav-item.dropdown {
+        .nav-link {
+            display: flex;
+        }
+
         .nav-link * {
             transition: all 0.25s;
             flex-grow: 0;
+        }
+
+        .nav-link-title::after {
+            display: none;
         }
 
         .nav-link-icon {
