@@ -22,6 +22,7 @@
     </title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" type="svg" href="{% static 'img/favicon/favicon.svg' %}" />
 
     {# Global stylesheets #}
     <link type="text/css" href="{% static "scss/myHPI.scss"|compile %}" rel="stylesheet">
@@ -42,7 +43,7 @@
             <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
                 <div id="navbar-left" class="d-flex align-items-center">
                     <a class="nav-brand" href="{% pageurl root_page %}">
-                        <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="Zur Startseite">
+                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="h-100" alt="Zur Startseite">
                     </a>
                 </div>
                 {% build_nav_level sub_pages_by_level_and_id 0 %}

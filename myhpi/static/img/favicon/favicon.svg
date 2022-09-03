@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg5043"
+   version="1.1"
+   viewBox="0 0 216.567 216.567"
+   height="216.567mm"
+   width="216.567mm"
+   sodipodi:docname="favicon.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview5627"
+     showgrid="false"
+     inkscape:snap-page="true"
+     inkscape:zoom="0.40775304"
+     inkscape:cx="217.96979"
+     inkscape:cy="554.57955"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5043" />
+  <defs
+     id="defs5037" />
+  <metadata
+     id="metadata5040">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     style="opacity:1;fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:0.018;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+     id="rect6172"
+     width="216.567"
+     height="216.567"
+     x="2.5438469e-008"
+     y="-3.9418542e-006"
+     rx="11.030983"
+     ry="11.030983" />
+  <g
+     id="g8007"
+     transform="matrix(0.83328594,0,0,0.83328594,21.75655,-19.837488)">
+    <g
+       transform="matrix(2.2113634,0,0,2.2113634,-2280.3984,-612.55732)"
+       aria-label="myHPI"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:78.03926086px;line-height:1.25;font-family:'Harlow Solid';-inkscape-font-specification:'Harlow Solid';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.9509815"
+       id="g7975">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 1031.3103,322.83272 h 7.4137 l 0.6243,5.22863 h 0.3122 q 2.4192,-2.5753 5.2286,-4.3702 2.8875,-1.7949 6.4773,-1.7949 4.2141,0 6.7113,1.7949 2.5753,1.7949 3.902,5.07255 2.7314,-2.96549 5.6969,-4.91647 2.9655,-1.95098 6.6333,-1.95098 6.0871,0 8.9745,3.98 2.8875,3.90196 2.8875,11.23765 v 24.03609 h -9.0526 v -22.8655 q 0,-4.76039 -1.4827,-6.71138 -1.4047,-1.95098 -4.3702,-1.95098 -3.5898,0 -8.0381,4.7604 v 26.76746 h -8.9745 v -22.8655 q 0,-4.76039 -1.4827,-6.71138 -1.4047,-1.95098 -4.4483,-1.95098 -3.5898,0 -8.038,4.7604 v 26.76746 h -8.9745 z"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro Semi-Bold';stroke-width:1.9509815"
+         id="path7965" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 1099.7312,376.91392 q -1.5608,0 -2.7314,-0.23411 -1.1706,-0.15608 -2.2631,-0.54628 l 1.6388,-7.02353 q 0.5463,0.15608 1.2486,0.31216 0.7804,0.23411 1.4828,0.23411 3.0435,0 4.8384,-1.87294 1.873,-1.7949 2.8094,-4.68235 l 0.7024,-2.41922 -15.0616,-37.84904 h 9.1306 l 6.6333,18.80746 q 0.8585,2.49726 1.6389,5.30667 0.8584,2.73137 1.7168,5.46275 h 0.3122 q 0.7023,-2.65334 1.4047,-5.38471 0.7804,-2.80942 1.4827,-5.38471 l 5.7749,-18.80746 h 8.6624 l -13.891,40.03414 q -1.1706,3.27765 -2.5753,5.85294 -1.4047,2.5753 -3.2776,4.3702 -1.7949,1.87294 -4.2142,2.80941 -2.3411,1.01451 -5.4627,1.01451 z"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro Semi-Bold';stroke-width:1.9509815"
+         id="path7967" />
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       style="opacity:1;fill:#f5631e;fill-opacity:1;stroke:none;stroke-width:0.00853113;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 0,197.77834 H 122.00315 V 216.7699 H 0 Z"
+       id="path7977" />
+  </g>
+</svg>
