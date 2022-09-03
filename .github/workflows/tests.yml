@@ -113,12 +113,12 @@ jobs:
         DATABASE_URL: ${{ matrix.database_url }}
       run: |
         source env/bin/activate
-        python manage.py test  myhpi.tests
-    #    poetry run coverage run --source=myhpi -m pytest tests/
-    #- name: Coveralls
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #  run: |
-    #    source env/bin/activate
-    #    poetry run coveralls
-    #  if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
+        poetry run coverage run --source=myhpi manage.py test myhpi.tests
+    - name: Coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        source env/bin/activate
+        pip install coveralls
+        coveralls --service=github
+      if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
