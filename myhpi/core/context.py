@@ -1,4 +1,4 @@
-from wagtail.core.models import Site
+from wagtail.core.models import Page, Site
 
 from .models import BasePage
 from .utils import get_user_groups
@@ -59,4 +59,5 @@ def base_context(request):
     return {
         "root_page": root_page,
         "all_pages": root_children,
+        "nav_root_pages": Page.objects.in_menu().child_of(root_page) if root_page else None,
     }
