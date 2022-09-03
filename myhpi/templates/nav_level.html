@@ -5,12 +5,12 @@
 
 <ul
     id="nav-item-container-{{ parent_id }}"
+    data-navbar-level="#nav-level-{{ level }}"
     {% if level == 0 %}
     class="nav-item-container d-xl-flex flex-xl-row flex-grow-1 flex-xl-grow-0 flex-xl-wrap collapse"
     {% else %}
     class="nav-item-container collapse"
     aria-labelledby="nav-item-{{ parent_id }}"
-    data-navbar-level="#nav-level-{{ level }}"
     {% endif %}>
     {% for page in level_pages %}
     {% if page|nav_children %}

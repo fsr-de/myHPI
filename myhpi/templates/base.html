@@ -36,8 +36,7 @@
 <body class="bg-background myhpi-accent {% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav
-        class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top sticky-xl-top xl-hide-on-scroll">
+    <nav id="navbar" class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top xl-hide-on-scroll">
         <div class="navbar-top bg-white d-flex">
             <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
                 <div id="navbar-left" class="d-flex align-items-center">
@@ -47,11 +46,14 @@
                 </div>
                 <div id="nav-level-0" class="nav-level"></div>
                 <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
-                    <a class="nav-link" onclick="toggleHideOnScrollBlock(event)" href="#">
+                    <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
+                        onclick="toggleUserNavbar(event)"
+                        role="button"
+                        aria-expanded="false" aria-controls="nav-item-container-user">
                         {% bs_icon 'person-circle' size='1.4rem' %}
                     </a>
-                    <a class="nav-link d-xl-none" data-bs-toggle="collapse" href="#nav-item-container-root"
-                        onclick="toggleHideOnScrollBlock(event)"
+                    <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
+                        onclick="toggleMobileNavbar(event)"
                         role="button"
                         aria-expanded="false" aria-controls="nav-item-container-root">
                         {% bs_icon 'list' size='1.4rem' %}
@@ -60,18 +62,30 @@
             </div>
         </div>
         <div class="navbar-bottom d-flex overflow-hidden">
-            <div class="navbar-bottom-content page-content d-flex flex-grow-1 flex-xl-grow-0">
+            <div class="navbar-bottom-content page-content d-flex flex-column flex-xl-row flex-grow-1 flex-xl-grow-0">
                 {% build_nav_level nav_root_pages %}
 
                 <!-- For navbar desktop mode: Wrappers for sub level containers of root level in navbar -->
                 <div id="nav-level-1" class="nav-level"></div>
                 <div id="nav-level-2" class="nav-level"></div>
+
+                <div id="nav-level-right"
+                    class="nav-level d-flex flex-column flex-grow-1 align-items-stretch align-items-xl-end">
+                    <ul id="nav-item-container-user" class="nav-item-container collapse"
+                        data-navbar-level="#nav-level-0">
+                        <li class="nav-item">
+                            <a class="nav-link" role="button">
+                                Abmelden
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="navbar-bottom-line"></div>
         </div>
     </nav>
 
-    <div class="container-lg page bg-white">
+    <div id="page" class="container-lg page bg-white">
         <div class="page-content">
             <div id="messages">
                 {% for message in messages %}
