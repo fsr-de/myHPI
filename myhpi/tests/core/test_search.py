@@ -1,21 +1,7 @@
-from django.test import Client, TestCase
-
-from tests.core.setup import setup_data
+from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
-class SearchTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.test_data = setup_data()
-
-    def sign_in_as_student(self):
-        student = self.test_data["users"][1]
-        self.client.force_login(student)
-
-    def sign_in_as_student_representative(self):
-        student_representative = self.test_data["users"][2]
-        self.client.force_login(student_representative)
-
+class SearchTests(MyHPIPageTestCase):
     def test_search_page_exists(self):
         search_page = self.client.get("/en/search/", follow=True)
         self.assertEqual(search_page.status_code, 200)

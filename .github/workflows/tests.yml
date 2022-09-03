@@ -113,7 +113,7 @@ jobs:
         DATABASE_URL: ${{ matrix.database_url }}
       run: |
         source env/bin/activate
-        python manage.py test  -v 3 tests
+        python manage.py test  myhpi.tests
     #    poetry run coverage run --source=myhpi -m pytest tests/
     #- name: Coveralls
     #  env:

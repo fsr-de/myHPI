@@ -1,0 +1,45 @@
+from myhpi.tests.core.utils import MyHPIPageTestCase
+
+
+class ViewPermissionTests(MyHPIPageTestCase):
+    def test_unauthorized_user_can_view_public_page(self):
+        response = self.client.get(self.public_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_unauthorized_user_can_not_view_common_page(self):
+        response = self.client.get(self.common_page.url, follow=True)
+        self.assertEqual(response.status_code, 403)
+
+    def test_unauthorized_user_can_not_view_private_page(self):
+        response = self.client.get(self.private_page.url, follow=True)
+        self.assertEqual(response.status_code, 403)
+
+    def test_student_can_view_public_page(self):
+        self.sign_in_as_student()
+        response = self.client.get(self.public_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_student_can_view_common_page(self):
+        self.sign_in_as_student()
+        response = self.client.get(self.common_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_student_can_not_view_private_page(self):
+        self.sign_in_as_student()
+        response = self.client.get(self.private_page.url, follow=True)
+        self.assertEqual(response.status_code, 403)
+
+    def test_student_representative_can_view_public_page(self):
+        self.sign_in_as_student_representative()
+        response = self.client.get(self.public_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_student_representative_can_view_common_page(self):
+        self.sign_in_as_student_representative()
+        response = self.client.get(self.common_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_student_representative_can_view_private_page(self):
+        self.sign_in_as_student_representative()
+        response = self.client.get(self.private_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
