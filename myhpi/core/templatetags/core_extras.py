@@ -5,8 +5,8 @@ from myhpi.core.markdown.utils import render_markdown
 register = template.Library()
 
 
-@register.inclusion_tag("menu_level.html")
-def build_menu_level(sub_pages_by_level_and_id, level):
+@register.inclusion_tag("nav_level.html")
+def build_nav_level(sub_pages_by_level_and_id, level):
     return {"sub_pages_by_id": sub_pages_by_level_and_id.get(level, {}), "level": level}
 
 
@@ -21,7 +21,7 @@ def sub_menu_pages(page):
 
 
 @register.filter
-def all_sub_menu_pages_by_id(pages):
+def all_sub_nav_pages_by_id(pages):
     all_sub_pages_by_id = {}
     for page in pages:
         traverse_page_tree(page, [], all_sub_pages_by_id)
@@ -34,7 +34,7 @@ def traverse_page_tree(curr_page, id_history, all_sub_pages):
     same_level_sub_pages = all_sub_pages.get(level_id, {})
     same_level_sub_pages[id] = same_level_sub_pages.get(id, []) + [curr_page]
     all_sub_pages[level_id] = same_level_sub_pages
-    sub_pages = sub_menu_pages(curr_page)
+    sub_pages = sub_nav_pages(curr_page)
     for sub_page in sub_pages:
         traverse_page_tree(sub_page, id_history + [curr_page.id], all_sub_pages)
 
