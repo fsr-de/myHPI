@@ -21,8 +21,8 @@ class HashEntry(TencaModel):
         return "HashEntry for {}".format(self.list_id)
 
     class Meta(TencaModel.Meta):
-        verbose_name = "Invite link"
-        verbose_name_plural = "Invite links"
+        verbose_name = "Mailing List Hash Entry"
+        verbose_name_plural = "Mailing List Hash Entries"
 
 
 class DjangoModelHashStorage(HashStorage):
