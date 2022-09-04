@@ -97,7 +97,6 @@ class TencaListAdminView(LoginRequiredMixin, TencaListAdminMixin, FormView):
     def get_context_data(self, **kwargs):
         kwargs.setdefault("mailing_list", self.mailing_list)
         kwargs.setdefault("listname", self.mailing_list.fqdn_listname)
-        # kwargs.setdefault("invite_link", urllib.parse.urljoin("https://" + settings.PAGE_URL, reverse("tenca_django:tenca_manage_subscription", kwargs=dict(hash_id=self.mailing_list.hash_id))))
         kwargs.setdefault(
             "invite_link",
             tenca.pipelines.call_func(tenca.settings.BUILD_INVITE_LINK, self.mailing_list),
