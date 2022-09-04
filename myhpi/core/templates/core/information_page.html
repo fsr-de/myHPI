@@ -26,6 +26,18 @@
                 <h1 class="toc-title">Inhaltsverzeichnis</h1>
                 {{ parsed_md.1 }}
             </aside>
+            {% if page.attachments.all %}
+                <aside class="side-panel border-accent toc-container d-print-none">
+                    <h1 class="toc-title">Attachments</h1>
+                    <ul>
+                    {% for attachment in page.attachments.all %}
+                        <li>
+                            <a href="{{ attachment.url }}">{{ attachment.title }}</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </aside>
+            {% endif %}
         </div>
     </div>
 </div>
