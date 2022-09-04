@@ -13,6 +13,7 @@ from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
+from wagtail.documents.models import Document
 from wagtail.search import index
 
 from myhpi.core.markdown.fields import CustomMarkdownField
@@ -39,9 +40,11 @@ class BasePage(Page):
 class InformationPage(BasePage):
     body = CustomMarkdownField()
     author_visible = BooleanField()
+    attachments = ParentalManyToManyField(Document, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("body", classname="full"),
+        FieldPanel("attachments")
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -163,6 +166,7 @@ class Minutes(BasePage):
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     text = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
+    attachments = ParentalManyToManyField(Document, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
@@ -172,6 +176,7 @@ class Minutes(BasePage):
         FieldPanel("labels"),
         FieldPanel("text"),
         FieldPanel("guests"),
+        FieldPanel("attachments")
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
