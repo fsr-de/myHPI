@@ -7,19 +7,23 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtaildocs', '0012_uploadeddocument'),
-        ('core', '0001_initial'),
+        ("wagtaildocs", "0012_uploadeddocument"),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='informationpage',
-            name='attachments',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='wagtaildocs.document'),
+            model_name="informationpage",
+            name="attachments",
+            field=modelcluster.fields.ParentalManyToManyField(
+                blank=True, to="wagtaildocs.document"
+            ),
         ),
         migrations.AddField(
-            model_name='minutes',
-            name='attachments',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='wagtaildocs.document'),
+            model_name="minutes",
+            name="attachments",
+            field=modelcluster.fields.ParentalManyToManyField(
+                blank=True, to="wagtaildocs.document"
+            ),
         ),
     ]
