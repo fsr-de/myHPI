@@ -3,8 +3,8 @@
 import django.db.models.deletion
 import modelcluster.contrib.taggit
 import modelcluster.fields
-from django.conf import settings
 import wagtailmarkdown.fields
+from django.conf import settings
 from django.db import migrations, models
 
 
