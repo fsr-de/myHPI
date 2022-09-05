@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("date", models.DateField()),
-                ("text", myhpi.wagtail_markdown.fields.MarkdownField()),
+                ("text", wagtailmarkdown.fields.MarkdownField()),
                 (
                     "author",
                     models.ForeignKey(
