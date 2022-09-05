@@ -1,7 +1,14 @@
 from django.contrib.auth.models import Group, User
 from wagtail.models import Site
 
-from myhpi.core.models import FirstLevelMenuItem, InformationPage, RootPage
+from myhpi.core.models import (
+    FirstLevelMenuItem,
+    InformationPage,
+    Minutes,
+    MinutesList,
+    RootPage,
+    SecondLevelMenuItem,
+)
 
 
 def create_users():
@@ -60,7 +67,7 @@ def create_basic_page_structure():
     Site.objects.create(
         hostname="localhost", port=80, site_name="myHPI", root_page=root_page, is_default_site=True
     )
-    first_level_menu_item = FirstLevelMenuItem(
+    information_menu = FirstLevelMenuItem(
         title="Information",
         show_in_menus=True,
         path="000100020001",
@@ -68,8 +75,25 @@ def create_basic_page_structure():
         is_public=True,
         slug="information",
     )
-    root_page.add_child(instance=first_level_menu_item)
-    return {"root_page": root_page, "first_level_menu_item": first_level_menu_item}
+    student_representation_menu = FirstLevelMenuItem(
+        title="Student representation",
+        is_public=False,
+        show_in_menus=True,
+        slug="student-representation",
+    )
+    root_page.add_child(instance=information_menu)
+    root_page.add_child(instance=student_representation_menu)
+    fsr_menu = SecondLevelMenuItem(
+        title="Student representative group", show_in_menus=True, is_public=False, slug="fsr"
+    )
+    student_representation_menu.add_child(instance=fsr_menu)
+
+    return {
+        "root_page": root_page,
+        "information_menu": information_menu,
+        "student_representation_menu": student_representation_menu,
+        "fsr_menu": fsr_menu,
+    }
 
 
 def create_information_pages(groups, parent):
@@ -111,10 +135,89 @@ def create_information_pages(groups, parent):
     return [common_page, private_page, public_page]
 
 
+def setup_minutes(group, students_group, parent, user):
+    minutes_list = MinutesList(
+        title="Student representative group minutes",
+        group=group,
+        is_public=False,
+        slug="minutes",
+        visible_for=[students_group, group],
+    )
+    minutes = [
+        Minutes(
+            title="First minutes",
+            date="2022-01-01",
+            is_public=False,
+            visible_for=[students_group, group],
+            moderator=user,
+            author=user,
+            participants=[user],
+            text="These are the first minutes.",
+            slug="first-minutes",
+        ),
+        Minutes(
+            title="Second minutes",
+            date="2022-02-02",
+            is_public=False,
+            visible_for=[students_group, group],
+            moderator=user,
+            author=user,
+            participants=[user],
+            text="These are the second minutes.",
+            slug="second-minutes",
+        ),
+        Minutes(
+            title="Private minutes",
+            date="2022-03-03",
+            is_public=False,
+            visible_for=[group],
+            moderator=user,
+            author=user,
+            participants=[user],
+            text="These minutes are private.",
+            slug="private-minutes",
+        ),
+        Minutes(
+            title="Unpublished minutes",
+            date="2022-04-04",
+            is_public=False,
+            live=False,
+            visible_for=[group],
+            moderator=user,
+            author=user,
+            participants=[user],
+            text="These minutes are unpublished.",
+            slug="unpublished-minutes",
+        ),
+        Minutes(
+            title="Recent minutes",
+            date="2022-05-05",
+            is_public=False,
+            visible_for=[students_group, group],
+            moderator=user,
+            author=user,
+            participants=[user],
+            text="These minutes are the most recent.",
+            slug="recent-minutes",
+        ),
+    ]
+    parent.add_child(instance=minutes_list)
+    for m in minutes:
+        minutes_list.add_child(instance=m)
+    return minutes, minutes_list
+
+
 def setup_data():
     users = create_users()
     groups = create_groups(users)
     basic_pages = create_basic_page_structure()
-    information_pages = create_information_pages(groups, basic_pages["first_level_menu_item"])
+    information_pages = create_information_pages(groups, basic_pages["information_menu"])
+    minutes, minutes_list = setup_minutes(groups[1], groups[0], basic_pages["fsr_menu"], users[2])
 
-    return {"users": users, "groups": groups, "pages": information_pages}
+    return {
+        "users": users,
+        "groups": groups,
+        "pages": information_pages,
+        "minutes": minutes,
+        "minutes_list": minutes_list,
+    }
