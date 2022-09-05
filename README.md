@@ -22,7 +22,7 @@ To set up a development version on your local machine, you need to execute the f
 
 ### Tests
 
-Test the code with `pytest`.
+Test the code with `python manage.py test myhpi.tests`.
 
 ### Code style
 
