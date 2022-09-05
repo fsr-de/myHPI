@@ -17,7 +17,8 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: Gr1N/setup-poetry@v4
+    - name: Install poetry
+      run: curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
     - uses: actions/cache@v1
       with:
         path: ~/.cache/pypoetry/virtualenvs
@@ -25,7 +26,8 @@ jobs:
         restore-keys: |
           myHPI-${{ runner.os }}-poetry-py${{ matrix.python-version }}-
     - name: Install dependencies
-      run: poetry install
+      run: |
+        poetry install
     - name: check format with black
       run: |
         poetry run black --version
@@ -44,12 +46,10 @@ jobs:
     strategy:
       matrix:
         python-version: [ 3.8, 3.9 ]
-        database: [ sqlite, mysql, postgres ]
+        database: [ sqlite, postgres ]
         include:
           - database: sqlite
             database_url: "sqlite:///data/db.sqlite3"
-          - database: mysql
-            database_url: "mysql://root:root@127.0.0.1:3306/myHPI"
           - database: postgres
             database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
     env:
@@ -72,12 +72,13 @@ jobs:
         #sudo apt-get install python-venv
         python -m venv env
         source env/bin/activate
-        pip install poetry
+        curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
     - name: Install dependencies
       # always install all -E extras to use a single cache
       run: |
         sudo apt-get install gettext
         source env/bin/activate
+        python install-bootstrap.py
         poetry run python -m pip install setuptools -U
         poetry install -E mysql -E pgsql
     - name: Prepare files for test run
@@ -103,25 +104,22 @@ jobs:
         poetry run python -m pip install psycopg2
       if: matrix.database == 'postgres'
 
-    - name: Setup mysql
-      run: |
-        sudo systemctl start mysql.service
-        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -uroot -proot -Dmysql
-        echo "CREATE DATABASE myHPI;" | mysql -uroot -proot
-        source env/bin/activate
-        poetry add mysqlclient
-      if: matrix.database == 'mysql'
+    #- name: Migrate db
+    #  run: |
+    #    source env/bin/activate
+    #  # python manage.py migrate --run-syncdb
 
     - name: Test apps
       env:
         DATABASE_URL: ${{ matrix.database_url }}
       run: |
         source env/bin/activate
-        poetry run coverage run --source=myhpi -m pytest tests/
-    #- name: Coveralls
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #  run: |
-    #    source env/bin/activate
-    #    poetry run coveralls
-    #  if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
+        poetry run coverage run --source=myhpi manage.py test myhpi.tests
+    - name: Coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        source env/bin/activate
+        pip install coveralls
+        coveralls --service=github
+      if: matrix.python-version == '3.9' && matrix.database == 'sqlite'

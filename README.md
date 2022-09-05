@@ -1,5 +1,8 @@
 # myHPI
 
+[![tests](https://github.com/fsr-de/myHPI/actions/workflows/tests.yml/badge.svg)](https://github.com/fsr-de/myHPI/actions/workflows/tests.yml)
+[![Coverage Status](https://coveralls.io/repos/github/fsr-de/myHPI/badge.svg?branch=main)](https://coveralls.io/github/fsr-de/myHPI?branch=main)
+
 This tool is used to manage the student representative website at https://myhpi.de (not live yet). It is a CMS based on Wagtail/Django and adds several functionalities like polls.
 
 ## Development setup
@@ -19,7 +22,7 @@ To set up a development version on your local machine, you need to execute the f
 
 ### Tests
 
-Test the code with `pytest`.
+Test the code with `python manage.py test myhpi.tests`.
 
 ### Code style
 
