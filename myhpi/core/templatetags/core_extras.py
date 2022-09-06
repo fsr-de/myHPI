@@ -12,7 +12,8 @@ def build_nav_level(level_pages, level=0, parent_id="root"):
 
 @register.filter
 def nav_children(page):
-    return page.menu_children
+    return page.get_children().in_menu().live()
+
 
 @register.filter(name="markdown")
 def markdown(value):
