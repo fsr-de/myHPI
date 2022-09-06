@@ -1,5 +1,7 @@
 from django import template
 
+from myhpi.core.markdown.utils import render_markdown
+
 register = template.Library()
 
 
@@ -41,3 +43,8 @@ def format_id_history(id_history):
     if not id_history:
         return "root"
     return str(id_history[-1])
+
+
+@register.filter(name="markdown")
+def markdown(value):
+    return render_markdown(value)

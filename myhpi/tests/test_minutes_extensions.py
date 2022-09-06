@@ -3,7 +3,7 @@ from django.test import TestCase
 
 django.setup()
 
-from myhpi.wagtail_markdown.minutes_extensions import EnterLeavePreprocessor
+from myhpi.core.markdown.extensions import EnterLeavePreprocessor
 
 
 class TestMinuteExtensions(TestCase):

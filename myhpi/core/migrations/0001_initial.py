@@ -3,10 +3,9 @@
 import django.db.models.deletion
 import modelcluster.contrib.taggit
 import modelcluster.fields
+import wagtailmarkdown.fields
 from django.conf import settings
 from django.db import migrations, models
-
-import myhpi.wagtail_markdown.fields
 
 
 class Migration(migrations.Migration):
@@ -111,7 +110,7 @@ class Migration(migrations.Migration):
                         to="core.basepage",
                     ),
                 ),
-                ("body", myhpi.wagtail_markdown.fields.MarkdownField()),
+                ("body", wagtailmarkdown.fields.MarkdownField()),
                 ("author_visible", models.BooleanField()),
             ],
             options={
@@ -134,7 +133,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("date", models.DateField()),
-                ("text", myhpi.wagtail_markdown.fields.MarkdownField()),
+                ("text", wagtailmarkdown.fields.MarkdownField()),
                 (
                     "author",
                     models.ForeignKey(

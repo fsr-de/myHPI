@@ -160,7 +160,3 @@ class MinuteExtension(Extension):
             "InternalLinkPattern",
             200,
         )
-
-
-def makeExtension():
-    return MinuteExtension()

@@ -58,10 +58,10 @@ INSTALLED_APPS = [
     "wagtail.users",
     "wagtail_localize",
     "wagtail_localize.locales",
+    "wagtailmarkdown",
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
-    "myhpi.wagtail_markdown",
     "static_precompiler",
 ]
 
@@ -228,6 +228,12 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INTERNAL_IPS = env.str("INTERNAL_IPS")
+
+WAGTAILMARKDOWN = {
+    "allowed_tags": ["abbr"],
+    "allowed_attributes": {"abbr": ["title"]},
+    "extensions": ["toc", "abbr"],
+}
 
 ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS", False)
 

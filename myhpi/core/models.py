@@ -15,9 +15,8 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 from wagtail.search import index
 
+from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
-from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
-from myhpi.wagtail_markdown.fields import MarkdownField
 
 
 class BasePage(Page):
@@ -38,11 +37,11 @@ class BasePage(Page):
 
 
 class InformationPage(BasePage):
-    body = MarkdownField()
+    body = CustomMarkdownField()
     author_visible = BooleanField()
 
     content_panels = Page.content_panels + [
-        MarkdownPanel("body", classname="full"),
+        FieldPanel("body", classname="full"),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -157,7 +156,7 @@ class Minutes(BasePage):
     author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
-    text = MarkdownField()
+    text = CustomMarkdownField()
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
@@ -165,7 +164,7 @@ class Minutes(BasePage):
         FieldPanel("author"),
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
-        MarkdownPanel("text", classname="full"),
+        FieldPanel("text"),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []

@@ -1,15 +1,4 @@
-# vim:sw=4 ts=4 et:
-# Copyright (c) 2015 Torchbox Ltd.
-# felicity@torchbox.com 2015-09-14
-#
-# Permission is granted to anyone to use this software for any purpose,
-# including commercial applications, and to alter it and redistribute it
-# freely. This software is provided 'as-is', without any express or implied
-# warranty.
-#
-
 import html2text
-from django.db.models import TextField
 from wagtail_localize.segments import (
     OverridableSegmentValue,
     StringSegmentValue,
@@ -18,19 +7,13 @@ from wagtail_localize.segments import (
 from wagtail_localize.segments.extract import quote_path_component
 from wagtail_localize.segments.ingest import organise_template_segments
 from wagtail_localize.strings import extract_strings, restore_strings
+from wagtailmarkdown.fields import MarkdownField
+from wagtailmarkdown.utils import render_markdown
 
-from .utils import render_markdown
-from .widgets import MarkdownTextarea
 
-
-class MarkdownField(TextField):
-    def formfield(self, **kwargs):
-        defaults = {"widget": MarkdownTextarea}
-        defaults.update(kwargs)
-        return super(MarkdownField, self).formfield(**defaults)
-
+class CustomMarkdownField(MarkdownField):
     def get_translatable_segments(self, value):
-        template, strings = extract_strings(render_markdown(value, with_abbreveations=False)[0])
+        template, strings = extract_strings(render_markdown(value))
 
         # Find all unique href values
         hrefs = set()
