@@ -51,7 +51,6 @@ urlpatterns += i18n_patterns(
     path("search/", search_views.search, name="search"),
     path("", include(wagtail_urls)),
 )
-<<<<<<< HEAD
 
 if settings.ENABLE_MAILING_LISTS:
     urlpatterns += i18n_patterns(
@@ -68,5 +67,3 @@ urlpatterns += i18n_patterns(
     path("search/", search_views.search, name="search"),
     path("", include(wagtail_urls)),
 )
-
-
