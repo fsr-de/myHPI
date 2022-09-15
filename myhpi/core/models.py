@@ -157,6 +157,7 @@ class Minutes(BasePage):
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     text = CustomMarkdownField()
+    guests = models.JSONField(blank=True, default='')
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
@@ -165,6 +166,7 @@ class Minutes(BasePage):
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
         FieldPanel("text"),
+        FieldPanel("guests")
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
