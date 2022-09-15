@@ -25,7 +25,16 @@
                     <li>{{ participant.get_full_name }}</li>
                 {% endfor %}
             </ul>
-
+            <h4>Guests</h4>
+            {% if page.guests %}
+                <ul>
+                {% for guest in page.guests %}
+                    <li>{{ guest }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <i>No guests</i>
+            {% endif %}
             <h4>Labels</h4>
                 {%  if page.labels.all %}
                     <p>
