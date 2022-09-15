@@ -152,12 +152,16 @@ class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
 
 class Minutes(BasePage):
     date = DateField()
-    moderator = ForeignKey(User, on_delete=models.PROTECT, related_name="moderator")
-    author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
+    moderator = ForeignKey(
+        User, blank=True, null=True, on_delete=models.PROTECT, related_name="moderator"
+    )
+    author = ForeignKey(
+        User, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
+    )
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     text = CustomMarkdownField()
-    guests = models.JSONField(blank=True, default="")
+    guests = models.JSONField(blank=True, default=[])
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
