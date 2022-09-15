@@ -6,15 +6,18 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tenca_django', '0001_initial'),
+        ("tenca_django", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='hashentry',
-            options={'verbose_name': 'Mailing List Hash Entry', 'verbose_name_plural': 'Mailing List Hash Entries'},
+            name="hashentry",
+            options={
+                "verbose_name": "Mailing List Hash Entry",
+                "verbose_name_plural": "Mailing List Hash Entries",
+            },
         ),
         migrations.DeleteModel(
-            name='LegacyAdminURL',
+            name="LegacyAdminURL",
         ),
     ]
