@@ -45,3 +45,8 @@ def check_view_permissions(page, request, serve_args, serve_kwargs):
 @hooks.register("insert_global_admin_css")
 def global_admin_css():
     return format_html('<link rel="stylesheet" href="{}">', static("css/myHPI_admin.css"))
+
+
+@hooks.register("insert_global_admin_js", order=100)
+def global_admin_js():
+    return format_html('<script src="{}"></script>', static("js/admin/easymde_custom.js"))
