@@ -1055,15 +1055,15 @@ testing = ["dj-database-url (==0.5.0)", "django-rq (>=2.5,<3.0)", "freezegun (==
 
 [[package]]
 name = "wagtail-markdown"
-version = "0.9.0"
+version = "0.10.0"
 description = "Markdown support for Wagtail"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-bleach = ">=3.3.0,<4"
-Markdown = ">=3,<4"
+bleach = ">=3.3,<5"
+Markdown = ">=3.3,<4"
 Wagtail = ">=2.15"
 
 [[package]]
@@ -1141,7 +1141,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "93d2f23efd57a23019fe4551c7590dc21395d136b8ddec02da559bc1e9daf58f"
+content-hash = "eb292d8b8c53fdffba71a65159532489ec47bc15ec61fa037f171916a4ef7531"
 
 [metadata.files]
 anyascii = [
@@ -1790,8 +1790,8 @@ wagtail-localize = [
     {file = "wagtail_localize-1.2.1-py3-none-any.whl", hash = "sha256:8102dd749465724bf429bb8e036fb566905521e70e65b912897ffcc202d93ca0"},
 ]
 wagtail-markdown = [
-    {file = "wagtail-markdown-0.9.0.tar.gz", hash = "sha256:8d42c0d0a82f325ef0311d3014ac3cfc67c2a69208c7c6c9f0989d1c7c4cd2f8"},
-    {file = "wagtail_markdown-0.9.0-py2.py3-none-any.whl", hash = "sha256:68a96e85c8aa5d4567a286bc0a1c507b3638abff8ffb167da63381c2df19d117"},
+    {file = "wagtail-markdown-0.10.0.tar.gz", hash = "sha256:b16be4b6e3518cc6dd15ab335cbc6d6a9122b5d7e3a61fa11c83597e2660044e"},
+    {file = "wagtail_markdown-0.10.0-py2.py3-none-any.whl", hash = "sha256:e4a97eee0211eebaab9c850669e647bc1c8ceb70df38b4db5a2c3d8b02ebaf69"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},
