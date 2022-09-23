@@ -215,3 +215,12 @@ class AbbreviationExplanation(Model):
 
     def __str__(self):
         return self.abbreviation
+
+
+class MailingListsMenuItem(BasePage):
+    parent_page_types = ["RootPage"]
+    subpage_types = []
+    show_in_menus_default = True
+
+    def serve(self, request, *args, **kwargs):
+        return HttpResponseRedirect("/lists/dashboard")
