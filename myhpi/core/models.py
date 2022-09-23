@@ -103,6 +103,7 @@ class MinutesList(BasePage):
 
 class MinutesLabel(TagBase):
     free_tagging = False
+    color = CharField(max_length=7, default="#000000")
 
     class Meta:
         verbose_name = "minutes label"
