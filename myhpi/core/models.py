@@ -44,7 +44,7 @@ class InformationPage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("body", classname="full"),
-        FieldPanel("attachments")
+        FieldPanel("attachments"),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -176,7 +176,7 @@ class Minutes(BasePage):
         FieldPanel("labels"),
         FieldPanel("text"),
         FieldPanel("guests"),
-        FieldPanel("attachments")
+        FieldPanel("attachments"),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
