@@ -228,9 +228,7 @@ class RedirectMenuItem(BasePage):
         help_text="The URL that the user should be redirected to when selecting this menu item",
     )
 
-    content_panels = BasePage.content_panels + [
-        FieldPanel("redirect_url")
-    ]
+    content_panels = BasePage.content_panels + [FieldPanel("redirect_url")]
 
     def serve(self, request, *args, **kwargs):
         return HttpResponseRedirect(redirect_to=self.redirect_url)
