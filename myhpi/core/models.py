@@ -215,3 +215,20 @@ class AbbreviationExplanation(Model):
 
     def __str__(self):
         return self.abbreviation
+
+
+class RedirectMenuItem(BasePage):
+    parent_page_types = ["RootPage"]
+    subpage_types = []
+    show_in_menus_default = True
+
+    redirect_url = models.CharField(
+        verbose_name="redirect URL",
+        max_length=255,
+        help_text="The URL that the user should be redirected to when selecting this menu item",
+    )
+
+    content_panels = BasePage.content_panels + [FieldPanel("redirect_url")]
+
+    def serve(self, request, *args, **kwargs):
+        return HttpResponseRedirect(redirect_to=self.redirect_url)
