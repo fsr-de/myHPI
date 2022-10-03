@@ -18,6 +18,13 @@
                     {% include "core/label.html" with minutes=minute %}
                 </td>
                 <td><a href="{% pageurl minute %}">{{ minute.title }}</a></td>
+                <td>
+                    {% if minute.attachments.count > 0 %}
+                        <span class="text-gray" data-toggle="tooltip" data-placement="left" data-container="body" title="{{ minute.attachments.all|join:', ' }}">
+                            📦
+                        </span>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </table>
