@@ -43,3 +43,12 @@ class ViewPermissionTests(MyHPIPageTestCase):
         self.sign_in_as_student_representative()
         response = self.client.get(self.private_page.url, follow=True)
         self.assertEqual(response.status_code, 200)
+
+    def test_super_user_can_view_all_pages(self):
+        self.sign_in_as_super_user()
+        response = self.client.get(self.public_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get(self.common_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get(self.private_page.url, follow=True)
+        self.assertEqual(response.status_code, 200)
