@@ -33,3 +33,10 @@ We recommend installing a pre-commit hook with `pre-commit install`. That will (
 * run `black .` to format the code. You can also check out the [IDE integration](https://github.com/psf/black#editor-integration)
 
 If you want to do that manually, run `pre-commit run --all-files`. Next to that, we also run `pylint myhpi` to check for semantic issues in the code.
+
+## Tips
+
+### Reset database
+
+1. Delete `db.sqlite3`
+2. Conduct development setup steps 7+

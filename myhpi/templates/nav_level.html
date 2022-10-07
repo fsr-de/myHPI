@@ -23,7 +23,7 @@
             <span class="nav-link-title dropdown-toggle">
                 {{ page.title }}
             </span>
-            {% bs_icon 'arrow-right-short' size="auto" extra_classes="nav-link-icon d-none" %}
+            {% bs_icon 'arrow-right-short' extra_classes="nav-link-icon d-none" %}
         </a>
         {% build_nav_level page|nav_children level|add:"1" page.id %}
     </li>
