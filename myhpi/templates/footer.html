@@ -1,0 +1,18 @@
+{% load core_extras %}
+
+<footer class="footer-myhpi container-lg page text-light">
+  <div class="page-content d-flex flex-wrap flex-column flex-sm-row">
+    {% for category in footer_base|footer_children %}
+    <div class="footer-category">
+      <h1 class="footer-category-title">{{ category.title }}</h1>
+      <ul>
+        {% for footer_page in category|footer_children %}
+        <li>
+          {% insert_link footer_page %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+</footer>

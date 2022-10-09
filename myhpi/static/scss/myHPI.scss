@@ -174,7 +174,14 @@ h1.toc-title::after {
     color: var(--bs-secondary);
 }
 
+.link.external {
+    .icon {
+        margin-top: -0.25rem;
+    }
+}
+
 @import "./navbar.scss";
+@import "./footer.scss";
 
 @media screen and (max-width: 1200px) {
     .xl-hide-on-scroll {

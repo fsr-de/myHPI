@@ -60,6 +60,7 @@ class InformationPage(BasePage):
         "FirstLevelMenuItem",
         "SecondLevelMenuItem",
         "InformationPage",
+        "FooterCategory",
         "RootPage",
     ]
     settings_panels = [
@@ -90,6 +91,7 @@ class MinutesList(BasePage):
         "FirstLevelMenuItem",
         "SecondLevelMenuItem",
         "InformationPage",
+        "FooterCategory",
         "RootPage",
     ]
     subpage_types = ["Minutes"]
@@ -211,6 +213,35 @@ class RootPage(InformationPage):
     parent_page_types = ["wagtailcore.Page"]
 
 
+class FooterBase(BasePage):
+    parent_page_types = ["RootPage"]
+    subpage_types = [
+        "FooterCategory",
+    ]
+
+    def serve(self, request, *args, **kwargs):
+        # To handle the situation where someone inadvertently lands on a menu page, do a redirect
+        first_descendant = self.get_descendants().first()
+        if first_descendant:
+            return HttpResponseRedirect(first_descendant.url)
+        else:
+            return HttpResponseRedirect(Site.find_for_request(request).root_page.url)
+
+
+class FooterCategory(BasePage):
+    parent_page_types = ["FooterBase"]
+    subpage_types = ["InformationPage", "MinutesList", "RedirectMenuItem"]
+    show_in_menus_default = True
+
+    def serve(self, request, *args, **kwargs):
+        # To handle the situation where someone inadvertently lands on a menu page, do a redirect
+        first_descendant = self.get_descendants().first()
+        if first_descendant:
+            return HttpResponseRedirect(first_descendant.url)
+        else:
+            return HttpResponseRedirect(Site.find_for_request(request).root_page.url)
+
+
 class FirstLevelMenuItem(BasePage):
     parent_page_types = ["RootPage"]
     subpage_types = ["SecondLevelMenuItem", "InformationPage", "MinutesList"]
@@ -239,7 +270,10 @@ class AbbreviationExplanation(Model):
 
 
 class RedirectMenuItem(BasePage):
-    parent_page_types = ["RootPage"]
+    parent_page_types = [
+        "RootPage",
+        "FooterCategory",
+    ]
     subpage_types = []
     show_in_menus_default = True
 
