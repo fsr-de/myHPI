@@ -3,30 +3,43 @@
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}Search{% endblock %}
+{% block title %}Suche{% endblock %}
 
 {% block content %}
-    <h1>Search</h1>
+<h1 class="page-title">
+    <span class="underline">
+        Suche
+    </span>
+</h1>
 
-    {% include "search/search_field.html" %}
-    <p>
-    {% if search_results %}
-            {% for result in search_results %}
-                    <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-                    {% if result.search_description %}
-                        {{ result.search_description }}
-                    {% endif %}
-            {% endfor %}
+{% include "search/search_field.html" %}
 
-        {% if search_results.has_previous %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-        {% endif %}
+{% if search_results %}
 
-        {% if search_results.has_next %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-        {% endif %}
-    {% elif search_query %}
-        No results found
+<i class="d-block mb-3 ps-1">
+    {% if search_results|length == 1 %}
+    Ein Ergebnis gefunden.
+    {% else %}
+    {{ search_results|length }} Ergebnisse gefunden.
     {% endif %}
-    </p>
+</i>
+
+<ul class="search-result-list d-block pb-3">
+    {% for result in search_results %}
+    {% include "search/search_result.html" %}
+    {% endfor %}
+</ul>
+
+{% if search_results.has_previous %}
+<a
+    href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
+{% endif %}
+
+{% if search_results.has_next %}
+<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+{% endif %}
+
+{% elif search_query %}
+<i class="d-block pb-3 ps-1">Keine Ergebnisse gefunden.</i>
+{% endif %}
 {% endblock %}
