@@ -48,12 +48,25 @@ const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
     previousScrollPosition = currentScrollPosition
 }
 
+const enableTooltips = () => {
+    const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+    )
+    Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
+        new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
+
 window.onload = () => {
     updateNavbarPosition()
     addNavbarCollapses()
     adaptNavbarToWindowSize()
     toggleElementVisibilityOnScroll()
     respectNavbarHeight()
+
+    initializeSearch()
+
+    enableTooltips()
 }
 window.onscroll = () => {
     updateNavbarPosition()
