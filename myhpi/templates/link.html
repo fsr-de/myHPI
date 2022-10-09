@@ -1,0 +1,14 @@
+{% load core_extras %}
+{% load bootstrap_icons %}
+
+{% with page|is_external_url as is_external_url %}
+
+<a href="{{page|actual_url}}"
+    class="link {%if is_external_url %}external{% endif %}"
+    {%if is_external_url %} target="_blank" {% endif %}>{{page.title}}
+    {% if is_external_url %}
+    {% bs_icon 'box-arrow-up-right' extra_classes='icon'%}
+    {% endif %}
+</a>
+
+{% endwith %}
