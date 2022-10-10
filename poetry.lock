@@ -49,7 +49,7 @@ tests_no_zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy 
 
 [[package]]
 name = "autoflake"
-version = "1.6.1"
+version = "1.7.1"
 description = "Removes unused imports and unused variables"
 category = "main"
 optional = false
@@ -1143,7 +1143,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "75a8296b10bb18e6c2bece4fca8a750a1a647f68de32dd42c40a6fd3e63a7907"
+content-hash = "99caba1c709533b87d276fc936d195012e728be017f4a62654b8cf6d8a921028"
 
 [metadata.files]
 anyascii = [
@@ -1163,8 +1163,8 @@ attrs = [
     {file = "attrs-22.1.0.tar.gz", hash = "sha256:29adc2665447e5191d0e7c568fde78b21f9672d344281d0c6e1ab085429b22b6"},
 ]
 autoflake = [
-    {file = "autoflake-1.6.1-py2.py3-none-any.whl", hash = "sha256:dfef4c851fb07e6111f9115d3e7c8c52d8564cbf71c12ade2d8b8a2a7b8bd176"},
-    {file = "autoflake-1.6.1.tar.gz", hash = "sha256:72bce741144ef6db26005d47dba242c1fd6a91ea53f7f4c5a90ad4b051e394c2"},
+    {file = "autoflake-1.7.1-py2.py3-none-any.whl", hash = "sha256:b759b1aee50526cc169a812a9a0de49b808c3de6be7166690e93bb36a7f23c98"},
+    {file = "autoflake-1.7.1.tar.gz", hash = "sha256:e7eddc1a5759d8f2cab5880f5777bf8a342db16d82a2ebbed2969a6bd74da0a2"},
 ]
 "backports.zoneinfo" = [
     {file = "backports.zoneinfo-0.2.1-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:da6013fd84a690242c310d77ddb8441a559e9cb3d3d59ebac9aca1a57b2e18bc"},
