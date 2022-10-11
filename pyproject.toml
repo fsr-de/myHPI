@@ -19,7 +19,7 @@ django-permissionedforms = "^0.1"
 tenca = "^0.0.2"
 html2text = "^2020.1.16"
 wagtail-markdown = "^0.10.0"
-autoflake = "^1.6.1"
+autoflake = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.15.3"
