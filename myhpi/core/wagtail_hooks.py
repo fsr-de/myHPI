@@ -33,6 +33,8 @@ modeladmin_register(AbbreviationExplanationAdmin)
 def check_view_permissions(page, request, serve_args, serve_kwargs):
     if isinstance(page, (Minutes, MinutesList, InformationPage)):
         target_groups = request.user.groups.all()
+        if request.user.is_superuser:
+            return
         if getattr(request.user, "_ip_range_group_name", None):
             target_groups = Group.objects.filter(
                 Q(name=request.user._ip_range_group_name) | Q(id__in=request.user.groups.all())
