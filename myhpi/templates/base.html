@@ -47,18 +47,22 @@
                 </div>
                 <div id="nav-level-0" class="nav-level"></div>
                 <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
-                    <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
-                        onclick="toggleUserNavbar(event)"
-                        role="button"
-                        aria-expanded="false" aria-controls="nav-item-container-user">
-                        {% bs_icon 'person-circle' size='1.4em' %}
-                    </a>
-                    <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
-                        onclick="toggleMobileNavbar(event)"
-                        role="button"
-                        aria-expanded="false" aria-controls="nav-item-container-root">
-                        {% bs_icon 'list' size='1.4em' %}
-                    </a>
+                    {% if user.is_anonymous %}
+                        <a id="nav-user-toggle" class="nav-link" class="dropdown-item" href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
+                    {% else %}
+                        <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
+                            onclick="toggleUserNavbar(event)"
+                            role="button"
+                            aria-expanded="false" aria-controls="nav-item-container-user">
+                            {% bs_icon 'person-circle' size='1.4em' %}
+                        </a>
+                        <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
+                            onclick="toggleMobileNavbar(event)"
+                            role="button"
+                            aria-expanded="false" aria-controls="nav-item-container-root">
+                            {% bs_icon 'list' size='1.4em' %}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -72,19 +76,20 @@
 
                 <div id="nav-level-right"
                     class="nav-level d-flex flex-column flex-grow-1 align-items-stretch align-items-xl-end">
+
+
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
+                        {% if not user.is_anonymous %}
                         <li class="nav-item">
-                            {% if user.is_anonymous %}
-                                <a class="dropdown-item" href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
-                            {% else %}
                                 <a class="dropdown-item" href="/" id="navbar-logout-link">Logout</a>
                                 <form action="{% url 'oidc_logout' %}" method="post" id="logout-form" hidden>
                                     {% csrf_token %}
                                 </form>
-                            {% endif %}
                         </li>
+                        {% endif %}
                     </ul>
+
                 </div>
             </div>
             <div class="navbar-bottom-line"></div>
