@@ -4,6 +4,7 @@
 {% load core_extras %}
 {% load compile_static %}
 {% load bootstrap_icons %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -74,9 +75,14 @@
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
                         <li class="nav-item">
-                            <a class="nav-link" role="button">
-                                Abmelden
-                            </a>
+                            {% if user.is_anonymous %}
+                                <a class="dropdown-item" href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
+                            {% else %}
+                                <a class="dropdown-item" href="/" id="navbar-logout-link">Logout</a>
+                                <form action="{% url 'oidc_logout' %}" method="post" id="logout-form" hidden>
+                                    {% csrf_token %}
+                                </form>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
