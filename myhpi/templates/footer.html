@@ -2,16 +2,11 @@
 
 <footer class="footer-myhpi container-lg page text-light">
   <div class="page-content d-flex flex-wrap flex-column flex-sm-row">
-    {% for category in footer_base|footer_children %}
+    {% for column in footer_columns %}
     <div class="footer-category">
-      <h1 class="footer-category-title">{{ category.title }}</h1>
-      <ul>
-        {% for footer_page in category|footer_children %}
-        <li>
-          {% insert_link footer_page %}
-        </li>
-        {% endfor %}
-      </ul>
+      {% with column|markdown as parsed_markdown %}
+      {{ parsed_markdown.0|tag_external_links }}
+      {% endwith %}
     </div>
     {% endfor %}
   </div>
