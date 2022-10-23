@@ -7,18 +7,18 @@
     }
 }
 
-.footer-category-title {
-    font-weight: 700;
-    font-size: 1rem;
-}
-
 .footer-category {
     ul {
         list-style: none;
         padding: 0;
     }
 
-    .link {
+    h1 {
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    a {
         color: var(--bs-text-light);
 
         &:hover {

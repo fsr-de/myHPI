@@ -15,6 +15,7 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 from wagtail.documents.models import Document
 from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
@@ -60,7 +61,6 @@ class InformationPage(BasePage):
         "FirstLevelMenuItem",
         "SecondLevelMenuItem",
         "InformationPage",
-        "FooterCategory",
         "RootPage",
     ]
     settings_panels = [
@@ -91,7 +91,6 @@ class MinutesList(BasePage):
         "FirstLevelMenuItem",
         "SecondLevelMenuItem",
         "InformationPage",
-        "FooterCategory",
         "RootPage",
     ]
     subpage_types = ["Minutes"]
@@ -213,33 +212,30 @@ class RootPage(InformationPage):
     parent_page_types = ["wagtailcore.Page"]
 
 
-class FooterBase(BasePage):
-    parent_page_types = ["RootPage"]
-    subpage_types = [
-        "FooterCategory",
+@register_snippet
+class Footer(models.Model):
+    column_1 = CustomMarkdownField()
+    column_2 = CustomMarkdownField()
+    column_3 = CustomMarkdownField()
+    column_4 = CustomMarkdownField()
+
+    panels = [
+        FieldPanel("column_1"),
+        FieldPanel("column_2"),
+        FieldPanel("column_3"),
+        FieldPanel("column_4"),
     ]
 
-    def serve(self, request, *args, **kwargs):
-        # To handle the situation where someone inadvertently lands on a menu page, do a redirect
-        first_descendant = self.get_descendants().first()
-        if first_descendant:
-            return HttpResponseRedirect(first_descendant.url)
-        else:
-            return HttpResponseRedirect(Site.find_for_request(request).root_page.url)
+    def __str__(self):
+        def get_first_line(content):
+            return content.split("\n", 1)[0]
 
-
-class FooterCategory(BasePage):
-    parent_page_types = ["FooterBase"]
-    subpage_types = ["InformationPage", "MinutesList", "RedirectMenuItem"]
-    show_in_menus_default = True
-
-    def serve(self, request, *args, **kwargs):
-        # To handle the situation where someone inadvertently lands on a menu page, do a redirect
-        first_descendant = self.get_descendants().first()
-        if first_descendant:
-            return HttpResponseRedirect(first_descendant.url)
-        else:
-            return HttpResponseRedirect(Site.find_for_request(request).root_page.url)
+        return (
+            get_first_line(self.column_1)
+            + get_first_line(self.column_2)
+            + get_first_line(self.column_3)
+            + get_first_line(self.column_4)
+        )
 
 
 class FirstLevelMenuItem(BasePage):
@@ -272,7 +268,6 @@ class AbbreviationExplanation(Model):
 class RedirectMenuItem(BasePage):
     parent_page_types = [
         "RootPage",
-        "FooterCategory",
     ]
     subpage_types = []
     show_in_menus_default = True

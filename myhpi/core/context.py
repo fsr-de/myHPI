@@ -1,6 +1,6 @@
 from wagtail.core.models import Page, Site
 
-from .models import BasePage, FooterBase
+from .models import BasePage
 from .utils import get_user_groups
 
 
@@ -9,14 +9,13 @@ def base_context(request):
 
     # Fetch all pages
     root_page = getattr(Site.find_for_request(request), "root_page", None)
-    footer = FooterBase.objects.live().first()
     pages = BasePage.objects.in_menu().live()
     pages_visible_for_user = []
     path_map = {}
     depth_levels = set()
 
     if not root_page:
-        return {"root_page": None, "all_pages": None, "nav_root_pages": None, "footer_pages": None}
+        return {"root_page": None, "all_pages": None, "nav_root_pages": None}
 
     # Add root page to path map - only needed if root page is NOT a base page (yet)
     root_page.menu_children = []
@@ -60,5 +59,4 @@ def base_context(request):
         "root_page": root_page,
         "all_pages": root_children,
         "nav_root_pages": Page.objects.in_menu().child_of(root_page) if root_page else None,
-        "footer_base": footer,
     }

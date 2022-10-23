@@ -1,6 +1,11 @@
-from django import template
+import re
 
+from django import template
+from django.template import Context, Template
+
+from myhpi import settings
 from myhpi.core.markdown.utils import render_markdown
+from myhpi.core.models import Footer
 
 register = template.Library()
 
@@ -16,30 +21,23 @@ def nav_children(page):
 
 
 @register.inclusion_tag("footer.html")
-def build_footer(footer_base):
-    return {"footer_base": footer_base}
+def insert_footer():
+    footer = Footer.objects.first()
+    return {"footer_columns": [footer.column_1, footer.column_2, footer.column_3, footer.column_4]}
 
 
-@register.filter
-def footer_children(footer_page):
-    if footer_page is None:
-        return []
-    return footer_page.get_children().in_menu().live()
-
-
-@register.inclusion_tag("link.html")
-def insert_link(page):
-    return {"page": page}
-
-
-@register.filter
-def is_external_url(page):
-    return hasattr(page.specific, "redirect_url")
-
-
-@register.filter
-def actual_url(page):
-    return page.specific.redirect_url if is_external_url(page) else page.url
+@register.filter(name="tag_external_links")
+def tag_external_links(content):
+    """Takes the content of a website and inserts external link icons after every external link."""
+    external_links = re.finditer('<a[^>]*href="(?!' + settings.SITE_URL + ")[^>]*>[^<]*", content)
+    for link in reversed(list(external_links)):
+        content = (
+            content[: link.end()]
+            + " {% bs_icon 'box-arrow-up-right' extra_classes='external-link-icon' %}"
+            + content[link.end() :]
+        )
+    template = Template("{% load bootstrap_icons %}" + content)
+    return template.render(Context())
 
 
 @register.filter(name="markdown")
