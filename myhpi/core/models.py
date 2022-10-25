@@ -13,10 +13,12 @@ from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
+from wagtail.documents.models import Document
 from wagtail.search import index
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
+from myhpi.core.widgets import AttachmentSelectWidget
 
 
 class BasePage(Page):
@@ -36,12 +38,23 @@ class BasePage(Page):
     ]
 
 
+class InformationPageForm(WagtailAdminPageForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Reinitialize widget
+        self.fields["attachments"].widget = AttachmentSelectWidget(
+            user=self.for_user, choices=self.fields["attachments"].widget.choices
+        )
+
+
 class InformationPage(BasePage):
     body = CustomMarkdownField()
     author_visible = BooleanField()
+    attachments = ParentalManyToManyField(Document, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("body", classname="full"),
+        FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -58,6 +71,8 @@ class InformationPage(BasePage):
     search_fields = BasePage.search_fields + [
         index.SearchField("body"),
     ]
+
+    base_form_class = InformationPageForm
 
     @property
     def last_edited_by(self):
@@ -137,6 +152,10 @@ class MinutesForm(WagtailAdminPageForm):
                 self.initial["moderator"] = last_minutes.moderator
                 self.initial["author"] = last_minutes.author
 
+        self.fields["attachments"].widget = AttachmentSelectWidget(
+            user=self.for_user, choices=self.fields["attachments"].widget.choices
+        )
+
     def get_last_minutes(self):
         # Since the minutes aren't created yet, they are not yet in the tree
         existing_minutes = self.minutes_list.get_children().live()
@@ -163,6 +182,7 @@ class Minutes(BasePage):
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     text = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
+    attachments = ParentalManyToManyField(Document, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
@@ -172,6 +192,7 @@ class Minutes(BasePage):
         FieldPanel("labels"),
         FieldPanel("text"),
         FieldPanel("guests"),
+        FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []

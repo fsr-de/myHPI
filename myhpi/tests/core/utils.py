@@ -10,6 +10,7 @@ class MyHPIPageTestCase(TestCase):
         self.common_page = self.test_data["pages"][0]
         self.private_page = self.test_data["pages"][1]
         self.public_page = self.test_data["pages"][2]
+        self.super_user = self.test_data["users"][0]
         self.student = self.test_data["users"][1]
         self.student_representative = self.test_data["users"][2]
 
@@ -17,5 +18,7 @@ class MyHPIPageTestCase(TestCase):
         self.client.force_login(self.student)
 
     def sign_in_as_student_representative(self):
-        student_representative = self.test_data["users"][2]
         self.client.force_login(self.student_representative)
+
+    def sign_in_as_super_user(self):
+        self.client.force_login(self.super_user)

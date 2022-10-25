@@ -19,16 +19,16 @@ django-permissionedforms = "^0.1"
 tenca = "^0.0.2"
 html2text = "^2020.1.16"
 wagtail-markdown = "^0.10.0"
-autoflake = "^1.6.0"
+autoflake = "^1.7.7"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.15.2"
-black = "^22.6"
+pylint = "^2.15.5"
+black = "^22.10"
 isort = "^5.8.0"
 autoflake = "^1.4"
 pre-commit = "^2.20.0"
 pytest = "^7.1.2"
-coverage = "^6.4.2"
+coverage = "^6.5.0"
 
 [tool.poetry.extras]
 pgsql = ["psycopg2"]
