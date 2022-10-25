@@ -3,6 +3,7 @@ from wagtail.models import Site
 
 from myhpi.core.models import (
     FirstLevelMenuItem,
+    Footer,
     InformationPage,
     Minutes,
     MinutesList,
@@ -62,6 +63,12 @@ def create_basic_page_structure():
         path="00010002",
         depth=2,
     )
+    Footer(
+        column_1="# Fachschaft\r\n",
+        column_2="# Rechtliches\r\n\r\n- [Impressum]()\r\n- [Datenschutzerklärung]()",
+        column_3="# Entwicklung\r\n\r\n- [GitHub](https://github.com/fsr-de/myHPI/)",
+        column_4="# Sprache\r\n",
+    ).save()
     # Remove dummy site
     Site.objects.all()[0].delete()
     Site.objects.create(
