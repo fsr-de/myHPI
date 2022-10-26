@@ -46,6 +46,12 @@
                 </div>
                 <div id="nav-level-0" class="nav-level"></div>
                 <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
+                    <a id="nav-search-button" class="nav-link"
+                        onclick="showSearchModal(event)"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Strg+K"
+                        role="button">
+                        {% bs_icon 'search' size='1.4em' %}
+                    </a>
                     <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
                         onclick="toggleUserNavbar(event)"
                         role="button"
@@ -117,10 +123,30 @@
         </div>
     </div>
 
+    <div id="searchModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="searchForm" class="d-flex align-items-center"
+                        action="{% url 'search' %}">
+                        <input id="searchInput" type="search" class="form-control me-3 " placeholder="Suchen..."
+                            aria-label="Suche" name="query">
+                        <button type="submit" class="btn btn-primary" aria-label="Suche starten"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-title="Enter">{% bs_icon 'search' size='1.4em' extra_classes="text-light" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% insert_footer %}
+
     {# Global javascript #}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
 
     {% block extra_js %}

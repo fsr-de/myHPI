@@ -161,6 +161,32 @@ h1.toc-title::after {
     height: 0px;
 }
 
+.search-result-list {
+    list-style: none;
+    padding: 0;
+    margin: -0.5rem -0.8rem;
+
+    .search-result {
+        transition: all 0.25s;
+
+        padding: 0.5rem 0.8rem;
+
+        border-radius: var(--myhpi-round-border);
+        border: solid 2px transparent;
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--bs-border);
+            background-color: var(--bs-body-bg-light);
+        }
+
+        &:active {
+            border-color: var(--bs-border-dark);
+            background-color: var(--bs-body-bg-overlay);
+        }
+    }
+}
+
 .myhpi-accent .navbar-myhpi::before,
 .myhpi-accent .bg-accent {
     background-color: var(--bs-secondary);
@@ -174,7 +200,12 @@ h1.toc-title::after {
     color: var(--bs-secondary);
 }
 
+.external-link-icon {
+    margin-top: -0.25rem;
+}
+
 @import "./navbar.scss";
+@import "./footer.scss";
 
 @media screen and (max-width: 1200px) {
     .xl-hide-on-scroll {
