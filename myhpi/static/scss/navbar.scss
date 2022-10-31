@@ -83,7 +83,7 @@
     #nav-item-container-root,
     #nav-level-right .nav-item-container {
         padding-left: 0;
-        max-height: 90vh;
+        max-height: 85vh;
     }
 
     #nav-item-container-root.show {
@@ -174,6 +174,8 @@
     }
 
     .navbar-bottom {
+        max-height: 70vh;
+        overflow-y: auto;
 
         .nav-level {
             width: 20rem;
