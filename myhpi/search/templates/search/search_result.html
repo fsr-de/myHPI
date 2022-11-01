@@ -8,11 +8,7 @@
             {% if result.search_description %}
                 {{ result.search_description }}
             {% else %}
-                {% if result.specific.text %}
-                    {{ result.specific.text|truncatewords:20 }}
-                {% else %}
-                    {{ result.specific.body|truncatewords:20 }}
-                {% endif %}
+                {{ result.specific.body|truncatewords:20 }}
             {% endif %}
         </span>
     </div>

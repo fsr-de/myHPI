@@ -159,7 +159,7 @@ def setup_minutes(group, students_group, parent, user):
             moderator=user,
             author=user,
             participants=[user],
-            text="These are the first minutes.",
+            body="These are the first minutes.",
             slug="first-minutes",
         ),
         Minutes(
@@ -170,7 +170,7 @@ def setup_minutes(group, students_group, parent, user):
             moderator=user,
             author=user,
             participants=[user],
-            text="These are the second minutes.",
+            body="These are the second minutes.",
             slug="second-minutes",
         ),
         Minutes(
@@ -181,7 +181,7 @@ def setup_minutes(group, students_group, parent, user):
             moderator=user,
             author=user,
             participants=[user],
-            text="These minutes are private.",
+            body="These minutes are private.",
             slug="private-minutes",
         ),
         Minutes(
@@ -193,7 +193,7 @@ def setup_minutes(group, students_group, parent, user):
             moderator=user,
             author=user,
             participants=[user],
-            text="These minutes are unpublished.",
+            body="These minutes are unpublished.",
             slug="unpublished-minutes",
         ),
         Minutes(
@@ -204,7 +204,7 @@ def setup_minutes(group, students_group, parent, user):
             moderator=user,
             author=user,
             participants=[user],
-            text="These minutes are the most recent.",
+            body="These minutes are the most recent.",
             slug="recent-minutes",
         ),
     ]
