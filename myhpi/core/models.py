@@ -181,7 +181,7 @@ class Minutes(BasePage):
     )
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
-    text = CustomMarkdownField()
+    body = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
     attachments = ParentalManyToManyField(Document, blank=True)
 
@@ -191,7 +191,7 @@ class Minutes(BasePage):
         FieldPanel("author"),
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
-        FieldPanel("text"),
+        FieldPanel("body"),
         FieldPanel("guests"),
         FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]

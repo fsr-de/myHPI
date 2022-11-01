@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name="minutes",
-            name="text",
+            name="body",
             field=myhpi.core.markdown.fields.CustomMarkdownField(),
         ),
     ]
