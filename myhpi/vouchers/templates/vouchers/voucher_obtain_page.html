@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load core_extras %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    {% with page.body|markdown as parsed_md %}
+        {{ parsed_md.0 }}
+    {% endwith %}
+    <h2>{% translate "Vouchers" %}</h2>
+    {% if voucher_allocation %}
+        {% for voucher in voucher_allocation.vouchers.all %}
+            <p>{{ voucher }}</p>
+        {% endfor %}
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Generate vouchers" />
+        </form>
+    {% endif %}
+{% endblock %}
