@@ -40,7 +40,13 @@ class Voucher(models.Model):
     redeemed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Voucher {self.code}"
+        return self.code
+
+    def redemption_url(self):
+        if self.voucherallocation_set.exists():
+            event = self.voucherallocation_set.first().event
+            return f"{settings.PRETIX_BASE_URL}/verde/{event.slug}/redeem?voucher={self.code}"
+        return None
 
 
 class VoucherAllocation(models.Model):

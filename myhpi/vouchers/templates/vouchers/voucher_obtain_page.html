@@ -11,7 +11,7 @@
     <h2>{% translate "Vouchers" %}</h2>
     {% if voucher_allocation %}
         {% for voucher in voucher_allocation.vouchers.all %}
-            <p>{{ voucher }}</p>
+            <p><a href="{{ voucher.redemption_url }}" target="_blank">{{ voucher }}</a></p>
         {% endfor %}
     {% else %}
         <form method="post">
