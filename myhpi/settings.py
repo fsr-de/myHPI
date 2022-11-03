@@ -1,5 +1,7 @@
 import os
+import sys
 
+import tenca
 from django.contrib.messages import constants
 from environ import environ
 
@@ -56,11 +58,10 @@ INSTALLED_APPS = [
     "wagtail.users",
     "wagtail_localize",
     "wagtail_localize.locales",
+    "wagtailmarkdown",
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
-    "myhpi.wagtail_markdown",
-    "debug_toolbar",
     "static_precompiler",
 ]
 
@@ -81,7 +82,6 @@ OIDC_OP_TOKEN_ENDPOINT = "https://oidc.hpi.de/token"
 OIDC_OP_USER_ENDPOINT = "https://oidc.hpi.de/me"
 OIDC_OP_JWKS_ENDPOINT = "https://oidc.hpi.de/certs"
 
-
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "login"
@@ -101,6 +101,7 @@ MIDDLEWARE = [
 ]
 
 if DJANGO_DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "myhpi.urls"
@@ -169,7 +170,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "de"
 
 TIME_ZONE = "UTC"
 
@@ -211,7 +212,10 @@ STATICFILES_FINDERS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+if DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 STATIC_URL = env.str("STATIC_URL")
 STATIC_ROOT = env.str("STATIC_ROOT")
@@ -241,3 +245,42 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 INTERNAL_IPS = env.str("INTERNAL_IPS")
+
+WAGTAILMARKDOWN = {
+    "allowed_tags": ["abbr"],
+    "allowed_attributes": {"abbr": ["title"]},
+    "extensions": ["toc", "abbr"],
+}
+
+ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS", False)
+
+# The mailing lists library (Tenca) has a django-like settings module.
+# This code will read in all correctly prefixed settings from the
+# current module, e.g. `TENCA_API_USER` -> `tenca.settings.API_USER`
+if ENABLE_MAILING_LISTS:
+    import tenca.settings
+
+    TENCA_API_HOST = env.str("TENCA_API_HOST")
+    TENCA_API_PORT = env.int("TENCA_API_PORT")
+    TENCA_API_SCHEME = env.str("TENCA_API_SCHEME")
+    TENCA_ADMIN_USER = env.str("TENCA_ADMIN_USER")
+    TENCA_ADMIN_PASS = env.str("TENCA_ADMIN_PASS")
+    TENCA_LIST_HASH_ID_SALT = env.str("TENCA_LIST_HASH_ID_SALT")
+    TENCA_WEB_UI_HOSTNAME = env.str("TENCA_WEB_UI_HOSTNAME")
+    TENCA_DISABLE_GOODBYE_MESSAGES = env.bool("TENCA_DISABLE_GOODBYE_MESSAGES")
+    TENCA_HASH_STORAGE_CLASS = env.str("TENCA_HASH_STORAGE_CLASS")
+
+    tenca.settings.load_from_module(sys.modules[__name__])
+
+    INSTALLED_APPS += ["myhpi.tenca_django"]
+    MIDDLEWARE += ["myhpi.tenca_django.middleware.TencaNoConnectionMiddleware"]
+
+INSTITUTION_EMAIL_REPLACEMENTS = [
+    ("hpi.uni-potsdam.de", "hpi.de"),
+    ("student.hpi.uni-potsdam.de", "student.hpi.de"),
+]
+
+ALUMNI_EMAIL_REPLACEMENTS = [
+    ("hpi.de", "student.hpi.de"),
+    ("hpi.uni-potsdam.de", "student.hpi.uni-potsdam.de"),
+]

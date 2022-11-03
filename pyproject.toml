@@ -9,25 +9,26 @@ license = "MIT"
 python = "^3.8"
 wagtail = ">=2.16.2"
 django-environ = "^0.9.0"
-bleach = {extras = ["css"], version = "^5.0.1"}
-Markdown = "3.3.7"
-wagtail-localize = "^1.2"
-html2text = "^2020.1.16"
+wagtail-localize = "^1.3"
 mozilla-django-oidc = "^2.0.0"
-django-bootstrap-icons = "^0.7.8"
-django-select2 = "^7.10.0"
+django-bootstrap-icons = "^0.8.1"
+django-select2 = "^7.11.0"
 django-static-precompiler = {extras = ["libsass"], version = "^2.1"}
 django-debug-toolbar = "^3.5.0"
 django-permissionedforms = "^0.1"
+tenca = "^0.0.2"
+html2text = "^2020.1.16"
+wagtail-markdown = "^0.10.0"
+autoflake = "^1.7.7"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.14.5"
-black = "^22.6"
+pylint = "^2.15.5"
+black = "^22.10"
 isort = "^5.8.0"
 autoflake = "^1.4"
 pre-commit = "^2.20.0"
-pytest = "^7.1.2"
-coverage = "^6.4.2"
+pytest = "^7.2.0"
+coverage = "^6.5.0"
 
 [tool.poetry.extras]
 pgsql = ["psycopg2"]
@@ -48,6 +49,7 @@ force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
 line_length = 100
+skip_gitignore = true
 
 [tool.pylint.messages_control]
 # C0330 and C0301 are disabled for use of black

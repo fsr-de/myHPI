@@ -1,43 +1,45 @@
+import re
+
 from django import template
+from django.template import Context, Template
+
+from myhpi import settings
+from myhpi.core.markdown.utils import render_markdown
+from myhpi.core.models import Footer
 
 register = template.Library()
 
 
-@register.inclusion_tag("menu_level.html")
-def build_menu_level(sub_pages_by_level_and_id, level):
-    return {"sub_pages_by_id": sub_pages_by_level_and_id.get(level, {}), "level": level}
+@register.inclusion_tag("nav_level.html")
+def build_nav_level(level_pages, level=0, parent_id="root"):
+    return {"level_pages": level_pages, "level": level, "parent_id": parent_id}
 
 
 @register.filter
-def get(dict, key):
-    return dict[key]
+def nav_children(page):
+    return page.get_children().in_menu().live()
 
 
-@register.filter
-def sub_menu_pages(page):
-    return page.menu_children
+@register.inclusion_tag("footer.html")
+def insert_footer():
+    footer = Footer.objects.first()
+    return {"footer_columns": [footer.column_1, footer.column_2, footer.column_3, footer.column_4]}
 
 
-@register.filter
-def all_sub_menu_pages_by_id(pages):
-    all_sub_pages_by_id = {}
-    for page in pages:
-        traverse_page_tree(page, [], all_sub_pages_by_id)
-    return all_sub_pages_by_id
+@register.filter(name="tag_external_links")
+def tag_external_links(content):
+    """Takes the content of a website and inserts external link icons after every external link."""
+    external_links = re.finditer('<a[^>]*href="(?!' + settings.SITE_URL + ")[^>]*>[^<]*", content)
+    for link in reversed(list(external_links)):
+        content = (
+            content[: link.end()]
+            + " {% bs_icon 'box-arrow-up-right' extra_classes='external-link-icon' %}"
+            + content[link.end() :]
+        )
+    template = Template("{% load bootstrap_icons %}" + content)
+    return template.render(Context())
 
 
-def traverse_page_tree(curr_page, id_history, all_sub_pages):
-    id = format_id_history(id_history)
-    level_id = len(id_history)
-    same_level_sub_pages = all_sub_pages.get(level_id, {})
-    same_level_sub_pages[id] = same_level_sub_pages.get(id, []) + [curr_page]
-    all_sub_pages[level_id] = same_level_sub_pages
-    sub_pages = sub_menu_pages(curr_page)
-    for sub_page in sub_pages:
-        traverse_page_tree(sub_page, id_history + [curr_page.id], all_sub_pages)
-
-
-def format_id_history(id_history):
-    if not id_history:
-        return "root"
-    return str(id_history[-1])
+@register.filter(name="markdown")
+def markdown(value):
+    return render_markdown(value)

@@ -1,10 +1,11 @@
+{% load bootstrap_icons %}
 
-
-<form action="{% url 'search' %}" method="get">
+<form action="{% url 'search' %}" method="get" class="pb-3">
     <div class="input-group">
-        <div class="form-outline">
-            <input type="search" class="form-control" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <input type="search" class="form-control" name="query" placeholder="Suchen..." {% if search_query %}
+            value="{{ search_query }}"
+            {% endif %}>
+        <button type="submit"
+            class="btn btn-primary" aria-label="Suchen">{% bs_icon 'search' extra_classes="text-light" %}</button>
     </div>
 </form>

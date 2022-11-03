@@ -2,7 +2,7 @@ default_language_version:
   python: python3.9
 repos:
   - repo: https://github.com/myint/autoflake
-    rev: v1.4
+    rev: v1.7.6
     hooks:
       - id: autoflake
         args:
@@ -16,6 +16,6 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
-    rev: 22.3.0
+    rev: 22.10.0
     hooks:
       - id: black

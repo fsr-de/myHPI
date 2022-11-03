@@ -13,11 +13,13 @@ from taggit.models import ItemBase, TagBase
 from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
+from wagtail.documents.models import Document
 from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
+from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
-from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
-from myhpi.wagtail_markdown.fields import MarkdownField
+from myhpi.core.widgets import AttachmentSelectWidget
 
 
 class BasePage(Page):
@@ -37,12 +39,23 @@ class BasePage(Page):
     ]
 
 
+class InformationPageForm(WagtailAdminPageForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Reinitialize widget
+        self.fields["attachments"].widget = AttachmentSelectWidget(
+            user=self.for_user, choices=self.fields["attachments"].widget.choices
+        )
+
+
 class InformationPage(BasePage):
-    body = MarkdownField()
+    body = CustomMarkdownField()
     author_visible = BooleanField()
+    attachments = ParentalManyToManyField(Document, blank=True)
 
     content_panels = Page.content_panels + [
-        MarkdownPanel("body", classname="full"),
+        FieldPanel("body", classname="full"),
+        FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]
     parent_page_types = [
         "FirstLevelMenuItem",
@@ -60,9 +73,12 @@ class InformationPage(BasePage):
         index.SearchField("body"),
     ]
 
+    base_form_class = InformationPageForm
+
     @property
     def last_edited_by(self):
-        return self.get_latest_revision().user
+        if self.get_latest_revision():
+            return self.get_latest_revision().user
 
 
 class MinutesList(BasePage):
@@ -103,6 +119,7 @@ class MinutesList(BasePage):
 
 class MinutesLabel(TagBase):
     free_tagging = False
+    color = CharField(max_length=7, default="#000000")
 
     class Meta:
         verbose_name = "minutes label"
@@ -136,6 +153,10 @@ class MinutesForm(WagtailAdminPageForm):
                 self.initial["moderator"] = last_minutes.moderator
                 self.initial["author"] = last_minutes.author
 
+        self.fields["attachments"].widget = AttachmentSelectWidget(
+            user=self.for_user, choices=self.fields["attachments"].widget.choices
+        )
+
     def get_last_minutes(self):
         # Since the minutes aren't created yet, they are not yet in the tree
         existing_minutes = self.minutes_list.get_children().live()
@@ -152,11 +173,17 @@ class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
 
 class Minutes(BasePage):
     date = DateField()
-    moderator = ForeignKey(User, on_delete=models.PROTECT, related_name="moderator")
-    author = ForeignKey(User, on_delete=models.PROTECT, related_name="author")
+    moderator = ForeignKey(
+        User, blank=True, null=True, on_delete=models.PROTECT, related_name="moderator"
+    )
+    author = ForeignKey(
+        User, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
+    )
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
-    text = MarkdownField()
+    body = CustomMarkdownField()
+    guests = models.JSONField(blank=True, default=[])
+    attachments = ParentalManyToManyField(Document, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
@@ -164,7 +191,9 @@ class Minutes(BasePage):
         FieldPanel("author"),
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
-        MarkdownPanel("text", classname="full"),
+        FieldPanel("body"),
+        FieldPanel("guests"),
+        FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]
     parent_page_types = ["MinutesList"]
     subpage_types = []
@@ -181,6 +210,32 @@ class RootPage(InformationPage):
     template = "core/information_page.html"
 
     parent_page_types = ["wagtailcore.Page"]
+
+
+@register_snippet
+class Footer(models.Model):
+    column_1 = CustomMarkdownField()
+    column_2 = CustomMarkdownField()
+    column_3 = CustomMarkdownField()
+    column_4 = CustomMarkdownField()
+
+    panels = [
+        FieldPanel("column_1"),
+        FieldPanel("column_2"),
+        FieldPanel("column_3"),
+        FieldPanel("column_4"),
+    ]
+
+    def __str__(self):
+        def get_first_line(content):
+            return content.split("\n", 1)[0]
+
+        return (
+            get_first_line(self.column_1)
+            + get_first_line(self.column_2)
+            + get_first_line(self.column_3)
+            + get_first_line(self.column_4)
+        )
 
 
 class FirstLevelMenuItem(BasePage):
@@ -208,3 +263,22 @@ class AbbreviationExplanation(Model):
 
     def __str__(self):
         return self.abbreviation
+
+
+class RedirectMenuItem(BasePage):
+    parent_page_types = [
+        "RootPage",
+    ]
+    subpage_types = []
+    show_in_menus_default = True
+
+    redirect_url = models.CharField(
+        verbose_name="redirect URL",
+        max_length=255,
+        help_text="The URL that the user should be redirected to when selecting this menu item",
+    )
+
+    content_panels = BasePage.content_panels + [FieldPanel("redirect_url")]
+
+    def serve(self, request, *args, **kwargs):
+        return HttpResponseRedirect(redirect_to=self.redirect_url)

@@ -10,9 +10,8 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail.core.models import Orderable, Page
 from wagtail.search import index
 
+from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.models import BasePage
-from myhpi.wagtail_markdown.edit_handlers import MarkdownPanel
-from myhpi.wagtail_markdown.fields import MarkdownField
 
 
 class PollList(BasePage):
@@ -30,7 +29,7 @@ class PollList(BasePage):
 
 class Poll(BasePage):
     question = models.CharField(max_length=254)
-    description = MarkdownField()
+    description = CustomMarkdownField()
     start_date = models.DateField()
     end_date = models.DateField()
     max_allowed_answers = models.IntegerField(default=1)
@@ -39,7 +38,7 @@ class Poll(BasePage):
     participants = models.ManyToManyField(User, related_name="polls")
 
     content_panels = Page.content_panels + [
-        MarkdownPanel("description", classname="full"),
+        FieldPanel("description", classname="full"),
         FieldPanel("question"),
         FieldPanel("start_date"),
         FieldPanel("end_date"),

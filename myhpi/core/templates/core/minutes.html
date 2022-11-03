@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
-{% load wagtailmarkdown %}
+{% load core_extras %}
 {% load minutes_tags %}
 
 {% block content %}
     <div class="row minutes-container">
-        {% with page.text|markdown as parsed_md %}
+        {% with page.body|markdown as parsed_md %}
         <div class="d-none d-print-block minutes-title">
         <h1>{{  page.title }}</h1>
         </div>
@@ -25,7 +25,16 @@
                     <li>{{ participant.get_full_name }}</li>
                 {% endfor %}
             </ul>
-
+            <h4>Guests</h4>
+            {% if page.guests %}
+                <ul>
+                {% for guest in page.guests %}
+                    <li>{{ guest }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <i>No guests</i>
+            {% endif %}
             <h4>Labels</h4>
                 {%  if page.labels.all %}
                     <p>
@@ -36,6 +45,16 @@
                 {% endif %}
             <h4 class="d-print-none">Table of contents</h4>
             {{ parsed_md.1 }}
+            {% if page.attachments.all %}
+                <h4 class="d-print-none">Attachments</h4>
+                <ul>
+                {% for attachment in page.attachments.all %}
+                    <li>
+                        <a href="{{ attachment.url }}">{{ attachment.title }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <div id="minutes-footer" class="d-none d-print-block"></div>
             <div id="minutes-navigation" class="row d-print-none">

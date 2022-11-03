@@ -1,6 +1,4 @@
-from django.contrib.auth.models import Group
-from django.db.models import Q
-from wagtail.core.models import Site
+from wagtail.core.models import Page, Site
 
 from .models import BasePage
 from .utils import get_user_groups
@@ -17,7 +15,7 @@ def base_context(request):
     depth_levels = set()
 
     if not root_page:
-        return {"root_page": None, "all_pages": None}
+        return {"root_page": None, "all_pages": None, "nav_root_pages": None}
 
     # Add root page to path map - only needed if root page is NOT a base page (yet)
     root_page.menu_children = []
@@ -56,9 +54,9 @@ def base_context(request):
         depth_levels.remove(deepest_level)
 
     # Return root page and all of their children
-    print(path_map, root_page.path)
     root_children = path_map[root_page.path].menu_children
     return {
         "root_page": root_page,
         "all_pages": root_children,
+        "nav_root_pages": Page.objects.in_menu().child_of(root_page) if root_page else None,
     }

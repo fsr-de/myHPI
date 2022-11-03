@@ -1,23 +1,78 @@
-window.onload = () => {
-    addCollapseToLevel2NavContainers()
+/* Settings */
+
+const isMobileLayoutActive = () => {
+    return window.innerWidth < 1200
+}
+
+const numberOfSupportedLevels = 3
+const defaultPagePadding = 1.5
+const navbarBarHeight = 0.3
+let previousScrollPosition = window.scrollY
+
+/* Logic */
+
+/**
+ * Toggles whether the given element prevents an ancestor from being hidden when scrolling down.
+ *
+ * If the element has the class `block-ancestor-hide`, any ancestor may not be hidden when scrolling down.
+ *
+ * @param {Node} element Node to toggle the prevention on.
+ */
+const toggleHideOnScrollBlock = (element) => {
+    element.classList.toggle("block-ancestor-hide")
 }
 
 /**
- * Makes second level menu items collapse when a root level menu item is toggled.
- * 
- * The Bootstrap Collapse Plugin only supports toggling collapsed states between
- * containers with the same parent. This means for the menu: Supposed a menu structure of
- * A > A1 > A2 and B > B1, with A and B being root level menu items always shown in the
- * navigation bar. If A1 and A2 are expanded and then the root menu item B is clicked 
- * (which expands B1), A1 would be replaced with B1, but A2 would still be expanded.
- * This method makes A2 collapse as well.
+ * Hides all nodes with the class `xl-hide-on-scroll` when scrolling down.
+ * When scrolling up, the nodes are displayed again.
+ *
+ * Exception: Elements having a descendant with the class `block-ancestor-hide` will always be displayed.
+ *
+ * @param {number} minScrollPosition The hide/show behaviour will only be activated after scrolling past this position.
+ *   Before, the elements will always be displayed.
  */
-function addCollapseToLevel2NavContainers() {
-    let levelOneItemContainers = document.querySelectorAll('.nav-level-1 .nav-item-container')
-    levelOneItemContainers.forEach(itemContainer => {
-        itemContainer.addEventListener('hide.bs.collapse', () => {
-            const levelTwoItemContainers = document.querySelectorAll('.nav-level-2 .nav-item-container')
-            levelTwoItemContainers.forEach(itemContainer => bootstrap.Collapse.getOrCreateInstance(itemContainer, { toggle: false, parent: '.nav-level-2' }).hide())
+const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
+    let currentScrollPosition = window.scrollY
+    let elements = document.querySelectorAll(".xl-hide-on-scroll")
+    if (
+        previousScrollPosition < currentScrollPosition &&
+        currentScrollPosition > minScrollPosition
+    ) {
+        elements.forEach((el) => {
+            if (el.querySelector(".block-ancestor-hide")) return
+            el.classList.add("hide-now")
         })
+    } else {
+        elements.forEach((el) => el.classList.remove("hide-now"))
+    }
+    previousScrollPosition = currentScrollPosition
+}
+
+const enableTooltips = () => {
+    const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+    )
+    Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
+        new bootstrap.Tooltip(tooltipTriggerEl)
     })
+}
+
+window.onload = () => {
+    updateNavbarPosition()
+    addNavbarCollapses()
+    adaptNavbarToWindowSize()
+    toggleElementVisibilityOnScroll()
+    respectNavbarHeight()
+
+    initializeSearch()
+
+    enableTooltips()
+}
+window.onscroll = () => {
+    updateNavbarPosition()
+    toggleElementVisibilityOnScroll(_navbarTop.offsetHeight)
+}
+window.onresize = () => {
+    adaptNavbarToWindowSize()
+    updateNavbarPosition()
 }

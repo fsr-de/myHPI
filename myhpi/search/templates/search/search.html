@@ -3,30 +3,82 @@
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}Search{% endblock %}
+{% block title %}Suche{% endblock %}
 
 {% block content %}
-    <h1>Search</h1>
+<h1 class="page-title">
+    <span class="underline">
+        Suche
+    </span>
+</h1>
 
-    {% include "search/search_field.html" %}
-    <p>
-    {% if search_results %}
-            {% for result in search_results %}
-                    <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-                    {% if result.search_description %}
-                        {{ result.search_description }}
-                    {% endif %}
-            {% endfor %}
+{% include "search/search_field.html" %}
 
-        {% if search_results.has_previous %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-        {% endif %}
+{% if search_results_page %}
 
-        {% if search_results.has_next %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-        {% endif %}
-    {% elif search_query %}
-        No results found
+<i class="d-block mb-3 ps-1">
+    {% if search_results_page.paginator.count == 1 %}
+    Ein Ergebnis gefunden.
+    {% else %}
+    {{ search_results_page.paginator.count }} Ergebnisse gefunden.
     {% endif %}
-    </p>
+</i>
+
+<ul class="search-result-list d-block pb-3">
+    {% for result in search_results_page %}
+    {% include "search/search_result.html" %}
+    {% endfor %}
+</ul>
+
+<nav aria-label="Page navigation" class="d-inline-block">
+    <ul class="pagination">
+        {% if search_results_page.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+                href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results_page.previous_page_number }}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for page_index in search_results_page.paginator.page_range %}
+        <li
+            {% if page_index == search_results_page.number %}
+            class="page-item active" aria-current="page"
+            {% else %}
+            class="page-item"
+            {% endif %}>
+            <a class="page-link"
+                href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ page_index }}">
+                {{ page_index }}
+            </a>
+        </li>
+        {% endfor %}
+        {% if search_results_page.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+                href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results_page.next_page_number }}"
+                aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% elif search_query %}
+<i class="d-block pb-3 ps-1">Keine Ergebnisse gefunden.</i>
+{% endif %}
 {% endblock %}

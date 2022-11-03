@@ -21,7 +21,8 @@
         {% endblock %}
     </title>
     <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" type="svg" href="{% static 'img/favicon/favicon.svg' %}" />
 
     {# Global stylesheets #}
     <link type="text/css" href="{% static "scss/myHPI.scss"|compile %}" rel="stylesheet">
@@ -32,30 +33,65 @@
     {% endblock %}
 </head>
 
-<body class="bg-background myhpi-accent-yellow {% block body_class %}{% endblock %}">
+<body class="bg-background myhpi-accent {% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <nav class="navbar-myhpi container-lg page d-print-none">
-        <div class="navbar-top bg-white">
-            {% with all_pages|all_sub_menu_pages_by_id as sub_pages_by_level_and_id %}
-            <div class="page-content d-flex">
-                <a class="nav-brand" href="{% pageurl root_page %}">
-                    <img src="{% static 'img/FSR_DE_color.svg' %}" class="w-100" alt="Zur Startseite">
-                </a>
-                {% build_menu_level sub_pages_by_level_and_id 0 %}
+    <nav id="navbar" class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top xl-hide-on-scroll">
+        <div class="navbar-top bg-white d-flex">
+            <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
+                <div id="navbar-left" class="d-flex align-items-center">
+                    <a class="nav-brand" href="{% pageurl root_page %}">
+                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="h-100" alt="Zur Startseite">
+                    </a>
+                </div>
+                <div id="nav-level-0" class="nav-level"></div>
+                <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
+                    <a id="nav-search-button" class="nav-link"
+                        onclick="showSearchModal(event)"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Strg+K"
+                        role="button">
+                        {% bs_icon 'search' size='1.4em' %}
+                    </a>
+                    <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
+                        onclick="toggleUserNavbar(event)"
+                        role="button"
+                        aria-expanded="false" aria-controls="nav-item-container-user">
+                        {% bs_icon 'person-circle' size='1.4em' %}
+                    </a>
+                    <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
+                        onclick="toggleMobileNavbar(event)"
+                        role="button"
+                        aria-expanded="false" aria-controls="nav-item-container-root">
+                        {% bs_icon 'list' size='1.4em' %}
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="navbar-bottom">
-            <div class="navbar-bottom-content page-content d-flex">
-                {% build_menu_level sub_pages_by_level_and_id 1 %}
-                {% build_menu_level sub_pages_by_level_and_id 2 %}
+        <div class="navbar-bottom d-flex">
+            <div class="navbar-bottom-content page-content d-flex flex-column flex-xl-row flex-grow-1 flex-xl-grow-0">
+                {% build_nav_level nav_root_pages %}
+
+                <!-- For navbar desktop mode: Wrappers for sub level containers of root level in navbar -->
+                <div id="nav-level-1" class="nav-level"></div>
+                <div id="nav-level-2" class="nav-level"></div>
+
+                <div id="nav-level-right"
+                    class="nav-level d-flex flex-column flex-grow-1 align-items-stretch align-items-xl-end">
+                    <ul id="nav-item-container-user" class="nav-item-container collapse"
+                        data-navbar-level="#nav-level-0">
+                        <li class="nav-item">
+                            <a class="nav-link" role="button">
+                                Abmelden
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="navbar-bottom-line"></div>
         </div>
-        {% endwith %}
     </nav>
 
-    <div class="container-lg page bg-white">
+    <div id="page" class="container-lg page bg-white">
         <div class="page-content">
             <div id="messages">
                 {% for message in messages %}
@@ -70,7 +106,7 @@
 
             {% if self.get_ancestors|length > 1 %}
             <nav aria-label="breadcrumb"
-                 class="d-print-none"
+                class="d-print-none"
                 style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,{% filter urlencode|slice:" 43:" %}{% bs_icon 'chevron-right' size="8" %}{% endfilter %} &#34;);">
                 <ol class="breadcrumb">
                     {% for ancestor_page in self.get_ancestors %}
@@ -87,8 +123,30 @@
         </div>
     </div>
 
+    <div id="searchModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="searchForm" class="d-flex align-items-center"
+                        action="{% url 'search' %}">
+                        <input id="searchInput" type="search" class="form-control me-3 " placeholder="Suchen..."
+                            aria-label="Suche" name="query">
+                        <button type="submit" class="btn btn-primary" aria-label="Suche starten"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-title="Enter">{% bs_icon 'search' size='1.4em' extra_classes="text-light" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% insert_footer %}
+
     {# Global javascript #}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
 
     {% block extra_js %}
