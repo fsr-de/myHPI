@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load voucher_extras %}
 {% load i18n %}
 {% load core_extras %}
 {% load wagtailcore_tags %}
@@ -9,14 +10,34 @@
         {{ parsed_md.0 }}
     {% endwith %}
     <h2>{% translate "Vouchers" %}</h2>
-    {% if voucher_allocation %}
-        {% for voucher in voucher_allocation.vouchers.all %}
-            <p>{{ voucher.get_type_display }}: <a href="{{ voucher.redemption_url }}" target="_blank">{{ voucher }}</a></p>
-        {% endfor %}
+    <h3>Your Ticket</h3>
+    {% if voucher_allocation.own_voucher %}
+        {% with voucher_allocation.own_voucher as voucher %}
+        <p>{{ voucher.get_type_display }}: <a href="{{ voucher.redemption_url }}" target="_blank">{{ voucher }}</a></p>
+        {% endwith %}
     {% else %}
         <form method="post">
             {% csrf_token %}
-            <input type="submit" value="Generate vouchers" />
+            <input type="submit" name="generate_own" value="Generate voucher for regular ticket" {% if request.user|is_angel %}disabled {% endif %}/>
+            <input type="submit" name="generate_angel" value="Generate voucher for angel ticket" {% if not request.user|is_angel %}disabled {% endif %}/>
         </form>
     {% endif %}
+    <h3>Additional tickets</h3>
+    {% if voucher_allocation.additional_vouchers.exists %}
+        {% for voucher in voucher_allocation.additional_vouchers.all %}
+        <p>{{ voucher.get_type_display }}: <a href="{{ voucher.redemption_url }}" target="_blank">{{ voucher }}</a></p>
+        {% endfor %}
+        {% if voucher_allocation.additional_vouchers.count < voucher_allocation.event.additional_voucher_count %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="generate_additional" value="Generate voucher" />
+        </form>
+        {% endif %}
+    {% else %}
+            <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="generate_additional" value="Generate voucher" />
+        </form>
+    {% endif %}
+
 {% endblock %}

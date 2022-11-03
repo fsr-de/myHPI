@@ -1,4 +1,3 @@
-import json
 import random
 import string
 from datetime import datetime
@@ -7,7 +6,9 @@ import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.db import models, transaction, IntegrityError
+from django.contrib.auth.decorators import login_required
+from django.db import models
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
@@ -19,7 +20,7 @@ from myhpi.core.models import BasePage
 class Event(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    voucher_count = models.IntegerField(default=2)
+    additional_voucher_count = models.IntegerField(default=1)
     regular_ticket_id = models.IntegerField()
     angel_ticket_id = models.IntegerField()
 
@@ -43,16 +44,34 @@ class Voucher(models.Model):
         return self.code
 
     def redemption_url(self):
+        event = None
         if self.voucherallocation_set.exists():
             event = self.voucherallocation_set.first().event
-            return f"{settings.PRETIX_BASE_URL}/verde/{event.slug}/redeem?voucher={self.code}"
-        return None
+        elif self.own_voucher is not None:
+            event = self.own_voucher.event
+        return f"{settings.PRETIX_BASE_URL}/verde/{event.slug}/redeem?voucher={self.code}" if event else None
+
+    def submit_to_pretix(self, event, user):
+        voucher_data = {
+            "code": self.code,
+            "max_usages": 1,
+            "item": event.angel_ticket_id if self.type == self.ANGEL_TYPE else event.regular_ticket_id,
+            "tag": "angel" if self.type == self.ANGEL_TYPE else "regular",
+            "comment": f"created for {user.email} at {datetime.now()}",
+            "show_hidden_items": True,
+        }
+        return requests.post(
+            url=f"{settings.PRETIX_BASE_URL}/api/v1/organizers/verde/events/{event.slug}/vouchers/",
+            headers={"Authorization": f"Token {settings.PRETIX_API_TOKEN}"},
+            data=voucher_data
+        )
 
 
 class VoucherAllocation(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    vouchers = models.ManyToManyField(Voucher)
+    own_voucher = models.OneToOneField(Voucher, on_delete=models.CASCADE, related_name="own_voucher", null=True, blank=True)
+    additional_vouchers = models.ManyToManyField(Voucher)
 
     def __str__(self):
         return f"Voucher allocation for {self.user} @ {self.event}"
@@ -71,54 +90,46 @@ class VoucherObtainPage(BasePage):
         FieldPanel("event"),
     ]
 
+    @method_decorator(login_required, name='dispatch')
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
-            if VoucherAllocation.objects.filter(user=request.user, event=self.event).exists():
-                messages.error(request, _("You already have a voucher for this event."))
-            else:
-                is_angel = False  # TODO: get from engelsystem
-                voucher_data = []
-                vouchers = []
-                if is_angel:
-                    voucher = Voucher(type=Voucher.ANGEL_TYPE, code=''.join(random.choice(string.ascii_uppercase) for i in range(16)))
-                    voucher_data.append({
-                        "code": voucher.code,
-                        "max_usages": 1,
-                        "item": self.event.angel_ticket_id,
-                        "tag": "angel",
-                        "comment": f"created for {request.user.email} at {datetime.now()}",
-                    })
-                    vouchers.append(voucher)
-                for i in range(self.event.voucher_count - len(voucher_data)):
-                    voucher = Voucher(code=''.join(random.choice(string.ascii_uppercase) for i in range(16)))
-                    voucher_data.append({
-                      "code": voucher.code,
-                      "max_usages": 1,
-                      "item": self.event.regular_ticket_id,
-                      "tag": "regular",
-                      "comment": f"created for {request.user.email} at {datetime.now()}",
-                    })
-                    vouchers.append(voucher)
-                result = requests.post(
-                    url=f"{settings.PRETIX_BASE_URL}/api/v1/organizers/verde/events/{self.event.slug}/vouchers/batch_create/",
-                    headers={"Authorization": f"Token {settings.PRETIX_API_TOKEN}"},
-                    json=voucher_data
-                )
-                if result.status_code != 201:
-                    messages.error(request, _("An error occurred while creating your vouchers."))
-                    print(result.content)
+            if "generate_own" in request.POST or "generate_angel" in request.POST:
+                if "generate_own" in request.POST and is_angel(request.user) or "generate_angel" in request.POST and not is_angel(request.user):
+                    messages.error(request, "You are not allowed to generate this type of voucher.")
+                if (allocation := VoucherAllocation.objects.filter(user=request.user, event=self.event)).exists() and allocation.first().own_voucher is not None:
+                    messages.error(request, _("You already have an own voucher."))
                 else:
-                    try:
-                        with transaction.atomic():
-                            allocation = VoucherAllocation.objects.create(user=request.user, event=self.event)
-                            for voucher in vouchers:
-                                voucher.save()
-                                allocation.vouchers.add(voucher)
+                    voucher = Voucher(type=Voucher.ANGEL_TYPE if is_angel(request.user) else Voucher.REGULAR_TYPE, code=''.join(random.choice(string.ascii_uppercase) for i in range(16)))
+                    result = voucher.submit_to_pretix(self.event, request.user)
+                    if result.status_code != 201:
+                        messages.error(request, _("An error occurred while creating your voucher."))
+                    else:
+                        voucher.save()
+                        if not allocation.exists():
+                            allocation = VoucherAllocation(user=request.user, event=self.event)
+                        else:
+                            allocation = allocation.first()
+                        allocation.own_voucher = voucher
+                        allocation.save()
+                        messages.success(request, _("Your voucher has been created."))
+            elif "generate_additional" in request.POST:
+                if (allocation := VoucherAllocation.objects.filter(user=request.user, event=self.event)).exists() and allocation.first().additional_vouchers.count() >= self.event.additional_voucher_count:
+                    messages.error(request, _("You cannot create additional vouchers."))
+                else:
+                    voucher = Voucher(code=''.join(random.choice(string.ascii_uppercase) for i in range(16)))
+                    result = voucher.submit_to_pretix(self.event, request.user)
+                    if result.status_code != 201:
+                        messages.error(request, _("An error occurred while creating your voucher."))
+                    else:
+                        voucher.save()
+                        if not allocation.exists():
+                            allocation = VoucherAllocation(user=request.user, event=self.event)
                             allocation.save()
-                            messages.success(request, _("Your vouchers have been created."))
-                    except IntegrityError as e:
-                        print(e)
-                        messages.error(request, _("An error occurred while creating your vouchers."))
+                        else:
+                            allocation = allocation.first()
+                        allocation.additional_vouchers.add(Voucher.objects.get(code=voucher.code))
+                        allocation.save()
+                        messages.success(request, _("Your voucher has been created."))
         return super().serve(request, *args, **kwargs)
 
     def get_context(self, request, *args, **kwargs):
@@ -128,3 +139,7 @@ class VoucherObtainPage(BasePage):
         except VoucherAllocation.DoesNotExist:
             pass
         return context
+
+
+def is_angel(user):
+    return True  # TODO: get from Engelsystem
