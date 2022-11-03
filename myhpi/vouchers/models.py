@@ -135,7 +135,7 @@ class VoucherObtainPage(BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         try:
-            context["voucher_allocation"] = VoucherAllocation.objects.get(user=request.user)
+            context["voucher_allocation"] = VoucherAllocation.objects.get(user=request.user, event=self.event)
         except VoucherAllocation.DoesNotExist:
             pass
         return context
