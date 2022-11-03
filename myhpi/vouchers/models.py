@@ -80,7 +80,7 @@ class VoucherObtainPage(BasePage):
                 voucher_data = []
                 vouchers = []
                 if is_angel:
-                    voucher = Voucher(code=''.join(random.choice(string.ascii_uppercase) for i in range(16)))
+                    voucher = Voucher(type=Voucher.ANGEL_TYPE, code=''.join(random.choice(string.ascii_uppercase) for i in range(16)))
                     voucher_data.append({
                         "code": voucher.code,
                         "max_usages": 1,
