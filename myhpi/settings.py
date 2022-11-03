@@ -268,3 +268,9 @@ ALUMNI_EMAIL_REPLACEMENTS = [
     ("hpi.de", "student.hpi.de"),
     ("hpi.uni-potsdam.de", "student.hpi.uni-potsdam.de"),
 ]
+
+ENABLE_VOUCHERS = env.bool("ENABLE_VOUCHERS", False)
+
+if ENABLE_VOUCHERS:
+    PRETIX_API_TOKEN = env.str("PRETIX_API_TOKEN")
+    PRETIX_BASE_URL = env.str("PRETIX_BASE_URL")
