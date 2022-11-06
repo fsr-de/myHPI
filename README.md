@@ -18,7 +18,6 @@ To set up a development version on your local machine, you need to execute the f
 1. Migrate the database with `python manage.py migrate`
 1. Compile translations with `python manage.py compilemessages` (does not work on Windows, recommended to skip this step or see [docs](https://docs.djangoproject.com/en/4.0/topics/i18n/translation/#gettext-on-windows))
 1. Create a local superuser with `python manage.py createsuperuser`
-1. Create default pages (e.g. the Footer) with `python manage.py initializesite`
 1. Start the development server with `python manage.py runserver`
 1. Open your web browser, visit `http://localhost:8000/admin` and log in with the user you just created
 

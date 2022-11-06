@@ -202,7 +202,7 @@ else:
 
 STATIC_URL = env.str("STATIC_URL")
 STATIC_ROOT = env.str("STATIC_ROOT")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "myhpi/static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "myhpi", "static"),)
 
 MEDIA_ROOT = env.str("MEDIA_ROOT")
 MEDIA_URL = env.str("MEDIA_URL")

@@ -11,6 +11,7 @@ def create_homepage(apps, schema_editor):
     Page = apps.get_model("wagtailcore.Page")
     Site = apps.get_model("wagtailcore.Site")
     RootPage = apps.get_model("core.RootPage")
+    Footer = apps.get_model("core.Footer")
 
     # Delete the default homepage generated in 0002_initial_data of wagtailcore
     # If migration is run multiple times, it may have already been deleted
@@ -19,6 +20,11 @@ def create_homepage(apps, schema_editor):
     # Create content type for homepage model
     homepage_content_type, __ = ContentType.objects.get_or_create(
         model="rootpage", app_label="core"
+    )
+
+    # Create content type for footer model
+    footer_content_type, __ = ContentType.objects.get_or_create(
+        model="footer", app_label="core"
     )
 
     # Create a new homepage
@@ -41,6 +47,13 @@ def create_homepage(apps, schema_editor):
         hostname="localhost",
         root_page=homepage,
         is_default_site=True,
+    )
+
+    Footer.objects.get_or_create(
+        column_1="# Fachschaft\r\n\r\n- [Twitter](https://twitter.com/fachschaftsrat)\r\n- [Discord](https://discord.com)\r\n- [Telegram](https://telegram.org)",
+        column_2="# Rechtliches\r\n\r\n- [Impressum]()\r\n- [Datenschutzerklärung]()",
+        column_3="# Entwicklung\r\n\r\n- [GitHub](https://github.com/fsr-de/myHPI/)",
+        column_4="# Sprache\r\n\r\n",
     )
 
 
