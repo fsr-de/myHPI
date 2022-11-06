@@ -15,6 +15,7 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.models import Page, Site
 from wagtail.documents.models import Document
 from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
@@ -180,7 +181,7 @@ class Minutes(BasePage):
     )
     participants = ParentalManyToManyField(User, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
-    text = CustomMarkdownField()
+    body = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
     attachments = ParentalManyToManyField(Document, blank=True)
 
@@ -190,7 +191,7 @@ class Minutes(BasePage):
         FieldPanel("author"),
         FieldPanel("participants", widget=UserSelectWidget),
         FieldPanel("labels"),
-        FieldPanel("text"),
+        FieldPanel("body"),
         FieldPanel("guests"),
         FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]
@@ -209,6 +210,32 @@ class RootPage(InformationPage):
     template = "core/information_page.html"
 
     parent_page_types = ["wagtailcore.Page"]
+
+
+@register_snippet
+class Footer(models.Model):
+    column_1 = CustomMarkdownField()
+    column_2 = CustomMarkdownField()
+    column_3 = CustomMarkdownField()
+    column_4 = CustomMarkdownField()
+
+    panels = [
+        FieldPanel("column_1"),
+        FieldPanel("column_2"),
+        FieldPanel("column_3"),
+        FieldPanel("column_4"),
+    ]
+
+    def __str__(self):
+        def get_first_line(content):
+            return content.split("\n", 1)[0]
+
+        return (
+            get_first_line(self.column_1)
+            + get_first_line(self.column_2)
+            + get_first_line(self.column_3)
+            + get_first_line(self.column_4)
+        )
 
 
 class FirstLevelMenuItem(BasePage):
@@ -239,7 +266,9 @@ class AbbreviationExplanation(Model):
 
 
 class RedirectMenuItem(BasePage):
-    parent_page_types = ["RootPage"]
+    parent_page_types = [
+        "RootPage",
+    ]
     subpage_types = []
     show_in_menus_default = True
 

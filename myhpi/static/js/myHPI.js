@@ -48,12 +48,25 @@ const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
     previousScrollPosition = currentScrollPosition
 }
 
+const enableTooltips = () => {
+    const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+    )
+    Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
+        new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
+
 window.onload = () => {
     updateNavbarPosition()
     addNavbarCollapses()
     adaptNavbarToWindowSize()
     toggleElementVisibilityOnScroll()
     respectNavbarHeight()
+
+    initializeSearch()
+
+    enableTooltips()
 }
 window.onscroll = () => {
     updateNavbarPosition()
@@ -63,9 +76,3 @@ window.onresize = () => {
     adaptNavbarToWindowSize()
     updateNavbarPosition()
 }
-
-// POST Request for logging out
-document.getElementById("navbar-logout-link").addEventListener("click",function(e) {
-    e.preventDefault();
-    document.getElementById("logout-form").submit();
-});

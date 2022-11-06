@@ -1,0 +1,15 @@
+{% load static wagtailcore_tags %}
+{% load bootstrap_icons %}
+
+<a href="{% pageurl result %}">
+    <div class="search-result">
+        <h5>{{ result.title }}</h5>
+        <span class="text-dark">
+            {% if result.search_description %}
+                {{ result.search_description }}
+            {% else %}
+                {{ result.specific.body|truncatewords:20 }}
+            {% endif %}
+        </span>
+    </div>
+</a>

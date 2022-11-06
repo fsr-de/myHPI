@@ -134,6 +134,7 @@ cython_debug/
 
 # IDEA files
 .idea/
+.fleet/
 
 # Visual Studio Code files
 .vscode/
@@ -143,3 +144,4 @@ cython_debug/
 
 bootstrap/
 bootstrap.bundle.min.js*
+tmp/

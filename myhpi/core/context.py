@@ -15,7 +15,7 @@ def base_context(request):
     depth_levels = set()
 
     if not root_page:
-        return {"root_page": None, "all_pages": None}
+        return {"root_page": None, "all_pages": None, "nav_root_pages": None}
 
     # Add root page to path map - only needed if root page is NOT a base page (yet)
     root_page.menu_children = []
@@ -54,7 +54,6 @@ def base_context(request):
         depth_levels.remove(deepest_level)
 
     # Return root page and all of their children
-    print(path_map, root_page.path)
     root_children = path_map[root_page.path].menu_children
     return {
         "root_page": root_page,

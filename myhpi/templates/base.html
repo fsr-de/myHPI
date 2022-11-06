@@ -4,7 +4,6 @@
 {% load core_extras %}
 {% load compile_static %}
 {% load bootstrap_icons %}
-{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,13 +46,18 @@
                 </div>
                 <div id="nav-level-0" class="nav-level"></div>
                 <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
-                    {% if user.is_anonymous %}
-                        <a id="nav-user-toggle" class="nav-link" class="dropdown-item" href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
-                    {% else %}
+                    <a id="nav-search-button" class="nav-link"
+                        onclick="showSearchModal(event)"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Strg+K"
+                        role="button">
+                        {% bs_icon 'search' size='1.4em' %}
+                    </a>
+                    {% if user.is_authenticated %}
                         <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
                             onclick="toggleUserNavbar(event)"
                             role="button"
                             aria-expanded="false" aria-controls="nav-item-container-user">
+                            {{ user.first_name }} {{ user.last_name }}
                             {% bs_icon 'person-circle' size='1.4em' %}
                         </a>
                         <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
@@ -62,11 +66,13 @@
                             aria-expanded="false" aria-controls="nav-item-container-root">
                             {% bs_icon 'list' size='1.4em' %}
                         </a>
+                    {% else %}
+                        <a id="nav-user-toggle" class="nav-link" class="dropdown-item" href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="navbar-bottom d-flex overflow-hidden">
+        <div class="navbar-bottom d-flex">
             <div class="navbar-bottom-content page-content d-flex flex-column flex-xl-row flex-grow-1 flex-xl-grow-0">
                 {% build_nav_level nav_root_pages %}
 
@@ -75,21 +81,22 @@
                 <div id="nav-level-2" class="nav-level"></div>
 
                 <div id="nav-level-right"
-                    class="nav-level d-flex flex-column flex-grow-1 align-items-stretch align-items-xl-end">
-
-
+                    class="nav-level d-flex flex-column flex-grow-2 align-items-stretch align-items-xl-end">
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
-                        {% if not user.is_anonymous %}
+                        {% if user.groups.all|length > 0 %}<span class="nav-bar-group-header"><i>Deine Gruppen:</i></span>{% endif %}
+                        {% for group in user.groups.all %}
+                            <li class="nav-bar-group-item">{{ group }} </li>
+                            {% empty %}
+                            {% endfor %}
+                        <li class="dropdown-divider"></li>
                         <li class="nav-item">
-                                <a class="dropdown-item" href="/" id="navbar-logout-link">Logout</a>
-                                <form action="{% url 'oidc_logout' %}" method="post" id="logout-form" hidden>
-                                    {% csrf_token %}
-                                </form>
+                            <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item" href="/">Logout</button>
+                            </form>
                         </li>
-                        {% endif %}
                     </ul>
-
                 </div>
             </div>
             <div class="navbar-bottom-line"></div>
@@ -128,10 +135,30 @@
         </div>
     </div>
 
+    <div id="searchModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="searchForm" class="d-flex align-items-center"
+                        action="{% url 'search' %}">
+                        <input id="searchInput" type="search" class="form-control me-3 " placeholder="Suchen..."
+                            aria-label="Suche" name="query">
+                        <button type="submit" class="btn btn-primary" aria-label="Suche starten"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-title="Enter">{% bs_icon 'search' size='1.4em' extra_classes="text-light" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% insert_footer %}
+
     {# Global javascript #}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
 
     {% block extra_js %}

@@ -29,19 +29,19 @@ def search(request):
         search_results = Page.objects.none()
 
     # Pagination
-    paginator = Paginator(search_results, 10)
+    paginator = Paginator(search_results, 20)
     try:
-        search_results = paginator.page(page)
+        search_results_page = paginator.page(page)
     except PageNotAnInteger:
-        search_results = paginator.page(1)
+        search_results_page = paginator.page(1)
     except EmptyPage:
-        search_results = paginator.page(paginator.num_pages)
+        search_results_page = paginator.page(paginator.num_pages)
 
     return TemplateResponse(
         request,
         "search/search.html",
         {
             "search_query": search_query,
-            "search_results": search_results,
+            "search_results_page": search_results_page,
         },
     )

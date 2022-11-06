@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("date", models.DateField()),
-                ("text", wagtailmarkdown.fields.MarkdownField()),
+                ("body", wagtailmarkdown.fields.MarkdownField()),
                 (
                     "author",
                     models.ForeignKey(
@@ -266,5 +266,20 @@ class Migration(migrations.Migration):
             field=modelcluster.fields.ParentalManyToManyField(
                 related_name="minutes", to=settings.AUTH_USER_MODEL
             ),
+        ),
+        migrations.CreateModel(
+            name="Footer",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("column_1", wagtailmarkdown.fields.MarkdownField()),
+                ("column_2", wagtailmarkdown.fields.MarkdownField()),
+                ("column_3", wagtailmarkdown.fields.MarkdownField()),
+                ("column_4", wagtailmarkdown.fields.MarkdownField()),
+            ],
         ),
     ]
