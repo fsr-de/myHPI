@@ -23,9 +23,7 @@ def create_homepage(apps, schema_editor):
     )
 
     # Create content type for footer model
-    footer_content_type, __ = ContentType.objects.get_or_create(
-        model="footer", app_label="core"
-    )
+    footer_content_type, __ = ContentType.objects.get_or_create(model="footer", app_label="core")
 
     # Create a new homepage
     homepage, __ = RootPage.objects.get_or_create(
