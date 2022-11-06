@@ -133,6 +133,17 @@ class EnterLeavePreprocessor(MinutesBasePreprocessor):
         return self.enter_or_leavify(match, _("leaves"))
 
 
+class HeadingLevelPreprocessor(MinutesBasePreprocessor):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.patterns = [
+            (r"^#{1,5}", self.decrease),
+        ]
+
+    def decrease(self, match):
+        return f"{match.group(0)}#"
+
+
 class InternalLinkPattern(LinkInlineProcessor):
     def handleMatch(self, m, data=None):
         el = markdown.util.etree.Element("a")
@@ -155,6 +166,7 @@ class MinuteExtension(Extension):
         md.preprocessors.register(BreakPreprocessor(md), "breakify", 200)
         md.preprocessors.register(QuorumPrepocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
+        md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
         md.inlinePatterns.register(
             InternalLinkPattern(r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)", md),
             "InternalLinkPattern",
