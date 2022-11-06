@@ -84,12 +84,12 @@
                     class="nav-level d-flex flex-column flex-grow-2 align-items-stretch align-items-xl-end">
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
-                        {% if user.groups.all|length > 0 %}<span class="nav-bar-group-header"><i>Deine Gruppen:</i></span>{% endif %}
-                        {% for group in user.groups.all %}
-                            <li class="nav-bar-group-item">{{ group }} </li>
-                            {% empty %}
-                            {% endfor %}
-                        <li class="dropdown-divider"></li>
+                        {% if user.groups.all.exists %}<span class="nav-bar-group-header"><i>Deine Gruppen:</i></span>
+                            {% for group in user.groups.all %}
+                                <li class="nav-bar-group-item">{{ group }} </li>
+                                {% endfor %}
+                            <li class="dropdown-divider"></li>
+                        {% endif %}
                         <li class="nav-item">
                             <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
                                 {% csrf_token %}
