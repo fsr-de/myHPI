@@ -267,4 +267,19 @@ class Migration(migrations.Migration):
                 related_name="minutes", to=settings.AUTH_USER_MODEL
             ),
         ),
+        migrations.CreateModel(
+            name="Footer",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("column_1", wagtailmarkdown.fields.MarkdownField()),
+                ("column_2", wagtailmarkdown.fields.MarkdownField()),
+                ("column_3", wagtailmarkdown.fields.MarkdownField()),
+                ("column_4", wagtailmarkdown.fields.MarkdownField()),
+            ],
+        ),
     ]
