@@ -269,7 +269,7 @@ requests = "*"
 
 [[package]]
 name = "django-debug-toolbar"
-version = "3.6.0"
+version = "3.7.0"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "main"
 optional = false
@@ -1146,7 +1146,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "740db525f806e1d6ddf57255f930813af61d3d91f55651c280cf88ced737c8df"
+content-hash = "b2061c055f6cd2079e023cec2d68bc21f0f4f752bc56743f29ca375cb1f78412"
 
 [metadata.files]
 anyascii = [
@@ -1402,8 +1402,8 @@ django-bootstrap-icons = [
     {file = "django_bootstrap_icons-0.8.1-py3-none-any.whl", hash = "sha256:09b438ae4a0eec57d4e35fcda4f2b73549cdaffe422fc1cc07c0dc6e18a38d1b"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-3.6.0.tar.gz", hash = "sha256:95fc2fd29c56cc86678aae9f6919ececefe892f2a78c4004b193a223a8380c3d"},
-    {file = "django_debug_toolbar-3.6.0-py3-none-any.whl", hash = "sha256:fe7fe3f21865218827e2162ecc06eba386dfe8cffe4f3501c49bb4359e06a0e6"},
+    {file = "django-debug-toolbar-3.7.0.tar.gz", hash = "sha256:1e3acad24e3d351ba45c6fa2072e4164820307332a776b16c9f06d1f89503465"},
+    {file = "django_debug_toolbar-3.7.0-py3-none-any.whl", hash = "sha256:80de23066b624d3970fd296cf02d61988e5d56c31aa0dc4a428970b46e2883a8"},
 ]
 django-environ = [
     {file = "django-environ-0.9.0.tar.gz", hash = "sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21"},
