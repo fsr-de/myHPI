@@ -1041,7 +1041,7 @@ testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=5.1,<6.0)", "azure-mgmt-fro
 
 [[package]]
 name = "wagtail-localize"
-version = "1.3.1"
+version = "1.3.2"
 description = "Translation plugin for Wagtail CMS"
 category = "main"
 optional = false
@@ -1789,8 +1789,8 @@ wagtail = [
     {file = "wagtail-3.0.3.tar.gz", hash = "sha256:23b3e541401355ea183372582050ea52b049c956dd5b506197f957bb68423ab3"},
 ]
 wagtail-localize = [
-    {file = "wagtail-localize-1.3.1.tar.gz", hash = "sha256:016056c77f18c7f6049269feebe64e50efb894e5e6ed1b33288b004f7d9eb281"},
-    {file = "wagtail_localize-1.3.1-py3-none-any.whl", hash = "sha256:a9f699e8bf32c3cfa95330cdc214d36a0bcff007a8263dafe3a7a4ac21c39696"},
+    {file = "wagtail-localize-1.3.2.tar.gz", hash = "sha256:6ab8f4f5047b2147c72dded0d118a97ce9dfbd15f1f5f781f0c3e63e51d46bb3"},
+    {file = "wagtail_localize-1.3.2-py3-none-any.whl", hash = "sha256:6a94698557a6ce4f04894f26067fbe142996ac4e3332446340668697858844de"},
 ]
 wagtail-markdown = [
     {file = "wagtail-markdown-0.10.0.tar.gz", hash = "sha256:b16be4b6e3518cc6dd15ab335cbc6d6a9122b5d7e3a61fa11c83597e2660044e"},
