@@ -351,7 +351,7 @@ test = ["pytest", "pytest-cov", "pytest-django", "selenium"]
 
 [[package]]
 name = "django-static-precompiler"
-version = "2.1"
+version = "2.2"
 description = "Django template tags to compile all kinds of static files (SASS, LESS, Stylus, CoffeeScript, Babel, LiveScript, Handlebars)."
 category = "main"
 optional = false
@@ -1146,7 +1146,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "c5b154ef65ebba756315f47801c3391f05ed1a31a54461c7213e9713f17bc9c1"
+content-hash = "9e7be431f07f33b54dae26c8ff2b2e6144ab8b5cf19dcb8b51cb3e2e5c4f21f0"
 
 [metadata.files]
 anyascii = [
@@ -1426,7 +1426,7 @@ django-select2 = [
     {file = "django_select2-8.0.0-py3-none-any.whl", hash = "sha256:38e2c91c99f0da07bb43addfa1ac3a2cd6a209154a93edbf4564b9203fa32a4d"},
 ]
 django-static-precompiler = [
-    {file = "django-static-precompiler-2.1.tar.gz", hash = "sha256:4052db9f90558f1a31168fcd185db2be38f2e50c3f1e8442ba381a39335f2fae"},
+    {file = "django-static-precompiler-2.2.tar.gz", hash = "sha256:6430f98252a105eb1545e655cfe0f713a0636918c8b529826c16f3765b5afb15"},
 ]
 django-taggit = [
     {file = "django-taggit-2.1.0.tar.gz", hash = "sha256:a9f41e4ad58efe4b28d86f274728ee87eb98eeae90c9eb4b4efad39e5068184e"},
