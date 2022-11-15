@@ -615,7 +615,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "mozilla-django-oidc"
-version = "2.0.0"
+version = "3.0.0"
 description = "A lightweight authentication and access management library for integration with OpenID Connect enabled authentication services."
 category = "main"
 optional = false
@@ -623,7 +623,7 @@ python-versions = "*"
 
 [package.dependencies]
 cryptography = "*"
-Django = ">=2.2"
+Django = ">=3.2"
 josepy = "*"
 requests = "*"
 
@@ -1146,7 +1146,7 @@ pgsql = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "bf5a7b95b40f0a60fce32460e4e9c0d3c0f11cb493e1067a8e2f58b1ab1e77a4"
+content-hash = "6521f303c002e953338e115de29480fea32d5f1b96cb9eed896f313a5b9eb55f"
 
 [metadata.files]
 anyascii = [
@@ -1555,8 +1555,8 @@ mccabe = [
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
 ]
 mozilla-django-oidc = [
-    {file = "mozilla-django-oidc-2.0.0.tar.gz", hash = "sha256:a8b2f27c69c122d2f4d801c3759761d33debf06ae9dabbab8aed82887bba3bb8"},
-    {file = "mozilla_django_oidc-2.0.0-py2.py3-none-any.whl", hash = "sha256:53c39755b667e8c5923b1dffc3c29673198d03aa107aa42ac86b8a38b4720c25"},
+    {file = "mozilla-django-oidc-3.0.0.tar.gz", hash = "sha256:a7d447af83cb5aa1671a24009b0ce6b2f0d259e9c58d8c88c7a8d0c27c05c04d"},
+    {file = "mozilla_django_oidc-3.0.0-py2.py3-none-any.whl", hash = "sha256:f535eeddf03698ad9fd89dd87037828e9c7d503771acef21f0509f6cc42fc875"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
