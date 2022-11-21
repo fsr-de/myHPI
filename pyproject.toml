@@ -22,7 +22,7 @@ wagtail-markdown = "^0.10.0"
 autoflake = "^1.7.7"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.15.5"
+pylint = "^2.15.6"
 black = "^22.10"
 isort = "^5.8.0"
 autoflake = "^1.4"
