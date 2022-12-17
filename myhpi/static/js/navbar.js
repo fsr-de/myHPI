@@ -231,8 +231,8 @@ const moveRootLevelToDesktopLayout = () => {
     const rootNavLevelContainer = document.querySelector("#nav-level-0")
     const rootLevel = document.querySelector("#nav-item-container-root")
     rootNavLevelContainer.appendChild(rootLevel)
+    document.getElementById("user-information-username").hidden = false
 }
-
 const setDesktopNavbar = () => {
     if (isNavbarInDesktopMode) return
     isNavbarInDesktopMode = true
@@ -267,6 +267,7 @@ const moveNonRootLevelsToMobileLayout = () => {
         })
 }
 
+
 /**
  * Moves the nodes of the root navbar level from the desktop to the mobile layout.
  */
@@ -274,6 +275,7 @@ const moveRootLevelToMobileLayout = () => {
     const bottomNavContainer = document.querySelector(".navbar-bottom-content")
     const rootLevel = document.querySelector("#nav-item-container-root")
     bottomNavContainer.appendChild(rootLevel)
+    document.getElementById("user-information-username").hidden = true
 }
 
 const setMobileNavbar = () => {

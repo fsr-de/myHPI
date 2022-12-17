@@ -22,6 +22,10 @@ const toggleHideOnScrollBlock = (element) => {
     element.classList.toggle("block-ancestor-hide")
 }
 
+document.getElementById("logout-link").onclick = (e) => {
+    document.getElementById("logout-form").submit()
+}
+
 /**
  * Hides all nodes with the class `xl-hide-on-scroll` when scrolling down.
  * When scrolling up, the nodes are displayed again.

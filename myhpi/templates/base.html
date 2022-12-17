@@ -26,7 +26,7 @@
 
     {# Global stylesheets #}
     <link type="text/css" href="{% static "scss/myHPI.scss"|compile %}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/myHPI.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/myHPI.css' %}?v=1">
 
     {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
@@ -57,7 +57,7 @@
                             onclick="toggleUserNavbar(event)"
                             role="button"
                             aria-expanded="false" aria-controls="nav-item-container-user">
-                            {{ user.first_name }} {{ user.last_name }}
+                            <span id="user-information-username" hidden>{{ user.first_name }} {{ user.last_name }}</span>
                             {% bs_icon 'person-circle' size='1.4em' %}
                         </a>
                         <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
@@ -67,7 +67,11 @@
                             {% bs_icon 'list' size='1.4em' %}
                         </a>
                     {% else %}
-                        <a id="nav-user-toggle" class="nav-link" class="dropdown-item" href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">Login</a>
+                        <a id="nav-user-toggle" class="nav-link" class="nav-link"
+                           href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">
+                            Login
+                            {% bs_icon 'box-arrow-in-right' size='1.4em' %}
+                        </a>
                     {% endif %}
                 </div>
             </div>
@@ -81,19 +85,20 @@
                 <div id="nav-level-2" class="nav-level"></div>
 
                 <div id="nav-level-right"
-                    class="nav-level d-flex flex-column flex-grow-2 align-items-stretch align-items-xl-end">
+                    class="nav-level d-flex flex-column flex-grow-1 align-items-stretch align-items-xl-end">
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
-                        {% if user.groups.all.exists %}<span class="nav-bar-group-header"><i>Deine Gruppen:</i></span>
+                        {% if user.groups.all.exists %}
+                            <span class="nav-link no-hover" id="navbar-groups-header"><i>Deine Gruppen:</i></span>
                             {% for group in user.groups.all %}
-                                <li class="nav-bar-group-item">{{ group }} </li>
+                                <li class="nav-link no-hover nav-link-extra-indent">{{ group }}</li>
                                 {% endfor %}
                             <li class="dropdown-divider"></li>
                         {% endif %}
                         <li class="nav-item">
+                            <a class='nav-link' href="#" id="logout-link">Logout</a>
                             <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
                                 {% csrf_token %}
-                                <button type="submit" class="dropdown-item" href="/">Logout</button>
                             </form>
                         </li>
                     </ul>

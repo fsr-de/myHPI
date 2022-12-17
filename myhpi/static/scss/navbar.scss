@@ -71,6 +71,11 @@
     transform: translateY(7%);
 }
 
+.nav-link-extra-indent {
+    padding-top: var(--bs-p2);
+    padding-left: calc(var(--bs-p-4) * 2) !important;
+}
+
 .navbar-bottom {
     background-color: var(--bs-body-bg-light);
 
@@ -199,4 +204,8 @@
             transform: rotateZ(180deg) !important;
         }
     }
+}
+
+.no-hover {
+    pointer-events: none;
 }
