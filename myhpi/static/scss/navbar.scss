@@ -66,14 +66,13 @@
 .nav-brand {
     display: inline-block;
     height: 2rem;
-    margin: 1rem;
-    margin-left: 0;
+    margin: 1rem 1rem 1rem 0;
     transform: translateY(7%);
 }
 
 .nav-link-extra-indent {
     padding-top: var(--bs-p2);
-    padding-left: calc(var(--bs-p-4) * 2) !important;
+    padding-left: calc(var(--bs-p-4) * 2);
 }
 
 .navbar-bottom {
