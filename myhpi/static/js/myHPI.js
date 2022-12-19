@@ -11,6 +11,12 @@ let previousScrollPosition = window.scrollY
 
 /* Logic */
 
+const enableLogout = () => {
+    document.querySelector("#logout-link").onclick = () => {
+        document.querySelector("#logout-form").submit()
+    }
+}
+
 /**
  * Toggles whether the given element prevents an ancestor from being hidden when scrolling down.
  *
@@ -20,10 +26,6 @@ let previousScrollPosition = window.scrollY
  */
 const toggleHideOnScrollBlock = (element) => {
     element.classList.toggle("block-ancestor-hide")
-}
-
-document.getElementById("logout-link").onclick = (e) => {
-    document.getElementById("logout-form").submit()
 }
 
 /**
@@ -67,10 +69,12 @@ window.onload = () => {
     adaptNavbarToWindowSize()
     toggleElementVisibilityOnScroll()
     respectNavbarHeight()
+    enableLogout()
 
     initializeSearch()
 
     enableTooltips()
+
 }
 window.onscroll = () => {
     updateNavbarPosition()

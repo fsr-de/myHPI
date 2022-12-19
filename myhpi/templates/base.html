@@ -57,7 +57,7 @@
                             onclick="toggleUserNavbar(event)"
                             role="button"
                             aria-expanded="false" aria-controls="nav-item-container-user">
-                            <span id="user-information-username" hidden>{{ user.first_name }} {{ user.last_name }}</span>
+                            <span id="user-information-username" class="d-none" aria-hidden="true">{{ user.first_name }} {{ user.last_name }}</span>
                             {% bs_icon 'person-circle' size='1.4em' %}
                         </a>
                         <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
@@ -69,7 +69,7 @@
                     {% else %}
                         <a id="nav-user-toggle" class="nav-link" class="nav-link"
                            href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">
-                            Login
+                            Anmelden
                             {% bs_icon 'box-arrow-in-right' size='1.4em' %}
                         </a>
                     {% endif %}
@@ -89,14 +89,14 @@
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
                         {% if user.groups.all.exists %}
-                            <span class="nav-link no-hover" id="navbar-groups-header"><i>Deine Gruppen:</i></span>
+                            <span class="nav-link pe-none" id="navbar-groups-header"><i>Deine Gruppen:</i></span>
                             {% for group in user.groups.all %}
-                                <li class="nav-link no-hover nav-link-extra-indent">{{ group }}</li>
+                                <li class="nav-link pe-none nav-link-extra-indent">{{ group }}</li>
                                 {% endfor %}
                             <li class="dropdown-divider"></li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class='nav-link' href="#" id="logout-link">Logout</a>
+                            <a class='nav-link' href="#" id="logout-link">Abmelden</a>
                             <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
                                 {% csrf_token %}
                             </form>

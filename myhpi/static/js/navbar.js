@@ -231,8 +231,14 @@ const moveRootLevelToDesktopLayout = () => {
     const rootNavLevelContainer = document.querySelector("#nav-level-0")
     const rootLevel = document.querySelector("#nav-item-container-root")
     rootNavLevelContainer.appendChild(rootLevel)
-    document.getElementById("user-information-username").hidden = false
+
+    const userInfo = document.querySelector("#user-information-username")
+    if (userInfo != null) {
+        userInfo.classList.remove("d-none")
+        userInfo.ariaHidden = "false"
+    }
 }
+
 const setDesktopNavbar = () => {
     if (isNavbarInDesktopMode) return
     isNavbarInDesktopMode = true
@@ -275,7 +281,12 @@ const moveRootLevelToMobileLayout = () => {
     const bottomNavContainer = document.querySelector(".navbar-bottom-content")
     const rootLevel = document.querySelector("#nav-item-container-root")
     bottomNavContainer.appendChild(rootLevel)
-    document.getElementById("user-information-username").hidden = true
+
+    const userInfo = document.querySelector("#user-information-username")
+    if (userInfo != null) {
+        userInfo.classList.add("d-none")
+        userInfo.ariaHidden = "true"
+    }
 }
 
 const setMobileNavbar = () => {
