@@ -8,6 +8,11 @@
     }
 }
 
+#navbar-right {
+    /* Should align navbar and page content. Assumes that the most right element in the navbar is a nav-link/has a padding of --bs-p-4) */
+    margin-right: calc(-1 * var(--bs-p-4));
+}
+
 .nav-link,
 .nav-link:focus {
     color: var(--bs-gray-700);
