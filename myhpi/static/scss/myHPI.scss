@@ -115,9 +115,12 @@ p {
 .breadcrumb {
     margin-bottom: 1.5rem;
 
+    .breadcrumb-item {
+        font-size: 0.8rem;
+    }
+
     a,
     a:hover {
-        font-size: 0.8rem;
         color: var(--bs-text-muted);
         text-decoration: none;
     }
@@ -196,7 +199,7 @@ h1.toc-title::after {
     border-color: var(--bs-secondary);
 }
 
-.myhpi-accent .breadcrumb .active {
+.myhpi-accent .breadcrumb-item.active {
     color: var(--bs-secondary);
 }
 
