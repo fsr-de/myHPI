@@ -1,3 +1,8 @@
+:root {
+    --logo-width: 6.5rem;
+    --logo-margin: 1rem;
+}
+
 .navbar-myhpi {
     z-index: 999;
 
@@ -70,8 +75,8 @@
 
 .nav-brand {
     display: inline-block;
-    height: 2rem;
-    margin: 1rem 1rem 1rem 0;
+    width: var(--logo-width);
+    margin: 1rem var(--logo-margin) 1rem 0;
     transform: translateY(7%);
 }
 
@@ -179,7 +184,7 @@
     #nav-level-1 {
         /* equals .nav-brand width + margin,
       minus the .nav-item border-width */
-        margin-left: calc(5rem - 3px);
+        margin-left: calc(var(--logo-width) + var(--logo-margin) - 3px);
     }
 
     .navbar-bottom {
