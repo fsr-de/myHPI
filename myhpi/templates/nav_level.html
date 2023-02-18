@@ -13,7 +13,7 @@
     aria-labelledby="nav-item-{{ parent_id }}"
     {% endif %}>
     {% for page in level_pages %}
-    {% if page|nav_children %}
+    {% if pages_by_parent|get_nav_children_for:page.path %}
     <li class="nav-item dropdown">
         <a class="nav-link"
             id="nav-item-{{ page.id }}"
@@ -25,7 +25,7 @@
             </span>
             {% bs_icon 'arrow-right-short' extra_classes="nav-link-icon d-none" %}
         </a>
-        {% build_nav_level page|nav_children level|add:"1" page.id %}
+        {% build_nav_level_for page level|add:"1" page.id %}
     </li>
     {% else %}
     <li class="nav-item">

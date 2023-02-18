@@ -10,14 +10,23 @@ from myhpi.core.models import Footer
 register = template.Library()
 
 
-@register.inclusion_tag("nav_level.html")
-def build_nav_level(level_pages, level=0, parent_id="root"):
-    return {"level_pages": level_pages, "level": level, "parent_id": parent_id}
+@register.inclusion_tag("nav_level.html", takes_context=True)
+def build_nav_level_for(context, parent_page, level=0, parent_id="root"):
+    return {
+        "level_pages": context["pages_by_parent"][
+            parent_page.path
+        ],  # all pages to display on this level
+        "level": level,
+        "parent_id": parent_id,
+        "pages_by_parent": context[
+            "pages_by_parent"
+        ],  # lookup by parent page for all pages visible for the user
+    }
 
 
-@register.filter
-def nav_children(page):
-    return page.get_children().in_menu().live()
+@register.filter()
+def get_nav_children_for(pages_by_parent, parent_path):
+    return pages_by_parent[parent_path]
 
 
 @register.inclusion_tag("footer.html")
