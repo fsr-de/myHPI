@@ -2,78 +2,94 @@
 {% load static %}
 {% load core_extras %}
 {% load minutes_tags %}
+{% load bootstrap_icons %}
 
 {% block content %}
-    <div class="row minutes-container">
-        {% with page.body|markdown as parsed_md %}
-        <div class="d-none d-print-block minutes-title">
-        <h1>{{  page.title }}</h1>
-        </div>
-        <div class="col-9 minutes-text">
-            {{ parsed_md.0 }}
-        </div>
-        <div class="col-3 minutes-meta">
-            <h4>Date</h4>
-            <p>{{ page.date }}</p>
-            <h4>Moderator</h4>
-            <p>{{ page.moderator.get_full_name }}</p>
-            <h4>Minutes taker</h4>
-            <p>{{ page.author.get_full_name }}</p>
-            <h4>Participants</h4>
-            <ul>
-                {% for participant in page.participants.all %}
-                    <li>{{ participant.get_full_name }}</li>
-                {% endfor %}
-            </ul>
-            <h4>Guests</h4>
-            {% if page.guests %}
-                <ul>
-                {% for guest in page.guests %}
-                    <li>{{ guest }}</li>
-                {% endfor %}
-                </ul>
-            {% else %}
+{% with page.body|markdown as parsed_md %}
+<div class="minutes-container row flex-lg-row">
+    <a id="side-panel-toggle" href="#toc" class="d-grid d-lg-none">
+        <button type="button" class="btn btn-light mb-3" aria-label="Jump to Table of Contents">
+            {% bs_icon 'list-ol' size='1.3rem' %}
+            Table of Contents
+        </button>
+    </a>
+
+    <div class="col-lg-9">
+        <h1 class="page-title">
+            <span class="underline">
+                {{ page.title }}
+            </span>
+        </h1>
+        {{ parsed_md.0 }}
+    </div>
+
+    <div id="side-column" class="col-lg-3">
+        <div id="side-panel-container" class="bg-white mb-3">
+            <aside class="side-panel border-accent">
+                <h1 class="toc-title">Date</h1>
+                <p>{{ page.date|date:"d.m.Y" }}</p>
+
+                <h1 class="toc-title">Moderator</h1>
+                <p>{{ page.moderator.get_full_name }}</p>
+
+                <h1 class="toc-title">Minutes Taker</h1>
+                <p>{{ page.author.get_full_name }}</p>
+
+                <h1 class="toc-title">Participants</h1>
+                <p>
+                    {% for participant in page.participants.all %}
+                    {{ participant.get_full_name }}
+                    {% if foorloop.counter < page.participants.all|length %}
+                    </br>
+                    {% endif %}
+                    {% endfor %}
+                </p>
+
+                <h1 class="toc-title">Guests</h1>
+                <p>
+                    {% if page.guests %}
+                <p>
+                    {% for guest in page.guests %}
+                    {{ guest }}</br>
+                    {% endfor %}
+                </p>
+                {% else %}
                 <i>No guests</i>
-            {% endif %}
-            <h4>Labels</h4>
-                {%  if page.labels.all %}
-                    <p>
+                {% endif %}
+                </p>
+
+                <h1 class="toc-title">Labels</h1>
+                <p>
+                    {%  if page.labels.all %}
                     {% include "core/label.html" with minutes=page %}
-                    </p>
                     {% else %}
                     <i>No labels</i>
-                {% endif %}
-            <h4 class="d-print-none">Table of contents</h4>
-            {{ parsed_md.1 }}
+                    {% endif %}
+                </p>
+            </aside>
+
+            <aside class="side-panel border-accent toc-container d-print-none">
+                <h1 id="toc" class="toc-title">Table of Contents</h1>
+                {{ parsed_md.1 }}
+            </aside>
+
             {% if page.attachments.all %}
-                <h4 class="d-print-none">Attachments</h4>
+            <aside class="side-panel border-accent toc-container d-print-none">
+                <h1 class="toc-title">Attachments</h1>
                 <ul>
-                {% for attachment in page.attachments.all %}
+                    {% for attachment in page.attachments.all %}
                     <li>
                         <a href="{{ attachment.url }}">{{ attachment.title }}</a>
                     </li>
-                {% endfor %}
+                    {% endfor %}
                 </ul>
+            </aside>
             {% endif %}
         </div>
-        <div id="minutes-footer" class="d-none d-print-block"></div>
-            <div id="minutes-navigation" class="row d-print-none">
-                <div class="col-6">
-                    {%  prev_minutes page as prev %}
-                    {% if prev %}
-                        <a href="{{ prev.url }}">< Previous minutes</a>
-                    {%  endif %}
-                </div>
-                <div class="col-6">
-                    {%  next_minutes page as next %}
-                    {% if next %}
-                        <a href="{{ next.url }}">Next minutes ></a>
-                    {%  endif %}
-                </div>
-        {% endwith %}
     </div>
-{% endblock %}
-
+    {% endwith %}
+</div>
 {% block extra_js %}
 <script type="text/javascript" src="{% static 'js/print_processor.js' %}"></script>
+{% endblock %}
 {% endblock %}

@@ -273,7 +273,6 @@ const moveNonRootLevelsToMobileLayout = () => {
         })
 }
 
-
 /**
  * Moves the nodes of the root navbar level from the desktop to the mobile layout.
  */
@@ -308,6 +307,7 @@ const adaptNavbarToWindowSize = () => {
 const _navbar = document.querySelector("#navbar")
 const _navbarTop = _navbar.querySelector(".navbar-top")
 const _page = document.querySelector("#page")
+const _root = document.querySelector(":root")
 
 /**
  * Emulate sticky position on Desktop.
@@ -317,16 +317,30 @@ const updateNavbarPosition = () => {
     _navbar.style.top = (pageClientY < 0 ? 0 : pageClientY) + "px"
 }
 
+const updateVisibleNavbarHeight = () => {
+    console.log(_navbar.classList.contains("hide-now"))
+    _root.style.setProperty(
+        "--myhpi-navbar-visible-height",
+        _navbar.classList.contains("hide-now")
+            ? "0px"
+            : _root.style.getPropertyValue("--myhpi-navbar-height")
+    )
+}
+
+let classObserver = new MutationObserver(updateVisibleNavbarHeight)
+classObserver.observe(_navbar, { attributeFilter: ["class"] })
+
 /**
  * Make sure the page always has enough padding to not be overlayed by the navbar.
  */
 const respectNavbarHeight = () => {
     const resizeObserver = new ResizeObserver((entries) => {
-        _page.style.paddingTop = isNavbarInDesktopMode
-            ? _navbarTop.offsetHeight + "px"
-            : _navbarTop.offsetHeight +
-              remToPx(defaultPagePadding + navbarBarHeight) +
-              "px"
+        const navbarHeight = isNavbarInDesktopMode
+            ? _navbarTop.offsetHeight
+            : _navbarTop.offsetHeight + remToPx(navbarBarHeight)
+        console.log(_navbarTop.offsetHeight)
+        _root.style.setProperty("--myhpi-navbar-height", navbarHeight + "px")
+        updateVisibleNavbarHeight()
     })
     resizeObserver.observe(_navbarTop)
 }

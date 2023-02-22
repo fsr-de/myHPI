@@ -5,7 +5,6 @@ const isMobileLayoutActive = () => {
 }
 
 const numberOfSupportedLevels = 3
-const defaultPagePadding = 1.5
 const navbarBarHeight = 0.3
 let previousScrollPosition = window.scrollY
 
@@ -65,16 +64,15 @@ const enableTooltips = () => {
 
 window.onload = () => {
     updateNavbarPosition()
-    addNavbarCollapses()
     adaptNavbarToWindowSize()
-    toggleElementVisibilityOnScroll()
     respectNavbarHeight()
+    addNavbarCollapses()
+    toggleElementVisibilityOnScroll()
     enableLogout()
 
     initializeSearch()
 
     enableTooltips()
-
 }
 window.onscroll = () => {
     updateNavbarPosition()

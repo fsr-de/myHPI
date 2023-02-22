@@ -65,7 +65,10 @@ $colors: map-merge($colors, $custom-colors);
 :root {
     --bs-p-2: 0.5rem;
     --bs-p-4: 1rem;
+    --myhpi-page-padding-top: 1.5rem;
     --myhpi-round-border: 2px;
+    --myhpi-navbar-height: 73px; // Default value, overwritten by JS
+    --myhpi-navbar-visible-height: 73px; // Default value, overwritten by JS
 }
 
 a {
@@ -74,6 +77,19 @@ a {
 
 p {
     text-align: justify;
+}
+
+:target::before {
+    content: '';
+    display: block;
+    position: relative;
+    width: 0;
+    height: calc(var(--myhpi-navbar-height) + 4rem);
+    margin-top: calc(var(--myhpi-navbar-height) * -1 - 4rem);
+}
+
+#page {
+    padding-top: calc(var(--myhpi-page-padding-top) + var(--myhpi-navbar-height));
 }
 
 .page {
@@ -87,6 +103,8 @@ p {
 .page-content {
     padding-left: 2rem;
     padding-right: 2rem;
+
+    word-wrap: break-word;
 }
 
 .page-title .underline {
@@ -128,11 +146,6 @@ p {
     a:hover {
         text-decoration: underline;
     }
-}
-
-.side-panel-container {
-    position: sticky;
-    top: 6rem;
 }
 
 .side-panel {
@@ -210,6 +223,39 @@ h1.toc-title::after {
 @import "./navbar.scss";
 @import "./footer.scss";
 
+#side-panel-toggle {
+    position: sticky;
+    transition: all 0.3s ease; // Equal to .xl-hide-on-scroll
+    top: calc(1rem + var(--myhpi-navbar-visible-height));
+}
+
+#side-panel-container {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+
+    * {
+        word-wrap: break-word;
+    }
+}
+
+#side-panel-container::-webkit-scrollbar {
+    width: 7px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#side-panel-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#side-panel-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#side-panel-container::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 @media screen and (max-width: 1200px) {
     .xl-hide-on-scroll {
         transition: top 0.3s, opacity 0.3s, transform 0.3s ease;
@@ -236,6 +282,17 @@ h1.toc-title::after {
 
     .page:not(.navbar-myhpi) .page-content {
         padding-top: 1.5rem; // default padding without height of navbar
+    }
+
+    #side-panel-container {
+        position: sticky;
+        top: calc(var(--myhpi-navbar-height) + 2rem);
+        max-height: calc(90vh - (var(--myhpi-navbar-height) + 1rem));
+
+        left: unset;
+        height: unset;
+        width: unset;
+        padding-top: 0 !important;
     }
 }
 
