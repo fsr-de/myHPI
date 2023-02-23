@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags %}
+{% load i18n %}
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}Suche{% endblock %}
+{% block title %}{% translate "Search" %}{% endblock %}
 
 {% block content %}
 <h1 class="page-title">
     <span class="underline">
-        Suche
+        {% translate "Search" %}
     </span>
 </h1>
 
@@ -18,9 +19,9 @@
 
 <i class="d-block mb-3 ps-1">
     {% if search_results_page.paginator.count == 1 %}
-    Ein Ergebnis gefunden.
+    {% translate "One result found." %}
     {% else %}
-    {{ search_results_page.paginator.count }} Ergebnisse gefunden.
+    {% blocktrans %}{{ search_results_page.paginator.count }} results found.{% endblocktrans %}
     {% endif %}
 </i>
 
@@ -79,6 +80,6 @@
 </nav>
 
 {% elif search_query %}
-<i class="d-block pb-3 ps-1">Keine Ergebnisse gefunden.</i>
+<i class="d-block pb-3 ps-1">{% translate "No results found." %}</i>
 {% endif %}
 {% endblock %}

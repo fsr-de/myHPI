@@ -188,6 +188,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+	os.path.join(BASE_DIR, "myhpi", "locale"),
+]
+
 # SCSS Precompiler
 # To learn more see: https://django-static-precompiler.readthedocs.io/en/stable/index.html
 

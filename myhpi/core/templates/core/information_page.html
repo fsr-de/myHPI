@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load core_extras %}
+{% load i18n %}
 
 {% block content %}
 {% with page.body|markdown as parsed_md %}
@@ -15,7 +16,7 @@
     <div class="col-lg-3">
         <div class="side-panel-container">
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">Zuletzt bearbeitet</h1>
+                <h1 class="toc-title">{% translate "Last edited" %}</h1>
                 {{ page.last_published_at|date:"d.m.Y, H:i" }}
                 {% if page.author_visible %}
                     <i>von</i>
@@ -23,12 +24,12 @@
                 {% endif %}
             </aside>
             <aside class="side-panel border-accent toc-container d-print-none">
-                <h1 class="toc-title">Inhaltsverzeichnis</h1>
+                <h1 class="toc-title">{% translate "Table of contents" %}</h1>
                 {{ parsed_md.1 }}
             </aside>
             {% if page.attachments.all %}
                 <aside class="side-panel border-accent toc-container d-print-none">
-                    <h1 class="toc-title">Attachments</h1>
+                    <h1 class="toc-title">{% translate "Attachments" %}</h1>
                     <ul>
                     {% for attachment in page.attachments.all %}
                         <li>
