@@ -204,6 +204,8 @@ STATIC_PRECOMPILER_COMPILERS = (
     ),
 )
 
+STATIC_PRECOMPILER_FINDER_LIST_FILES = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
