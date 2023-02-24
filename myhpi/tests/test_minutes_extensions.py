@@ -1,5 +1,6 @@
 import django
 from django.test import TestCase
+from django.utils.translation import activate
 
 django.setup()
 
@@ -8,6 +9,7 @@ from myhpi.core.markdown.extensions import EnterLeavePreprocessor
 
 class TestMinuteExtensions(TestCase):
     def test_enter(self):
+        activate("en")
         elp = EnterLeavePreprocessor()
         text = [
             "|enter|(12:00)(First Last)",

@@ -1,0 +1,463 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-23 17:18+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/markdown/extensions.py:54
+msgid "Begin of meeting"
+msgstr "Beginn des Meetings"
+
+#: core/markdown/extensions.py:57
+msgid "End of meeting"
+msgstr "Ende des Meetings"
+
+#: core/markdown/extensions.py:71
+#, python-brace-format
+msgid "*Meeting break: {time_start_break} – {time_end_break}*"
+msgstr "*Sitzungspause: {time_start_break} – {time_end_break}*"
+
+#: core/markdown/extensions.py:88
+msgid "quorate"
+msgstr "beschlussfähig"
+
+#: core/markdown/extensions.py:88
+msgid "not quorate"
+msgstr "nicht beschlussfähig"
+
+#: core/markdown/extensions.py:91
+#, python-brace-format
+msgid "*{num_participants}/{max_num_participants} present → {quorate}*  "
+msgstr "*{num_participants}/{max_num_participants} anwesend → {quorate}*  "
+
+#: core/markdown/extensions.py:115
+#, python-brace-format
+msgid "*{time}: {name} {event} the meeting*  "
+msgstr "*{time}: {name} {event} das Meeting*  "
+
+#: core/markdown/extensions.py:120
+#, python-brace-format
+msgid "*{time}: {name} {event} the meeting via {mean_of_participation}*  "
+msgstr "*{time}: {name} {event} das Meeting via {mean_of_participation}*  "
+
+#: core/markdown/extensions.py:130
+msgid "enters"
+msgstr "betritt"
+
+#: core/markdown/extensions.py:133
+msgid "leaves"
+msgstr "verlässt"
+
+#: core/markdown/extensions.py:154
+msgid "[missing link]"
+msgstr "[link fehlt]"
+
+#: core/templates/core/information_page.html:19
+msgid "Last edited"
+msgstr "Zuletzt bearbeitet"
+
+#: core/templates/core/information_page.html:27
+#: core/templates/core/minutes.html:47 polls/templates/polls/poll.html:29
+msgid "Table of contents"
+msgstr "Inhaltsverzeichnis"
+
+#: core/templates/core/information_page.html:32
+#: core/templates/core/minutes.html:50
+msgid "Attachments"
+msgstr "Anhänge"
+
+#: core/templates/core/minutes.html:17
+msgid "Date"
+msgstr "Datum"
+
+#: core/templates/core/minutes.html:19
+msgid "Moderator"
+msgstr "Sitzungsleitung"
+
+#: core/templates/core/minutes.html:21
+msgid "Minutes taker"
+msgstr "Protokollführung"
+
+#: core/templates/core/minutes.html:23
+msgid "Participants"
+msgstr "Teilnehmende"
+
+#: core/templates/core/minutes.html:29
+msgid "Guests"
+msgstr "Gäste"
+
+#: core/templates/core/minutes.html:37
+msgid "No guests"
+msgstr "Keine Gäste"
+
+#: core/templates/core/minutes.html:39
+msgid "Labels"
+msgstr "Labels"
+
+#: core/templates/core/minutes.html:45
+msgid "No labels"
+msgstr "Keine Labels"
+
+#: core/templates/core/minutes.html:65
+msgid "Previous minutes"
+msgstr "Vorheriges Protokoll"
+
+#: core/templates/core/minutes.html:71
+msgid "Next minutes"
+msgstr "Nächstes Protokoll"
+
+#: core/templates/core/minutes_list.html:15
+msgid "Draft"
+msgstr "Entwurf"
+
+#: polls/templates/polls/poll.html:17
+msgid "You have already voted and the results are not yet visible."
+msgstr ""
+"Du hast schon abgestimmt und die Ergebnisse sind noch nicht veröffentlicht."
+
+#: polls/templates/polls/poll.html:21
+msgid "Start Date"
+msgstr "Startdatum"
+
+#: polls/templates/polls/poll.html:23
+msgid "End Date"
+msgstr "Enddatum"
+
+#: polls/templates/polls/poll.html:25
+msgid "Number of participants"
+msgstr "Teilnehmendenanzahl"
+
+#: polls/templates/polls/poll.html:27
+msgid "Number of votes"
+msgstr "Stimmenanzahl"
+
+#: polls/templates/polls/results.html:4
+msgid "Choice"
+msgstr "Auswahl"
+
+#: polls/templates/polls/results.html:5
+msgid "Description"
+msgstr "Beschreibung"
+
+#: polls/templates/polls/results.html:6
+msgid "Votes"
+msgstr "Stimmen"
+
+#: polls/templates/polls/results.html:7
+msgid "Percentage"
+msgstr "Prozent"
+
+#: search/templates/search/search.html:7 search/templates/search/search.html:12
+#: search/templates/search/search_field.html:10
+msgid "Search"
+msgstr "Suche"
+
+#: search/templates/search/search.html:22
+msgid "One result found."
+msgstr "Ein Ergebnis gefunden"
+
+#: search/templates/search/search.html:24
+#, python-format
+msgid "%(search_results_page.paginator.count)s results found."
+msgstr "%(search_results_page.paginator.count)s Ergebnisse gefunden."
+
+#: search/templates/search/search.html:83
+msgid "No results found."
+msgstr "Keine Ergebnisse gefunden."
+
+#: search/templates/search/search_field.html:6 templates/base.html:150
+msgid "Search..."
+msgstr "Suchen..."
+
+#: templates/404.html:7
+msgid "Page not found"
+msgstr "Seite nicht gefunden."
+
+#: templates/404.html:9
+msgid ""
+"The page you requested does not exist. Please check the URL or use the menu "
+"above to find your page."
+msgstr ""
+" Die angeforderte Seite existiert nicht. Bitte überprüfe die URL oder nutze "
+"das Menü oben, um die gewünschte Seite zu finden."
+
+#: templates/base.html:45
+msgid "To home page"
+msgstr "Zur Startseite"
+
+#: templates/base.html:52
+msgid "Ctrl+K"
+msgstr "Strg+K"
+
+#: templates/base.html:73
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: templates/base.html:93
+msgid "Your groups:"
+msgstr "Deine Gruppen"
+
+#: templates/base.html:100
+msgid "Sign out"
+msgstr "Abmelden"
+
+#: templates/base.html:152
+msgid "Start search"
+msgstr "Suche starten"
+
+#: templates/login.html:11
+msgid "Current user:"
+msgstr "Aktueller User:"
+
+#: templates/login.html:20
+msgid "Please login to see this page."
+msgstr "Bitte melde dich an um diese Seite zu sehen."
+
+#: tenca_django/admin.py:23
+#: tenca_django/templates/tenca_django/manage_list.html:6
+msgid "Manage List"
+msgstr "Liste verwalten"
+
+#: tenca_django/apps.py:7
+msgid "Mailing Lists"
+msgstr "Mailinglisten"
+
+#: tenca_django/forms.py:15
+msgid "Not subscribed users are allowed to post."
+msgstr "Nichtmitglieder dürfen an diese Liste schreiben."
+
+#: tenca_django/forms.py:18
+msgid "Replies are addressed to the list per default."
+msgstr "Antworten gehen immer an den Verteiler."
+
+#: tenca_django/templates/tenca_django/action.html:4
+#: tenca_django/templates/tenca_django/action.html:9
+msgid "Adjust membership"
+msgstr "Mitgliedschaft ändern"
+
+#: tenca_django/templates/tenca_django/action.html:8
+#: tenca_django/templates/tenca_django/dashboard.html:10
+#: tenca_django/templates/tenca_django/delete_list.html:9
+#: tenca_django/templates/tenca_django/manage_list.html:10
+#: tenca_django/templates/tenca_django/manage_subscription.html:10
+#: tenca_django/templates/tenca_django/report.html:8
+msgid "Mailing lists"
+msgstr "Mailinglisten"
+
+#: tenca_django/templates/tenca_django/action.html:14
+msgid "This link is now invalid. You never need to visit it again."
+msgstr "Dieser Link ist nun ungültig. Du brauchst ihn nicht nochmal."
+
+#: tenca_django/templates/tenca_django/backend_error.html:4
+msgid "Mailing Lists Unavailable"
+msgstr "Mailinglisten nicht verfügbar"
+
+#: tenca_django/templates/tenca_django/backend_error.html:7
+msgid ""
+"Sorry for the inconvenience, but the mail server backend does not reply. "
+"Please try again later."
+msgstr ""
+"Entschuldigung, aber das Mailinglistenbackend ist nicht erreichbar. Versuche "
+"es später nochmal."
+
+#: tenca_django/templates/tenca_django/dashboard.html:6
+msgid "List memberships"
+msgstr "Mitgliedschaft ändern"
+
+#: tenca_django/templates/tenca_django/dashboard.html:14
+msgid "Create new list"
+msgstr "Neue Liste anlegen"
+
+#: tenca_django/templates/tenca_django/dashboard.html:36
+msgid "Your Memberships"
+msgstr "Deine Mitgliedschaften"
+
+#: tenca_django/templates/tenca_django/delete_list.html:5
+#: tenca_django/templates/tenca_django/delete_list.html:10
+#: tenca_django/templates/tenca_django/manage_list.html:48
+msgid "Delete list"
+msgstr "Liste Löschen"
+
+#: tenca_django/templates/tenca_django/delete_list.html:14
+#, python-format
+msgid ""
+"\n"
+"\t\tAre you sure you want to delete the list %(listname)s?\n"
+"\t"
+msgstr ""
+"\n"
+"\t\tMöchtest du die Liste %(listname)s wirklich löschen?\n"
+"\t"
+
+#: tenca_django/templates/tenca_django/delete_list.html:20
+msgid "Delete"
+msgstr "Löschen"
+
+#: tenca_django/templates/tenca_django/delete_list.html:21
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: tenca_django/templates/tenca_django/manage_list.html:11
+msgid "Manage list"
+msgstr "Liste verwalten"
+
+#: tenca_django/templates/tenca_django/manage_list.html:15
+#, python-format
+msgid ""
+"\n"
+"\t\tThis is the admin view for the owners of %(listname)s\n"
+"\t"
+msgstr ""
+"\n"
+"\t\tDas ist die Ansicht für die Admins der Liste %(listname)s\n"
+"\t"
+
+#: tenca_django/templates/tenca_django/manage_list.html:19
+msgid "Invite Link"
+msgstr "Einladungslink"
+
+#: tenca_django/templates/tenca_django/manage_list.html:20
+msgid "Share this link to invite new members:"
+msgstr "Teile diesen Link, um neue Mitglieder einzuladen:"
+
+#: tenca_django/templates/tenca_django/manage_list.html:27
+msgid "List options"
+msgstr "Listeneinstellungen"
+
+#: tenca_django/templates/tenca_django/manage_list.html:47
+msgid "Save"
+msgstr "Speichern"
+
+#: tenca_django/templates/tenca_django/manage_list.html:51
+msgid "Members"
+msgstr "Mitglieder"
+
+#: tenca_django/templates/tenca_django/manage_subscription.html:5
+#: tenca_django/templates/tenca_django/manage_subscription.html:11
+msgid "Manage subscription"
+msgstr "Mitgliedschaft verwalten"
+
+#: tenca_django/templates/tenca_django/manage_subscription.html:16
+#, python-format
+msgid ""
+"\n"
+"\t\tEnter the e-mail address you want to un-/subscribe from/to "
+"%(list_name)s\n"
+"\t"
+msgstr ""
+"\n"
+"\t\tGib die E-Mailadresse ein, die du von %(list_name)s an-/abmelden "
+"möchtest\n"
+"\t"
+
+#: tenca_django/templates/tenca_django/manage_subscription.html:32
+msgid "Un-/Subscribe"
+msgstr "An-/Abmelden"
+
+#: tenca_django/templates/tenca_django/report.html:4
+#: tenca_django/templates/tenca_django/report.html:9
+msgid "Report action"
+msgstr "Vorgang melden"
+
+#: tenca_django/templates/tenca_django/report.html:14
+msgid ""
+"Sorry for this inconvenience. Please contact the Student Representative "
+"Group if this should happen more often."
+msgstr ""
+"Entschuldige die Unannehmlichkeiten. Kontaktiere den Fachschaftsrat, falls "
+"diese häufiger auftreten sollte."
+
+#: tenca_django/views.py:42
+#, python-brace-format
+msgid "The list {list} has been created successfully."
+msgstr "Die Liste {list} wurde erfolgreich angelegt."
+
+#: tenca_django/views.py:48 tenca_django/views.py:87 tenca_django/views.py:151
+#: tenca_django/views.py:192
+#, python-brace-format
+msgid "An error occurred: {error}"
+msgstr "Ein Fehler ist aufgetreten: {error}"
+
+#: tenca_django/views.py:83
+msgid "The change has been requested. Please check your mails."
+msgstr "Änderung beantragt. Schau in deinem Postfach nach."
+
+#: tenca_django/views.py:116
+msgid "List options saved successfully."
+msgstr "Listeneinstellungen gespeichert."
+
+#: tenca_django/views.py:129
+#, python-brace-format
+msgid "Removed {member}"
+msgstr "{member} wurde entfernt"
+
+#: tenca_django/views.py:130
+#, python-brace-format
+msgid "Promoted {member}"
+msgstr "{member} wurde befördert"
+
+#: tenca_django/views.py:131
+#, python-brace-format
+msgid "Demoted {member}"
+msgstr "{member} wurde degradiert"
+
+#: tenca_django/views.py:135
+#, python-brace-format
+msgid "Blocked {member}"
+msgstr "{member} wurde blockiert"
+
+#: tenca_django/views.py:140
+#, python-brace-format
+msgid "Unblocked {member}"
+msgstr "{member} wurde entsperrt"
+
+#: tenca_django/views.py:186
+#, python-brace-format
+msgid "{list} has been deleted successfully."
+msgstr "{list} wurde erfolgreich gelöscht."
+
+#: tenca_django/views.py:225
+#, python-brace-format
+msgid ""
+"{email} is the last owner of {list}. Please delegate your job first, before "
+"leaving the list."
+msgstr ""
+"{email} ist der letzte Admin auf {list}. Bitte delegiere deine Rolle erst, "
+"bevor du die Liste verlässt."
+
+#: tenca_django/views.py:239
+#, python-brace-format
+msgid "{email} has successfully joined {list}."
+msgstr "{email} ist erfolgreich {list} beigetreten."
+
+#: tenca_django/views.py:246
+#, python-brace-format
+msgid "{email} has successfully left {list}."
+msgstr "{email} hat erfolgreich {list} verlassen."
+
+#: tenca_django/views.py:263
+#, python-brace-format
+msgid "The subscription of {email} onto {list} was rolled back."
+msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
+
+#~ msgid "Sorry, this page could not be found."
+#~ msgstr ""
+#~ " Die angeforderte Seite existiert nicht. Bitte überprüfe die URL oder "
+#~ "nutze das Menü oben, um die gewünschte Seite zu finden. "
+
+#~ msgid "Previous"
+#~ msgstr "Vorherige "
