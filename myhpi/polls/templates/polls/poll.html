@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load core_extras %}
+{% load i18n %}
 
 {% block content %}
     <div class="row">
@@ -13,19 +14,19 @@
             {% elif page.results_visible %}
                 {% include "polls/results.html" %}
             {% else %}
-                <p> You already voted and the results are not visible yet. </p>
+                <p> {% translate "You have already voted and the results are not yet visible." %} </p>
             {% endif %}
         </div>
         <div class="col-3">
-            <h4>Start Date</h4>
+            <h4>{% translate "Start Date" %}</h4>
             <p>{{ page.start_date }}</p>
-            <h4>End Date</h4>
+            <h4>{% translate "End Date" %}</h4>
             <p>{{ page.end_date }}</p>
-            <h4>Number of participants</h4>
+            <h4>{% translate "Number of participants" %}</h4>
             <p>{{ page.participants.count }}</p>
-            <h4>Number of votes</h4>
+            <h4>{% translate "Number of votes" %}</h4>
             <p>{{ page.num_votes }}</p>
-            <h4>Table of contents</h4>
+            <h4>{% translate "Table of contents" %}</h4>
             {{ parsed_md.1 }}
         </div>
         {% endwith %}

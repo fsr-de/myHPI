@@ -4,6 +4,7 @@
 {% load core_extras %}
 {% load compile_static %}
 {% load bootstrap_icons %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +26,7 @@
     <link rel="icon" type="svg" href="{% static 'img/favicon/favicon.svg' %}" />
 
     {# Global stylesheets #}
-    <link type="text/css" href="{% static "scss/myHPI.scss"|compile %}" rel="stylesheet">
+    <link type="text/css" href="{% static " scss/myHPI.scss"|compile %}" rel="stylesheet">
 
     {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
@@ -40,36 +41,32 @@
             <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
                 <div id="navbar-left" class="d-flex align-items-center">
                     <a class="nav-brand" href="{% pageurl root_page %}">
-                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="w-100" alt="Zur Startseite">
+                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="h-100" alt={% translate "To home page" %}>
                     </a>
                 </div>
                 <div id="nav-level-0" class="nav-level"></div>
                 <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
-                    <a id="nav-search-button" class="nav-link"
-                        onclick="showSearchModal(event)"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Strg+K"
-                        role="button">
+                    <a id="nav-search-button" class="nav-link" onclick="showSearchModal(event)" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" data-bs-title={% translate "Ctrl+K" %} role="button">
                         {% bs_icon 'search' size='1.4em' %}
                     </a>
                     {% if user.is_authenticated %}
                     <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
-                        onclick="toggleUserNavbar(event)"
-                        role="button"
-                        aria-expanded="false" aria-controls="nav-item-container-user">
+                        onclick="toggleUserNavbar(event)" role="button" aria-expanded="false"
+                        aria-controls="nav-item-container-user">
                         <span id="user-information-username" class="d-none" aria-hidden="true">{{ user.first_name }}
                             {{ user.last_name }}</span>
                         {% bs_icon 'person-circle' size='1.4em' %}
                     </a>
                     <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
-                        onclick="toggleMobileNavbar(event)"
-                        role="button"
-                        aria-expanded="false" aria-controls="nav-item-container-root">
+                        onclick="toggleMobileNavbar(event)" role="button" aria-expanded="false"
+                        aria-controls="nav-item-container-root">
                         {% bs_icon 'list' size='1.4em' %}
                     </a>
                     {% else %}
-                    <a id="nav-user-toggle" class="nav-link"
+                    <a id="nav-user-toggle" class="nav-link" class="nav-link"
                         href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">
-                        <span class="d-none d-lg-inline-block">Anmelden</span>
+                        {% translate "Sign in" %}
                         {% bs_icon 'box-arrow-in-right' size='1.4em' %}
                     </a>
                     {% endif %}
@@ -89,14 +86,15 @@
                     <ul id="nav-item-container-user" class="nav-item-container collapse"
                         data-navbar-level="#nav-level-0">
                         {% if user.groups.all.exists %}
-                        <span class="nav-link pe-none" id="navbar-groups-header"><i>Deine Gruppen:</i></span>
+                        <span class="nav-link pe-none" id="navbar-groups-header"><i>{% translate "Your groups:"
+                                %}</i></span>
                         {% for group in user.groups.all %}
                         <li class="nav-link pe-none nav-link-extra-indent">{{ group }}</li>
                         {% endfor %}
                         <li class="dropdown-divider"></li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class='nav-link' href="#" id="logout-link">Abmelden</a>
+                            <a class='nav-link' href="#" id="logout-link">{% trans "Sign out" %}</a>
                             <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
                                 {% csrf_token %}
                             </form>
@@ -122,9 +120,9 @@
             </div>
 
             {% if self.get_ancestors|length > 1 %}
-            <nav aria-label="breadcrumb"
-                class="d-print-none"
-                style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,{% filter urlencode|slice:" 43:" %}{% bs_icon 'chevron-right' size="8" %}{% endfilter %} &#34;);">
+            <nav aria-label="breadcrumb" class="d-print-none"
+                style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,{% filter urlencode|slice:" 43:" %}{%
+                bs_icon 'chevron-right' size="8" %}{% endfilter %} &#34;);">
                 <ol class="breadcrumb">
                     {% for ancestor_page in self.get_ancestors %}
                     {% if ancestor_page.is_root == False %}
@@ -144,13 +142,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="searchForm" class="d-flex align-items-center"
-                        action="{% url 'search' %}">
-                        <input id="searchInput" type="search" class="form-control me-3 " placeholder="Suchen..."
-                            aria-label="Suche" name="query">
-                        <button type="submit" class="btn btn-primary" aria-label="Suche starten"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            data-bs-title="Enter">{% bs_icon 'search' size='1.4em' extra_classes="text-light" %}</button>
+                    <form id="searchForm" class="d-flex align-items-center" action="{% url 'search' %}">
+                        <input id="searchInput" type="search" class="form-control me-3 " placeholder={%
+                            translate "Search..." %} aria-label="Suche" name="query">
+                        <button type="submit" class="btn btn-primary" aria-label={% translate "Start search" %}
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Enter">{% bs_icon
+                            'search' size='1.4em' extra_classes="text-light" %}</button>
                     </form>
                 </div>
             </div>

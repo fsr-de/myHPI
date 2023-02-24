@@ -3,91 +3,96 @@
 {% load core_extras %}
 {% load minutes_tags %}
 {% load bootstrap_icons %}
+{% load i18n %}
 
 {% block content %}
-{% with page.body|markdown as parsed_md %}
-<div class="minutes-container row flex-lg-row">
-    <a id="side-panel-toggle" href="#toc" class="d-grid d-lg-none">
-        <button type="button" class="btn btn-light mb-3" aria-label="Jump to Table of Contents">
-            {% bs_icon 'list-ol' size='1.3rem' %}
-            Table of Contents
-        </button>
-    </a>
-
-    <div class="col-lg-9">
-        <h1 class="page-title">
-            <span class="underline">
-                {{ page.title }}
-            </span>
-        </h1>
+<div class="row minutes-container">
+    {% with page.body|markdown as parsed_md %}
+    <div class="d-none d-print-block minutes-title">
+        <h1>{{ page.title }}</h1>
+    </div>
+    <div class="col-9 minutes-text">
         {{ parsed_md.0 }}
     </div>
-
-    <div id="side-column" class="col-lg-3">
-        <div id="side-panel-container" class="bg-white mb-3">
-            <aside class="side-panel border-accent">
-                <h1 class="toc-title">Date</h1>
-                <p>{{ page.date|date:"d.m.Y" }}</p>
-
-                <h1 class="toc-title">Moderator</h1>
-                <p>{{ page.moderator.get_full_name }}</p>
-
-                <h1 class="toc-title">Minutes Taker</h1>
-                <p>{{ page.author.get_full_name }}</p>
-
-                <h1 class="toc-title">Participants</h1>
-                <p>
-                    {% for participant in page.participants.all %}
-                    {{ participant.get_full_name }}
-                    {% if foorloop.counter < page.participants.all|length %}
-                    </br>
-                    {% endif %}
-                    {% endfor %}
-                </p>
-
-                <h1 class="toc-title">Guests</h1>
-                <p>
-                    {% if page.guests %}
-                <p>
-                    {% for guest in page.guests %}
-                    {{ guest }}</br>
-                    {% endfor %}
-                </p>
-                {% else %}
-                <i>No guests</i>
+    <div class="col-3 minutes-meta">
+        <h4>{% translate "Date" %}</h4>
+        <p>{{ page.date }}</p>
+        <h4>{% translate "Moderator" %}</h4>
+        <p>{{ page.moderator.get_full_name }}</p>
+        <h4>{% translate "Minutes taker" %}</h4>
+        <p>{{ page.author.get_full_name }}</p>
+        <h4>{% translate "Participants" %}</h4>
+        <ul>
+            {% for participant in page.participants.all %}
+            <li>{{ participant.get_full_name }}</li>
+            {% endfor %}
+        </ul>
+        <h4>{% translate "Guests" %}</h4>
+        {% if page.guests %}
+        <ul>
+            {% for guest in page.guests %}
+            <li>{{ guest }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <i>{% translate "No guests" %}</i>
+        {% endif %}
+        <h4>{% translate "Labels" %}</h4>
+        {% if page.labels.all %}
+        <p>
+            {% include "core/label.html" with minutes=page %}
+            {% else %}
+            <<<<<<< HEAD <i>No labels</i>
                 {% endif %}
-                </p>
+        </p>
+        </aside>
 
-                <h1 class="toc-title">Labels</h1>
-                <p>
-                    {%  if page.labels.all %}
-                    {% include "core/label.html" with minutes=page %}
-                    {% else %}
-                    <i>No labels</i>
-                    {% endif %}
-                </p>
-            </aside>
+        <aside class="side-panel border-accent toc-container d-print-none">
+            <h1 id="toc" class="toc-title">Table of Contents</h1>
+            {{ parsed_md.1 }}
+        </aside>
 
-            <aside class="side-panel border-accent toc-container d-print-none">
-                <h1 id="toc" class="toc-title">Table of Contents</h1>
-                {{ parsed_md.1 }}
-            </aside>
-
-            {% if page.attachments.all %}
-            <aside class="side-panel border-accent toc-container d-print-none">
-                <h1 class="toc-title">Attachments</h1>
-                <ul>
-                    {% for attachment in page.attachments.all %}
-                    <li>
-                        <a href="{{ attachment.url }}">{{ attachment.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </aside>
+        {% if page.attachments.all %}
+        <aside class="side-panel border-accent toc-container d-print-none">
+            <h1 class="toc-title">Attachments</h1>
+            =======
+            <i>{% translate "No labels"%}</i>
             {% endif %}
-        </div>
+            <h4 class="d-print-none">{% translate "Table of contents" %}</h4>
+            {{ parsed_md.1 }}
+            {% if page.attachments.all %}
+            <h4 class="d-print-none">{% translate "Attachments" %}</h4>
+            >>>>>>> Translate templates (#288)
+            <ul>
+                {% for attachment in page.attachments.all %}
+                <li>
+                    <a href="{{ attachment.url }}">{{ attachment.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        {% endif %}
+    </div>
+    <<<<<<< HEAD=======<div id="minutes-footer" class="d-none d-print-block">
+</div>
+<div id="minutes-navigation" class="row d-print-none">
+    <div class="col-6">
+        {% prev_minutes page as prev %}
+        {% if prev %}
+        <a href="{{ prev.url }}">
+            < {% translate "Previous minutes" %}</a>
+                {% endif %}
+    </div>
+    <div class="col-6">
+        {% next_minutes page as next %}
+        {% if next %}
+        <a href="{{ next.url }}"> {% translate "Next minutes" %} ></a>
+        {% endif %}
     </div>
     {% endwith %}
+    >>>>>>> Translate templates (#288)
+</div>
+{% endwith %}
 </div>
 {% block extra_js %}
 <script type="text/javascript" src="{% static 'js/print_processor.js' %}"></script>
