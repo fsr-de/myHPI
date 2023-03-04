@@ -16,8 +16,6 @@ class RedirectMenuItemTests(MyHPIPageTestCase):
         self.redirect_menu_item = self.create_redirect_menu_item("example", "https://example.com")
 
     def test_redirect_menu_item_redirects(self):
-        print(RedirectMenuItem.objects.count())
-        print(RedirectMenuItem.objects.get(slug="example"))
         redirection = self.client.get("/en/example/")
         self.assertEqual(redirection.status_code, 302)
 
