@@ -115,6 +115,7 @@ def create_information_pages(groups, parent):
         path="0001000200010001",
         is_public=False,
         author_visible=True,
+        show_in_menus=True,
     )
     private_page = InformationPage(
         title="Private Page",
@@ -125,6 +126,7 @@ def create_information_pages(groups, parent):
         path="0001000200010002",
         is_public=False,
         author_visible=True,
+        show_in_menus=True,
     )
     public_page = InformationPage(
         title="Public Page",
@@ -134,12 +136,24 @@ def create_information_pages(groups, parent):
         depth=4,
         path="0001000200010003",
         author_visible=False,
+        show_in_menus=True,
+    )
+    hidden_public_page = InformationPage(
+        title="Hidden Public Page",
+        body="A page for everyone, but not in menus.",
+        slug="public-page-hidden",
+        is_public=True,
+        depth=4,
+        path="0001000200010004",
+        author_visible=False,
+        show_in_menus=False,
     )
     parent.add_child(instance=common_page)
     parent.add_child(instance=private_page)
     parent.add_child(instance=public_page)
+    parent.add_child(instance=hidden_public_page)
 
-    return [common_page, private_page, public_page]
+    return [common_page, private_page, public_page, hidden_public_page]
 
 
 def setup_minutes(group, students_group, parent, user):
@@ -149,6 +163,7 @@ def setup_minutes(group, students_group, parent, user):
         is_public=False,
         slug="minutes",
         visible_for=[students_group, group],
+        show_in_menus=True,
     )
     minutes = [
         Minutes(
@@ -222,6 +237,7 @@ def setup_data():
     minutes, minutes_list = setup_minutes(groups[1], groups[0], basic_pages["fsr_menu"], users[2])
 
     return {
+        "basic_pages": basic_pages,
         "users": users,
         "groups": groups,
         "pages": information_pages,
