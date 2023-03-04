@@ -18,7 +18,9 @@ def base_context(request):
     # Determine all pages the user may view based on his groups
     user_groups = get_user_groups(request.user)
 
-    pages_visible_for_user = pages.filter(Q(visible_for__in=user_groups) | Q(is_public=True))
+    pages_visible_for_user = pages.filter(
+        Q(visible_for__in=user_groups) | Q(is_public=True)
+    ).distinct()
 
     page_lookup = {}
 
