@@ -1,5 +1,6 @@
 import os
 import sys
+from email.utils import getaddresses
 
 import tenca
 from django.contrib.messages import constants
@@ -290,3 +291,49 @@ ALUMNI_EMAIL_REPLACEMENTS = [
     ("hpi.de", "student.hpi.de"),
     ("hpi.uni-potsdam.de", "student.hpi.uni-potsdam.de"),
 ]
+
+# mail configuration
+EMAIL_CONFIG = env.email_url("EMAIL_URL")
+vars().update(EMAIL_CONFIG)
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
+SERVER_EMAIL = env.str("SERVER_EMAIL")
+ADMINS = getaddresses([env("ADMINS")])
+
+# logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {"format": "%(levelname)s %(asctime)s %(name)s %(module)s %(message)s"},
+    },
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["mail_admins", "console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+    "root": {
+        "handlers": ["mail_admins", "console"],
+    },
+}
