@@ -299,6 +299,10 @@ DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 SERVER_EMAIL = env.str("SERVER_EMAIL")
 ADMINS = getaddresses([env("ADMINS")])
 
+LOG_DIR = os.path.join(BASE_DIR, "logs")
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
 # logging
 LOGGING = {
     "version": 1,
@@ -328,7 +332,7 @@ LOGGING = {
         "file": {
             "level": "WARNING",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "debug.log"),
+            "filename": os.path.join(LOG_DIR, "debug.log"),
             "backupCount": 10,
             "maxBytes": 5242880,
         },
