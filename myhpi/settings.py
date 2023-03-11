@@ -325,6 +325,13 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "default",
         },
+        "file": {
+            "level": "WARNING",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "debug.log"),
+            "backupCount": 10,
+            "maxBytes": 5242880,
+        },
     },
     "loggers": {
         "django": {
