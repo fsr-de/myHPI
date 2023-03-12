@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtaildocs", "0012_uploadeddocument"),
         ("core", "0005_redirectmenuitem"),

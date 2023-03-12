@@ -17,7 +17,7 @@ class AttachmentSelectWidget(forms.SelectMultiple):
         has_selected = False
 
         attachments = []
-        for (option_value, option_label) in self.choices:
+        for option_value, option_label in self.choices:
             if not self.current_user:
                 attachments.append((option_value, option_label))
             else:

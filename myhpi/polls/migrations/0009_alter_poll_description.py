@@ -6,7 +6,6 @@ import myhpi.core.markdown.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("polls", "0008_polllist"),
     ]
