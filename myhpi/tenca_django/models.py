@@ -66,6 +66,5 @@ class DjangoModelHashStorage(HashStorage):
 
 
 class DjangoModelCachedDescriptionHashStorage(TwoLevelHashStorage):
-
     l1_class = DjangoModelHashStorage
     l2_class = MailmanDescriptionHashStorage

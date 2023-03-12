@@ -140,7 +140,7 @@ class TencaMemberEditView(TencaListAdminMixin, LoginRequiredMixin, View):
                     _("Unblocked {member}"),
                 ),
             ]
-            for (name, func, success_string) in operations:
+            for name, func, success_string in operations:
                 if name in request.POST:
                     try:
                         func(form.cleaned_data["email"])

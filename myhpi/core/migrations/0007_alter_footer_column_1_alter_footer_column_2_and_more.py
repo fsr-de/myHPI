@@ -6,7 +6,6 @@ import myhpi.core.markdown.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("core", "0006_informationpage_attachments_minutes_attachments_and_more"),
     ]
