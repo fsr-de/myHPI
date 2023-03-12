@@ -145,3 +145,4 @@ cython_debug/
 bootstrap/
 bootstrap.bundle.min.js*
 tmp/
+logs/
