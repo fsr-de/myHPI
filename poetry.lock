@@ -614,14 +614,14 @@ testing = ["django-modelcluster"]
 
 [[package]]
 name = "django-select2"
-version = "8.0.0"
+version = "8.1.1"
 description = "This is a Django_ integration of Select2_."
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django-select2-8.0.0.tar.gz", hash = "sha256:0145c9cb34a8c0813f68d7165ed6b034ac03fbdbf145aea203d15ae1653cf7d9"},
-    {file = "django_select2-8.0.0-py3-none-any.whl", hash = "sha256:38e2c91c99f0da07bb43addfa1ac3a2cd6a209154a93edbf4564b9203fa32a4d"},
+    {file = "django-select2-8.1.1.tar.gz", hash = "sha256:72b282393a1d0b2211d386826c5af34be0031cd7a6b57c1aacd829f49c293d84"},
+    {file = "django_select2-8.1.1-py3-none-any.whl", hash = "sha256:8a3862e4fc82ca2fb8419da1212b5f3637943bc8a54d8d023fa2582453f6d37f"},
 ]
 
 [package.dependencies]
@@ -1864,4 +1864,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "a0e1f332dfa116eb978e5bd86d12131459f708dc71738cf362ff4dab11eac1b9"
+content-hash = "cbc4f161c90ac9a6e322ebb95df911d6b791d37a0171a8bb12524dde098ac7b0"
