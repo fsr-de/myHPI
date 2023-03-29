@@ -23,7 +23,7 @@ autoflake = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.17.1"
-black = "^23.1"
+black = "^23.3"
 isort = "^5.12.0"
 autoflake = "^2.0.2"
 pre-commit = "^3.2.1"
