@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
@@ -47,7 +49,7 @@ def check_view_permissions(page, request, serve_args, serve_kwargs):
 @hooks.register("before_serve_document")
 def check_document_permissions(document, request):
     can_view = False
-    for page in document.informationpage_set.all():
+    for page in chain(document.informationpage_set.all(), document.minutes_set.all()):
         try:
             check_view_permissions(page, request, (), {})
             can_view = True
