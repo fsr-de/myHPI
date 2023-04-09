@@ -21,7 +21,7 @@
     {% if search_results_page.paginator.count == 1 %}
     {% translate "One result found." %}
     {% else %}
-    {% blocktrans %}{{ search_results_page.paginator.count }} results found.{% endblocktrans %}
+    {{ search_results_page.paginator.count }}{% blocktrans %} results found.{% endblocktrans %}
     {% endif %}
 </i>
 
