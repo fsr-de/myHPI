@@ -171,9 +171,8 @@ msgid "One result found."
 msgstr "Ein Ergebnis gefunden"
 
 #: search/templates/search/search.html:24
-#, python-format
-msgid "%(search_results_page.paginator.count)s results found."
-msgstr "%(search_results_page.paginator.count)s Ergebnisse gefunden."
+msgid " results found."
+msgstr " Ergebnisse gefunden."
 
 #: search/templates/search/search.html:83
 msgid "No results found."

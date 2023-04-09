@@ -198,7 +198,7 @@ class Minutes(BasePage):
     parent_page_types = ["MinutesList"]
     subpage_types = []
     search_fields = BasePage.search_fields + [
-        index.SearchField("text"),
+        index.SearchField("body"),
         index.SearchField("participants"),
         index.SearchField("moderator"),
     ]
