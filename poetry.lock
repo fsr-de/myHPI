@@ -513,14 +513,14 @@ django = "*"
 
 [[package]]
 name = "django-bootstrap-icons"
-version = "0.8.2"
+version = "0.8.3"
 description = "A quick way to add Bootstrap Icons with Django template tags."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "django-bootstrap-icons-0.8.2.tar.gz", hash = "sha256:e7684db3af0fca41eb8aa9d2503c61942ca549c322b6e8a51e8b34abe14ae20d"},
-    {file = "django_bootstrap_icons-0.8.2-py3-none-any.whl", hash = "sha256:209fa35897dab37e6ca7d6eddc52734dd5f35b02c44e33ec3636eaf157778446"},
+    {file = "django-bootstrap-icons-0.8.3.tar.gz", hash = "sha256:2950414181a9c529feed075b4b77e52278e03c445b80f9192760d5fdd25385da"},
+    {file = "django_bootstrap_icons-0.8.3-py3-none-any.whl", hash = "sha256:94470dce3063249f365fc362fcb1d78c6ca6b71c5fc87e78de2ed685fa69cc3c"},
 ]
 
 [package.dependencies]
@@ -1864,4 +1864,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "7f483fb55adf0a09acb903c61dcbb92e006e4eeaae5a255d3becf1bccab286cf"
+content-hash = "4eb101412416864286524a02c61e990daf669f97befc5fc333bd34494fe9477f"
