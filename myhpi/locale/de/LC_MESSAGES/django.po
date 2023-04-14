@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 17:18+0100\n"
+"POT-Creation-Date: 2023-04-14 12:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,7 +182,34 @@ msgstr "Keine Ergebnisse gefunden."
 msgid "Search..."
 msgstr "Suchen..."
 
-#: templates/404.html:7
+#: templates/403.html:5 myhpi/templates/403.html:11
+msgid "Access denied"
+msgstr "Zugang verweigert"
+
+#: templates/403.html:13
+msgid ""
+"Unfortunately you are not allowed to view this page. This might have one of "
+"the following reasons:"
+msgstr "Du bist nicht berechtigt, diese Seite zu sehen. Das kann einen der folgenden Gründe haben:"
+
+#: templates/403.html:16
+msgid ""
+"You are not logged in and are not accessing the page from the university "
+"network."
+msgstr "Du bist nicht eingeloggt oder rufst die Seite nicht aus dem Universitätsnetzwerk auf."
+
+#: templates/403.html:17
+msgid ""
+"You are not logged in and the page is only available for logged in users."
+msgstr "Du bist nicht eingeloggt und die Seite ist nur für eingeloggte Nutzer sichtbar."
+
+#: templates/403.html:18
+msgid ""
+"You are logged in but don't have the required permissions to access this "
+"page."
+msgstr "Du bist eingeloggt, aber hast keine ausreichenden Berechtigungen, um diese Seite zu sehen."
+
+#: myhpi/templates/404.html:7
 msgid "Page not found"
 msgstr "Seite nicht gefunden."
 
