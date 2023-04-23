@@ -511,14 +511,14 @@ requests = "*"
 
 [[package]]
 name = "django-debug-toolbar"
-version = "3.8.1"
+version = "4.0.0"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "django_debug_toolbar-3.8.1-py3-none-any.whl", hash = "sha256:879f8a4672d41621c06a4d322dcffa630fc4df056cada6e417ed01db0e5e0478"},
-    {file = "django_debug_toolbar-3.8.1.tar.gz", hash = "sha256:24ef1a7d44d25e60d7951e378454c6509bf536dce7e7d9d36e7c387db499bc27"},
+    {file = "django_debug_toolbar-4.0.0-py3-none-any.whl", hash = "sha256:bad339d68520652ddc1580c76f136fcbc3e020fd5ed96510a89a02ec81bb3fb1"},
+    {file = "django_debug_toolbar-4.0.0.tar.gz", hash = "sha256:89619f6e0ea1057dca47bfc429ed99b237ef70074dabc065a7faa5f00e1459cf"},
 ]
 
 [package.dependencies]
@@ -1673,6 +1673,7 @@ python-versions = "*"
 files = [
     {file = "wagtail-markdown-0.10.0.tar.gz", hash = "sha256:b16be4b6e3518cc6dd15ab335cbc6d6a9122b5d7e3a61fa11c83597e2660044e"},
     {file = "wagtail_markdown-0.10.0-py2.py3-none-any.whl", hash = "sha256:e4a97eee0211eebaab9c850669e647bc1c8ceb70df38b4db5a2c3d8b02ebaf69"},
+    {file = "wagtail_markdown-0.10.0-py3-none-any.whl", hash = "sha256:9e8b23bb4946f700e1627238fed7a10e1b2708de6a8187a7fc8d22db99a9ba7b"},
 ]
 
 [package.dependencies]
@@ -1845,4 +1846,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "23f5ff0b25ab9a595f19328c4dc36f4057c37ce738a595362a50a53f5dbeaefe"
+content-hash = "b50ec7aa3e4bc736d68c17472408640edd5a40a9d93809f15b5e21e11fffb10f"
