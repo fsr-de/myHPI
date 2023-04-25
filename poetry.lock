@@ -29,14 +29,14 @@ tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
 name = "astroid"
-version = "2.15.2"
+version = "2.15.4"
 description = "An abstract syntax tree for Python with inference support."
 category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 files = [
-    {file = "astroid-2.15.2-py3-none-any.whl", hash = "sha256:dea89d9f99f491c66ac9c04ebddf91e4acf8bd711722175fe6245c0725cc19bb"},
-    {file = "astroid-2.15.2.tar.gz", hash = "sha256:6e61b85c891ec53b07471aec5878f4ac6446a41e590ede0f2ce095f39f7d49dd"},
+    {file = "astroid-2.15.4-py3-none-any.whl", hash = "sha256:a1b8543ef9d36ea777194bc9b17f5f8678d2c56ee6a45b2c2f17eec96f242347"},
+    {file = "astroid-2.15.4.tar.gz", hash = "sha256:c81e1c7fbac615037744d067a9bb5f9aeb655edf59b63ee8b59585475d6f80d8"},
 ]
 
 [package.dependencies]
@@ -1254,18 +1254,18 @@ files = [
 
 [[package]]
 name = "pylint"
-version = "2.17.2"
+version = "2.17.3"
 description = "python code static checker"
 category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 files = [
-    {file = "pylint-2.17.2-py3-none-any.whl", hash = "sha256:001cc91366a7df2970941d7e6bbefcbf98694e00102c1f121c531a814ddc2ea8"},
-    {file = "pylint-2.17.2.tar.gz", hash = "sha256:1b647da5249e7c279118f657ca28b6aaebb299f86bf92affc632acf199f7adbb"},
+    {file = "pylint-2.17.3-py3-none-any.whl", hash = "sha256:a6cbb4c6e96eab4a3c7de7c6383c512478f58f88d95764507d84c899d656a89a"},
+    {file = "pylint-2.17.3.tar.gz", hash = "sha256:761907349e699f8afdcd56c4fe02f3021ab5b3a0fc26d19a9bfdc66c7d0d5cd5"},
 ]
 
 [package.dependencies]
-astroid = ">=2.15.2,<=2.17.0-dev0"
+astroid = ">=2.15.4,<=2.17.0-dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
     {version = ">=0.2", markers = "python_version < \"3.11\""},
@@ -1673,7 +1673,6 @@ python-versions = "*"
 files = [
     {file = "wagtail-markdown-0.10.0.tar.gz", hash = "sha256:b16be4b6e3518cc6dd15ab335cbc6d6a9122b5d7e3a61fa11c83597e2660044e"},
     {file = "wagtail_markdown-0.10.0-py2.py3-none-any.whl", hash = "sha256:e4a97eee0211eebaab9c850669e647bc1c8ceb70df38b4db5a2c3d8b02ebaf69"},
-    {file = "wagtail_markdown-0.10.0-py3-none-any.whl", hash = "sha256:9e8b23bb4946f700e1627238fed7a10e1b2708de6a8187a7fc8d22db99a9ba7b"},
 ]
 
 [package.dependencies]
@@ -1846,4 +1845,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "44247020386bb7de08e7efcfca34be50b6016454aae03feec996e997aaa0aab2"
+content-hash = "60539206d53a8b192cde788a11059d85a082dfca25b54bd24547e405b757dd02"
