@@ -70,7 +70,7 @@
                     </a>
                     {% else %}
                     <a id="nav-user-toggle" class="nav-link"
-                        href="{% url 'oidc_authentication_init' %}{% if 'next' in request.GET %}?next={{ request.GET.next }}{% endif %}">
+                        href="{% url 'oidc_authentication_init' %}?next={{ request.path }}">
                         <span class="d-none d-md-inline-block">{% translate "Sign in" %}</span>
                         {% bs_icon 'box-arrow-in-right' size='1.4em' %}
                     </a>
