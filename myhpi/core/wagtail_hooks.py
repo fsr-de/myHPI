@@ -37,9 +37,9 @@ def check_view_permissions(page, request, serve_args, serve_kwargs):
         target_groups = request.user.groups.all()
         if request.user.is_superuser:
             return
-        if getattr(request.user, "_ip_range_group_name", None):
+        if getattr(request.user, "ip_range_group_name", None):
             target_groups = Group.objects.filter(
-                Q(name=request.user._ip_range_group_name) | Q(id__in=request.user.groups.all())
+                Q(name=request.user.ip_range_group_name) | Q(id__in=request.user.groups.all())
             )
         is_matching_group = any(group in page.visible_for.all() for group in target_groups)
         if not (is_matching_group or page.is_public):
