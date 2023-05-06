@@ -18,11 +18,9 @@ class MenuTests(MyHPIPageTestCase):
         lookup = get_as_page_path_lookup(start_page.context["pages_by_parent"])
         self.assertDictEqual(
             {
-                "00010001": [],  # root page from migration
                 self.root_page.path: [self.information_menu.path],
                 self.information_menu.path: [self.public_page.path],
                 self.public_page.path: [],
-                self.hidden_public_page.path: [],
             },
             lookup,
         )
@@ -34,16 +32,11 @@ class MenuTests(MyHPIPageTestCase):
         self.maxDiff = None
         self.assertDictEqual(
             {
-                "00010001": [],  # root page from migration
                 self.root_page.path: [self.information_menu.path],
                 self.information_menu.path: [self.common_page.path, self.public_page.path],
                 self.public_page.path: [],
                 self.common_page.path: [],
-                self.hidden_public_page.path: [],
                 self.student_representative_group_minutes.path: [],
-                self.minutes[0].path: [],
-                self.minutes[1].path: [],
-                self.minutes[4].path: [],
             },
             lookup,
         )
@@ -55,7 +48,6 @@ class MenuTests(MyHPIPageTestCase):
         self.maxDiff = None
         self.assertDictEqual(
             {
-                "00010001": [],  # root page from migration
                 self.root_page.path: [self.information_menu.path],
                 self.information_menu.path: [
                     self.common_page.path,
@@ -65,12 +57,7 @@ class MenuTests(MyHPIPageTestCase):
                 self.public_page.path: [],
                 self.common_page.path: [],
                 self.private_page.path: [],
-                self.hidden_public_page.path: [],
                 self.student_representative_group_minutes.path: [],
-                self.minutes[0].path: [],
-                self.minutes[1].path: [],
-                self.minutes[2].path: [],
-                self.minutes[4].path: [],
             },
             lookup,
         )

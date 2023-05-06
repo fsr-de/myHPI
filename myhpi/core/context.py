@@ -19,13 +19,14 @@ def base_context(request):
     user_groups = get_user_groups(request.user)
 
     pages_visible_for_user = pages.filter(
-        Q(visible_for__in=user_groups) | Q(is_public=True)
+        (Q(visible_for__in=user_groups) | Q(is_public=True))
+        & (Q(show_in_menus=True) | Q(id=root_page.id))
     ).distinct()
 
     page_lookup = {}
 
     for page in pages_visible_for_user:
-        page_lookup[page.path] = pages_visible_for_user.child_of(page).in_menu()
+        page_lookup[page.path] = pages_visible_for_user.child_of(page)
 
     return {
         "root_page": root_page,

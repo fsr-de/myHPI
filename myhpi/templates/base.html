@@ -5,6 +5,7 @@
 {% load compile_static %}
 {% load bootstrap_icons %}
 {% load i18n %}
+{% load cache %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +80,11 @@
         </div>
         <div class="navbar-bottom d-flex">
             <div class="navbar-bottom-content page-content d-flex flex-column flex-xl-row flex-grow-1 flex-xl-grow-0">
-                {% build_nav_level_for root_page %}
+
+                {% get_current_language as LANGUAGE_CODE %}
+                {% cache 500 menu request.user.id request.user.ip_range_group_name LANGUAGE_CODE %}
+                    {% build_nav_level_for root_page %}
+                {% endcache %}
 
                 <!-- For navbar desktop mode: Wrappers for sub level containers of root level in navbar -->
                 <div id="nav-level-1" class="nav-level"></div>
