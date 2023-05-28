@@ -182,7 +182,8 @@ WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("de", "German"),
 ]
 WAGTAILLOCALIZE_MACHINE_TRANSLATOR = {
-    "CLASS": "wagtail_localize.machine_translators.dummy.DummyTranslator",
+    "CLASS": "wagtail_localize.machine_translators.deepl.DeepLTranslator",
+    "OPTIONS": {"AUTH_KEY": env.str("DEEPL_API_KEY", "")},
 }
 
 USE_L10N = True
