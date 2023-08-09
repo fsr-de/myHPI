@@ -69,7 +69,7 @@ window.wagtailMarkdown.options = {
                         onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
                         responses: {
                             imageChosen: function (t) {
-                                editor.codemirror.replaceSelection("![" + t.title + "](" + t.preview.url + ")")
+                                editor.codemirror.replaceSelection("![" + t.title + "](image:" + t.id + ")");
                             }
                         },
 

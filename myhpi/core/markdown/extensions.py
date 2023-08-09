@@ -7,6 +7,7 @@ from markdown import Extension
 from markdown.inlinepatterns import LinkInlineProcessor
 from markdown.preprocessors import Preprocessor
 from wagtail.core.models import Page
+from wagtail.images.models import Image
 
 
 class MinutesBasePreprocessor(Preprocessor):
@@ -158,6 +159,22 @@ class InternalLinkPattern(LinkInlineProcessor):
         return Page.objects.get(id=id).localized.get_url()
 
 
+class ImagePattern(LinkInlineProcessor):
+    def handleMatch(self, m, data=None):
+        el = markdown.util.etree.Element("img")
+        try:
+            el.set("src", self.url(m.group("id")))
+            el.set("alt", markdown.util.AtomicString(m.group("title")))
+            el.set("class", "rendered-image")
+        except ObjectDoesNotExist:
+            el = markdown.util.etree.Element("span")
+            el.text = markdown.util.AtomicString(_("[missing image]"))
+        return el, m.start(0), m.end(0)
+
+    def url(self, id):
+        return Image.objects.get(id=id).get_rendition("width-800").url
+
+
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
         md.registerExtension(self)
@@ -170,5 +187,10 @@ class MinuteExtension(Extension):
         md.inlinePatterns.register(
             InternalLinkPattern(r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)", md),
             "InternalLinkPattern",
+            200,
+        )
+        md.inlinePatterns.register(
+            ImagePattern(r"!\[(?P<title>[^\[]+)\]\(image:(?P<id>\d+)\)", md),
+            "ImagePattern",
             200,
         )
