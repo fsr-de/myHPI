@@ -207,6 +207,10 @@ h1.toc-title::after {
     margin-top: -0.25rem;
 }
 
+.rendered-image {
+    max-width: 100%;
+}
+
 @import "./navbar.scss";
 @import "./footer.scss";
 
