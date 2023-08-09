@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 12:42+0000\n"
+"POT-Creation-Date: 2023-08-09 16:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,6 +69,10 @@ msgstr "[link fehlt]"
 #: core/templates/core/information_page.html:19
 msgid "Last edited"
 msgstr "Zuletzt bearbeitet"
+
+#: core/templates/core/information_page.html:22
+msgid "by"
+msgstr "von"
 
 #: core/templates/core/information_page.html:27
 #: core/templates/core/minutes.html:47 polls/templates/polls/poll.html:29
@@ -178,11 +182,11 @@ msgstr " Ergebnisse gefunden."
 msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
-#: search/templates/search/search_field.html:6 templates/base.html:150
+#: search/templates/search/search_field.html:6 templates/base.html:157
 msgid "Search..."
 msgstr "Suchen..."
 
-#: templates/403.html:5 myhpi/templates/403.html:11
+#: templates/403.html:5 templates/403.html:11
 msgid "Access denied"
 msgstr "Zugang verweigert"
 
@@ -190,26 +194,34 @@ msgstr "Zugang verweigert"
 msgid ""
 "Unfortunately you are not allowed to view this page. This might have one of "
 "the following reasons:"
-msgstr "Du bist nicht berechtigt, diese Seite zu sehen. Das kann einen der folgenden Gründe haben:"
+msgstr ""
+"Du bist nicht berechtigt, diese Seite zu sehen. Das kann einen der folgenden "
+"Gründe haben:"
 
 #: templates/403.html:16
 msgid ""
 "You are not logged in and are not accessing the page from the university "
 "network."
-msgstr "Du bist nicht eingeloggt oder rufst die Seite nicht aus dem Universitätsnetzwerk auf."
+msgstr ""
+"Du bist nicht eingeloggt oder rufst die Seite nicht aus dem "
+"Universitätsnetzwerk auf."
 
 #: templates/403.html:17
 msgid ""
 "You are not logged in and the page is only available for logged in users."
-msgstr "Du bist nicht eingeloggt und die Seite ist nur für eingeloggte Nutzer sichtbar."
+msgstr ""
+"Du bist nicht eingeloggt und die Seite ist nur für eingeloggte Nutzer "
+"sichtbar."
 
 #: templates/403.html:18
 msgid ""
 "You are logged in but don't have the required permissions to access this "
 "page."
-msgstr "Du bist eingeloggt, aber hast keine ausreichenden Berechtigungen, um diese Seite zu sehen."
+msgstr ""
+"Du bist eingeloggt, aber hast keine ausreichenden Berechtigungen, um diese "
+"Seite zu sehen."
 
-#: myhpi/templates/404.html:7
+#: templates/404.html:7
 msgid "Page not found"
 msgstr "Seite nicht gefunden."
 
@@ -229,19 +241,19 @@ msgstr "Zur Startseite"
 msgid "Ctrl+K"
 msgstr "Strg+K"
 
-#: templates/base.html:73
+#: templates/base.html:74
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: templates/base.html:93
+#: templates/base.html:99
 msgid "Your groups:"
 msgstr "Deine Gruppen"
 
-#: templates/base.html:100
+#: templates/base.html:106
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: templates/base.html:152
+#: templates/base.html:159
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -330,8 +342,10 @@ msgstr ""
 "\t"
 
 #: tenca_django/templates/tenca_django/delete_list.html:20
+#, fuzzy
+#| msgid "Delete list"
 msgid "Delete"
-msgstr "Löschen"
+msgstr "Liste Löschen"
 
 #: tenca_django/templates/tenca_django/delete_list.html:21
 msgid "Cancel"
@@ -484,6 +498,3 @@ msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
 #~ msgstr ""
 #~ " Die angeforderte Seite existiert nicht. Bitte überprüfe die URL oder "
 #~ "nutze das Menü oben, um die gewünschte Seite zu finden. "
-
-#~ msgid "Previous"
-#~ msgstr "Vorherige "

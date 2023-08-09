@@ -19,7 +19,7 @@
                 <h1 class="toc-title">{% translate "Last edited" %}</h1>
                 {{ page.last_published_at|date:"d.m.Y, H:i" }}
                 {% if page.author_visible %}
-                    <i>von</i>
+                    <i>{% translate "by" %}</i>
                     {{ page.last_edited_by }}
                 {% endif %}
             </aside>
