@@ -37,6 +37,8 @@ If you want to do that manually, run `pre-commit run --all-files`. Next to that,
 
 ## Tips
 
+- To create translations, run `django-admin makemessages -l de` in the myhpi directory.
+
 ### Reset database
 
 1. Delete `db.sqlite3`
