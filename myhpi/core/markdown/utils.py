@@ -12,12 +12,12 @@ def render_markdown(text, context=None, with_abbreveations=True):
     """
     if context is None or not isinstance(context, dict):
         context = {}
-    markdown_html, toc = _transform_markdown_into_html(text, with_abbreveations=with_abbreveations)
+    markdown_html, toc = _transform_markdown_into_html(text, with_abbreviations=with_abbreveations)
     sanitised_markdown_html = _sanitise_markdown_html(markdown_html)
     return mark_safe(sanitised_markdown_html), mark_safe(toc)
 
 
-def _transform_markdown_into_html(text, with_abbreveations):
+def _transform_markdown_into_html(text, with_abbreviations):
     from myhpi.core.models import AbbreviationExplanation
 
     markdown_kwargs = _get_markdown_kwargs()
@@ -25,7 +25,7 @@ def _transform_markdown_into_html(text, with_abbreveations):
         MinuteExtension()
     )  # should be in settings.py, but module lookup doesn't work
     md = markdown.Markdown(**markdown_kwargs)
-    abbreveations = "\n\n" + (
+    abbreviations = "\n\n" + (
         "\n".join(
             [
                 f"*[{abbr.abbreviation}]: {abbr.explanation}"
@@ -33,5 +33,5 @@ def _transform_markdown_into_html(text, with_abbreveations):
             ]
         )
     )
-    text = smart_str(text) + abbreveations if with_abbreveations else smart_str(text)
+    text = smart_str(text) + abbreviations if with_abbreviations else smart_str(text)
     return md.convert(text), md.toc
