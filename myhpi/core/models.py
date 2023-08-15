@@ -97,8 +97,13 @@ class MinutesList(BasePage):
     subpage_types = ["Minutes"]
 
     def get_visible_minutes(self, request):
-        minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
         user_groups = get_user_groups(request.user)
+        minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
+
+        # display all minutes including drafts if user is in group that owns the minutes list
+        if self.group in user_groups:
+            return Minutes.objects.filter(id__in=minutes_ids).order_by("-date")
+
         minutes_list = (
             Minutes.objects.filter(id__in=minutes_ids)
             .filter(Q(visible_for__in=user_groups) | Q(is_public=True))
