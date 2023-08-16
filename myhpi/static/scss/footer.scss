@@ -32,3 +32,9 @@
         margin-right: 5rem;
     }
 }
+
+@media print {
+    .footer-myhpi {
+        display: none;
+    }
+}
