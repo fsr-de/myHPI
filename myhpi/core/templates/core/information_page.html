@@ -18,14 +18,18 @@
         <div class="side-panel-container">
             <aside class="side-panel border-accent">
                 <h1 class="toc-title">{% translate "Last edited" %}</h1>
-                {% get_current_timezone as TIMEZONE %}
-                <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
-                    {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
-                        {{ date }} at {{ time }}
-                    {% endblocktranslate %}
-                </time>
-                {% if page.author_visible %}
-                    {% translate "by" %}
+                {% if not page.last_published_at %}
+                    {% translate "A long time ago" %}
+                {% else %}
+                    {% get_current_timezone as TIMEZONE %}
+                    <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
+                        {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
+                            {{ date }} at {{ time }}
+                        {% endblocktranslate %}
+                    </time>
+                {% endif %}
+                {% if page.author_visible and page.last_edited_by %}
+                    <i>{% translate "by" %}</i>
                     {{ page.last_edited_by }}
                 {% endif %}
             </aside>
