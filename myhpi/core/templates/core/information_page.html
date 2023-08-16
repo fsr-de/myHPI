@@ -29,28 +29,7 @@
                     {{ page.last_edited_by }}
                 {% endif %}
             </aside>
-            {% if perms.wagtail.edit_page %}
-                <aside class="side-panel border-accent toc-container d-print-none">
-                    <h1 class="toc-title">{% translate "Visibility" %}</h1>
-                    {{ page.visible_for.all|join:", " }}
-                </aside>
-            {% endif %}
-            <aside class="side-panel border-accent toc-container d-print-none">
-                <h1 class="toc-title">{% translate "Table of contents" %}</h1>
-                {{ parsed_md.1 }}
-            </aside>
-            {% if page.attachments.all %}
-                <aside class="side-panel border-accent toc-container d-print-none">
-                    <h1 class="toc-title">{% translate "Attachments" %}</h1>
-                    <ul>
-                    {% for attachment in page.attachments.all %}
-                        <li>
-                            <a href="{{ attachment.url }}">{{ attachment.title }}</a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </aside>
-            {% endif %}
+            {% include "core/sidebar.html" %}
         </div>
     </div>
 </div>
