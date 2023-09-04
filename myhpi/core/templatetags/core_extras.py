@@ -30,9 +30,9 @@ def get_nav_children_for(pages_by_parent, parent_path):
 
 
 @register.inclusion_tag("footer.html")
-def insert_footer():
+def insert_footer(page):
     footer = Footer.objects.first()
-    return {"footer_columns": [footer.column_1, footer.column_2, footer.column_3, footer.column_4]}
+    return {"footer_columns": [footer.column_1, footer.column_2, footer.column_3], "page": page}
 
 
 @register.filter(name="tag_external_links")

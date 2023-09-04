@@ -223,13 +223,11 @@ class Footer(models.Model):
     column_1 = CustomMarkdownField()
     column_2 = CustomMarkdownField()
     column_3 = CustomMarkdownField()
-    column_4 = CustomMarkdownField()
 
     panels = [
         FieldPanel("column_1"),
         FieldPanel("column_2"),
         FieldPanel("column_3"),
-        FieldPanel("column_4"),
     ]
 
     def __str__(self):
@@ -240,7 +238,6 @@ class Footer(models.Model):
             get_first_line(self.column_1)
             + get_first_line(self.column_2)
             + get_first_line(self.column_3)
-            + get_first_line(self.column_4)
         )
 
 

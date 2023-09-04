@@ -15,6 +15,9 @@ def base_context(request):
     if not root_page:
         return {"root_page": None, "pages_by_parent": None}
 
+    # Determine the correct root for the active language
+    root_page = root_page.localized
+
     # Determine all pages the user may view based on his groups
     user_groups = get_user_groups(request.user)
 
