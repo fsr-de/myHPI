@@ -52,3 +52,16 @@ class ViewPermissionTests(MyHPIPageTestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.get(self.private_page.url, follow=True)
         self.assertEqual(response.status_code, 200)
+
+    def test_document_view(self):
+        self.common_page.attachments.add(self.first_document)
+        self.common_page.save()
+        self.private_page.attachments.add(self.second_document)
+        self.private_page.save()
+
+        self.sign_in_as_student()
+        response = self.client.get(self.first_document.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.second_document.url, follow=True)
+        self.assertEqual(response.status_code, 403)
