@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from myhpi.core.widgets import AttachmentSelectWidget
-from myhpi.tests.core.utils import MyHPIPageTestCase
 
 from django.forms.models import ModelChoiceIteratorValue
+
+from myhpi.core.widgets import AttachmentSelectWidget
+from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
 class WidgetTests(MyHPIPageTestCase):

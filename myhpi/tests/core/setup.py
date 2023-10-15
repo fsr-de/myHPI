@@ -1,5 +1,6 @@
-from django.contrib.auth.models import Group, User, Permission
-from wagtail.models import Site
+from django.contrib.auth.models import Group, Permission, User
+from wagtail.documents.models import Document
+from wagtail.models import Collection, GroupCollectionPermission, Site
 
 from myhpi.core.models import (
     FirstLevelMenuItem,
@@ -10,8 +11,6 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
-from wagtail.models import Collection, GroupCollectionPermission
-from wagtail.documents.models import Document
 
 
 def create_users():
