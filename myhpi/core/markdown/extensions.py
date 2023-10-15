@@ -177,6 +177,9 @@ class ImagePattern(LinkInlineProcessor):
     def url(self, id):
         return Image.objects.get(id=id).get_rendition("width-800").url
 
+    def default_pattern():
+        return r"!\[(?P<title>[^\[]+)\]\(image:(?P<id>\d+)\)"
+
 
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
@@ -193,7 +196,7 @@ class MinuteExtension(Extension):
             200,
         )
         md.inlinePatterns.register(
-            ImagePattern(r"!\[(?P<title>[^\[]+)\]\(image:(?P<id>\d+)\)", md),
+            ImagePattern(ImagePattern.default_pattern(), md),
             "ImagePattern",
             200,
         )

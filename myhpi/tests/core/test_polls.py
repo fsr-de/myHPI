@@ -58,6 +58,8 @@ class PollTests(MyHPIPageTestCase):
         )
         self.choice_good.refresh_from_db()
         self.assertEqual(self.choice_good.votes, 1)
+        self.assertEqual(self.choice_good.percentage(), 100)
+        self.assertEqual(self.choice_bad.percentage(), 0)
         self.assertFalse(self.poll.can_vote(self.student))
 
     def test_post_vote_invalid_choice(self):
@@ -89,4 +91,15 @@ class PollTests(MyHPIPageTestCase):
             data={"choice": [self.choice_good.id, self.choice_bad.id]},
         )
         self.assertContains(response, "You can only select up to 1 options.", 1)
+        self.assertTrue(self.poll.can_vote(self.student))
+
+    def test_post_vote_before_start_date(self):
+        self.sign_in_as_student()
+        self.poll.start_date = datetime.now() + timedelta(days=1)
+        self.poll.save()
+        self.assertTrue(self.poll.can_vote(self.student))
+        response = self.client.post(
+            self.poll.url, data={"choice": [self.choice_good.id]}, follow=True
+        )
+        self.assertContains(response, "This poll has not yet started.")
         self.assertTrue(self.poll.can_vote(self.student))
