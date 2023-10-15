@@ -75,7 +75,7 @@ class BreakPreprocessor(MinutesBasePreprocessor):
         )
 
 
-class QuorumPrepocessor(MinutesBasePreprocessor):
+class QuorumPreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
@@ -138,11 +138,11 @@ class HeadingLevelPreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.patterns = [
-            (r"^#{1,5}", self.decrease),
+            (r"^#{1,5} ", self.decrease),
         ]
 
     def decrease(self, match):
-        return f"{match.group(0)}#"
+        return f"#{match.group(0)}"
 
 
 class InternalLinkPattern(LinkInlineProcessor):
@@ -157,6 +157,9 @@ class InternalLinkPattern(LinkInlineProcessor):
 
     def url(self, id):
         return Page.objects.get(id=id).localized.get_url()
+
+    def default_pattern():
+        return r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)"
 
 
 class ImagePattern(LinkInlineProcessor):
@@ -181,11 +184,11 @@ class MinuteExtension(Extension):
         md.preprocessors.register(VotePreprocessor(md), "votify", 200)
         md.preprocessors.register(StartEndPreprocessor(md), "start_or_endify", 200)
         md.preprocessors.register(BreakPreprocessor(md), "breakify", 200)
-        md.preprocessors.register(QuorumPrepocessor(md), "quorumify", 200)
+        md.preprocessors.register(QuorumPreprocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
         md.inlinePatterns.register(
-            InternalLinkPattern(r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)", md),
+            InternalLinkPattern(InternalLinkPattern.default_pattern(), md),
             "InternalLinkPattern",
             200,
         )
