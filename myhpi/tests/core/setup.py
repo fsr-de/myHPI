@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, User, Permission
 from wagtail.models import Site
 
 from myhpi.core.models import (
@@ -10,6 +10,8 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
+from wagtail.models import Collection, GroupCollectionPermission
+from wagtail.documents.models import Document
 
 
 def create_users():
@@ -228,12 +230,70 @@ def setup_minutes(group, students_group, parent, user):
     return minutes, minutes_list
 
 
+def create_collections(groups):
+    root_collection = Collection.get_first_root_node()
+    for group in groups:
+        group_collection = root_collection.add_child(name=f"{group.name} collection")
+        group_collection.save()
+        GroupCollectionPermission.objects.create(
+            group=group,
+            collection=group_collection,
+            permission=Permission.objects.get(
+                content_type__app_label="wagtaildocs", codename="add_document"
+            ),
+        )
+        GroupCollectionPermission.objects.create(
+            group=group,
+            collection=group_collection,
+            permission=Permission.objects.get(
+                content_type__app_label="wagtaildocs", codename="change_document"
+            ),
+        )
+        GroupCollectionPermission.objects.create(
+            group=group,
+            collection=group_collection,
+            permission=Permission.objects.get(
+                content_type__app_label="wagtaildocs", codename="choose_document"
+            ),
+        )
+        yield group_collection
+
+
+def get_test_image_file():
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    image_file = SimpleUploadedFile(
+        name="test_image.jpg",
+        content=open("myhpi/tests/files/test_image.jpg", "rb").read(),
+        content_type="image/jpeg",
+    )
+    return image_file
+
+
+def create_documents(collections):
+    documents = [
+        Document.objects.create(
+            title="First document",
+            file=get_test_image_file(),
+            collection=collections[0],
+        ),
+        Document.objects.create(
+            title="Second document",
+            file=get_test_image_file(),
+            collection=collections[1],
+        ),
+    ]
+    return documents
+
+
 def setup_data():
     users = create_users()
     groups = create_groups(users)
     basic_pages = create_basic_page_structure()
     information_pages = create_information_pages(groups, basic_pages["information_menu"])
     minutes, minutes_list = setup_minutes(groups[1], groups[0], basic_pages["fsr_menu"], users[2])
+    collections = list(create_collections(groups))
+    documents = create_documents(collections)
 
     return {
         "basic_pages": basic_pages,
@@ -242,4 +302,6 @@ def setup_data():
         "pages": information_pages,
         "minutes": minutes,
         "minutes_list": minutes_list,
+        "collections": collections,
+        "documents": documents,
     }
