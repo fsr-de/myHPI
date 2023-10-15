@@ -41,7 +41,7 @@ def create_users():
 
 def create_groups(users):
     superuser, student, student_representative = users
-    students = Group.objects.create(name="Students")
+    students = Group.objects.create(name="Student")
     fsr = Group.objects.create(name="Student Representative Group")
 
     students.user_set.add(superuser)
