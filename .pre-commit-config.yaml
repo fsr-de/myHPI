@@ -2,7 +2,7 @@ default_language_version:
   python: python3.9
 repos:
   - repo: https://github.com/myint/autoflake
-    rev: v2.1.1
+    rev: v2.2.1
     hooks:
       - id: autoflake
         args:
