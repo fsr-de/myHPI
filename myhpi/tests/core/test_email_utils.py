@@ -30,3 +30,12 @@ class EmailUtilTest(TestCase):
             toggled = list(toggle_institution(email))
             if not "unrelated" in email:
                 self.assertEqual(toggled[0], expected_email)
+
+    def test_alternative_emails(self):
+        email = "user@hpi.de"
+        alternatives = [
+            "user@hpi.uni-potsdam.de",
+            "user@student.hpi.de",
+            "user@student.hpi.uni-potsdam.de",
+        ]
+        self.assertSetEqual(set(alternative_emails(email)), set(alternatives))
