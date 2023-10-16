@@ -65,18 +65,25 @@ class Poll(BasePage):
         elif request.method == "POST" and self.can_vote(request.user):
             choices = request.POST.getlist("choice")
             if len(choices) == 0:
-                messages.error(request, "You must at least select one choice.")
+                messages.error(request, "You must select at least one choice.")
             elif len(choices) > self.max_allowed_answers:
                 messages.error(
                     request,
                     "You can only select up to {} options.".format(self.max_allowed_answers),
                 )
             else:
+                confirmed_choices = 0
                 for choice_id in choices:
-                    choice = self.choices.filter(id=choice_id)
-                    choice.update(votes=F("votes") + 1)
-                self.participants.add(request.user)
-                messages.success(request, "Your vote has been counted.")
+                    choice = self.choices.filter(id=choice_id).first()
+                    if choice and choice.page == self:
+                        choice.votes += 1
+                        choice.save()
+                        confirmed_choices += 1
+                    else:
+                        messages.error(request, "Invalid choice.")
+                if confirmed_choices > 0:
+                    self.participants.add(request.user)
+                    messages.success(request, "Your vote has been counted.")
                 return redirect(self.relative_url(self.get_site()))
 
         return super().serve(request, *args, **kwargs)

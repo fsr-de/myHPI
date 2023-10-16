@@ -27,6 +27,9 @@ class MyHPIPageTestCase(TestCase):
         self.student = self.test_data["users"][1]
         self.student_representative = self.test_data["users"][2]
 
+        self.first_document = self.test_data["documents"][0]
+        self.second_document = self.test_data["documents"][1]
+
     def sign_in_as_student(self):
         self.client.force_login(self.student)
 
