@@ -1,13 +1,8 @@
 import re
 
-import markdown
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 from markdown import Extension
-from markdown.inlinepatterns import LinkInlineProcessor
 from markdown.preprocessors import Preprocessor
-from wagtail.core.models import Page
-from wagtail.images.models import Image
 
 
 class MinutesBasePreprocessor(Preprocessor):
@@ -145,42 +140,6 @@ class HeadingLevelPreprocessor(MinutesBasePreprocessor):
         return f"#{match.group(0)}"
 
 
-class InternalLinkPattern(LinkInlineProcessor):
-    def handleMatch(self, m, data=None):
-        el = markdown.util.etree.Element("a")
-        try:
-            el.set("href", self.url(m.group("id")))
-            el.text = markdown.util.AtomicString(m.group("title"))
-        except ObjectDoesNotExist:
-            el.text = markdown.util.AtomicString(_("[missing link]"))
-        return el, m.start(0), m.end(0)
-
-    def url(self, id):
-        return Page.objects.get(id=id).localized.get_url()
-
-    def default_pattern():
-        return r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)"
-
-
-class ImagePattern(LinkInlineProcessor):
-    def handleMatch(self, m, data=None):
-        el = markdown.util.etree.Element("img")
-        try:
-            el.set("src", self.url(m.group("id")))
-            el.set("alt", markdown.util.AtomicString(m.group("title")))
-            el.set("class", "rendered-image")
-        except ObjectDoesNotExist:
-            el = markdown.util.etree.Element("span")
-            el.text = markdown.util.AtomicString(_("[missing image]"))
-        return el, m.start(0), m.end(0)
-
-    def url(self, id):
-        return Image.objects.get(id=id).get_rendition("width-800").url
-
-    def default_pattern():
-        return r"!\[(?P<title>[^\[]+)\]\(image:(?P<id>\d+)\)"
-
-
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
         md.registerExtension(self)
@@ -190,13 +149,3 @@ class MinuteExtension(Extension):
         md.preprocessors.register(QuorumPreprocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
-        md.inlinePatterns.register(
-            InternalLinkPattern(InternalLinkPattern.default_pattern(), md),
-            "InternalLinkPattern",
-            200,
-        )
-        md.inlinePatterns.register(
-            ImagePattern(ImagePattern.default_pattern(), md),
-            "ImagePattern",
-            200,
-        )
