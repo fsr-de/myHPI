@@ -32,6 +32,12 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
 
         return user
 
+    def update_user(self, user, claims):
+        user.email = mail_replacement(claims.get("email"))
+        user.save()
+
+        return user
+
     def filter_users_by_claims(self, claims):
         """Return all users matching the specified username."""
         username = claims.get("sub")
