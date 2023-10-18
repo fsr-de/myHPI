@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
-from wagtail.core import hooks
+from wagtail import hooks
 
 from myhpi.core.models import (
     AbbreviationExplanation,

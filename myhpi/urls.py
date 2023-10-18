@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path, reverse_lazy
 from django.views.generic import RedirectView
 from wagtail.admin import urls as wagtailadmin_urls
-from wagtail.core import urls as wagtail_urls
+from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from myhpi.search import views as search_views
