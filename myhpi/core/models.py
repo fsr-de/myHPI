@@ -10,10 +10,10 @@ from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
-from wagtail.admin.panels import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
-from wagtail.models import Page, Site
+from wagtail.admin.panels import FieldPanel, PublishingPanel
 from wagtail.documents.models import Document
+from wagtail.models import Page, Site
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 

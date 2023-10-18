@@ -4,7 +4,6 @@ import django
 from django.test import TestCase
 from django.utils.translation import activate
 
-
 django.setup()
 
 from myhpi.core.markdown.extensions import (

@@ -5,8 +5,8 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.templatetags.static import static
 from django.utils.html import format_html
-from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail import hooks
+from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 
 from myhpi.core.models import (
     AbbreviationExplanation,
