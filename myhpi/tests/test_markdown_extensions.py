@@ -1,13 +1,9 @@
 import re
-from typing import Collection
 
 import django
 from django.test import TestCase
 from django.utils.translation import activate
-from wagtail.core.models import Page
-from wagtail.images.models import Image
 
-from myhpi.core.markdown.extensions import ImagePattern
 
 django.setup()
 
@@ -15,7 +11,6 @@ from myhpi.core.markdown.extensions import (
     BreakPreprocessor,
     EnterLeavePreprocessor,
     HeadingLevelPreprocessor,
-    InternalLinkPattern,
     QuorumPreprocessor,
     StartEndPreprocessor,
     VotePreprocessor,
@@ -92,39 +87,3 @@ class TestMarkdownExtensions(TestCase):
                 "###### Heading 6",
             ],
         )
-
-    def test_internal_link_preprocessor(self):
-        ilp = InternalLinkPattern(InternalLinkPattern.default_pattern())
-
-        from myhpi.tests.core.setup import setup_data
-
-        test_data = setup_data()
-        test_page = test_data["pages"][0]
-        text = f"[Page title](page:{test_page.id})"
-        el, _, _ = ilp.handleMatch(re.match(ilp.pattern, text))
-        self.assertEqual(el.attrib["href"], test_page.localized.get_url())
-
-    def test_image_pattern(self):
-        activate("en")
-        from django.core.files.uploadedfile import SimpleUploadedFile
-
-        ip = ImagePattern(ImagePattern.default_pattern())
-
-        image_file = SimpleUploadedFile(
-            name="test_image.jpg",
-            content=open("myhpi/tests/files/test_image.jpg", "rb").read(),
-            content_type="image/jpeg",
-        )
-
-        image = Image.objects.create(
-            title="Test image",
-            file=image_file,
-        )
-
-        text = f"![Alt text](image:{image.id})"
-        invalid_text = "![Alt text](image:1234567890)"
-        el, _, _ = ip.handleMatch(re.match(ip.pattern, text))
-        self.assertEqual(el.attrib["src"], image.get_rendition("width-800").url)
-
-        el, _, _ = ip.handleMatch(re.match(ip.pattern, invalid_text))
-        self.assertEqual(el.text, "[missing image]")

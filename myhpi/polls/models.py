@@ -7,7 +7,7 @@ from django.db.models import F, Sum
 from django.shortcuts import redirect
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
-from wagtail.core.models import Orderable, Page
+from wagtail.models import Orderable, Page
 from wagtail.search import index
 
 from myhpi.core.markdown.fields import CustomMarkdownField
