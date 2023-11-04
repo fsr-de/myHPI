@@ -1,7 +1,7 @@
 from django.db.models import Q
 from wagtail.core.models import Site
 
-from .models import BasePage
+from .models import BasePage, MinutesList
 from .utils import get_user_groups
 
 
@@ -31,7 +31,20 @@ def base_context(request):
     for page in pages_visible_for_user:
         page_lookup[page.path] = pages_visible_for_user.child_of(page)
 
+    minutes_creation_links = {}
+    for group in request.user.groups.all():
+        minutes_creation_links[group.id] = create_minutes_for_group_link(request.user, group)
+
     return {
         "root_page": root_page,
         "pages_by_parent": page_lookup,
+        "minutes_creation_links": minutes_creation_links,
     }
+
+
+def create_minutes_for_group_link(user, group):
+    minutes_list = MinutesList.objects.filter(group=group).first()
+    if not minutes_list:
+        return None
+    if minutes_list.permissions_for_user(user).can_add_subpage():
+        return f"/admin/pages/{minutes_list.id}/add_subpage/"

@@ -98,7 +98,19 @@
                         <span class="nav-link pe-none"
                             id="navbar-groups-header"><i>{% translate "Your groups:" %}</i></span>
                         {% for group in user.groups.all %}
-                        <li class="nav-link pe-none nav-link-extra-indent">{{ group }}</li>
+                        <li class="nav-link nav-link-extra-indent">
+                            <div class="row">
+                                <div class="col">
+                                    {{ group }}
+                                </div>
+                                {% if minutes_creation_links|get_link_for_group:group%}
+                                <div class="col">
+                                    {% bs_icon 'journal-plus' size='1.4em' %}
+                                    <a href="{{ minutes_creation_links|get_link_for_group:group }}">Create minutes</a>
+                                </div>
+                                {% endif %}
+                        </div>
+                        </li>
                         {% endfor %}
                         <li class="dropdown-divider"></li>
                         {% endif %}
