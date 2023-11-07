@@ -352,3 +352,5 @@ LOGGING = {
         "handlers": ["mail_admins", "console"],
     },
 }
+
+BS_ICONS_CACHE = os.path.join(STATIC_ROOT, "icon_cache")
