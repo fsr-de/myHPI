@@ -47,4 +47,5 @@ def create_minutes_for_group_link(user, group):
     if not minutes_list:
         return None
     if minutes_list.permissions_for_user(user).can_add_subpage():
-        return f"/admin/pages/{minutes_list.id}/add_subpage/"
+        from django.urls import reverse
+        return reverse("wagtailadmin_pages:add_subpage", kwargs={"parent_page_id": minutes_list.id})
