@@ -52,3 +52,8 @@ def tag_external_links(content):
 @register.filter(name="markdown")
 def markdown(value):
     return render_markdown(value)
+
+
+@register.filter(name="get_link_for_group")
+def get_link_for_group(minutes_creation_links, group):
+    return minutes_creation_links[group.id]
