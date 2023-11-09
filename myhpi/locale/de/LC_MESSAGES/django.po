@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-04 20:15+0100\n"
+"POT-Creation-Date: 2023-11-09 16:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,7 +188,7 @@ msgstr " Ergebnisse gefunden."
 msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
-#: search/templates/search/search_field.html:6 templates/base.html:169
+#: search/templates/search/search_field.html:6 templates/base.html:168
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -255,17 +255,17 @@ msgstr "Anmelden"
 msgid "Your groups:"
 msgstr "Deine Gruppen"
 
-#: templates/base.html:109
+#: templates/base.html:108
 #, fuzzy
 #| msgid "Next minutes"
 msgid "Create minutes"
 msgstr "Protokoll erstellen"
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: templates/base.html:171
+#: templates/base.html:170
 msgid "Start search"
 msgstr "Suche starten"
 

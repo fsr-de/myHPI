@@ -56,6 +56,4 @@ def markdown(value):
 
 @register.filter(name="get_link_for_group")
 def get_link_for_group(minutes_creation_links, group):
-    print(group)
-    print(minutes_creation_links)
     return minutes_creation_links[group.id]

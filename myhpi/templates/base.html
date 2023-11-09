@@ -104,9 +104,8 @@
                                     {{ group }}
                                 </div>
                                 {% if minutes_creation_links|get_link_for_group:group%}
-                                <div class="col">
-                                    {% bs_icon 'journal-plus' size='1.4em' %}
-                                    <a href="{{ minutes_creation_links|get_link_for_group:group }}">{% translate "Create minutes" %}</a>
+                                <div class="col add-minutes">
+                                    <a href="{{ minutes_creation_links|get_link_for_group:group }}" title="{% translate "Create minutes" %}"> {% bs_icon 'journal-plus' size='1.4em' %}</a>
                                 </div>
                                 {% endif %}
                         </div>
