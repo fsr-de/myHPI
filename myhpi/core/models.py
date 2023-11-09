@@ -195,7 +195,7 @@ class Minutes(BasePage):
         FieldPanel("date"),
         FieldPanel("moderator"),
         FieldPanel("author"),
-        FieldPanel("participants", widget=UserSelectWidget({'data-width': '10%'})),
+        FieldPanel("participants", widget=UserSelectWidget({'data-width': '100%'})),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
