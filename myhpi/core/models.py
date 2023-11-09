@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
-from django_tomselect.widgets import TomSelectWidget, TomSelectTabularWidget, TomSelectMultipleWidget
+from django_tomselect.widgets import TomSelectMultipleWidget, TomSelectWidget
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
