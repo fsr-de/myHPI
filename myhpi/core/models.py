@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
-from django_select2 import forms as s2forms
+from django_tomselect.widgets import TomSelectWidget, TomSelectTabularWidget, TomSelectMultipleWidget
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
@@ -170,13 +170,6 @@ class MinutesForm(WagtailAdminPageForm):
             return existing_minutes.last().specific
 
 
-class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
-    search_fields = [
-        "username__icontains",
-        "email__icontains",
-    ]
-
-
 class Minutes(BasePage):
     date = DateField()
     moderator = ForeignKey(
@@ -193,9 +186,9 @@ class Minutes(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
-        FieldPanel("moderator"),
-        FieldPanel("author"),
-        FieldPanel("participants", widget=UserSelectWidget),
+        FieldPanel("moderator", widget=TomSelectWidget(label_field="username")),
+        FieldPanel("author", widget=TomSelectWidget(label_field="username")),
+        FieldPanel("participants", widget=TomSelectMultipleWidget(label_field="username")),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),

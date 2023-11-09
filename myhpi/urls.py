@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path, reverse_lazy
 from django.views.generic import RedirectView
+from django_tomselect.views import AutocompleteView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
@@ -25,7 +26,7 @@ urlpatterns = [
         ),
         name="login",
     ),
-    path("select2/", include("django_select2.urls")),
+    path("autocomplete/", AutocompleteView.as_view(), name="autocomplete"),
     path("__debug__/", include("debug_toolbar.urls")),
     path(
         ".well-known/security.txt",

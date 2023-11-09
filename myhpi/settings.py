@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.messages",
     "django_bootstrap_icons",
-    "django_select2",
+    "django_tomselect",
     "modelcluster",
     "mozilla_django_oidc",
     "taggit",
