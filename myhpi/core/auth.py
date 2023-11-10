@@ -38,5 +38,7 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
             return self.UserModel.objects.none()
         users = self.UserModel.objects.filter(username__iexact=username)
         if not users.exists():
-            users = self.UserModel.objects.filter(email__iexact=mail_replacement(claims.get("email")))
+            users = self.UserModel.objects.filter(
+                email__iexact=mail_replacement(claims.get("email"))
+            )
         return users
