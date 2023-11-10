@@ -1,8 +1,11 @@
 import re
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
-from markdown import Extension
+from markdown import Extension, util
+from markdown.inlinepatterns import LinkInlineProcessor
 from markdown.preprocessors import Preprocessor
+from wagtail.models import Page
 
 
 class MinutesBasePreprocessor(Preprocessor):
@@ -140,6 +143,24 @@ class HeadingLevelPreprocessor(MinutesBasePreprocessor):
         return f"#{match.group(0)}"
 
 
+class InternalLinkPattern(LinkInlineProcessor):
+    def handleMatch(self, m, data=None):
+        el = util.etree.Element("a")
+        try:
+            el.set("href", self.url(m.group("id")))
+            el.text = util.AtomicString(m.group("title"))
+        except ObjectDoesNotExist:
+            el.text = util.AtomicString(_("[missing link]"))
+        return el, m.start(0), m.end(0)
+
+    def url(self, id):
+        return Page.objects.get(id=id).localized.get_url()
+
+    @staticmethod
+    def default_pattern():
+        return r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)"
+
+
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
         md.registerExtension(self)
@@ -149,3 +170,8 @@ class MinuteExtension(Extension):
         md.preprocessors.register(QuorumPreprocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
+        md.inlinePatterns.register(
+            InternalLinkPattern(InternalLinkPattern.default_pattern(), md),
+            "InternalLinkPattern",
+            200,
+        )
