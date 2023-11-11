@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-09 16:50+0200\n"
+"POT-Creation-Date: 2023-11-09 16:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,52 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core/markdown/extensions.py:54
+#: core/markdown/extensions.py:55
 msgid "Begin of meeting"
 msgstr "Beginn des Meetings"
 
-#: core/markdown/extensions.py:57
+#: core/markdown/extensions.py:58
 msgid "End of meeting"
 msgstr "Ende des Meetings"
 
-#: core/markdown/extensions.py:71
+#: core/markdown/extensions.py:72
 #, python-brace-format
 msgid "*Meeting break: {time_start_break} – {time_end_break}*"
 msgstr "*Sitzungspause: {time_start_break} – {time_end_break}*"
 
-#: core/markdown/extensions.py:88
+#: core/markdown/extensions.py:89
 msgid "quorate"
 msgstr "beschlussfähig"
 
-#: core/markdown/extensions.py:88
+#: core/markdown/extensions.py:89
 msgid "not quorate"
 msgstr "nicht beschlussfähig"
 
-#: core/markdown/extensions.py:91
+#: core/markdown/extensions.py:92
 #, python-brace-format
 msgid "*{num_participants}/{max_num_participants} present → {quorate}*  "
 msgstr "*{num_participants}/{max_num_participants} anwesend → {quorate}*  "
 
-#: core/markdown/extensions.py:115
+#: core/markdown/extensions.py:116
 #, python-brace-format
 msgid "*{time}: {name} {event} the meeting*  "
 msgstr "*{time}: {name} {event} das Meeting*  "
 
-#: core/markdown/extensions.py:120
+#: core/markdown/extensions.py:121
 #, python-brace-format
 msgid "*{time}: {name} {event} the meeting via {mean_of_participation}*  "
 msgstr "*{time}: {name} {event} das Meeting via {mean_of_participation}*  "
 
-#: core/markdown/extensions.py:130
+#: core/markdown/extensions.py:131
 msgid "enters"
 msgstr "betritt"
 
-#: core/markdown/extensions.py:133
+#: core/markdown/extensions.py:134
 msgid "leaves"
 msgstr "verlässt"
 
-#: core/markdown/extensions.py:154
+#: core/markdown/extensions.py:155
 msgid "[missing link]"
+msgstr "[link fehlt]"
+
+#: core/markdown/extensions.py:174
+#, fuzzy
+#| msgid "[missing link]"
+msgid "[missing image]"
 msgstr "[link fehlt]"
 
 #: core/templates/core/information_page.html:19
@@ -182,7 +188,7 @@ msgstr " Ergebnisse gefunden."
 msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
-#: search/templates/search/search_field.html:6 templates/base.html:157
+#: search/templates/search/search_field.html:6 templates/base.html:168
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -249,13 +255,23 @@ msgstr "Anmelden"
 msgid "Your groups:"
 msgstr "Deine Gruppen"
 
-#: templates/base.html:106
+#: templates/base.html:108
+#, fuzzy
+#| msgid "Next minutes"
+msgid "Create minutes"
+msgstr "Protokoll erstellen"
+
+#: templates/base.html:117
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: templates/base.html:159
+#: templates/base.html:170
 msgid "Start search"
 msgstr "Suche starten"
+
+#: templates/footer.html:14
+msgid "Language"
+msgstr "Sprache"
 
 #: templates/login.html:11
 msgid "Current user:"

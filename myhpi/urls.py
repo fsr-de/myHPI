@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
@@ -25,6 +27,10 @@ urlpatterns = [
     ),
     path("select2/", include("django_select2.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
+    path(
+        ".well-known/security.txt",
+        RedirectView.as_view(url=os.path.join(settings.STATIC_URL, "security.txt")),
+    ),
 ]
 
 

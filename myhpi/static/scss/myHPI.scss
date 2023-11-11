@@ -211,6 +211,12 @@ h1.toc-title::after {
     max-width: 100%;
 }
 
+.add-minutes {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+}
+
 @import "./navbar.scss";
 @import "./footer.scss";
 
