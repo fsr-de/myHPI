@@ -10,6 +10,7 @@ from myhpi.core.markdown.extensions import (
     BreakPreprocessor,
     EnterLeavePreprocessor,
     HeadingLevelPreprocessor,
+    InternalLinkPattern,
     QuorumPreprocessor,
     StartEndPreprocessor,
     VotePreprocessor,
@@ -86,3 +87,14 @@ class TestMarkdownExtensions(TestCase):
                 "###### Heading 6",
             ],
         )
+
+    def test_internal_link_preprocessor(self):
+        ilp = InternalLinkPattern(InternalLinkPattern.default_pattern())
+
+        from myhpi.tests.core.setup import setup_data
+
+        test_data = setup_data()
+        test_page = test_data["pages"][0]
+        text = f"[Page title](page:{test_page.id})"
+        el, _, _ = ilp.handleMatch(re.match(ilp.pattern, text))
+        self.assertEqual(el.attrib["href"], test_page.localized.get_url())
