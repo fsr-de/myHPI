@@ -11,7 +11,7 @@ wagtail = "^4.2.4"
 django-environ = "^0.10.0"
 wagtail-localize = "^1.6"
 mozilla-django-oidc = "^3.0.0"
-django-bootstrap-icons = "^0.8.3"
+django-bootstrap-icons = "^0.8.6"
 django-select2 = "^8.1.2"
 django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
 django-debug-toolbar = "^4.2.0"
