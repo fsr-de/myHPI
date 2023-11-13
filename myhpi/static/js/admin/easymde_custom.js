@@ -68,8 +68,8 @@ window.wagtailMarkdown.options = {
                         url: "/admin/images/chooser/",
                         onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
                         responses: {
-                            imageChosen: function (t) {
-                                editor.codemirror.replaceSelection("![" + t.title + "](image:" + t.id + ")");
+                            chosen: function (t) {
+                                editor.codemirror.replaceSelection("![" + t.title + "](image:" + t.id + ",class=rendered-image,filter=width-800)");
                             }
                         },
 

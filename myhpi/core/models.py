@@ -10,10 +10,10 @@ from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
-from wagtail.admin.edit_handlers import FieldPanel, PublishingPanel
 from wagtail.admin.forms import WagtailAdminPageForm
-from wagtail.core.models import Page, Site
+from wagtail.admin.panels import FieldPanel, PublishingPanel
 from wagtail.documents.models import Document
+from wagtail.models import Page, Site
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
@@ -195,7 +195,7 @@ class Minutes(BasePage):
         FieldPanel("date"),
         FieldPanel("moderator"),
         FieldPanel("author"),
-        FieldPanel("participants", widget=UserSelectWidget),
+        FieldPanel("participants", widget=UserSelectWidget({"data-width": "100%"})),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
