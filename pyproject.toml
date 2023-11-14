@@ -7,9 +7,9 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-wagtail = ">=2.16.2"
+wagtail = "^4.2.4"
 django-environ = "^0.10.0"
-wagtail-localize = "^1.4"
+wagtail-localize = "^1.6"
 mozilla-django-oidc = "^3.0.0"
 django-bootstrap-icons = "^0.8.3"
 django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
@@ -17,7 +17,7 @@ django-debug-toolbar = "^4.2.0"
 django-permissionedforms = "^0.1"
 tenca = "^0.0.2"
 html2text = "^2020.1.16"
-wagtail-markdown = "^0.10.0"
+wagtail-markdown = "^0.11.1"
 autoflake = "^2.2.1"
 django-tomselect = "^0.4.4"
 
