@@ -1,6 +1,9 @@
 from collections import defaultdict
 from datetime import date
 
+from django.db.models import CharField, Value, F
+from django.db.models.functions import Concat
+
 from django import forms
 from django.contrib.auth.models import Group, User
 from django.db import models
@@ -20,6 +23,27 @@ from wagtail.snippets.models import register_snippet
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
 from myhpi.core.widgets import AttachmentSelectWidget
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    display_name = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.display_name
+
+    def get_full_name(self):
+        return self.display_name
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+@receiver(post_save, sender=User)
+def post_user_save(sender, instance, created, **kwargs):
+    display_name = instance.first_name + " " + instance.last_name
+    UserProfile.objects.find(user=instance).update_or_create(display_name=display_name)
 
 
 class BasePage(Page):
@@ -173,12 +197,12 @@ class MinutesForm(WagtailAdminPageForm):
 class Minutes(BasePage):
     date = DateField()
     moderator = ForeignKey(
-        User, blank=True, null=True, on_delete=models.PROTECT, related_name="moderator"
+        UserProfile, blank=True, null=True, on_delete=models.PROTECT, related_name="moderator"
     )
     author = ForeignKey(
-        User, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
+        UserProfile, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
     )
-    participants = ParentalManyToManyField(User, related_name="minutes")
+    participants = ParentalManyToManyField(UserProfile, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     body = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
@@ -186,9 +210,9 @@ class Minutes(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
-        FieldPanel("moderator", widget=TomSelectWidget(label_field="username")),
-        FieldPanel("author", widget=TomSelectWidget(label_field="username")),
-        FieldPanel("participants", widget=TomSelectMultipleWidget(label_field="username")),
+        FieldPanel("moderator", widget=TomSelectWidget(label_field="display_name")),
+        FieldPanel("author", widget=TomSelectWidget(label_field="display_name")),
+        FieldPanel("participants", widget=TomSelectMultipleWidget(label_field="display_name")),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
