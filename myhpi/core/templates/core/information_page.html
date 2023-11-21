@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load core_extras %}
 {% load i18n %}
+{% load tz %}
 
 {% block content %}
 {% with page.body|markdown as parsed_md %}
@@ -17,22 +18,20 @@
         <div class="side-panel-container">
             <aside class="side-panel border-accent">
                 <h1 class="toc-title">{% translate "Last edited" %}</h1>
-                <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}">
+                {% get_current_timezone as TIMEZONE %}
+                <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
                     <span id="last-published-date">
-                        {{ page.last_published_at|date:"d.m.Y" }}
+                        {{ page.last_published_at|localtime|date:"SHORT_DATE_FORMAT" }}
                     </span>
                     {% translate "at" %}
                     <span id="last-published-time">
-                        {{ page.last_published_at|time:"H:i" }}
+                        {{ page.last_published_at|localtime|time:"TIME_FORMAT" }}
                     </span>
-                </time>
                 {% get_current_language as LANGUAGE_CODE %}
                 {% if LANGUAGE_CODE != "en" %}
                     {% translate "Uhr" %}
                 {% endif %}
-                <noscript>
-                    UTC
-                </noscript>
+                </time>
                 {% if page.author_visible %}
                     {% translate "by" %}
                     {{ page.last_edited_by }}
