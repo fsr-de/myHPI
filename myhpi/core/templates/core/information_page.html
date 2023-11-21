@@ -17,9 +17,24 @@
         <div class="side-panel-container">
             <aside class="side-panel border-accent">
                 <h1 class="toc-title">{% translate "Last edited" %}</h1>
-                {{ page.last_published_at|date:"d.m.Y, H:i" }}
+                <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}">
+                    <span id="last-published-date">
+                        {{ page.last_published_at|date:"d.m.Y" }}
+                    </span>
+                    {% translate "at" %}
+                    <span id="last-published-time">
+                        {{ page.last_published_at|time:"H:i" }}
+                    </span>
+                </time>
+                {% get_current_language as LANGUAGE_CODE %}
+                {% if LANGUAGE_CODE != "en" %}
+                    {% translate "Uhr" %}
+                {% endif %}
+                <noscript>
+                    UTC
+                </noscript>
                 {% if page.author_visible %}
-                    <i>{% translate "by" %}</i>
+                    {% translate "by" %}
                     {{ page.last_edited_by }}
                 {% endif %}
             </aside>

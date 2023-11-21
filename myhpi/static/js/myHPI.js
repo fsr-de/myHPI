@@ -54,6 +54,12 @@ const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
     previousScrollPosition = currentScrollPosition
 }
 
+const localizeLastPublished = () => {
+    let lastPublished = new Date(document.getElementById("last-published").getAttribute("datetime"))
+    document.getElementById("last-published-date").innerHTML = lastPublished.toLocaleDateString("de-DE", { dateStyle: "medium" })
+    document.getElementById("last-published-time").innerHTML = lastPublished.toLocaleString("de-DE", { timeStyle: "short" })
+}
+
 const enableTooltips = () => {
     const tooltipTriggerList = document.querySelectorAll(
         '[data-bs-toggle="tooltip"]'
@@ -72,6 +78,8 @@ window.onload = () => {
     enableLogout()
 
     initializeSearch()
+
+    localizeLastPublished()
 
     enableTooltips()
 
