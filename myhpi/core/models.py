@@ -33,6 +33,10 @@ class UserProfile(models.Model):
     def get_full_name(self):
         return self.display_name
 
+    @staticmethod
+    def for_user(u):
+        return UserProfile.objects.get(user=u)
+
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -41,10 +45,10 @@ from django.dispatch import receiver
 @receiver(post_save, sender=User)
 def post_user_save(sender, instance, created, **kwargs):
     display_name = instance.first_name + " " + instance.last_name
-    user_profile = UserProfile.objects.get(user=instance.pk)
+    user_profile = UserProfile.objects.filter(user=instance.pk)
     if user_profile:
-        user_profile.display_name = display_name
-        user_profile.save()
+        user_profile[0].display_name = display_name
+        user_profile[0].save()
     else:
         UserProfile.objects.create(user=instance, display_name=display_name)
 
