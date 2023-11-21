@@ -1,13 +1,11 @@
 from collections import defaultdict
 from datetime import date
 
-from django.db.models import CharField, Value, F
-from django.db.models.functions import Concat
-
 from django import forms
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, User, UserManager
 from django.db import models
-from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
+from django.db.models import BooleanField, CharField, DateField, F, ForeignKey, Model, Q, Value
+from django.db.models.functions import Concat
 from django.http import HttpResponseRedirect
 from django_tomselect.widgets import TomSelectMultipleWidget, TomSelectWidget
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -43,7 +41,12 @@ from django.dispatch import receiver
 @receiver(post_save, sender=User)
 def post_user_save(sender, instance, created, **kwargs):
     display_name = instance.first_name + " " + instance.last_name
-    UserProfile.objects.find(user=instance).update_or_create(display_name=display_name)
+    user_profile = UserProfile.objects.get(user=instance.pk)
+    if user_profile:
+        user_profile.display_name = display_name
+        user_profile.save()
+    else:
+        UserProfile.objects.create(user=instance, display_name=display_name)
 
 
 class BasePage(Page):
