@@ -2,11 +2,12 @@ from collections import defaultdict
 from datetime import date
 
 from django import forms
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, User, UserManager
 from django.db import models
-from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
+from django.db.models import BooleanField, CharField, DateField, F, ForeignKey, Model, Q, Value
+from django.db.models.functions import Concat
 from django.http import HttpResponseRedirect
-from django_select2 import forms as s2forms
+from django_tomselect.widgets import TomSelectMultipleWidget, TomSelectWidget
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import ItemBase, TagBase
@@ -20,6 +21,36 @@ from wagtail.snippets.models import register_snippet
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
 from myhpi.core.widgets import AttachmentSelectWidget
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    display_name = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.display_name
+
+    def get_full_name(self):
+        return self.display_name
+
+    @staticmethod
+    def for_user(u):
+        return UserProfile.objects.get(user=u)
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+@receiver(post_save, sender=User)
+def post_user_save(sender, instance, created, **kwargs):
+    display_name = instance.first_name + " " + instance.last_name
+    user_profile = UserProfile.objects.filter(user=instance.pk)
+    if user_profile:
+        user_profile[0].display_name = display_name
+        user_profile[0].save()
+    else:
+        UserProfile.objects.create(user=instance, display_name=display_name)
 
 
 class BasePage(Page):
@@ -170,22 +201,15 @@ class MinutesForm(WagtailAdminPageForm):
             return existing_minutes.last().specific
 
 
-class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
-    search_fields = [
-        "username__icontains",
-        "email__icontains",
-    ]
-
-
 class Minutes(BasePage):
     date = DateField()
     moderator = ForeignKey(
-        User, blank=True, null=True, on_delete=models.PROTECT, related_name="moderator"
+        UserProfile, blank=True, null=True, on_delete=models.PROTECT, related_name="moderator"
     )
     author = ForeignKey(
-        User, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
+        UserProfile, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
     )
-    participants = ParentalManyToManyField(User, related_name="minutes")
+    participants = ParentalManyToManyField(UserProfile, related_name="minutes")
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     body = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
@@ -193,9 +217,9 @@ class Minutes(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
-        FieldPanel("moderator"),
-        FieldPanel("author"),
-        FieldPanel("participants", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("moderator", widget=TomSelectWidget(label_field="display_name")),
+        FieldPanel("author", widget=TomSelectWidget(label_field="display_name")),
+        FieldPanel("participants", widget=TomSelectMultipleWidget(label_field="display_name")),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
