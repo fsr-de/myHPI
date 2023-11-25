@@ -21,11 +21,11 @@
                 {% get_current_timezone as TIMEZONE %}
                 <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
                     <span id="last-published-date">
-                        {{ page.last_published_at|localtime|date:"SHORT_DATE_FORMAT" }}
+                        {{ page.last_published_at|date:"SHORT_DATE_FORMAT" }}
                     </span>
                     {% translate "at" %}
                     <span id="last-published-time">
-                        {{ page.last_published_at|localtime|time:"TIME_FORMAT" }}
+                        {{ page.last_published_at|time:"TIME_FORMAT" }}
                     </span>
                 {% get_current_language as LANGUAGE_CODE %}
                 {% if LANGUAGE_CODE != "en" %}
