@@ -170,11 +170,28 @@ class MinutesForm(WagtailAdminPageForm):
             return existing_minutes.last().specific
 
 
-class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
+class UserSelectMultipleWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = [
         "username__icontains",
         "email__icontains",
+        "first_name__icontains",
+        "last_name__icontains",
     ]
+
+    def label_from_instance(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+
+
+class UserSelectWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "username__icontains",
+        "email__icontains",
+        "first_name__icontains",
+        "last_name__icontains",
+    ]
+
+    def label_from_instance(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
 
 
 class Minutes(BasePage):
@@ -193,9 +210,9 @@ class Minutes(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
-        FieldPanel("moderator"),
-        FieldPanel("author"),
-        FieldPanel("participants", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("moderator", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("author", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("participants", widget=UserSelectMultipleWidget({"data-width": "100%"})),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
