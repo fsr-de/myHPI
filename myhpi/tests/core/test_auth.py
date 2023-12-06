@@ -31,7 +31,6 @@ class AuthTests(MyHPIPageTestCase):
         user = self.auth_backend.create_user(claims)
         self.assertEqual(user.username, "grace.hopper")
         self.assertEqual(user.email, "grace.hopper@student.example.com")
-        self.assertTrue(user.groups.filter(name="Student").exists())
 
     def test_update_user(self):
         claims = {
@@ -47,5 +46,5 @@ class AuthTests(MyHPIPageTestCase):
         claims["email"] = "jw.goethe@weimar.eu"
         user = self.auth_backend.update_user(user, claims)
         self.assertEqual(user.first_name, "Johann Wolfgang")
-        self.assertEqual(user.last_name, "Goethe")
+        self.assertEqual(user.last_name, "von Goethe")
         self.assertEqual(user.email, "jw.goethe@weimar.eu")

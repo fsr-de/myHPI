@@ -30,7 +30,8 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         user.email = claims.get("email")
         user.first_name = claims.get("given_name", "")
         user.last_name = claims.get("family_name", "")
-        self._update_groups(user, claims)
+        # group updating currently disabled until all groups are migrated to keycloak
+        # self._update_groups(user, claims)
         user.save()
 
         return user
