@@ -15,7 +15,7 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         user.groups.set(groups)
 
     def create_user(self, claims):
-        email = mail_replacement(claims.get("email"))
+        email = claims.get("email")
         first_name = claims.get("given_name", "")
         last_name = claims.get("family_name", "")
         username = claims.get("sub")
