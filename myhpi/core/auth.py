@@ -8,7 +8,7 @@ def mail_replacement(email):
 
 class MyHPIOIDCAB(OIDCAuthenticationBackend):
     def _update_groups(self, user, claims):
-        group_names = claims.get("role", [])
+        group_names = claims.get("roles", [])
         groups = set()
         for group in group_names:
             groups.add(Group.objects.get_or_create(name=group)[0])
