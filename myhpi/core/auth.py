@@ -11,7 +11,7 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         group_names = claims.get("roles", [])
         groups = set()
         for group in group_names:
-            groups.add(Group.objects.get_or_create(name=group)[0])
+            groups.add(Group.objects.get_or_create(name__iexact=group)[0])
         user.groups.set(groups)
 
     def create_user(self, claims):
