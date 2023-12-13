@@ -11,7 +11,11 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         group_names = claims.get("roles", [])
         groups = set()
         for group in group_names:
-            groups.add(Group.objects.get_or_create(name__iexact=group)[0])
+            try:
+                # djangos get_or_create does not work with __iexact, therefore using try/catch
+                groups.add(Group.objects.get(name__iexact=group))
+            except Group.DoesNotExist:
+                groups.add(Group.objects.create(name=group))
         user.groups.set(groups)
 
     def create_user(self, claims):
