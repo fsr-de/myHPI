@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-12 19:24+0100\n"
+"POT-Creation-Date: 2023-12-20 18:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,6 +75,10 @@ msgstr "Zuletzt bearbeitet"
 msgid "%(date)s at %(time)s"
 msgstr "%(date)s um %(time)s Uhr"
 
+#: core/templates/core/information_page.html:21
+msgid "A long time ago"
+msgstr "Vor langer Zeit"
+
 #: core/templates/core/information_page.html:28
 msgid "by"
 msgstr "von"
@@ -93,45 +97,61 @@ msgstr "Anhänge"
 msgid "Date"
 msgstr "Datum"
 
-#: core/templates/core/minutes.html:19
+#: core/templates/core/minutes.html:22
 msgid "Moderator"
 msgstr "Sitzungsleitung"
 
-#: core/templates/core/minutes.html:21
+#: core/templates/core/minutes.html:26
 msgid "Minutes taker"
 msgstr "Protokollführung"
 
-#: core/templates/core/minutes.html:23
+#: core/templates/core/minutes.html:30
 msgid "Participants"
 msgstr "Teilnehmende"
 
-#: core/templates/core/minutes.html:29
+#: core/templates/core/minutes.html:38
 msgid "Guests"
 msgstr "Gäste"
 
-#: core/templates/core/minutes.html:37
+#: core/templates/core/minutes.html:46
 msgid "No guests"
 msgstr "Keine Gäste"
 
-#: core/templates/core/minutes.html:39
+#: core/templates/core/minutes.html:50
 msgid "Labels"
 msgstr "Labels"
 
-#: core/templates/core/minutes.html:45
+#: core/templates/core/minutes.html:54
 msgid "No labels"
 msgstr "Keine Labels"
 
-#: core/templates/core/minutes.html:65
+#: core/templates/core/minutes.html:64
 msgid "Previous minutes"
 msgstr "Vorheriges Protokoll"
 
-#: core/templates/core/minutes.html:71
+#: core/templates/core/minutes.html:70
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
 #: core/templates/core/minutes_list.html:15
 msgid "Draft"
 msgstr "Entwurf"
+
+#: core/templates/core/sidebar.html:6
+msgid "⚠️ Preview ⚠️"
+msgstr "⚠️ Vorschau ⚠️"
+
+#: core/templates/core/sidebar.html:11
+msgid "Visibility"
+msgstr "Sichtbarkeit"
+
+#: core/templates/core/sidebar.html:16 polls/templates/polls/poll.html:29
+msgid "Table of contents"
+msgstr "Inhaltsverzeichnis"
+
+#: core/templates/core/sidebar.html:21
+msgid "Attachments"
+msgstr "Anhänge"
 
 #: polls/templates/polls/poll.html:17
 msgid "You have already voted and the results are not yet visible."
