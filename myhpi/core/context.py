@@ -29,11 +29,11 @@ def base_context(request):
     page_lookup = {}
 
     for page in pages_visible_for_user:
-        page_lookup[page.path] = pages_visible_for_user.child_of(page)
+        page_lookup[page.path] = pages_visible_for_user.child_of(page).order_by('path')
 
     minutes_creation_links = {}
     for group in request.user.groups.all():
-        minutes_creation_links[group.id] = create_minutes_for_group_link(request.user, group).order_by('path')
+        minutes_creation_links[group.id] = create_minutes_for_group_link(request.user, group)
 
     return {
         "root_page": root_page,
