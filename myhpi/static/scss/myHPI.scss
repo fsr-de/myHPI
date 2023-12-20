@@ -144,6 +144,17 @@ p {
     border-top: solid 2px var(--bs-border);
 }
 
+.side-panel-title {
+    font-size: 1.05rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+h1.side-panel-title::after {
+    margin: 0;
+    height: 0px;
+}
+
 .toc-container ul {
     list-style: none;
     padding: 0;
@@ -151,17 +162,6 @@ p {
 
 .toc-container ul li>ul {
     margin-left: 0.5rem;
-}
-
-.toc-title {
-    font-size: 1.05rem;
-    line-height: 1.1;
-    font-weight: 600;
-}
-
-h1.toc-title::after {
-    margin: 0;
-    height: 0px;
 }
 
 .search-result-list {

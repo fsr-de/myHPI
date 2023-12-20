@@ -15,19 +15,19 @@
         </div>
         <div class="col-3 minutes-meta">
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Date" %}</h1>
+                <h1 class="side-panel-title">{% translate "Date" %}</h1>
                 <p>{{ page.date }}</p>
             </aside>
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Moderator" %}</h1>
+                <h1 class="side-panel-title">{% translate "Moderator" %}</h1>
                 <p>{{ page.moderator.get_full_name }}</p>
             </aside>
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Minutes taker" %}</h1>
+                <h1 class="side-panel-title">{% translate "Minutes taker" %}</h1>
                 <p>{{ page.author.get_full_name }}</p>
             </aside>
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Participants" %}</h1>
+                <h1 class="side-panel-title">{% translate "Participants" %}</h1>
                 <ul>
                     {% for participant in page.participants.all %}
                         <li>{{ participant.get_full_name }}</li>
@@ -35,7 +35,7 @@
                 </ul>
             </aside>
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Guests" %}</h1>
+                <h1 class="side-panel-title">{% translate "Guests" %}</h1>
                 {% if page.guests %}
                     <ul>
                     {% for guest in page.guests %}
@@ -47,7 +47,7 @@
                 {% endif %}
             </aside>
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Labels" %}</h1>
+                <h1 class="side-panel-title">{% translate "Labels" %}</h1>
                 {%  if page.labels.all %}
                     <p>{% include "core/label.html" with minutes=page %}</p>
                 {% else %}
