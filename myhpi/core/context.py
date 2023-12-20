@@ -33,7 +33,7 @@ def base_context(request):
 
     minutes_creation_links = {}
     for group in request.user.groups.all():
-        minutes_creation_links[group.id] = create_minutes_for_group_link(request.user, group)
+        minutes_creation_links[group.id] = create_minutes_for_group_link(request.user, group).order_by('path')
 
     return {
         "root_page": root_page,
