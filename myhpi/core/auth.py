@@ -31,6 +31,7 @@ class MyHPIOIDCAB(OIDCAuthenticationBackend):
         return user
 
     def update_user(self, user, claims):
+        user.username = claims.get("sub")
         user.email = claims.get("email")
         user.first_name = claims.get("given_name", "")
         user.last_name = claims.get("family_name", "")
