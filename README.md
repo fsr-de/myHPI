@@ -10,7 +10,7 @@ This tool is used to manage the student representative website at https://myhpi.
 To set up a development version on your local machine, you need to execute the following steps:
 
 1. Check out repository and cd to it
-1. Set up a virtualenv for the project with Python >=3.8 and activate it
+1. Set up a virtualenv for the project with Python >=3.8 and activate it (e.g., `python3 -m venv venv` and `source venv/bin/activate`)
 1. Install poetry (if not already installed): `curl -sSL https://install.python-poetry.org/ | python -`
 1. Install dependencies with `poetry install`
 1. Install bootstrap with `python install-bootstrap.py`
