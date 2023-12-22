@@ -2,8 +2,11 @@ import os
 
 import django
 
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myhpi.settings")
 django.setup()
+from myhpi.tests.core.setup import create_collections, create_documents
+
 import random
 
 from django.contrib.auth.models import Group, Permission, User
@@ -102,37 +105,7 @@ def create_users_and_groups():
         ("Anna", "Lyse", [0]),
     ]
 
-    groups = []
-
-    root_collection = Collection.get_first_root_node()
-
-    for group_name in test_groups:
-        group = Group.objects.create(name=group_name)
-        groups.append(group)
-
-        group_collection = root_collection.add_child(name=f"{group_name} collection")
-        group_collection.save()
-        GroupCollectionPermission.objects.create(
-            group=group,
-            collection=group_collection,
-            permission=Permission.objects.get(
-                content_type__app_label="wagtaildocs", codename="add_document"
-            ),
-        )
-        GroupCollectionPermission.objects.create(
-            group=group,
-            collection=group_collection,
-            permission=Permission.objects.get(
-                content_type__app_label="wagtaildocs", codename="change_document"
-            ),
-        )
-        GroupCollectionPermission.objects.create(
-            group=group,
-            collection=group_collection,
-            permission=Permission.objects.get(
-                content_type__app_label="wagtaildocs", codename="choose_document"
-            ),
-        )
+    groups = [Group.objects.create(name=group_name) for group_name in test_groups]
 
     users = []
     for user_spec in user_data:
@@ -161,7 +134,7 @@ def create_abbreviation_explanations():
     )
 
 
-def create_some_pages(users, groups):
+def create_some_pages(users, groups, documents):
     root_page = RootPage.objects.get()
 
     # Create information pages
@@ -217,6 +190,8 @@ def create_some_pages(users, groups):
             visible_for=[],
         )
     )
+    student_rep_overview.attachments.add(documents[0])
+    student_rep_overview.save()
 
     # FSR minutes
 
@@ -261,6 +236,7 @@ def create_some_pages(users, groups):
             slug="study-council",
             show_in_menus=True,
             is_public=False,
+            visible_for=[groups[0]],
         )
     )
 
@@ -272,11 +248,11 @@ def create_some_pages(users, groups):
             is_public=False,
             body=generate_text(),
             author_visible=True,
-            visible_for=[],
+            visible_for=[groups[0]],
         )
     )
 
-    study_council_minutes = study_council_menu.add_child(
+    study_council_minutes_list = study_council_menu.add_child(
         instance=MinutesList(
             title="Minutes",
             slug="minutes",
@@ -287,17 +263,52 @@ def create_some_pages(users, groups):
         )
     )
 
-    study_council_minutes.add_child(
-        instance=Minutes(
-            title="Study council meeting",
-            date="2023-01-01",
+    study_council_minutes = Minutes(
+        title="Study council meeting",
+        date="2023-01-01",
+        is_public=False,
+        visible_for=[groups[2]],
+        moderator=users[4],
+        author=users[5],
+        participants=[users[0], users[4], users[5]],
+        guests='["Prof. Essor"]',
+        body=generate_text(),
+    )
+    study_council_minutes_list.add_child(instance=study_council_minutes)
+    study_council_minutes.attachments.add(documents[1])
+    study_council_minutes.save()
+
+    # Club pages
+
+    club_menu = root_page.add_child(
+        instance=FirstLevelMenuItem(
+            title="Student Clubs",
+            slug="clubs",
+            show_in_menus=True,
             is_public=False,
-            visible_for=[groups[2]],
-            moderator=users[4],
-            author=users[5],
-            participants=[users[0], users[4], users[5]],
-            guests='["Prof. Essor"]',
+            visible_for=[groups[0]],
+        )
+    )
+
+    frisbee_club_menu = club_menu.add_child(
+        instance=SecondLevelMenuItem(
+            title="Frisbee Club",
+            slug="frisbee",
+            show_in_menus=True,
+            is_public=False,
+            visible_for=[groups[4]],
+        )
+    )
+
+    frisbee_club_overview = frisbee_club_menu.add_child(
+        instance=InformationPage(
+            title="Frisbee Club",
+            slug="overview",
+            show_in_menus=True,
+            is_public=False,
             body=generate_text(),
+            author_visible=True,
+            visible_for=[groups[4]],
         )
     )
 
@@ -305,8 +316,10 @@ def create_some_pages(users, groups):
 def main():
     # Superuser is created manually via createsuperuser command
     users, groups = create_users_and_groups()
+    collections = list(create_collections(groups))
+    documents = create_documents([collections[1], collections[2]])
     create_abbreviation_explanations()
-    create_some_pages(users, groups)
+    create_some_pages(users, groups, documents)
 
 
 if __name__ == "__main__":
