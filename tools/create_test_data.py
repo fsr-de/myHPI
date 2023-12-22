@@ -2,11 +2,8 @@ import os
 
 import django
 
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myhpi.settings")
 django.setup()
-from myhpi.tests.core.setup import create_collections, create_documents
-
 import random
 
 from django.contrib.auth.models import Group, Permission, User
@@ -27,6 +24,7 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
+from myhpi.tests.core.setup import create_collections, create_documents
 
 
 def generate_random_text(words, paragraphs=5, sentences_per_paragraph=5, words_per_sentence=10):
