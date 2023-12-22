@@ -75,6 +75,7 @@ sample_words = [
     "magna",
     "aliqua",
     "HPI",
+    "FSR",
 ]
 
 
@@ -149,6 +150,17 @@ def create_users_and_groups():
     return users, groups
 
 
+def create_abbreviation_explanations():
+    AbbreviationExplanation.objects.create(
+        abbreviation="hpi",
+        explanation="Hasso Plattner Institute",
+    )
+    AbbreviationExplanation.objects.create(
+        abbreviation="fsr",
+        explanation="Student Representative Group",
+    )
+
+
 def create_some_pages(users, groups):
     root_page = RootPage.objects.get()
 
@@ -185,7 +197,8 @@ def create_some_pages(users, groups):
     )
 
     # Create student rep pages
-    student_rep_group = root_page.add_child(
+
+    student_rep_menu = root_page.add_child(
         instance=FirstLevelMenuItem(
             title="Student Representatives",
             slug="fsr",
@@ -193,7 +206,7 @@ def create_some_pages(users, groups):
             is_public=True,
         )
     )
-    student_rep_overview = student_rep_group.add_child(
+    student_rep_overview = student_rep_menu.add_child(
         instance=InformationPage(
             title="Student Representatives",
             slug="overview",
@@ -204,7 +217,10 @@ def create_some_pages(users, groups):
             visible_for=[],
         )
     )
-    student_rep_minutes = student_rep_group.add_child(
+
+    # FSR minutes
+
+    student_rep_minutes = student_rep_menu.add_child(
         instance=MinutesList(
             title="Minutes",
             slug="minutes",
@@ -237,11 +253,60 @@ def create_some_pages(users, groups):
             minutes.labels.add(label)
         minutes.save()
 
+    # Study council pages
+
+    study_council_menu = root_page.add_child(
+        instance=FirstLevelMenuItem(
+            title="Study Council",
+            slug="study-council",
+            show_in_menus=True,
+            is_public=False,
+        )
+    )
+
+    study_council_overview = study_council_menu.add_child(
+        instance=InformationPage(
+            title="Study Council",
+            slug="overview",
+            show_in_menus=True,
+            is_public=False,
+            body=generate_text(),
+            author_visible=True,
+            visible_for=[],
+        )
+    )
+
+    study_council_minutes = study_council_menu.add_child(
+        instance=MinutesList(
+            title="Minutes",
+            slug="minutes",
+            show_in_menus=True,
+            is_public=False,
+            group=groups[2],
+            visible_for=[groups[2]],
+        )
+    )
+
+    study_council_minutes.add_child(
+        instance=Minutes(
+            title="Study council meeting",
+            date="2023-01-01",
+            is_public=False,
+            visible_for=[groups[2]],
+            moderator=users[4],
+            author=users[5],
+            participants=[users[0], users[4], users[5]],
+            guests='["Prof. Essor"]',
+            body=generate_text(),
+        )
+    )
+
 
 def main():
     # Superuser is created manually via createsuperuser command
     users, groups = create_users_and_groups()
-    pages = create_some_pages(users, groups)
+    create_abbreviation_explanations()
+    create_some_pages(users, groups)
 
 
 if __name__ == "__main__":
