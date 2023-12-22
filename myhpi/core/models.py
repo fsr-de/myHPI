@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -170,11 +171,28 @@ class MinutesForm(WagtailAdminPageForm):
             return existing_minutes.last().specific
 
 
-class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
+class UserSelectMultipleWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = [
         "username__icontains",
         "email__icontains",
+        "first_name__icontains",
+        "last_name__icontains",
     ]
+
+    def label_from_instance(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+
+
+class UserSelectWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "username__icontains",
+        "email__icontains",
+        "first_name__icontains",
+        "last_name__icontains",
+    ]
+
+    def label_from_instance(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
 
 
 class Minutes(BasePage):
@@ -193,9 +211,9 @@ class Minutes(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel("date"),
-        FieldPanel("moderator"),
-        FieldPanel("author"),
-        FieldPanel("participants", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("moderator", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("author", widget=UserSelectWidget({"data-width": "100%"})),
+        FieldPanel("participants", widget=UserSelectMultipleWidget({"data-width": "100%"})),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
@@ -210,6 +228,14 @@ class Minutes(BasePage):
     ]
 
     base_form_class = MinutesForm
+
+    # this function also fetches the correct draft url if the minute is still a draft
+    def get_valid_url(self):
+        return (
+            self.url
+            if self.live
+            else reverse("wagtailadmin_pages:view_draft", kwargs={"page_id": self.id})
+        )
 
 
 class RootPage(InformationPage):
