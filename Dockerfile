@@ -12,6 +12,6 @@ RUN apt update && apt install gettext -y
 RUN pip install "poetry==$POETRY_VERSION" "uwsgi==$UWSGI_PIP_VERSION" "psycopg2==$PSYCOPG2_PIP_VERSION"
 ADD . /app
 RUN poetry install --no-dev
-RUN python install-bootstrap.py -u
+RUN python tools/install_bootstrap.py -u
 RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
