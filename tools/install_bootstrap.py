@@ -13,8 +13,13 @@ logger = logging.getLogger("myhpi_install_bootstrap")
 
 
 def ensure_correct_directory():
-    with open("pyproject.toml") as toml_file:
-        return "myHPI" in toml_file.readlines()[1]
+    if os.getcwd().endswith("tools"):
+        os.chdir("..")
+    try:
+        with open("pyproject.toml") as toml_file:
+            return "myHPI" in toml_file.readlines()[1]
+    except FileNotFoundError:
+        return False
 
 
 def download_zip():
