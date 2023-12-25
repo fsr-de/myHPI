@@ -78,10 +78,11 @@ OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = 3600  # renew auth after 1 hour
 OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID")
 OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET")
 
-OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/auth"
-OIDC_OP_TOKEN_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/token"
-OIDC_OP_USER_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/userinfo"
-OIDC_OP_JWKS_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/certs"
+OIDC_REALM = "myhpi-testing" if DEBUG else "fsr"
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/auth"
+OIDC_OP_TOKEN_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/userinfo"
+OIDC_OP_JWKS_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/certs"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
