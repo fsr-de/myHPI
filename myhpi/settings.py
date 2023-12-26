@@ -79,9 +79,13 @@ OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID")
 OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET")
 
 OIDC_REALM = "myhpi-testing" if DEBUG else "fsr"
-OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/auth"
+OIDC_OP_AUTHORIZATION_ENDPOINT = (
+    f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/auth"
+)
 OIDC_OP_TOKEN_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/token"
-OIDC_OP_USER_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/userinfo"
+OIDC_OP_USER_ENDPOINT = (
+    f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/userinfo"
+)
 OIDC_OP_JWKS_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/certs"
 
 LOGIN_REDIRECT_URL = "/"
