@@ -1515,13 +1515,13 @@ testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-f
 
 [[package]]
 name = "wagtail-localize"
-version = "1.6"
+version = "1.7"
 description = "Translation plugin for Wagtail CMS"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtail_localize-1.6-py3-none-any.whl", hash = "sha256:bc46941cd0dc287d8bca0fa15f50fca6ee7bb45f01af6161e75b0173b7af118f"},
-    {file = "wagtail_localize-1.6.tar.gz", hash = "sha256:b590d095ca0752a0247909ca8cea71fbaa54b173cd59aa63f460a4a6b0fc74d0"},
+    {file = "wagtail_localize-1.7-py3-none-any.whl", hash = "sha256:4c4a5792abb1ce5b75c287801bc5abeb704390936569629bc8ea9b0f58235bad"},
+    {file = "wagtail_localize-1.7.tar.gz", hash = "sha256:313d887fbc60d9a535e1778473e0aab1069eb1a51f23b12b5e02750a0c1f6eb5"},
 ]
 
 [package.dependencies]
@@ -1601,4 +1601,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "a4f93e12726cdffe8285df9f07f0f684a90e200f9414c716f85fdce5cbd758df"
+content-hash = "7c2ccc8fbf20613afbf1848e22acaa78d9d143ef3c377d494b9f80717c503f0a"
