@@ -6,6 +6,12 @@ import tenca
 from django.contrib.messages import constants
 from environ import environ
 
+try:
+    import importlib_metadata  # importlib is broken on python 3.8, using backport
+except ImportError:
+    import importlib.metadata as importlib_metadata
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env(interpolate=True)
@@ -359,3 +365,8 @@ LOGGING = {
 }
 
 BS_ICONS_CACHE = os.path.join(STATIC_ROOT, "icon_cache")
+
+try:
+    MYHPI_VERSION = importlib_metadata.version("myHPI")
+except importlib_metadata.PackageNotFoundError:
+    MYHPI_VERSION = "dev"
