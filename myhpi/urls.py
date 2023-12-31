@@ -31,6 +31,7 @@ urlpatterns = [
         ".well-known/security.txt",
         RedirectView.as_view(url=os.path.join(settings.STATIC_URL, "security.txt")),
     ),
+    path("", include("myhpi.core.urls")),
 ]
 
 
