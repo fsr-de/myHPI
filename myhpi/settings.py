@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "myhpi.polls",
     "myhpi.search",
     "static_precompiler",
+    "django_prometheus",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -93,6 +94,7 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "login"
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -104,6 +106,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "myhpi.core.middleware.IPRangeUserMiddleware",
     "mozilla_django_oidc.middleware.SessionRefresh",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 if DJANGO_DEBUG:
@@ -308,11 +311,15 @@ DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 SERVER_EMAIL = env.str("SERVER_EMAIL")
 ADMINS = getaddresses(env.list("ADMINS"))
 
+# Set this to view /metrics with X-API-KEY header
+METRICS_API_KEY = env.str("METRICS_API_KEY", default=None)
+
+# logging
+
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 
-# logging
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
