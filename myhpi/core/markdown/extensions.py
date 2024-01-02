@@ -8,6 +8,8 @@ from markdown.inlinepatterns import LinkInlineProcessor
 from markdown.preprocessors import Preprocessor
 from wagtail.models import Page
 
+from myhpi import settings
+
 
 class MinutesBasePreprocessor(Preprocessor):
     def run(self, lines):
@@ -162,6 +164,14 @@ class InternalLinkPattern(LinkInlineProcessor):
         return r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)"
 
 
+class VersionPreprocessor(MinutesBasePreprocessor):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.patterns = [
+            (r"\[MYHPI-VERSION\]", lambda match: settings.MYHPI_VERSION),
+        ]
+
+
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
         md.registerExtension(self)
@@ -171,6 +181,7 @@ class MinuteExtension(Extension):
         md.preprocessors.register(QuorumPreprocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
+        md.preprocessors.register(VersionPreprocessor(md), "version", 200)
         md.inlinePatterns.register(
             InternalLinkPattern(InternalLinkPattern.default_pattern(), md),
             "InternalLinkPattern",
