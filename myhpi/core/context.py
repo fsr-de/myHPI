@@ -1,5 +1,5 @@
 from django.db.models import Q
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from .models import BasePage, MinutesList
 from .utils import get_user_groups

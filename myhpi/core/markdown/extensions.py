@@ -1,4 +1,5 @@
 import re
+import xml.etree.ElementTree
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
@@ -147,7 +148,7 @@ class HeadingLevelPreprocessor(MinutesBasePreprocessor):
 
 class InternalLinkPattern(LinkInlineProcessor):
     def handleMatch(self, m, data=None):
-        el = util.etree.Element("a")
+        el = xml.etree.ElementTree.Element("a")
         try:
             el.set("href", self.url(m.group("id")))
             el.text = util.AtomicString(m.group("title"))
