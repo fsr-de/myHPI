@@ -14,11 +14,6 @@
             {{ parsed_md.0 }}
         </div>
         <div class="col-3 minutes-meta">
-            {% if not page.live %}
-                <aside class="side-panel border-accent toc-container d-print-none">
-                    <h1 class="side-panel-warning">{% translate "⚠️ Preview ⚠️" %}</h1>
-                </aside>
-            {% endif %}
             <aside class="side-panel border-accent">
                 <h1 class="side-panel-title">{% translate "Date" %}</h1>
                 <p>{{ page.date }}</p>
