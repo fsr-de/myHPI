@@ -54,6 +54,29 @@ const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
     previousScrollPosition = currentScrollPosition
 }
 
+const localizeLastPublished = () => {
+    const lastPublished = document.getElementById("last-published")
+    const timezone_server = lastPublished.getAttribute("title")
+    const timezone_user = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+    if(timezone_server !== timezone_user) {
+        lastPublishedLocalized = new Date(lastPublished.getAttribute("datetime")).toLocaleString(undefined, {
+            year: "numeric", month: "numeric", day: "numeric",
+            hour: "numeric", minute: "2-digit",
+            timeZoneName: "short"
+        })
+
+        // replace <time> width <abbr> tag
+        let abbr = document.createElement("abbr");
+        abbr.setAttribute("title", lastPublishedLocalized)
+        lastPublished.removeAttribute("title")
+
+        let parent = lastPublished.parentNode;
+        parent.replaceChild(abbr, lastPublished);
+        abbr.appendChild(lastPublished);
+    }
+}
+
 const enableTooltips = () => {
     const tooltipTriggerList = document.querySelectorAll(
         '[data-bs-toggle="tooltip"]'
@@ -72,6 +95,8 @@ window.onload = () => {
     enableLogout()
 
     initializeSearch()
+
+    localizeLastPublished()
 
     enableTooltips()
 
