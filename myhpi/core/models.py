@@ -124,6 +124,7 @@ class MinutesList(BasePage):
         return context
 
 
+@register_snippet
 class MinutesLabel(TagBase):
     free_tagging = False
     color = CharField(max_length=7, default="#000000")
@@ -286,6 +287,7 @@ class SecondLevelMenuItem(FirstLevelMenuItem):
     subpage_types = ["InformationPage", "MinutesList"]
 
 
+@register_snippet
 class AbbreviationExplanation(Model):
     abbreviation = CharField(max_length=255)
     explanation = CharField(max_length=255)
