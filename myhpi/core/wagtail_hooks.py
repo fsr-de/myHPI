@@ -6,29 +6,8 @@ from django.db.models import Q
 from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail import hooks
-from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 
-from myhpi.core.models import (
-    AbbreviationExplanation,
-    InformationPage,
-    Minutes,
-    MinutesLabel,
-    MinutesList,
-)
-
-
-class MinutesLabelAdmin(ModelAdmin):
-    model = MinutesLabel
-    add_to_settings_menu = True
-
-
-class AbbreviationExplanationAdmin(ModelAdmin):
-    model = AbbreviationExplanation
-    add_to_settings_menu = True
-
-
-modeladmin_register(MinutesLabelAdmin)
-modeladmin_register(AbbreviationExplanationAdmin)
+from myhpi.core.models import InformationPage, Minutes, MinutesList
 
 
 @hooks.register("before_serve_page")
