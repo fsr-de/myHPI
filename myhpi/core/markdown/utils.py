@@ -25,7 +25,7 @@ def _transform_markdown_into_html(text, with_abbreveations):
         MinuteExtension()
     )  # should be in settings.py, but module lookup doesn't work
     md = markdown.Markdown(**markdown_kwargs)
-    abbreveations = "\n" + (
+    abbreveations = "\n\n" + (
         "\n".join(
             [
                 f"*[{abbr.abbreviation}]: {abbr.explanation}"
