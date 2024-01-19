@@ -10,6 +10,7 @@ ENV PSYCOPG2_PIP_VERSION=2.9.3
 WORKDIR /app
 RUN apt update && apt install gettext -y
 RUN pip install "poetry==$POETRY_VERSION" "uwsgi==$UWSGI_PIP_VERSION" "psycopg2==$PSYCOPG2_PIP_VERSION"
+RUN poetry self add "poetry-dynamic-versioning[plugin]"
 ADD . /app
 RUN poetry install --no-dev
 RUN python tools/install_bootstrap.py -u
