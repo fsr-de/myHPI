@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-25 15:21+0000\n"
+"POT-Creation-Date: 2024-02-13 11:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,51 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core/markdown/extensions.py:53
+#: core/markdown/extensions.py:56
 msgid "Begin of meeting"
 msgstr "Beginn des Meetings"
 
-#: core/markdown/extensions.py:56
+#: core/markdown/extensions.py:59
 msgid "End of meeting"
 msgstr "Ende des Meetings"
 
-#: core/markdown/extensions.py:70
+#: core/markdown/extensions.py:73
 #, python-brace-format
 msgid "*Meeting break: {time_start_break} – {time_end_break}*"
 msgstr "*Sitzungspause: {time_start_break} – {time_end_break}*"
 
-#: core/markdown/extensions.py:87
+#: core/markdown/extensions.py:90
 msgid "quorate"
 msgstr "beschlussfähig"
 
-#: core/markdown/extensions.py:87
+#: core/markdown/extensions.py:90
 msgid "not quorate"
 msgstr "nicht beschlussfähig"
 
-#: core/markdown/extensions.py:90
+#: core/markdown/extensions.py:93
 #, python-brace-format
 msgid "*{num_participants}/{max_num_participants} present → {quorate}*  "
 msgstr "*{num_participants}/{max_num_participants} anwesend → {quorate}*  "
 
-#: core/markdown/extensions.py:114
+#: core/markdown/extensions.py:117
 #, python-brace-format
 msgid "*{time}: {name} {event} the meeting*  "
 msgstr "*{time}: {name} {event} das Meeting*  "
 
-#: core/markdown/extensions.py:119
+#: core/markdown/extensions.py:122
 #, python-brace-format
 msgid "*{time}: {name} {event} the meeting via {mean_of_participation}*  "
 msgstr "*{time}: {name} {event} das Meeting via {mean_of_participation}*  "
 
-#: core/markdown/extensions.py:129
+#: core/markdown/extensions.py:132
 msgid "enters"
 msgstr "betritt"
 
-#: core/markdown/extensions.py:132
+#: core/markdown/extensions.py:135
 msgid "leaves"
 msgstr "verlässt"
 
-#: core/markdown/extensions.py:153
+#: core/markdown/extensions.py:156
 msgid "[missing link]"
 msgstr "[link fehlt]"
 
@@ -70,30 +70,20 @@ msgstr "[link fehlt]"
 msgid "Last edited"
 msgstr "Zuletzt bearbeitet"
 
-#: core/templates/core/information_page.html:23
+#: core/templates/core/information_page.html:22
+msgid "A long time ago"
+msgstr "Vor langer Zeit"
+
+#: core/templates/core/information_page.html:26
 #, python-format
 msgid "%(date)s at %(time)s"
 msgstr "%(date)s um %(time)s Uhr"
 
-#: core/templates/core/information_page.html:21
-msgid "A long time ago"
-msgstr "Vor langer Zeit"
-
-#: core/templates/core/information_page.html:28
+#: core/templates/core/information_page.html:32
 msgid "by"
 msgstr "von"
 
-#: core/templates/core/information_page.html:33
-#: core/templates/core/minutes.html:47 polls/templates/polls/poll.html:29
-msgid "Table of contents"
-msgstr "Inhaltsverzeichnis"
-
-#: core/templates/core/information_page.html:38
-#: core/templates/core/minutes.html:50
-msgid "Attachments"
-msgstr "Anhänge"
-
-#: core/templates/core/minutes.html:17
+#: core/templates/core/minutes.html:18
 msgid "Date"
 msgstr "Datum"
 
@@ -133,11 +123,7 @@ msgstr "Vorheriges Protokoll"
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
-#: core/templates/core/minutes_list.html:15
-msgid "Draft"
-msgstr "Entwurf"
-
-#: core/templates/core/sidebar.html:7
+#: core/templates/core/minutes_list.html:15 core/templates/core/sidebar.html:7
 msgid "Page has unpublished changes!"
 msgstr "Seite hat unveröffentlichte Änderungen!"
 
@@ -528,6 +514,9 @@ msgstr "{email} hat erfolgreich {list} verlassen."
 #, python-brace-format
 msgid "The subscription of {email} onto {list} was rolled back."
 msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
+
+#~ msgid "Draft"
+#~ msgstr "Entwurf"
 
 #, fuzzy
 #~| msgid "[missing link]"
