@@ -3,7 +3,7 @@ name: build-container
 on:
   push:
     branches:
-      - 'docker-image-workflow-fix'
+      - 'main'
     tags:
       - 'v*'
 
