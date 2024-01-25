@@ -1,12 +1,12 @@
 {% load core_extras %}
 {% load i18n %}
 
-{% if not page.live %}
-<aside class="side-panel border-accent toc-container d-print-none">
-    <h1 class="side-panel-warning">{% translate "⚠️ Preview ⚠️" %}</h1>
-</aside>
-{% endif %}
 {% if perms.wagtail.edit_page %}
+    {% if page.has_unpublished_changes %}
+    <aside class="side-panel border-accent toc-container d-print-none">
+        <h1 class="side-panel-warning">{% translate "Page has unpublished changes!" %}</h1>
+    </aside>
+    {% endif %}
     <aside class="side-panel border-accent toc-container d-print-none">
         <h1 class="side-panel-title">{% translate "Visibility" %}</h1>
         {{ page.visible_for.all|join:", " }}

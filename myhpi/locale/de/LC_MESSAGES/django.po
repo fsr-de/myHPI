@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-20 18:27+0100\n"
+"POT-Creation-Date: 2024-01-25 15:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,9 +137,9 @@ msgstr "Nächstes Protokoll"
 msgid "Draft"
 msgstr "Entwurf"
 
-#: core/templates/core/sidebar.html:6
-msgid "⚠️ Preview ⚠️"
-msgstr "⚠️ Vorschau ⚠️"
+#: core/templates/core/sidebar.html:7
+msgid "Page has unpublished changes!"
+msgstr "Seite hat unveröffentlichte Änderungen!"
 
 #: core/templates/core/sidebar.html:11
 msgid "Visibility"
