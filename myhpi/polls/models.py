@@ -19,7 +19,7 @@ class PollList(BasePage):
     parent_page_types = [
         "core.RootPage",
     ]
-    subpage_types = ["MajorityVote", "Election"]
+    subpage_types = ["MajorityVotePoll", "RankedChoicePoll"]
     max_count = 1
 
     def get_context(self, request, *args, **kwargs):
@@ -46,6 +46,7 @@ class BasePoll(BasePage):
         "PollList",
     ]
     subpage_types = []
+    is_creatable = False
 
     def can_vote(self, user):
         return self.is_live() and user not in self.participants.all()
@@ -68,7 +69,7 @@ class BasePoll(BasePage):
         return super().serve(request, *args, **kwargs)
 
 
-class MajorityVote(BasePoll):
+class MajorityVotePoll(BasePoll):
     question = models.CharField(max_length=254)
     max_allowed_answers = models.IntegerField(default=1)
 
@@ -86,6 +87,8 @@ class MajorityVote(BasePoll):
         index.SearchField("description"),
         index.SearchField("question"),
     ]
+
+    is_creatable = True
 
     def cast_vote(self, request, *args, **kwargs):
         choices = request.POST.getlist("choice")
@@ -137,7 +140,7 @@ class Choice(models.Model):
 
 
 class MajorityVoteChoice(Orderable, Choice):
-    page = ParentalKey("polls.MajorityVote", on_delete=models.CASCADE, related_name="choices")
+    page = ParentalKey("MajorityVotePoll", on_delete=models.CASCADE, related_name="choices")
 
     def percentage(self):
         participant_count = self.page.participants.count()
@@ -146,13 +149,13 @@ class MajorityVoteChoice(Orderable, Choice):
         return self.votes * 100 / participant_count
 
 
-class Election(BasePoll):
+class RankedChoicePoll(BasePoll):
     content_panels = Page.content_panels + [
         FieldPanel("description", classname="full"),
         FieldPanel("start_date"),
         FieldPanel("end_date"),
         FieldPanel("results_visible"),
-        InlinePanel("candidates", label="Candidates"),
+        InlinePanel("options", label="Options"),
     ]
 
     parent_page_types = [
@@ -163,15 +166,17 @@ class Election(BasePoll):
         index.SearchField("description"),
     ]
 
+    is_creatable = True
+
     def cast_vote(self, request, *args, **kwargs):
         print(f"Cast vote: {request}")
         return True
 
 
-class ElectionCandidate(Orderable):
+class RankedChoiceOption(Orderable):
     name = models.CharField(max_length=254)
     description = CustomMarkdownField()
-    election = ParentalKey("Election", related_name="candidates")
+    poll = ParentalKey("RankedChoicePoll", related_name="options")
 
     panels = [
         FieldPanel("name"),
@@ -182,17 +187,17 @@ class ElectionCandidate(Orderable):
         return self.name
 
 
-class ElectionBallot(models.Model):
-    entries = models.ManyToManyField(ElectionCandidate, through="ElectionBallotEntry")
+class RankedChoiceBallot(models.Model):
+    entries = models.ManyToManyField(RankedChoiceOption, through="RankedChoiceBallotEntry")
 
     def __str__(self):
         ", ".join(map(lambda x: str(x), self.entries.all()))
 
 
-class ElectionBallotEntry(models.Model):
-    ballot = models.ForeignKey(ElectionBallot, on_delete=models.CASCADE)
-    candidate = models.ForeignKey(ElectionCandidate, on_delete=models.CASCADE)
+class RankedChoiceBallotEntry(models.Model):
+    ballot = models.ForeignKey(RankedChoiceBallot, on_delete=models.CASCADE)
+    option = models.ForeignKey(RankedChoiceOption, on_delete=models.CASCADE)
     rank = models.IntegerField()
 
     class Meta:
-        unique_together = [["ballot", "candidate", "rank"]]
+        unique_together = [["ballot", "option", "rank"]]

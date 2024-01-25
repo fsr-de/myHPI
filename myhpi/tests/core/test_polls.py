@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from myhpi.polls.models import MajorityVote, PollChoice, PollList
+from myhpi.polls.models import MajorityVotePoll, MajorityVoteChoice, PollList
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
@@ -16,7 +16,7 @@ class PollTests(MyHPIPageTestCase):
         )
         self.information_menu.add_child(instance=self.poll_list)
 
-        self.poll = MajorityVote(
+        self.poll = MajorityVotePoll(
             title="How are you?",
             slug="how-are-you",
             question="How are you?",
