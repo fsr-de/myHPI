@@ -38,7 +38,7 @@ If you want to do that manually, run `pre-commit run --all-files`. Next to that,
 
 ## Tips
 
-- To create translations, run `django-admin makemessages -l de` in the myhpi directory.
+- To create translations, run `python manage.py makemessages -l de -i venv`.
 
 ### Reset database
 
