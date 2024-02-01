@@ -1,1 +1,27 @@
-aouaoueaoeu
+{% extends "polls/base_poll.html" %}
+{% load core_extras %}
+{% load i18n %}
+
+{% block ballot %}
+{% endblock %}
+
+{% block results %}
+    <table>
+        <thead>
+        <tr>
+            <th> {% translate "Rank" %}</th>
+            <th> {% translate "Choice" %}</th>
+            <th> {% translate "Final Votes" %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for choice in page.calculate_ranking %}
+            <tr>
+                <td> {{ choice.0 }} </td>
+                <td> {{ choice.1 }} </td>
+                <td> {{ choice.2 }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,4 +1,6 @@
 import datetime
+import queue
+from collections import defaultdict
 
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -26,10 +28,7 @@ class PollList(BasePage):
         context = super().get_context(request, *args, **kwargs)
         context.setdefault(
             "poll_list",
-            filter(
-                lambda poll: poll.is_live(),
-                self.get_children().specific().all()
-            )
+            self.get_children().specific().live()
         )
         return context
 
@@ -48,24 +47,18 @@ class BasePoll(BasePage):
     subpage_types = []
     is_creatable = False
 
+    def in_voting_period(self):
+        return self.start_date <= datetime.date.today() <= self.end_date
+
     def can_vote(self, user):
-        return self.is_live() and user not in self.participants.all()
-
-    def is_live(self):
-        self.start_date > datetime.date.today()
-
-    def serve_poll(self, request, *args, **kwargs):
-        raise NotImplemented()
+        return self.in_voting_period() and user not in self.already_voted.all()
 
     def cast_vote(self, request, *args, **kwargs):
         raise NotImplemented()
 
     def serve(self, request, *args, **kwargs):
-        if not self.is_live():
-            messages.warning(request, _("This poll has not yet started."))
-            return redirect(self.get_parent().relative_url(self.get_site()))
         if request.method == "POST" and self.can_vote(request.user):
-            self.cast_vote()
+            self.cast_vote(request, *args, **kwargs)
         return super().serve(request, *args, **kwargs)
 
 
@@ -110,7 +103,7 @@ class MajorityVotePoll(BasePoll):
                 else:
                     messages.error(request, "Invalid choice.")
             if confirmed_choices > 0:
-                self.participants.add(request.user)
+                self.already_voted.add(request.user)
                 messages.success(request, "Your vote has been counted.")
             return redirect(self.relative_url(self.get_site()))
 
@@ -124,26 +117,20 @@ class MajorityVotePoll(BasePoll):
         return self.choices.aggregate(Sum("votes")).get("votes__sum")
 
 
-class Choice(models.Model):
+class MajorityVoteChoice(Orderable):
     text = models.CharField(max_length=254)
     votes = models.IntegerField(default=0)
+    page = ParentalKey("MajorityVotePoll", on_delete=models.CASCADE, related_name="choices")
 
     panels = [
         FieldPanel("text"),
     ]
 
-    class Meta:
-        abstract = True
-
     def __str__(self):
         return self.text
 
-
-class MajorityVoteChoice(Orderable, Choice):
-    page = ParentalKey("MajorityVotePoll", on_delete=models.CASCADE, related_name="choices")
-
     def percentage(self):
-        participant_count = self.page.participants.count()
+        participant_count = self.page.already_voted.count()
         if participant_count == 0:
             return 0
         return self.votes * 100 / participant_count
@@ -172,6 +159,19 @@ class RankedChoicePoll(BasePoll):
         print(f"Cast vote: {request}")
         return True
 
+    def calculate_ranking(self):
+        ballots = map(lambda x: x.as_sensible_datastructure(), self.ballots.all())
+        options = self.options.all()
+
+        current_votes = {}
+        active_options = len(options)
+
+        for option in options:
+            current_votes[option.pk] = 0
+
+        return [(1, "Julian", 100)]
+
+
 
 class RankedChoiceOption(Orderable):
     name = models.CharField(max_length=254)
@@ -188,7 +188,14 @@ class RankedChoiceOption(Orderable):
 
 
 class RankedChoiceBallot(models.Model):
+    poll = models.ForeignKey(RankedChoicePoll, on_delete=models.CASCADE, related_name="ballots")
     entries = models.ManyToManyField(RankedChoiceOption, through="RankedChoiceBallotEntry")
+
+    def as_sensible_datastructure(self):
+        result = queue.PriorityQueue()
+        for entry in self.entries:
+            result.put((entry.rank, entry.option))
+        return result
 
     def __str__(self):
         ", ".join(map(lambda x: str(x), self.entries.all()))
@@ -200,4 +207,4 @@ class RankedChoiceBallotEntry(models.Model):
     rank = models.IntegerField()
 
     class Meta:
-        unique_together = [["ballot", "option", "rank"]]
+        unique_together = [["ballot", "option"], ["ballot", "rank"]]

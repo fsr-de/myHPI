@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load core_extras %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+        {% with page.description|markdown as parsed_md %}
+        <div class="col-9">
+            <h1> {{ page.title }} </h1>
+            {{ parsed_md.0 }}
+            <h2> {{ page.question }} </h2>
+            {% if can_vote %}
+                {% block ballot %}
+                {% endblock %}
+            {% elif page.results_visible %}
+                {% block results %}
+                {% endblock %}
+            {% elif not page.in_voting_period %}
+                <p> {% translate "You've accessed this page outside of the voting period." %} </p>
+            {% else %}
+                <p> {% translate "The results are not visible yet." %}</p>
+            {% endif %}
+        </div>
+        <div class="col-3">
+            <h4>{% translate "Start Date" %}</h4>
+            <p>{{ page.start_date }}</p>
+            <h4>{% translate "End Date" %}</h4>
+            <p>{{ page.end_date }}</p>
+            <h4>{% translate "Number of participants" %}</h4>
+            <p>{{ page.participants.count }}</p>
+            <h4>{% translate "Number of votes" %}</h4>
+            <p>{{ page.num_votes }}</p>
+        </div>
+        {% endwith %}
+    </div>
+{% endblock %}
