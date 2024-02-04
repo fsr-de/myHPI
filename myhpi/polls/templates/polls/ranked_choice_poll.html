@@ -1,8 +1,32 @@
 {% extends "polls/base_poll.html" %}
 {% load core_extras %}
+{% load core_extras %}
 {% load i18n %}
 
 {% block ballot %}
+    <form method="post">
+        {% csrf_token %}
+        <div id="options" class="mb-3">
+            {% for field in page.get_ballot_form %}
+                <div class="card">
+                    <div class="card-header" data-toggle="collapse" data-target="#collapse_{{ field.html_name }}">
+                        <div class="row">
+                            <div class="col">{{ field.label }}</div>
+                            <div class="col-auto">{{ field }}</div>
+                        </div>
+                    </div>
+                    <div id="collapse_{{ field.html_name }}" data-parent="#options" class="collapse show">
+                        <div class="card-body">
+                            {% with field.help_text|markdown as parsed_md %}
+                                <p>{{ parsed_md.0 }}</p>
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Vote"/>
+    </form>
 {% endblock %}
 
 {% block results %}

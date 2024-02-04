@@ -4,9 +4,10 @@ from collections import defaultdict
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, transaction, IntegrityError
 from django.db.models import F, Sum
 from django.shortcuts import redirect
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import FieldPanel, InlinePanel
@@ -39,7 +40,7 @@ class BasePoll(BasePage):
     end_date = models.DateField()
     results_visible = models.BooleanField(default=False)
 
-    already_voted = models.ManyToManyField(User, related_name="base_polls")
+    already_voted = models.ManyToManyField(User, related_name="base_polls", blank=True)
 
     parent_page_types = [
         "PollList",
@@ -58,7 +59,7 @@ class BasePoll(BasePage):
 
     def serve(self, request, *args, **kwargs):
         if request.method == "POST" and self.can_vote(request.user):
-            self.cast_vote(request, *args, **kwargs)
+            return self.cast_vote(request, *args, **kwargs)
         return super().serve(request, *args, **kwargs)
 
 
@@ -156,8 +157,30 @@ class RankedChoicePoll(BasePoll):
     is_creatable = True
 
     def cast_vote(self, request, *args, **kwargs):
-        print(f"Cast vote: {request}")
-        return True
+        form = self.get_ballot_form(request.POST)
+        if not form.is_valid():
+            messages.error(request, mark_safe(_("Invalid ballot.\n{errors}").format(errors=form.errors)))
+        else:
+            try:
+                with transaction.atomic():
+                    ballot = RankedChoiceBallot.objects.create(poll=self)
+                    for option in self.options.all():
+                        if f"option_{option.pk}" in form.cleaned_data:
+                            entry = RankedChoiceBallotEntry.objects.create(
+                                ballot=ballot,
+                                option=option,
+                                rank=form.cleaned_data[f"option_{option.pk}"],
+                            )
+                            entry.save()
+                    self.already_voted.add(request.user)
+                    messages.success(request, "Your vote has been counted.")
+            except IntegrityError:
+                messages.error(request, "Invalid ballot.")
+        return redirect(self.relative_url(self.get_site()))
+
+    def get_ballot_form(self, data=None):
+        from myhpi.polls.forms import RankedChoiceBallotForm
+        return RankedChoiceBallotForm(data, options=self.options.all())
 
     def calculate_ranking(self):
         ballots = map(lambda x: x.as_sensible_datastructure(), self.ballots.all())
@@ -170,6 +193,9 @@ class RankedChoicePoll(BasePoll):
             current_votes[option.pk] = 0
 
         return [(1, "Julian", 100)]
+
+    def __str__(self):
+        return self.title
 
 
 
@@ -198,7 +224,7 @@ class RankedChoiceBallot(models.Model):
         return result
 
     def __str__(self):
-        ", ".join(map(lambda x: str(x), self.entries.all()))
+        return "ballot" #, ".join(map(lambda x: str(x), self.entries.all()))
 
 
 class RankedChoiceBallotEntry(models.Model):
@@ -208,3 +234,6 @@ class RankedChoiceBallotEntry(models.Model):
 
     class Meta:
         unique_together = [["ballot", "option"], ["ballot", "rank"]]
+
+    def __str__(self):
+        return f"{self.option} on rank {self.rank}"
