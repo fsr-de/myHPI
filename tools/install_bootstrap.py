@@ -86,10 +86,13 @@ def remove_current_bootstrap():
     if os.path.exists(bootstrap_min_js_map_path):
         os.remove(bootstrap_min_js_map_path)
 
+
 def is_bootstrap_installed():
-    return os.path.exists(os.path.join("myhpi", "static", "scss", "bootstrap")) and \
-    os.path.exists(os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js")) and \
-    os.path.exists(os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js.map"))
+    return (
+        os.path.exists(os.path.join("myhpi", "static", "scss", "bootstrap"))
+        and os.path.exists(os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js"))
+        and os.path.exists(os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js.map"))
+    )
 
 
 def init_argparse() -> argparse.ArgumentParser:
