@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.forms import Form, ChoiceField
+from django.forms import ChoiceField, Form
 
 
 class RankedChoiceBallotForm(Form):

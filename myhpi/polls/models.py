@@ -4,7 +4,7 @@ import math
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.db import models, transaction, IntegrityError
+from django.db import IntegrityError, models, transaction
 from django.db.models import F, Sum
 from django.shortcuts import redirect
 from django.utils.safestring import mark_safe

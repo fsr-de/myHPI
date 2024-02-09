@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from myhpi.polls.models import MajorityVotePoll, MajorityVoteChoice, PollList
+from myhpi.polls.models import MajorityVoteChoice, MajorityVotePoll, PollList
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 

@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
+
 from django.test.utils import tag
 
 from myhpi.polls.models import (
-    RankedChoicePoll,
-    RankedChoiceBallot,
-    RankedChoiceOption,
-    RankedChoiceBallotEntry,
     PollList,
+    RankedChoiceBallot,
+    RankedChoiceBallotEntry,
+    RankedChoiceOption,
+    RankedChoicePoll,
 )
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
