@@ -27,10 +27,7 @@ class PollList(BasePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.setdefault(
-            "poll_list",
-            self.get_children().specific().live()
-        )
+        context.setdefault("poll_list", self.get_children().specific().live())
         return context
 
 
@@ -159,7 +156,9 @@ class RankedChoicePoll(BasePoll):
     def cast_vote(self, request, *args, **kwargs):
         form = self.get_ballot_form(request.POST)
         if not form.is_valid():
-            messages.error(request, mark_safe(_("Invalid ballot.\n{errors}").format(errors=form.errors)))
+            messages.error(
+                request, mark_safe(_("Invalid ballot.\n{errors}").format(errors=form.errors))
+            )
         else:
             try:
                 with transaction.atomic():
@@ -180,6 +179,7 @@ class RankedChoicePoll(BasePoll):
 
     def get_ballot_form(self, data=None):
         from myhpi.polls.forms import RankedChoiceBallotForm
+
         return RankedChoiceBallotForm(data, options=self.options.all())
 
     def __str__(self):
@@ -203,7 +203,9 @@ class RankedChoicePoll(BasePoll):
 
         def find_loosers():
             threshold = min(map(lambda key: len(current_votes[key]), current_votes.keys()))
-            return set(filter(lambda key: len(current_votes[key]) == threshold, current_votes.keys()))
+            return set(
+                filter(lambda key: len(current_votes[key]) == threshold, current_votes.keys())
+            )
 
         final_votes = {}
 
@@ -223,7 +225,9 @@ class RankedChoicePoll(BasePoll):
                             current_votes[next_option].append(ballot)
                             break
 
-        sorted_votes = sorted(map(lambda tuple: (tuple[1], tuple[0]), final_votes.items()), reverse=True)
+        sorted_votes = sorted(
+            map(lambda tuple: (tuple[1], tuple[0]), final_votes.items()), reverse=True
+        )
         assigned_rank = 0
         rank = 0
         previous_votes = None

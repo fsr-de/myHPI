@@ -1,8 +1,13 @@
 from datetime import datetime, timedelta
 from django.test.utils import tag
 
-from myhpi.polls.models import RankedChoicePoll, RankedChoiceBallot, RankedChoiceOption, RankedChoiceBallotEntry, \
-    PollList
+from myhpi.polls.models import (
+    RankedChoicePoll,
+    RankedChoiceBallot,
+    RankedChoiceOption,
+    RankedChoiceBallotEntry,
+    PollList,
+)
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
@@ -11,8 +16,8 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
         super().setUp()
 
         method = getattr(self, self._testMethodName)
-        tags = getattr(method, 'tags', {})
-        if 'skip_setup' in tags:
+        tags = getattr(method, "tags", {})
+        if "skip_setup" in tags:
             return
         self.setup_poll()
 
@@ -50,44 +55,52 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
             ballot = RankedChoiceBallot.objects.create(poll=self.poll)
             ballot.save()
 
-            for (idx, template_entry) in enumerate(template_ballot):
+            for idx, template_entry in enumerate(template_ballot):
                 RankedChoiceBallotEntry.objects.create(
-                    ballot=ballot,
-                    option=self.options[template_entry],
-                    rank=idx
+                    ballot=ballot, option=self.options[template_entry], rank=idx
                 )
 
     def test_can_two_first_places(self):
         self.cast_ballots([["alice", "bob"], ["bob", "alice"]])
-        self.assertEqual(self.poll.calculate_ranking(),
-                         [(1, "Alice", 1), (1, "Bob", 1), (3, "Charlie", 0), (3, "Dora", 0)])
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 1), (1, "Bob", 1), (3, "Charlie", 0), (3, "Dora", 0)],
+        )
 
     def test_three_first_places(self):
         self.cast_ballots([["alice", "bob"], ["bob", "alice"], ["charlie"]])
-        self.assertEqual(self.poll.calculate_ranking(),
-                         [(1, "Alice", 1), (1, "Bob", 1), (1, "Charlie", 1), (4, "Dora", 0)])
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 1), (1, "Bob", 1), (1, "Charlie", 1), (4, "Dora", 0)],
+        )
 
     def test_runoff_with_skips(self):
         self.cast_ballots(
-            ([["alice", "charlie", "bob"]] * 10) +
-            ([["bob", "alice", "charlie"]] * 12) +
-            ([["charlie", "dora", "alice", "bob"]] * 9) +
-            ([["dora", "alice", "charlie"]] * 1)
+            ([["alice", "charlie", "bob"]] * 10)
+            + ([["bob", "alice", "charlie"]] * 12)
+            + ([["charlie", "dora", "alice", "bob"]] * 9)
+            + ([["dora", "alice", "charlie"]] * 1)
         )
-        self.assertEqual(self.poll.calculate_ranking(),
-                         [(1, "Alice", 32), (2, "Bob", 12), (3, "Charlie", 9), (4, "Dora", 1)])
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 32), (2, "Bob", 12), (3, "Charlie", 9), (4, "Dora", 1)],
+        )
 
     def test_no_ballots(self):
-        self.assertEqual(self.poll.calculate_ranking(),
-                         [(1, "Alice", 0), (1, "Bob", 0), (1, "Charlie", 0), (1, "Dora", 0)])
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 0), (1, "Bob", 0), (1, "Charlie", 0), (1, "Dora", 0)],
+        )
 
     def test_fast(self):
         # TODO: Please assert this is reasonably fast. Do your Django magic here.
         self.cast_ballots(([["alice", "bob"]] * 1000) + ([["bob", "alice", "charlie"]] * 900))
-        self.assertEqual(self.poll.calculate_ranking(),
-                         [(1, "Alice", 1900), (2, "Bob", 900), (3, "Charlie", 0), (3, "Dora", 0)])
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 1900), (2, "Bob", 900), (3, "Charlie", 0), (3, "Dora", 0)],
+        )
 
-    @tag('skip_setup')
+    @tag("skip_setup")
     def test_no_options(self):
         self.setup_poll()
         self.assertEqual(self.poll.calculate_ranking(), [])

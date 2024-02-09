@@ -8,8 +8,11 @@ class RankedChoiceBallotForm(Form):
         self.options = options
         for option in self.options:
             self.fields[f"option_{option.pk}"] = ChoiceField(
-                choices=[("unranked", "unranked")] + [(i, i) for i in range(1, len(self.options) + 1)],
-                label=option.name, help_text=option.description)
+                choices=[("unranked", "unranked")]
+                + [(i, i) for i in range(1, len(self.options) + 1)],
+                label=option.name,
+                help_text=option.description,
+            )
 
     def clean(self):
         cleaned_data = super().clean()

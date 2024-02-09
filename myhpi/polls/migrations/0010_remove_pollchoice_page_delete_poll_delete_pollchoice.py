@@ -5,18 +5,18 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('polls', '0009_alter_poll_description'),
+        ("polls", "0009_alter_poll_description"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='pollchoice',
-            name='page',
+            model_name="pollchoice",
+            name="page",
         ),
         migrations.DeleteModel(
-            name='Poll',
+            name="Poll",
         ),
         migrations.DeleteModel(
-            name='PollChoice',
+            name="PollChoice",
         ),
     ]
