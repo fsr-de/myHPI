@@ -12,8 +12,6 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [8000],
-	//"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
-	// "workspaceFolder": "/workspace"
 
 	// Uncomment the next line to run commands after the container is created.
 	"postCreateCommand": "bash .devcontainer/setup.sh"
