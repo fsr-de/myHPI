@@ -1,6 +1,6 @@
 import datetime
-import queue
-from collections import defaultdict
+import heapq
+import math
 
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -182,21 +182,60 @@ class RankedChoicePoll(BasePoll):
         from myhpi.polls.forms import RankedChoiceBallotForm
         return RankedChoiceBallotForm(data, options=self.options.all())
 
-    def calculate_ranking(self):
-        ballots = map(lambda x: x.as_sensible_datastructure(), self.ballots.all())
-        options = self.options.all()
-
-        current_votes = {}
-        active_options = len(options)
-
-        for option in options:
-            current_votes[option.pk] = 0
-
-        return [(1, "Julian", 100)]
-
     def __str__(self):
         return self.title
 
+    def calculate_ranking(self):
+        ballots = list(map(lambda x: x.as_sensible_datastructure(), list(self.ballots.all())))
+        options = self.options.all()
+
+        total_votes = len(ballots)
+
+        current_votes = {}
+        names = {}
+
+        for option in options:
+            current_votes[option.pk] = []
+            names[option.pk] = option.name
+
+        for ballot in ballots:
+            current_votes[heapq.heappop(ballot)[1].option.pk].append(ballot)
+
+        def find_loosers():
+            threshold = min(map(lambda key: len(current_votes[key]), current_votes.keys()))
+            return set(filter(lambda key: len(current_votes[key]) == threshold, current_votes.keys()))
+
+        final_votes = {}
+
+        while current_votes:
+            loosers = find_loosers()
+
+            for looser in loosers:
+                final_votes[looser] = len(current_votes[looser])
+
+            for looser in loosers:
+                for ballot in current_votes.pop(looser, []):
+                    while True:
+                        if not ballot:
+                            break
+                        next_option = heapq.heappop(ballot)[1].option.pk
+                        if not next_option in loosers and next_option in current_votes.keys():
+                            current_votes[next_option].append(ballot)
+                            break
+
+        sorted_votes = sorted(map(lambda tuple: (tuple[1], tuple[0]), final_votes.items()), reverse=True)
+        assigned_rank = 0
+        rank = 0
+        previous_votes = None
+        results = []
+        for candidate in sorted_votes:
+            rank += 1
+            if previous_votes is None or previous_votes > candidate[0]:
+                assigned_rank = rank
+            results.append((assigned_rank, names[candidate[1]], candidate[0]))
+            previous_votes = candidate[0]
+
+        return sorted(results)
 
 
 class RankedChoiceOption(Orderable):
@@ -218,13 +257,14 @@ class RankedChoiceBallot(models.Model):
     entries = models.ManyToManyField(RankedChoiceOption, through="RankedChoiceBallotEntry")
 
     def as_sensible_datastructure(self):
-        result = queue.PriorityQueue()
-        for entry in self.entries:
-            result.put((entry.rank, entry.option))
+        result = []
+        for entry in self.rankedchoiceballotentry_set.all():
+            result.append((entry.rank, entry))
+        heapq.heapify(result)
         return result
 
     def __str__(self):
-        return "ballot" #, ".join(map(lambda x: str(x), self.entries.all()))
+        return "ballot"  # , ".join(map(lambda x: str(x), self.entries.all()))
 
 
 class RankedChoiceBallotEntry(models.Model):
@@ -237,3 +277,7 @@ class RankedChoiceBallotEntry(models.Model):
 
     def __str__(self):
         return f"{self.option} on rank {self.rank}"
+
+
+def heappeek(heap):
+    return heap[0][1]
