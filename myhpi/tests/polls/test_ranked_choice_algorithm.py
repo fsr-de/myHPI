@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 from django.test.utils import tag
 
-from myhpi.polls.models import RankedChoicePoll, RankedChoiceBallot, RankedChoiceOption, RankedChoiceBallotEntry, PollList
+from myhpi.polls.models import RankedChoicePoll, RankedChoiceBallot, RankedChoiceOption, RankedChoiceBallotEntry, \
+    PollList
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
@@ -43,7 +44,6 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
         )
 
         self.poll_list.add_child(instance=self.poll)
-
 
     def cast_ballots(self, template_ballots):
         for template_ballot in template_ballots:

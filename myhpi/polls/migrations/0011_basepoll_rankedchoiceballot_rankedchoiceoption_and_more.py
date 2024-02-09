@@ -8,7 +8,6 @@ import myhpi.core.markdown.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('core', '0008_remove_footer_column_4'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -19,7 +18,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BasePoll',
             fields=[
-                ('basepage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='core.basepage')),
+                ('basepage_ptr',
+                 models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True,
+                                      primary_key=True, serialize=False, to='core.basepage')),
                 ('description', myhpi.core.markdown.fields.CustomMarkdownField()),
                 ('start_date', models.DateField()),
                 ('end_date', models.DateField()),
@@ -53,7 +54,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='MajorityVotePoll',
             fields=[
-                ('basepoll_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='polls.basepoll')),
+                ('basepoll_ptr',
+                 models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True,
+                                      primary_key=True, serialize=False, to='polls.basepoll')),
                 ('question', models.CharField(max_length=254)),
                 ('max_allowed_answers', models.IntegerField(default=1)),
             ],
@@ -65,7 +68,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RankedChoicePoll',
             fields=[
-                ('basepoll_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='polls.basepoll')),
+                ('basepoll_ptr',
+                 models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True,
+                                      primary_key=True, serialize=False, to='polls.basepoll')),
             ],
             options={
                 'abstract': False,
@@ -77,8 +82,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rank', models.IntegerField()),
-                ('ballot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.rankedchoiceballot')),
-                ('option', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.rankedchoiceoption')),
+                ('ballot',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.rankedchoiceballot')),
+                ('option',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.rankedchoiceoption')),
             ],
             options={
                 'unique_together': {('ballot', 'option'), ('ballot', 'rank')},
@@ -92,12 +99,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rankedchoiceoption',
             name='poll',
-            field=modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='options', to='polls.rankedchoicepoll'),
+            field=modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='options',
+                                                  to='polls.rankedchoicepoll'),
         ),
         migrations.AddField(
             model_name='rankedchoiceballot',
             name='poll',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ballots', to='polls.rankedchoicepoll'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ballots',
+                                    to='polls.rankedchoicepoll'),
         ),
         migrations.CreateModel(
             name='MajorityVoteChoice',
@@ -106,7 +115,9 @@ class Migration(migrations.Migration):
                 ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
                 ('text', models.CharField(max_length=254)),
                 ('votes', models.IntegerField(default=0)),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='choices', to='polls.majorityvotepoll')),
+                ('page',
+                 modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='choices',
+                                                 to='polls.majorityvotepoll')),
             ],
             options={
                 'ordering': ['sort_order'],
