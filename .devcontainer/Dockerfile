@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/python:3.11
 
-# Add more tools here
+# Add more tools needed in the devcontainer here
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
         nano \
@@ -8,8 +8,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         gettext \
     && true
 
-#ENV PATH="${PATH}:~/.local/bin"
-#RUN pipx ensurepath
 ENV POETRY_VERSION=1.3.2
 
 # README steps
