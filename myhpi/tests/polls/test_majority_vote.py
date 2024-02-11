@@ -77,11 +77,7 @@ class PollTests(MyHPIPageTestCase):
     def test_post_vote_no_choice(self):
         self.sign_in_as_student()
         self.assertTrue(self.poll.can_vote(self.student))
-        response = self.client.post(
-            self.poll.url,
-            data={"choice": []},
-            follow=True
-        )
+        response = self.client.post(self.poll.url, data={"choice": []}, follow=True)
         self.assertContains(response, "You must select at least one choice.")
         self.assertTrue(self.poll.can_vote(self.student))
 
@@ -89,9 +85,7 @@ class PollTests(MyHPIPageTestCase):
         self.sign_in_as_student()
         self.assertTrue(self.poll.can_vote(self.student))
         response = self.client.post(
-            self.poll.url,
-            data={"choice": [self.choice_good.id, self.choice_bad.id]},
-            follow=True
+            self.poll.url, data={"choice": [self.choice_good.id, self.choice_bad.id]}, follow=True
         )
         self.assertContains(response, "You can only select up to 1 options.", 1)
         self.assertTrue(self.poll.can_vote(self.student))
