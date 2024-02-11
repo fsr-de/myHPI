@@ -28,9 +28,7 @@
             <h4>{% translate "End Date" %}</h4>
             <p>{{ page.end_date }}</p>
             <h4>{% translate "Number of participants" %}</h4>
-            <p>{{ page.participants.count }}</p>
-            <h4>{% translate "Number of votes" %}</h4>
-            <p>{{ page.num_votes }}</p>
+            <p>{{ page.already_voted.count }}</p>
         </div>
         {% endwith %}
     </div>
