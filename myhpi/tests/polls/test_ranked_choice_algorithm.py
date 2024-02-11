@@ -40,9 +40,9 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
         self.information_menu.add_child(instance=self.poll_list)
 
         self.poll = RankedChoicePoll(
-            title="How are you?",
-            slug="how-are-you",
-            description="This is a poll to check how you are.",
+            title="SLASH 1999",
+            slug="slash-1999",
+            description="Who should win the SLASH 1999?",
             start_date=datetime.now() - timedelta(days=1),
             end_date=datetime.now() + timedelta(days=1),
             results_visible=False,
