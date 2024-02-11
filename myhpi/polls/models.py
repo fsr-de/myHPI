@@ -63,7 +63,7 @@ class BasePoll(BasePage):
         if request.method == "POST":
             if self.can_vote(request.user):
                 return self.cast_vote(request, *args, **kwargs)
-        messages.error(request, "You are not allowed to vote.")
+            messages.error(request, "You are not allowed to vote.")
         return super().serve(request, *args, **kwargs)
 
 
@@ -76,6 +76,7 @@ class MajorityVotePoll(BasePoll):
         FieldPanel("question"),
         FieldPanel("start_date"),
         FieldPanel("end_date"),
+        FieldPanel("eligible_groups"),
         FieldPanel("max_allowed_answers"),
         FieldPanel("results_visible"),
         InlinePanel("choices", label="Choices"),
@@ -110,7 +111,7 @@ class MajorityVotePoll(BasePoll):
             if confirmed_choices > 0:
                 self.already_voted.add(request.user)
                 messages.success(request, "Your vote has been counted.")
-            return redirect(self.relative_url(self.get_site()))
+        return redirect(self.relative_url(self.get_site()))
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)

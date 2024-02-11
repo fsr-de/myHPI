@@ -23,6 +23,7 @@ class PollTests(MyHPIPageTestCase):
             description="This is a poll to check how you are.",
             start_date=datetime.now() - timedelta(days=1),
             end_date=datetime.now() + timedelta(days=1),
+            eligible_groups=[self.test_data["groups"][0]],
             max_allowed_answers=1,
             results_visible=False,
             is_public=True,
@@ -30,13 +31,13 @@ class PollTests(MyHPIPageTestCase):
 
         self.poll_list.add_child(instance=self.poll)
 
-        self.choice_good = PollChoice(
+        self.choice_good = MajorityVoteChoice(
             text="Good",
             page=self.poll,
             votes=0,
         )
         self.choice_good.save()
-        self.choice_bad = PollChoice(
+        self.choice_bad = MajorityVoteChoice(
             text="Bad",
             page=self.poll,
             votes=0,
@@ -46,7 +47,7 @@ class PollTests(MyHPIPageTestCase):
     def test_can_vote_once(self):
         self.sign_in_as_student()
         self.assertTrue(self.poll.can_vote(self.student))
-        self.poll.participants.add(self.student)
+        self.poll.already_voted.add(self.student)
         self.assertFalse(self.poll.can_vote(self.student))
 
     def test_post_vote(self):
@@ -79,6 +80,7 @@ class PollTests(MyHPIPageTestCase):
         response = self.client.post(
             self.poll.url,
             data={"choice": []},
+            follow=True
         )
         self.assertContains(response, "You must select at least one choice.")
         self.assertTrue(self.poll.can_vote(self.student))
@@ -89,6 +91,7 @@ class PollTests(MyHPIPageTestCase):
         response = self.client.post(
             self.poll.url,
             data={"choice": [self.choice_good.id, self.choice_bad.id]},
+            follow=True
         )
         self.assertContains(response, "You can only select up to 1 options.", 1)
         self.assertTrue(self.poll.can_vote(self.student))
@@ -97,9 +100,8 @@ class PollTests(MyHPIPageTestCase):
         self.sign_in_as_student()
         self.poll.start_date = datetime.now() + timedelta(days=1)
         self.poll.save()
-        self.assertTrue(self.poll.can_vote(self.student))
+        self.assertFalse(self.poll.can_vote(self.student))
         response = self.client.post(
             self.poll.url, data={"choice": [self.choice_good.id]}, follow=True
         )
-        self.assertContains(response, "This poll has not yet started.")
-        self.assertTrue(self.poll.can_vote(self.student))
+        self.assertContains(response, "You've accessed this page outside of the voting period.")
