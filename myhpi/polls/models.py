@@ -3,13 +3,13 @@ import heapq
 import math
 
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import IntegrityError, models, transaction
 from django.db.models import F, Sum
 from django.shortcuts import redirect
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
-from modelcluster.fields import ParentalKey
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.models import Orderable, Page
 from wagtail.search import index
@@ -36,6 +36,7 @@ class BasePoll(BasePage):
     start_date = models.DateField()
     end_date = models.DateField()
     results_visible = models.BooleanField(default=False)
+    eligible_groups = ParentalManyToManyField(Group, related_name="base_polls", blank=True)
 
     already_voted = models.ManyToManyField(User, related_name="base_polls", blank=True)
 
@@ -49,14 +50,16 @@ class BasePoll(BasePage):
         return self.start_date <= datetime.date.today() <= self.end_date
 
     def can_vote(self, user):
-        return self.in_voting_period() and user not in self.already_voted.all()
+        return self.in_voting_period() and user not in self.already_voted.all() and self.eligible_groups.intersection(user.groups.all()).exists()
 
     def cast_vote(self, request, *args, **kwargs):
         raise NotImplemented()
 
     def serve(self, request, *args, **kwargs):
-        if request.method == "POST" and self.can_vote(request.user):
-            return self.cast_vote(request, *args, **kwargs)
+        if request.method == "POST":
+            if self.can_vote(request.user):
+                return self.cast_vote(request, *args, **kwargs)
+        messages.error(request, "You are not allowed to vote.")
         return super().serve(request, *args, **kwargs)
 
 
@@ -139,6 +142,7 @@ class RankedChoicePoll(BasePoll):
         FieldPanel("description", classname="full"),
         FieldPanel("start_date"),
         FieldPanel("end_date"),
+        FieldPanel("eligible_groups"),
         FieldPanel("results_visible"),
         InlinePanel("options", label="Options"),
     ]
