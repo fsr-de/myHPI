@@ -94,10 +94,14 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
         )
 
     def test_fast(self):
-        # TODO: Please assert this is reasonably fast. Do your Django magic here.
         self.cast_ballots(([["alice", "bob"]] * 1000) + ([["bob", "alice", "charlie"]] * 900))
+
+        start = datetime.datetime.now()
+        result = self.poll.calculate_ranking(),
+        end = datetime.datetime.now()
+        self.assertLessEqual(end - start, timedelta(milliseconds=100))
         self.assertEqual(
-            self.poll.calculate_ranking(),
+            result,
             [(1, "Alice", 1900), (2, "Bob", 900), (3, "Charlie", 0), (3, "Dora", 0)],
         )
 
