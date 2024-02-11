@@ -9,7 +9,7 @@
         <table class="table table-striped">
         {% for minute in minutes %}
             <tr>
-                <td><a href="{% pageurl minute %}">{{ minute.date|date:"d.m.Y" }}</a></td>
+                <td><a href="{{ minute.get_valid_url }}">{{ minute.date|date:"d.m.Y" }}</a></td>
                 <td>
                     {% if not minute.live %}
                         <span title={% translate "Draft" %} aria-hidden="true">⚠️</span>
@@ -18,7 +18,7 @@
                 <td>
                     {% include "core/label.html" with minutes=minute %}
                 </td>
-                <td><a href="{% if minute.live %}{% pageurl minute %}{% else %}{% url "wagtailadmin_pages:view_draft" minute.id %}{% endif %}">{{ minute.title }}</a></td>
+                <td><a href="{{ minute.get_valid_url }}">{{ minute.title }}</a></td>
                 <td>
                     {% if minute.attachments.count > 0 %}
                         <span class="text-gray" data-toggle="tooltip" data-placement="left" data-container="body" title="{{ minute.attachments.all|join:', ' }}">

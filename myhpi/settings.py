@@ -6,6 +6,12 @@ import tenca
 from django.contrib.messages import constants
 from environ import environ
 
+try:
+    import importlib_metadata  # importlib is broken on python 3.8, using backport
+except ImportError:
+    import importlib.metadata as importlib_metadata
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env(interpolate=True)
@@ -45,18 +51,18 @@ INSTALLED_APPS = [
     "modelcluster",
     "mozilla_django_oidc",
     "taggit",
-    "wagtail.admin",
     "wagtail.contrib.forms",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.redirects",
-    "wagtail.core",
-    "wagtail.documents",
     "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
     "wagtail.images",
     "wagtail.search",
-    "wagtail.sites",
-    "wagtail.snippets",
-    "wagtail.users",
+    "wagtail.admin",
+    "wagtail.contrib.modeladmin",
+    "wagtail",
     "wagtail_localize",
     "wagtail_localize.locales",
     "wagtailmarkdown",
@@ -64,6 +70,7 @@ INSTALLED_APPS = [
     "myhpi.polls",
     "myhpi.search",
     "static_precompiler",
+    "django_prometheus",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -78,16 +85,22 @@ OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = 3600  # renew auth after 1 hour
 OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID")
 OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET")
 
-OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/auth"
-OIDC_OP_TOKEN_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/token"
-OIDC_OP_USER_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/userinfo"
-OIDC_OP_JWKS_ENDPOINT = "https://auth.myhpi.de/realms/fsr/protocol/openid-connect/certs"
+OIDC_REALM = "myhpi-testing" if DEBUG else "fsr"
+OIDC_OP_AUTHORIZATION_ENDPOINT = (
+    f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/auth"
+)
+OIDC_OP_TOKEN_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = (
+    f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/userinfo"
+)
+OIDC_OP_JWKS_ENDPOINT = f"https://auth.myhpi.de/realms/{OIDC_REALM}/protocol/openid-connect/certs"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "login"
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -99,6 +112,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "myhpi.core.middleware.IPRangeUserMiddleware",
     "mozilla_django_oidc.middleware.SessionRefresh",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 if DJANGO_DEBUG:
@@ -173,7 +187,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "de"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Berlin"
 
 USE_I18N = True
 WAGTAIL_I18N_ENABLED = True
@@ -303,11 +317,15 @@ DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 SERVER_EMAIL = env.str("SERVER_EMAIL")
 ADMINS = getaddresses(env.list("ADMINS"))
 
+# Set this to view /metrics with X-API-KEY header
+METRICS_API_KEY = env.str("METRICS_API_KEY", default=None)
+
+# logging
+
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 
-# logging
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -354,3 +372,8 @@ LOGGING = {
 }
 
 BS_ICONS_CACHE = os.path.join(STATIC_ROOT, "icon_cache")
+
+try:
+    MYHPI_VERSION = importlib_metadata.version("myHPI")
+except importlib_metadata.PackageNotFoundError:
+    MYHPI_VERSION = "dev"

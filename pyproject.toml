@@ -1,17 +1,17 @@
 [tool.poetry]
 name = "myHPI"
-version = "0.1.0"
+version = "0.0.0" # automatically set by poetry-dynamic-versioning
 description = ""
 authors = ["FSR DE <fachschaftsrat@hpi.de>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-wagtail = "^4.2.4"
-django-environ = "^0.10.0"
-wagtail-localize = "^1.6"
+wagtail = "^5.2"
+django-environ = "^0.11.2"
+wagtail-localize = "^1.7"
 mozilla-django-oidc = "^3.0.0"
-django-bootstrap-icons = "^0.8.3"
+django-bootstrap-icons = "^0.8.7"
 django-select2 = "^8.1.2"
 django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
 django-debug-toolbar = "^4.2.0"
@@ -20,13 +20,15 @@ tenca = "^0.0.2"
 html2text = "^2020.1.16"
 wagtail-markdown = "^0.11.1"
 autoflake = "^2.2.1"
+setuptools-scm = "^8.0.4"
+django-prometheus = "^2.3.1"
 
 [tool.poetry.group.dev.dependencies]
-pylint = "^2.17.5"
+pylint = "^3.0.3"
 black = "^23.9"
 isort = "^5.12.0"
 autoflake = "^2.2.1"
-pre-commit = "^3.3.3"
+pre-commit = "^3.5.0"
 pytest = "^7.4.2"
 coverage = "^7.3.2"
 
@@ -35,8 +37,8 @@ pgsql = ["psycopg2"]
 mysql = ["mysqlclient"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.black]
 line-length = 100
@@ -62,3 +64,6 @@ useless-object-inheritance, logging-fstring-interpolation
 
 [tool.pylint.format]
 max-line-length = "100"
+
+[tool.poetry-dynamic-versioning]
+enable = true

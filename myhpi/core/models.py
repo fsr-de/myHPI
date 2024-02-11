@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django_select2 import forms as s2forms
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -123,6 +124,7 @@ class MinutesList(BasePage):
         return context
 
 
+@register_snippet
 class MinutesLabel(TagBase):
     free_tagging = False
     color = CharField(max_length=7, default="#000000")
@@ -228,6 +230,14 @@ class Minutes(BasePage):
 
     base_form_class = MinutesForm
 
+    # this function also fetches the correct draft url if the minute is still a draft
+    def get_valid_url(self):
+        return (
+            self.url
+            if self.live
+            else reverse("wagtailadmin_pages:view_draft", kwargs={"page_id": self.id})
+        )
+
 
 class RootPage(InformationPage):
     template = "core/information_page.html"
@@ -277,6 +287,7 @@ class SecondLevelMenuItem(FirstLevelMenuItem):
     subpage_types = ["InformationPage", "MinutesList"]
 
 
+@register_snippet
 class AbbreviationExplanation(Model):
     abbreviation = CharField(max_length=255)
     explanation = CharField(max_length=255)

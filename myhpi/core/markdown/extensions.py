@@ -1,4 +1,5 @@
 import re
+import xml.etree.ElementTree
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
@@ -6,6 +7,8 @@ from markdown import Extension, util
 from markdown.inlinepatterns import LinkInlineProcessor
 from markdown.preprocessors import Preprocessor
 from wagtail.models import Page
+
+from myhpi import settings
 
 
 class MinutesBasePreprocessor(Preprocessor):
@@ -145,7 +148,7 @@ class HeadingLevelPreprocessor(MinutesBasePreprocessor):
 
 class InternalLinkPattern(LinkInlineProcessor):
     def handleMatch(self, m, data=None):
-        el = util.etree.Element("a")
+        el = xml.etree.ElementTree.Element("a")
         try:
             el.set("href", self.url(m.group("id")))
             el.text = util.AtomicString(m.group("title"))
@@ -161,6 +164,14 @@ class InternalLinkPattern(LinkInlineProcessor):
         return r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)"
 
 
+class VersionPreprocessor(MinutesBasePreprocessor):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.patterns = [
+            (r"\[MYHPI-VERSION\]", lambda match: settings.MYHPI_VERSION),
+        ]
+
+
 class MinuteExtension(Extension):
     def extendMarkdown(self, md):
         md.registerExtension(self)
@@ -170,6 +181,7 @@ class MinuteExtension(Extension):
         md.preprocessors.register(QuorumPreprocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
+        md.preprocessors.register(VersionPreprocessor(md), "version", 200)
         md.inlinePatterns.register(
             InternalLinkPattern(InternalLinkPattern.default_pattern(), md),
             "InternalLinkPattern",

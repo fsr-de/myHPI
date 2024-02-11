@@ -80,7 +80,7 @@ jobs:
         source env/bin/activate
         poetry run python -m pip install setuptools -U
         poetry install -E mysql -E pgsql
-        python install-bootstrap.py
+        python tools/install_bootstrap.py
     - name: Prepare files for test run
       continue-on-error: true
       run: |
