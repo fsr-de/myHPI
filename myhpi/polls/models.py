@@ -3,7 +3,7 @@ import heapq
 import math
 
 from django.contrib import messages
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 from django.db import IntegrityError, models, transaction
 from django.db.models import F, Sum
 from django.shortcuts import redirect
@@ -50,7 +50,11 @@ class BasePoll(BasePage):
         return self.start_date <= datetime.date.today() <= self.end_date
 
     def can_vote(self, user):
-        return self.in_voting_period() and user not in self.already_voted.all() and self.eligible_groups.intersection(user.groups.all()).exists()
+        return (
+            self.in_voting_period()
+            and user not in self.already_voted.all()
+            and self.eligible_groups.intersection(user.groups.all()).exists()
+        )
 
     def cast_vote(self, request, *args, **kwargs):
         raise NotImplemented()
