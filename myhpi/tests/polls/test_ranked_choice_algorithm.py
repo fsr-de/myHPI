@@ -96,9 +96,9 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
     def test_fast(self):
         self.cast_ballots(([["alice", "bob"]] * 1000) + ([["bob", "alice", "charlie"]] * 900))
 
-        start = datetime.datetime.now()
-        result = self.poll.calculate_ranking(),
-        end = datetime.datetime.now()
+        start = datetime.now()
+        result = (self.poll.calculate_ranking(),)
+        end = datetime.now()
         self.assertLessEqual(end - start, timedelta(milliseconds=100))
         self.assertEqual(
             result,
