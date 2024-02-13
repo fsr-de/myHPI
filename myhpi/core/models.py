@@ -205,6 +205,7 @@ class Minutes(BasePage):
         User, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
     )
     participants = ParentalManyToManyField(User, related_name="minutes")
+    location = CharField(max_length=255, blank=True)
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     body = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
@@ -215,6 +216,7 @@ class Minutes(BasePage):
         FieldPanel("moderator", widget=UserSelectWidget({"data-width": "100%"})),
         FieldPanel("author", widget=UserSelectWidget({"data-width": "100%"})),
         FieldPanel("participants", widget=UserSelectMultipleWidget({"data-width": "100%"})),
+        FieldPanel("location"),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
