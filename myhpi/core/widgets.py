@@ -1,3 +1,5 @@
+from json import loads as parse_json
+
 from django import forms
 from wagtail.documents.models import Document
 
@@ -59,3 +61,12 @@ class AttachmentSelectWidget(forms.SelectMultiple):
                 if subindex is not None:
                     subindex += 1
         return groups
+
+
+class TextArrayWidget(forms.Widget):
+    template_name = "core/text_array_widget.html"
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["strings"] = parse_json(context["widget"]["value"])
+        return context
