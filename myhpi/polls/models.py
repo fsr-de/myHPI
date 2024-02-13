@@ -175,8 +175,10 @@ class RankedChoicePoll(BasePoll):
             )
         else:
             try:
-                RankedChoicePoll.objects.select_for_update().get(pk=self.pk)
+                qs = RankedChoicePoll.objects.select_for_update().filter(pk=self.pk)
                 with transaction.atomic():
+                    # acquire lock for this transaction by evaluating the queryset
+                    date = qs.get().start_date
                     if self.already_voted.filter(pk=request.user.pk).exists():
                         messages.error(request, _("You have already voted."))
                     else:
