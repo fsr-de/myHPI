@@ -3,6 +3,9 @@
 {% load i18n %}
 
 {% block content %}
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{% trans "by" %} {{ page.author }}</p>
+    <span>{{ page.date }}</span>
     {% with page.body|markdown as parsed_md %}
         {{ parsed_md.0 }}
     {% endwith %}

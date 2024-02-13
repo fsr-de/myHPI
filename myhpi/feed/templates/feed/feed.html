@@ -3,16 +3,25 @@
 {% load i18n %}
 
 {% block content %}
-{% for post in posts %}
-    <div class="post jumbotron">
-        <h2>{{ post.title }}</h2>
-        <p class="lead">by {{ post.author }}</p>
-        <p>{{ post.snippet }}</p>
-        <div>
-            <span class="badge badge-secondary">{{ post.date }}</span>
-            <a href="{{ post.get_url }}">{% trans  "Read more" %}</a>
+    <div>
+    {% for post in posts %}
+        <div class="card mb-2">
+            <div class="card-header">
+                <h2>{{ post.title }}</h2>
+                <div class="row justify-content-between">
+                    <div class="col-8">
+                        <p class="lead">{% trans "by" %} {{ post.author }}</p>
+                    </div>
+                    <div class="col-4">
+                        <div class="d-flex justify-content-end text-muted"> <span>{{ post.date }}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>{{ post.snippet }}</p>
+                <a href="{{ post.get_url }}">{% trans  "Read more" %}</a>
+            </div>
         </div>
+    {% endfor %}
     </div>
-    <hr class="my-4">
-{% endfor %}
 {% endblock %}
