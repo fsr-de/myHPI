@@ -32,6 +32,7 @@ urlpatterns = [
         RedirectView.as_view(url=os.path.join(settings.STATIC_URL, "security.txt")),
     ),
     path("", include("myhpi.core.urls")),
+    path("", include("myhpi.feed.urls")),
 ]
 
 

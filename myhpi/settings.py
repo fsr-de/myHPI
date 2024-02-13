@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
+    "myhpi.feed",
     "static_precompiler",
     "django_prometheus",
 ]

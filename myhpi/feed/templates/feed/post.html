@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load core_extras %}
+{% load i18n %}
+
+{% block content %}
+    {% with page.body|markdown as parsed_md %}
+        {{ parsed_md.0 }}
+    {% endwith %}
+{% endblock %}
