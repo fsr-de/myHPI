@@ -18,7 +18,7 @@ jobs:
       - name: Checkout # Checkout the repository to allow for dynamic versioning
         uses: actions/checkout@v4
         with:
-          fetch-tags: true
+          fetch-depth: 0
 
       - name: Docker meta
         id: meta

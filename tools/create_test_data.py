@@ -217,6 +217,7 @@ def create_some_pages(users, groups, documents):
             participants=random.sample(
                 [users[0], users[1], users[2], users[3]], random.randint(3, 4)
             ),
+            location="FSR-Office" if i % 2 == 0 else "Online",
             guests="",
             body=generate_text(),
         )
