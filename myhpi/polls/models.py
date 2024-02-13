@@ -63,7 +63,7 @@ class BasePoll(BasePage):
         if request.method == "POST":
             if self.can_vote(request.user):
                 return self.cast_vote(request, *args, **kwargs)
-            messages.error(request, "You are not allowed to vote.")
+            messages.error(request, _("You are not allowed to vote."))
         return super().serve(request, *args, **kwargs)
 
 
@@ -92,11 +92,11 @@ class MajorityVotePoll(BasePoll):
     def cast_vote(self, request, *args, **kwargs):
         choices = request.POST.getlist("choice")
         if len(choices) == 0:
-            messages.error(request, "You must select at least one choice.")
+            messages.error(request, _("You must select at least one choice."))
         elif len(choices) > self.max_allowed_answers:
             messages.error(
                 request,
-                "You can only select up to {} options.".format(self.max_allowed_answers),
+                _("You can only select up to {} options.").format(self.max_allowed_answers),
             )
         else:
             confirmed_choices = 0
@@ -107,10 +107,10 @@ class MajorityVotePoll(BasePoll):
                     choice.save()
                     confirmed_choices += 1
                 else:
-                    messages.error(request, "Invalid choice.")
+                    messages.error(request, _("Invalid choice."))
             if confirmed_choices > 0:
                 self.already_voted.add(request.user)
-                messages.success(request, "Your vote has been counted.")
+                messages.success(request, _("Your vote has been counted."))
         return redirect(self.relative_url(self.get_site()))
 
     def get_context(self, request, *args, **kwargs):
@@ -181,9 +181,9 @@ class RankedChoicePoll(BasePoll):
                             )
                             entry.save()
                     self.already_voted.add(request.user)
-                    messages.success(request, "Your vote has been counted.")
+                    messages.success(request, _("Your vote has been counted."))
             except IntegrityError:
-                messages.error(request, "Invalid ballot.")
+                messages.error(request, _("Invalid ballot."))
         return redirect(self.relative_url(self.get_site()))
 
     def get_ballot_form(self, data=None):
@@ -277,7 +277,7 @@ class RankedChoiceBallot(models.Model):
         return result
 
     def __str__(self):
-        return "ballot"  # , ".join(map(lambda x: str(x), self.entries.all()))
+        return ", ".join(map(lambda x: str(x), self.entries.all()))
 
 
 class RankedChoiceBallotEntry(models.Model):
