@@ -48,7 +48,8 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
             description="Who should win the SLASH 1999?",
             start_date=datetime.now() - timedelta(days=1),
             end_date=datetime.now() + timedelta(days=1),
-            results_visible=False,
+            eligible_groups=[self.test_data["groups"][0]],
+            results_visible=True,
             is_public=True,
         )
 
@@ -63,6 +64,18 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
                 RankedChoiceBallotEntry.objects.create(
                     ballot=ballot, option=self.options[template_entry], rank=idx
                 )
+
+    def test_cast_ballot(self):
+        self.sign_in_as_student()
+        result = self.client.post(
+            self.poll.url, follow=True, data={"option_1": 1, "option_2": 2, "option_3": 3, "option_4": "unranked"}
+        )
+        print(result.rendered_content)
+        self.assertInHTML("Your vote has been counted.", result.rendered_content)
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 1), (1, "Bob", 1), (1, "Charlie", 1)],
+        )
 
     def test_can_two_first_places(self):
         self.cast_ballots([["alice", "bob"], ["bob", "alice"]])
