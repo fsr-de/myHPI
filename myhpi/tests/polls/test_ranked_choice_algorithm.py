@@ -68,7 +68,9 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
     def test_cast_ballot(self):
         self.sign_in_as_student()
         result = self.client.post(
-            self.poll.url, follow=True, data={"option_1": 1, "option_2": 2, "option_3": 3, "option_4": "unranked"}
+            self.poll.url,
+            follow=True,
+            data={"option_1": 1, "option_2": 2, "option_3": 3, "option_4": "unranked"},
         )
         print(result.rendered_content)
         self.assertIn("Your vote has been counted.", result.rendered_content)
