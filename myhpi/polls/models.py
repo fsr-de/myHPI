@@ -4,7 +4,7 @@ import math
 
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
-from django.db import IntegrityError, models, transaction
+from django.db import IntegrityError, models, transaction, DatabaseError
 from django.db.models import F, Sum
 from django.shortcuts import redirect
 from django.utils.safestring import mark_safe
@@ -170,6 +170,7 @@ class RankedChoicePoll(BasePoll):
             )
         else:
             try:
+                self.already_voted.select_for_update(nowait=True).get(user=request.user)
                 with transaction.atomic():
                     ballot = RankedChoiceBallot.objects.create(poll=self)
                     for option in self.options.all():
@@ -184,6 +185,8 @@ class RankedChoicePoll(BasePoll):
                     messages.success(request, _("Your vote has been counted."))
             except IntegrityError:
                 messages.error(request, _("Invalid ballot."))
+            except DatabaseError:
+                messages.error(request, _("A database error occured. Please try again."))
         return redirect(self.relative_url(self.get_site()))
 
     def get_ballot_form(self, data=None):
