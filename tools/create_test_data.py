@@ -339,8 +339,15 @@ def create_some_pages(users, groups, documents):
             visible_for=[groups[0]],
         )
     )
-    slash_1999_poll.options.add(RankedChoiceOption(name="Alice", description=generate_text(), poll=slash_1999_poll))
-    slash_1999_poll.options.add(RankedChoiceOption(name="Bob", description=generate_text(), poll=slash_1999_poll))
+    option_alice = RankedChoiceOption(name="Alice", description=generate_text(), poll=slash_1999_poll)
+    option_bob = RankedChoiceOption(name="Bob", description=generate_text(), poll=slash_1999_poll)
+    option_charlie = RankedChoiceOption(name="Charlie", description=generate_text(), poll=slash_1999_poll)
+    option_alice.save()
+    option_bob.save()
+    option_charlie.save()
+    slash_1999_poll.options.add(option_alice)
+    slash_1999_poll.options.add(option_bob)
+    slash_1999_poll.options.add(option_charlie)
 
 
 def main():
