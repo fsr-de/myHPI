@@ -99,4 +99,5 @@ class PollTests(MyHPIPageTestCase):
         response = self.client.post(
             self.poll.url, data={"choice": [self.choice_good.id]}, follow=True
         )
+        print(response.rendered_content)
         self.assertContains(response, "You've accessed this page outside of the voting period.")
