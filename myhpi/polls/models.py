@@ -197,8 +197,16 @@ class RankedChoicePoll(BasePoll):
     def __str__(self):
         return self.title
 
+    @staticmethod
+    def _heapify_ballot(ballot):
+        result = []
+        for entry in ballot.rankedchoiceballotentry_set.all():
+            result.append((entry.rank, entry))
+        heapq.heapify(result)
+        return result
+
     def calculate_ranking(self):
-        ballots = list(map(lambda x: x.as_sensible_datastructure(), list(self.ballots.all())))
+        ballots = list(map(lambda x: self._heapify_ballot(x), list(self.ballots.prefetch_related("rankedchoiceballotentry_set__option"))))
         options = self.options.all()
 
         total_votes = len(ballots)
@@ -271,13 +279,6 @@ class RankedChoiceOption(Orderable):
 class RankedChoiceBallot(models.Model):
     poll = models.ForeignKey(RankedChoicePoll, on_delete=models.CASCADE, related_name="ballots")
     entries = models.ManyToManyField(RankedChoiceOption, through="RankedChoiceBallotEntry")
-
-    def as_sensible_datastructure(self):
-        result = []
-        for entry in self.rankedchoiceballotentry_set.all():
-            result.append((entry.rank, entry))
-        heapq.heapify(result)
-        return result
 
     def __str__(self):
         return ", ".join(map(lambda x: str(x), self.entries.all()))
