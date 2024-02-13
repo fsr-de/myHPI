@@ -11,7 +11,7 @@
             <h1>{{  page.title }}</h1>
         </div>
         <div class="col-9 minutes-text">
-            {{ parsed_md.0 }}
+            {{ parsed_md.0|tag_external_links }}
         </div>
         <div class="col-3 minutes-meta">
             <aside class="side-panel border-accent">
