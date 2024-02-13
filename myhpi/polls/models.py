@@ -166,7 +166,7 @@ class RankedChoicePoll(BasePoll):
         form = self.get_ballot_form(request.POST)
         if not form.is_valid():
             messages.error(
-                request, mark_safe(_("Invalid ballot.\n{errors}").format(errors=form.errors))
+                request, mark_safe(_("Invalid ballot.\n{errors}").format(errors=", ".join([str(err) for err in form.errors.values()])))
             )
         else:
             try:
