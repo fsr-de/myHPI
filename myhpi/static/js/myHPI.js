@@ -109,8 +109,3 @@ window.onresize = () => {
     adaptNavbarToWindowSize()
     updateNavbarPosition()
 }
-
-/* https://stackoverflow.com/questions/12539006/tooltips-for-mobile-browsers */
-// To enable tooltips on mobile, add tabindex=0 to abbr elements.
-document.querySelectorAll("abbr")
-    .forEach(node => node.setAttribute("tabindex", "0"))
