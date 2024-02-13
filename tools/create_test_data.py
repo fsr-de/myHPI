@@ -3,7 +3,7 @@ from datetime import date
 
 import django
 
-from myhpi.polls.models import PollList, RankedChoicePoll, RankedChoiceOption
+from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myhpi.settings")
 django.setup()
@@ -339,9 +339,13 @@ def create_some_pages(users, groups, documents):
             visible_for=[groups[0]],
         )
     )
-    option_alice = RankedChoiceOption(name="Alice", description=generate_text(), poll=slash_1999_poll)
+    option_alice = RankedChoiceOption(
+        name="Alice", description=generate_text(), poll=slash_1999_poll
+    )
     option_bob = RankedChoiceOption(name="Bob", description=generate_text(), poll=slash_1999_poll)
-    option_charlie = RankedChoiceOption(name="Charlie", description=generate_text(), poll=slash_1999_poll)
+    option_charlie = RankedChoiceOption(
+        name="Charlie", description=generate_text(), poll=slash_1999_poll
+    )
     option_alice.save()
     option_bob.save()
     option_charlie.save()
