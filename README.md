@@ -14,7 +14,7 @@ For a quick start, use the [dev container](https://containers.dev/), e.g. by ins
 To set up a development version on your local machine, you need to execute the following steps:
 
 1. Check out repository and cd to it
-1. Set up a virtualenv for the project with Python >=3.8 and activate it (e.g., `python3 -m venv venv` and `source venv/bin/activate`)
+1. Set up a virtualenv for the project with Python >=3.11 and activate it (e.g., `python3 -m venv venv` and `source venv/bin/activate`)
 1. Install poetry (if not already installed): `curl -sSL https://install.python-poetry.org/ | python -`
 1. Install dependencies with `poetry install`
 1. Install bootstrap with `python tools/install_bootstrap.py`
@@ -42,7 +42,7 @@ If you want to do that manually, run `pre-commit run --all-files`. Next to that,
 
 ## Tips
 
-- To create translations, run `django-admin makemessages -l de` in the myhpi directory.
+- To create translations, run `python manage.py makemessages -l de -i venv`.
 
 ### Reset database
 
