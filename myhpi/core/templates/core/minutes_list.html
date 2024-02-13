@@ -11,8 +11,8 @@
             <tr>
                 <td><a href="{{ minute.get_valid_url }}">{{ minute.date|date:"d.m.Y" }}</a></td>
                 <td>
-                    {% if not minute.live %}
-                        <span title={% translate "Draft" %} aria-hidden="true">⚠️</span>
+                    {% if minute.has_unpublished_changes %}
+                        <span title='{% translate "Page has unpublished changes!" %}' aria-hidden="true">⚠️</span>
                     {% endif %}
                 </td>
                 <td>

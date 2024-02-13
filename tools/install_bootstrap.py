@@ -87,6 +87,14 @@ def remove_current_bootstrap():
         os.remove(bootstrap_min_js_map_path)
 
 
+def is_bootstrap_installed():
+    return (
+        os.path.exists(os.path.join("myhpi", "static", "scss", "bootstrap"))
+        and os.path.exists(os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js"))
+        and os.path.exists(os.path.join("myhpi", "static", "js", "bootstrap.bundle.min.js.map"))
+    )
+
+
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         usage="%(prog)s [-u]", description="Install bootstrap for myHPI."
@@ -99,6 +107,9 @@ def init_argparse() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "-r", "--remove", action="store_true", help="Remove current bootstrap installation."
+    )
+    parser.add_argument(
+        "--is-installed", action="store_true", help="Check if bootstrap is installed."
     )
     return parser
 
@@ -115,6 +126,9 @@ def install_bootstrap():
         Ensure that it is run in the top directory of the repository."
         )
         exit(1)
+    if args.is_installed:
+        is_installed = is_bootstrap_installed()
+        exit(0 if is_installed else 1)
     if args.update or args.remove:
         remove_current_bootstrap()
         if args.remove:
