@@ -3,13 +3,15 @@ from ipaddress import ip_address, ip_network
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
+
 def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
     if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
+        ip = x_forwarded_for.split(",")[0]
     else:
-        ip = request.META.get('REMOTE_ADDR')
+        ip = request.META.get("REMOTE_ADDR")
     return ip
+
 
 class IPRangeUserMiddleware:
     def __init__(self, get_response):
