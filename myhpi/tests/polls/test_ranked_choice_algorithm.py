@@ -50,6 +50,7 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
             end_date=datetime.now() + timedelta(days=1),
             eligible_groups=[self.test_data["groups"][0]],
             results_visible=True,
+            visible_for=[self.test_data["groups"][0]],
             is_public=True,
         )
 
@@ -72,7 +73,6 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
             follow=True,
             data={"option_1": 1, "option_2": 2, "option_3": 3, "option_4": "unranked"},
         )
-        print(result.rendered_content)
         self.assertIn("Your vote has been counted.", result.rendered_content)
         self.assertEqual(
             self.poll.calculate_ranking(),
