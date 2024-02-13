@@ -228,6 +228,19 @@ img {
     flex-direction: column-reverse;
 }
 
+.minutes-navigation-button {
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      color: white;
+    }
+}
+
+.minutes-navigation-icon {
+    margin: 0 5px;
+}
+
 @import "./navbar.scss";
 @import "./footer.scss";
 
