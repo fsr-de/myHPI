@@ -46,6 +46,12 @@
                     <i>{% translate "No guests" %}</i>
                 {% endif %}
             </aside>
+            {% if page.location %}
+            <aside class="side-panel border-accent">
+              <h1 class="side-panel-title">{% translate "Location" %}</h1>
+              <p>{{ page.location }}</p>
+            </aside>
+            {% endif %}
             <aside class="side-panel border-accent">
                 <h1 class="side-panel-title">{% translate "Labels" %}</h1>
                 {%  if page.labels.all %}
