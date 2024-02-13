@@ -1,6 +1,9 @@
+import json
+from contextlib import contextmanager
 from datetime import datetime, timedelta
 
-from django.test.utils import tag
+from django.db import connections
+from django.test.utils import CaptureQueriesContext, tag
 
 from myhpi.polls.models import (
     PollList,
@@ -96,16 +99,25 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
     def test_fast(self):
         self.cast_ballots(([["alice", "bob"]] * 1000) + ([["bob", "alice", "charlie"]] * 900))
 
-        start = datetime.now()
-        result = (self.poll.calculate_ranking(),)
-        end = datetime.now()
-        self.assertLessEqual(end - start, timedelta(milliseconds=100))
-        self.assertEqual(
-            result,
-            [(1, "Alice", 1900), (2, "Bob", 900), (3, "Charlie", 0), (3, "Dora", 0)],
-        )
+        with self.withAssertNumQueriesLessThan(10):
+            result = self.poll.calculate_ranking()
+            self.assertEqual(
+                result,
+                [(1, "Alice", 1900), (2, "Bob", 900), (3, "Charlie", 0), (3, "Dora", 0)],
+            )
 
     @tag("skip_setup")
     def test_no_options(self):
         self.setup_poll()
         self.assertEqual(self.poll.calculate_ranking(), [])
+
+    # from https://stackoverflow.com/questions/1254170/django-is-there-a-way-to-count-sql-queries-from-an-unit-test/59089020#59089020
+    @contextmanager
+    def withAssertNumQueriesLessThan(self, value, using="default", verbose=False):
+        with CaptureQueriesContext(connections[using]) as context:
+            yield
+        if verbose:
+            msg = "\r\n%s" % json.dumps(context.captured_queries, indent=4)
+        else:
+            msg = None
+        self.assertLess(len(context.captured_queries), value, msg=msg)
