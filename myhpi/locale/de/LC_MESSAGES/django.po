@@ -518,6 +518,9 @@ msgstr "{email} hat erfolgreich {list} verlassen."
 msgid "The subscription of {email} onto {list} was rolled back."
 msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
 
+#~ msgid "Draft"
+#~ msgstr "Entwurf"
+
 #, fuzzy
 #~| msgid "[missing link]"
 #~ msgid "[missing image]"
