@@ -21,6 +21,5 @@ urlpatterns = [
         views.TencaListDeleteView.as_view(),
         name="tenca_delete_list",
     ),
-    path("templates/<str:name>/", views.tenca_template_server, name="tenca_template_server"),
     path("<str:hash_id>/", views.TencaSubscriptionView.as_view(), name="tenca_manage_subscription"),
 ]
