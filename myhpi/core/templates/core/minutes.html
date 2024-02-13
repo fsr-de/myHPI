@@ -41,58 +41,43 @@
         {% if page.labels.all %}
         <p>
             {% include "core/label.html" with minutes=page %}
-            {% else %}
-            <<<<<<< HEAD <i>No labels</i>
-                {% endif %}
         </p>
-        </aside>
-
-        <aside class="side-panel border-accent toc-container d-print-none">
-            <h1 id="toc" class="toc-title">Table of Contents</h1>
-            {{ parsed_md.1 }}
-        </aside>
-
+        {% else %}
+        <i>{% translate "No labels"%}</i>
+        {% endif %}
+        <h4 class="d-print-none">{% translate "Table of contents" %}</h4>
+        {{ parsed_md.1 }}
         {% if page.attachments.all %}
-        <aside class="side-panel border-accent toc-container d-print-none">
-            <h1 class="toc-title">Attachments</h1>
-            =======
-            <i>{% translate "No labels"%}</i>
-            {% endif %}
-            <h4 class="d-print-none">{% translate "Table of contents" %}</h4>
-            {{ parsed_md.1 }}
-            {% if page.attachments.all %}
-            <h4 class="d-print-none">{% translate "Attachments" %}</h4>
-            >>>>>>> Translate templates (#288)
-            <ul>
-                {% for attachment in page.attachments.all %}
-                <li>
-                    <a href="{{ attachment.url }}">{{ attachment.title }}</a>
-                </li>
-                {% endfor %}
-            </ul>
+        <h4 class="d-print-none">{% translate "Attachments" %}</h4>
+        <ul>
+            {% for attachment in page.attachments.all %}
+            <li>
+                <a href="{{ attachment.url }}">{{ attachment.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
         </aside>
         {% endif %}
     </div>
-    <<<<<<< HEAD=======<div id="minutes-footer" class="d-none d-print-block">
-</div>
-<div id="minutes-navigation" class="row d-print-none">
-    <div class="col-6">
-        {% prev_minutes page as prev %}
-        {% if prev %}
-        <a href="{{ prev.url }}">
-            < {% translate "Previous minutes" %}</a>
-                {% endif %}
+    <div id="minutes-footer" class="d-none d-print-block">
     </div>
-    <div class="col-6">
-        {% next_minutes page as next %}
-        {% if next %}
-        <a href="{{ next.url }}"> {% translate "Next minutes" %} ></a>
-        {% endif %}
+    <div id="minutes-navigation" class="row d-print-none">
+        <div class="col-6">
+            {% prev_minutes page as prev %}
+            {% if prev %}
+            <a href="{{ prev.url }}">
+                < {% translate "Previous minutes" %}</a>
+                    {% endif %}
+        </div>
+        <div class="col-6">
+            {% next_minutes page as next %}
+            {% if next %}
+            <a href="{{ next.url }}"> {% translate "Next minutes" %} ></a>
+            {% endif %}
+        </div>
+        {% endwith %}
     </div>
     {% endwith %}
-    >>>>>>> Translate templates (#288)
-</div>
-{% endwith %}
 </div>
 {% block extra_js %}
 <script type="text/javascript" src="{% static 'js/print_processor.js' %}"></script>

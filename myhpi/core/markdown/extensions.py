@@ -144,15 +144,28 @@ class HeadingLevelPreprocessor(MinutesBasePreprocessor):
         return f"{match.group(0)}#"
 
 
-class InternalLinkPattern(LinkInlineProcessor):
+class BootstrapStyleLinkProcessor(LinkInlineProcessor):
     def handleMatch(self, m, data=None):
-        el = markdown.util.etree.Element("a")
+        print(BootstrapStyleLinkProcessor.__mro__)
+        el, start, end = super().handleMatch(m, data)
+        print(el)
+        print(start)
+        print("END")
+        if (el is None):
+            return el, start, end
+        el.set("class", "link-primary")
+        return el, start, end
+
+
+class InternalLinkPattern(BootstrapStyleLinkProcessor):
+    def handleMatch(self, m, data=None):
+        el, start, end = super().handleMatch(m, data)
         try:
             el.set("href", self.url(m.group("id")))
             el.text = markdown.util.AtomicString(m.group("title"))
         except ObjectDoesNotExist:
             el.text = markdown.util.AtomicString(_("[missing link]"))
-        return el, m.start(0), m.end(0)
+        return el, start, end
 
     def url(self, id):
         return Page.objects.get(id=id).localized.get_url()
@@ -167,8 +180,13 @@ class MinuteExtension(Extension):
         md.preprocessors.register(QuorumPrepocessor(md), "quorumify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
+        # md.inlinePatterns.register(
+        #     InternalLinkPattern(r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)", md),
+        #     "InternalLinkPattern",
+        #     200,
+        # )
         md.inlinePatterns.register(
-            InternalLinkPattern(r"\[(?P<title>[^\[]+)\]\(page:(?P<id>\d+)\)", md),
-            "InternalLinkPattern",
+            BootstrapStyleLinkProcessor(r"\[(?P<text>.*)\]\((?P<link>.*)\)", md),
+            "BootstrapStyleLinkProcessor",
             200,
         )

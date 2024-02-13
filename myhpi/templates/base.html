@@ -26,7 +26,7 @@
     <link rel="icon" type="svg" href="{% static 'img/favicon/favicon.svg' %}" />
 
     {# Global stylesheets #}
-    <link type="text/css" href="{% static " scss/myHPI.scss"|compile %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'scss/myHPI.scss'|compile %}" rel="stylesheet">
 
     {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
@@ -41,13 +41,14 @@
             <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
                 <div id="navbar-left" class="d-flex align-items-center">
                     <a class="nav-brand" href="{% pageurl root_page %}">
-                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="h-100" alt={% translate "To home page" %}>
+                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="w-100" alt="{% translate 'To home page' %}"">
                     </a>
                 </div>
-                <div id="nav-level-0" class="nav-level"></div>
+                <div id=" nav-level-0" class="nav-level">
+                </div>
                 <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
                     <a id="nav-search-button" class="nav-link" onclick="showSearchModal(event)" data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" data-bs-title={% translate "Ctrl+K" %} role="button">
+                        data-bs-placement="bottom" data-bs-title="{% translate 'Ctrl+K' %}" role="button">
                         {% bs_icon 'search' size='1.4em' %}
                     </a>
                     <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
@@ -143,9 +144,9 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <form id="searchForm" class="d-flex align-items-center" action="{% url 'search' %}">
-                        <input id="searchInput" type="search" class="form-control me-3 " placeholder={%
-                            translate "Search..." %} aria-label="Suche" name="query">
-                        <button type="submit" class="btn btn-primary" aria-label={% translate "Start search" %}
+                        <input id="searchInput" type="search" class="form-control me-3 " placeholder="{%
+                            translate 'Search..' %}" aria-label="Suche" name="query">
+                        <button type="submit" class="btn btn-primary" aria-label="{% translate 'Start search' %}"
                             data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Enter">{% bs_icon
                             'search' size='1.4em' extra_classes="text-light" %}</button>
                     </form>

@@ -2,23 +2,30 @@
 @import "./bootstrap/functions";
 
 // 2. Include any default variable overrides here
-$primary: #F5631E;
-$secondary: #F5631E;
-$body-bg: #F5F5F5;
-
-// 3. Include remainder of required Bootstrap stylesheets
 @import "./bootstrap/variables";
-@import "./bootstrap/mixins";
+@import "./bootstrap/variables-dark";
+
+$primary-override: #F5631E;
+$secondary-override: #F5631E;
+$body-bg-override: #F5F5F5;
 
 $custom-colors: (
-    "gray-700": $gray-700,
-    "text-muted": $text-muted,
+    // "gray-700": $gray-700,
+    // "text-muted": $text-muted,
     "border": #EEE,
     "border-dark": #B2B2B2,
     "body-bg-light": #FBFBFB,
-    "body-bg-overlay": #EEE
+    "body-bg-overlay": #EEE,
+    "primary": $primary-override,
+    "secondary": $secondary-override,
+    "body-bg": $body-bg-override,
 );
-$colors: map-merge($colors, $custom-colors);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "./bootstrap/maps";
+@import "./bootstrap/mixins";
 
 @import "./bootstrap/root";
 
