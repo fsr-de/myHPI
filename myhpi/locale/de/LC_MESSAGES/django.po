@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-27 22:56+0100\n"
+"POT-Creation-Date: 2024-02-13 12:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,75 +70,82 @@ msgstr "[link fehlt]"
 msgid "Last edited"
 msgstr "Zuletzt bearbeitet"
 
-#: myhpi/core/templates/core/information_page.html:23
+#: myhpi/core/templates/core/information_page.html:22
+msgid "A long time ago"
+msgstr "Vor langer Zeit"
+
+#: myhpi/core/templates/core/information_page.html:26
 #, python-format
 msgid "%(date)s at %(time)s"
 msgstr "%(date)s um %(time)s Uhr"
 
-#: myhpi/core/templates/core/information_page.html:28
+#: myhpi/core/templates/core/information_page.html:32
 msgid "by"
 msgstr "von"
 
-#: myhpi/core/templates/core/information_page.html:33
-#: myhpi/core/templates/core/minutes.html:49
-#: myhpi/polls/templates/polls/poll.html:29
-msgid "Table of contents"
-msgstr "Inhaltsverzeichnis"
-
-#: myhpi/core/templates/core/information_page.html:38
-#: myhpi/core/templates/core/minutes.html:52
-msgid "Attachments"
-msgstr "Anhänge"
-
-#: myhpi/core/templates/core/minutes.html:17
+#: myhpi/core/templates/core/minutes.html:18
 msgid "Date"
 msgstr "Datum"
 
-#: myhpi/core/templates/core/minutes.html:19
+#: myhpi/core/templates/core/minutes.html:22
 msgid "Moderator"
 msgstr "Sitzungsleitung"
 
-#: myhpi/core/templates/core/minutes.html:21
+#: myhpi/core/templates/core/minutes.html:26
 msgid "Minutes taker"
 msgstr "Protokollführung"
 
-#: myhpi/core/templates/core/minutes.html:23
+#: myhpi/core/templates/core/minutes.html:30
 msgid "Participants"
 msgstr "Teilnehmende"
 
-#: myhpi/core/templates/core/minutes.html:29
+#: myhpi/core/templates/core/minutes.html:38
 msgid "Guests"
 msgstr "Gäste"
 
-#: myhpi/core/templates/core/minutes.html:37
+#: myhpi/core/templates/core/minutes.html:46
 msgid "No guests"
 msgstr "Keine Gäste"
 
-#: myhpi/core/templates/core/minutes.html:39
+#: myhpi/core/templates/core/minutes.html:51
 #, fuzzy
 #| msgid "List options"
 msgid "Location"
 msgstr "Ort"
 
-#: myhpi/core/templates/core/minutes.html:41
+#: myhpi/core/templates/core/minutes.html:56
 msgid "Labels"
 msgstr "Labels"
 
-#: myhpi/core/templates/core/minutes.html:47
+#: myhpi/core/templates/core/minutes.html:60
 msgid "No labels"
 msgstr "Keine Labels"
 
-#: myhpi/core/templates/core/minutes.html:67
+#: myhpi/core/templates/core/minutes.html:70
 msgid "Previous minutes"
 msgstr "Vorheriges Protokoll"
 
-#: myhpi/core/templates/core/minutes.html:73
+#: myhpi/core/templates/core/minutes.html:76
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
 #: myhpi/core/templates/core/minutes_list.html:15
-msgid "Draft"
-msgstr "Entwurf"
+#: myhpi/core/templates/core/sidebar.html:7
+msgid "Page has unpublished changes!"
+msgstr "Seite hat unveröffentlichte Änderungen!"
+
+#: myhpi/core/templates/core/sidebar.html:11
+msgid "Visibility"
+msgstr "Sichtbarkeit"
+
+#: myhpi/core/templates/core/sidebar.html:16
+#: myhpi/polls/templates/polls/poll.html:29
+msgid "Table of contents"
+msgstr "Inhaltsverzeichnis"
+
+#: myhpi/core/templates/core/sidebar.html:21
+msgid "Attachments"
+msgstr "Anhänge"
 
 #: myhpi/polls/templates/polls/poll.html:17
 msgid "You have already voted and the results are not yet visible."
