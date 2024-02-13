@@ -7,7 +7,7 @@ This tool is used to manage the student representative website at https://myhpi.
 
 ## Development setup
 
-For a quick start, use the [dev container](https://containers.dev/), e.g. by installing the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in Visual Studio Code or using the [built-in feature in JetBrains IDEs](jetbrains.com/help/idea/connect-to-devcontainer.html). This automatically installs all dependencies in a container. After starting the container, setup your local data by following the Manual Setup from step 9 (creating a superuser).
+For a quick start, use the [dev container](https://containers.dev/), e.g. by installing the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in Visual Studio Code or using the [built-in feature in JetBrains IDEs](https://jetbrains.com/help/idea/connect-to-devcontainer.html). This automatically installs all dependencies in a container. After starting the container, setup your local data by following the Manual Setup from step 9 (creating a superuser).
 
 ### Manual setup
 
