@@ -86,7 +86,7 @@ window.wagtailMarkdown.options = {
 
 // convenience function
 function getCurrentTime(){
-    return new Date().toLocaleTimeString([], {timeStyle: 'short'})
+    return new Date().toLocaleTimeString("de-DE", {timeStyle: 'short'})
 }
 
 // Custom button actions
