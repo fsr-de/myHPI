@@ -171,6 +171,12 @@ h1.side-panel-title::after {
     padding: 0;
 }
 
+.toc-container ul li a {
+    display: block;
+    line-height: 100%;
+    padding-bottom: 0.3rem;
+}
+
 .toc-container ul li>ul {
     margin-left: 0.5rem;
 }
