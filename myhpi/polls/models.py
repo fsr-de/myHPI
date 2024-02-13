@@ -4,7 +4,7 @@ import math
 
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
-from django.db import IntegrityError, models, transaction, DatabaseError
+from django.db import DatabaseError, IntegrityError, models, transaction
 from django.db.models import F, Sum
 from django.shortcuts import redirect
 from django.utils.safestring import mark_safe
@@ -166,7 +166,12 @@ class RankedChoicePoll(BasePoll):
         form = self.get_ballot_form(request.POST)
         if not form.is_valid():
             messages.error(
-                request, mark_safe(_("Invalid ballot.\n{errors}").format(errors=", ".join([str(err) for err in form.errors.values()])))
+                request,
+                mark_safe(
+                    _("Invalid ballot.\n{errors}").format(
+                        errors=", ".join([str(err) for err in form.errors.values()])
+                    )
+                ),
             )
         else:
             try:
@@ -206,7 +211,12 @@ class RankedChoicePoll(BasePoll):
         return result
 
     def calculate_ranking(self):
-        ballots = list(map(lambda x: self._heapify_ballot(x), list(self.ballots.prefetch_related("rankedchoiceballotentry_set__option"))))
+        ballots = list(
+            map(
+                lambda x: self._heapify_ballot(x),
+                list(self.ballots.prefetch_related("rankedchoiceballotentry_set__option")),
+            )
+        )
         options = self.options.all()
 
         total_votes = len(ballots)
