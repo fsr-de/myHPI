@@ -175,19 +175,22 @@ class RankedChoicePoll(BasePoll):
             )
         else:
             try:
-                self.already_voted.select_for_update(nowait=True).get(user=request.user)
+                RankedChoicePoll.objects.select_for_update().get(pk=self.pk)
                 with transaction.atomic():
-                    ballot = RankedChoiceBallot.objects.create(poll=self)
-                    for option in self.options.all():
-                        if f"option_{option.pk}" in form.cleaned_data:
-                            entry = RankedChoiceBallotEntry.objects.create(
-                                ballot=ballot,
-                                option=option,
-                                rank=form.cleaned_data[f"option_{option.pk}"],
-                            )
-                            entry.save()
-                    self.already_voted.add(request.user)
-                    messages.success(request, _("Your vote has been counted."))
+                    if self.already_voted.filter(pk=request.user.pk).exists():
+                        messages.error(request, _("You have already voted."))
+                    else:
+                        ballot = RankedChoiceBallot.objects.create(poll=self)
+                        for option in self.options.all():
+                            if f"option_{option.pk}" in form.cleaned_data:
+                                entry = RankedChoiceBallotEntry.objects.create(
+                                    ballot=ballot,
+                                    option=option,
+                                    rank=form.cleaned_data[f"option_{option.pk}"],
+                                )
+                                entry.save()
+                        self.already_voted.add(request.user)
+                        messages.success(request, _("Your vote has been counted."))
             except IntegrityError:
                 messages.error(request, _("Invalid ballot."))
             except DatabaseError:
