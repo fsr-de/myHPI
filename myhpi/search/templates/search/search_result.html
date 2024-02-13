@@ -3,7 +3,12 @@
 
 <a href="{% pageurl result %}">
     <div class="search-result">
-        <h5>{{ result.title }}</h5>
+        <hgroup>
+            <h5>{{ result.title }}</h5>
+            <time datetime="{{ result.first_published_at|date:"c" }}">
+                {{ result.first_published_at|date:"SHORT_DATE_FORMAT" }}
+            </time>
+        </hgroup>
         <span class="text-dark">
             {% if result.search_description %}
                 {{ result.search_description }}
