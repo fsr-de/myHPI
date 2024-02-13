@@ -273,6 +273,7 @@ class Footer(models.Model):
 class FirstLevelMenuItem(BasePage):
     parent_page_types = ["RootPage"]
     subpage_types = ["SecondLevelMenuItem", "InformationPage", "MinutesList"]
+    preview_modes = []
     show_in_menus_default = True
 
     def serve(self, request, *args, **kwargs):
@@ -303,6 +304,7 @@ class RedirectMenuItem(BasePage):
         "RootPage",
     ]
     subpage_types = []
+    preview_modes = []
     show_in_menus_default = True
 
     redirect_url = models.CharField(
