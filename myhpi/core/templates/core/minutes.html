@@ -8,69 +8,75 @@
     <div class="row minutes-container">
         {% with page.body|markdown as parsed_md %}
         <div class="d-none d-print-block minutes-title">
-        <h1>{{  page.title }}</h1>
+            <h1>{{  page.title }}</h1>
         </div>
         <div class="col-9 minutes-text">
             {{ parsed_md.0 }}
         </div>
         <div class="col-3 minutes-meta">
-            <h4>{% translate "Date" %}</h4>
-            <p>{{ page.date }}</p>
-            <h4>{% translate "Moderator" %}</h4>
-            <p>{{ page.moderator.get_full_name }}</p>
-            <h4>{% translate "Minutes taker" %}</h4>
-            <p>{{ page.author.get_full_name }}</p>
-            <h4>{% translate "Participants" %}</h4>
-            <ul>
-                {% for participant in page.participants.all %}
-                    <li>{{ participant.get_full_name }}</li>
-                {% endfor %}
-            </ul>
-            <h4>{% translate "Guests" %}</h4>
-            {% if page.guests %}
+            <aside class="side-panel border-accent">
+                <h1 class="side-panel-title">{% translate "Date" %}</h1>
+                <p>{{ page.date }}</p>
+            </aside>
+            <aside class="side-panel border-accent">
+                <h1 class="side-panel-title">{% translate "Moderator" %}</h1>
+                <p>{{ page.moderator.get_full_name }}</p>
+            </aside>
+            <aside class="side-panel border-accent">
+                <h1 class="side-panel-title">{% translate "Minutes taker" %}</h1>
+                <p>{{ page.author.get_full_name }}</p>
+            </aside>
+            <aside class="side-panel border-accent">
+                <h1 class="side-panel-title">{% translate "Participants" %}</h1>
                 <ul>
-                {% for guest in page.guests %}
-                    <li>{{ guest }}</li>
-                {% endfor %}
+                    {% for participant in page.participants.all %}
+                        <li>{{ participant.get_full_name }}</li>
+                    {% endfor %}
                 </ul>
-            {% else %}
-                <i>{% translate "No guests" %}</i>
+            </aside>
+            <aside class="side-panel border-accent">
+                <h1 class="side-panel-title">{% translate "Guests" %}</h1>
+                {% if page.guests %}
+                    <ul>
+                    {% for guest in page.guests %}
+                        <li>{{ guest }}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <i>{% translate "No guests" %}</i>
+                {% endif %}
+            </aside>
+            {% if page.location %}
+            <aside class="side-panel border-accent">
+              <h1 class="side-panel-title">{% translate "Location" %}</h1>
+              <p>{{ page.location }}</p>
+            </aside>
             {% endif %}
-            <h4>{% translate "Labels" %}</h4>
+            <aside class="side-panel border-accent">
+                <h1 class="side-panel-title">{% translate "Labels" %}</h1>
                 {%  if page.labels.all %}
-                    <p>
-                    {% include "core/label.html" with minutes=page %}
-                    </p>
-                    {% else %}
+                    <p>{% include "core/label.html" with minutes=page %}</p>
+                {% else %}
                     <i>{% translate "No labels"%}</i>
                 {% endif %}
-            <h4 class="d-print-none">{% translate "Table of contents" %}</h4>
-            {{ parsed_md.1 }}
-            {% if page.attachments.all %}
-                <h4 class="d-print-none">{% translate "Attachments" %}</h4>
-                <ul>
-                {% for attachment in page.attachments.all %}
-                    <li>
-                        <a href="{{ attachment.url }}">{{ attachment.title }}</a>
-                    </li>
-                {% endfor %}
-                </ul>
-            {% endif %}
+            </aside>
+            {% include "core/sidebar.html" %}
         </div>
         <div id="minutes-footer" class="d-none d-print-block"></div>
-            <div id="minutes-navigation" class="row d-print-none">
-                <div class="col-6">
-                    {%  prev_minutes page as prev %}
-                    {% if prev %}
-                        <a href="{{ prev.url }}">< {% translate "Previous minutes" %}</a>
-                    {%  endif %}
-                </div>
-                <div class="col-6">
-                    {%  next_minutes page as next %}
-                    {% if next %}
-                        <a href="{{ next.url }}"> {% translate "Next minutes" %} ></a>
-                    {%  endif %}
-                </div>
+        <div id="minutes-navigation" class="row d-print-none">
+            <div class="col-6">
+                {%  prev_minutes page as prev %}
+                {% if prev %}
+                    <a href="{{ prev.url }}">< {% translate "Previous minutes" %}</a>
+                {%  endif %}
+            </div>
+            <div class="col-6">
+                {%  next_minutes page as next %}
+                {% if next %}
+                    <a href="{{ next.url }}"> {% translate "Next minutes" %} ></a>
+                {%  endif %}
+            </div>
+        </div>
         {% endwith %}
     </div>
 {% endblock %}
