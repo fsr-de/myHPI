@@ -24,6 +24,7 @@ class PollTests(MyHPIPageTestCase):
             start_date=datetime.now() - timedelta(days=1),
             end_date=datetime.now() + timedelta(days=1),
             eligible_groups=[self.test_data["groups"][0]],
+            visible_for=[self.test_data["groups"][0]],
             max_allowed_answers=1,
             results_visible=False,
             is_public=True,
