@@ -1,9 +1,8 @@
 import os
+import datetime
 from datetime import date
 
 import django
-
-from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myhpi.settings")
 django.setup()
@@ -15,6 +14,9 @@ from django.db import IntegrityError
 from wagtail.contrib.redirects.models import Redirect
 from wagtail.documents.models import Document
 from wagtail.models import Collection, GroupCollectionPermission
+
+from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
+from myhpi.feed.models import Feed, Post, PostAccount
 
 from myhpi.core.models import (
     AbbreviationExplanation,
@@ -339,6 +341,9 @@ def create_some_pages(users, groups, documents):
             visible_for=[groups[0]],
         )
     )
+
+    # Create poll
+
     option_alice = RankedChoiceOption(
         name="Alice", description=generate_text(), poll=slash_1999_poll
     )
@@ -352,6 +357,39 @@ def create_some_pages(users, groups, documents):
     slash_1999_poll.options.add(option_alice)
     slash_1999_poll.options.add(option_bob)
     slash_1999_poll.options.add(option_charlie)
+
+    # Create feed and posts
+
+    feed = root_page.add_child(
+        instance=Feed(
+            title="Feed",
+            slug="feed",
+            show_in_menus=True,
+            is_public=False,
+            visible_for=[groups[0]],
+        )
+    )
+
+    the_potsdam_post = PostAccount.objects.create(
+        post_key="SECRET_TEST_KEY",
+        name="the Potsdam Post",
+    )
+
+    for i in range(10):
+        feed.add_child(
+            instance=Post(
+                title=f"Post {i}",
+                slug=f"post-{i}",
+                show_in_menus=False,
+                is_public=False,
+                post_account = the_potsdam_post,
+                body=generate_text(),
+                visible_for=[groups[0]],
+                first_published_at=datetime.datetime.now(datetime.UTC)
+                - datetime.timedelta(10)
+                + datetime.timedelta(days=i),
+            )
+        )
 
 
 def main():
