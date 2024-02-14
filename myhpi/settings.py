@@ -380,4 +380,4 @@ except importlib_metadata.PackageNotFoundError:
 
 # Feed settings
 REDIRECT_TO_FEED = env.bool("REDIRECT_TO_FEED", False)
-FEED_TRUNCATE_LIMIT = 400
+FEED_TRUNCATE_LIMIT = env.int("FEED_TRUNCATE_LIMIT", 400)
