@@ -273,6 +273,12 @@ WAGTAILMARKDOWN = {
     "allowed_tags": ["abbr"],
     "allowed_attributes": {"abbr": ["title"]},
     "extensions": ["toc", "abbr"],
+    "extension_configs": {
+        "toc": {
+            "permalink": "#",
+            "permalink_class": "toc-permalink ms-2",
+        }
+    }
 }
 
 ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS", False)
