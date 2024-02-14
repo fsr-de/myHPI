@@ -1,0 +1,18 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  write-post:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+            python -m pip install --upgrade pip
+            pip install requests
+      - run: python tools/publish_release.py
+        env:
+          API_KEY: ${{ secrets.MYHPI_POST_TOKEN }}
+          RELEASE_TITLE: ${{ github.event.release.name }}
+          RELEASE_BODY: ${{ github.event.release.body }}
