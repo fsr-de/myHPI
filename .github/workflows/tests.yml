@@ -53,7 +53,7 @@ jobs:
           - database: postgres
             database_url: "psql://user:pass@127.0.0.1:5432/myHPI"
     env:
-      DJANGO_SETTINGS_MODULE: myhpi.settings
+      DJANGO_SETTINGS_MODULE: myhpi.tests.settings
 
     steps:
     - uses: actions/checkout@v2

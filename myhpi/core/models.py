@@ -17,6 +17,7 @@ from wagtail.documents.models import Document
 from wagtail.models import Page, Site
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
+from wagtail_localize.fields import SynchronizedField
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
@@ -28,6 +29,9 @@ class BasePage(Page):
     is_public = BooleanField()
     is_creatable = False
 
+    override_translatable_fields = [
+        SynchronizedField("visible_for"),
+    ]
     settings_panels = [
         PublishingPanel(),
         FieldPanel("is_public", widget=forms.CheckboxInput),
@@ -60,6 +64,9 @@ class InformationPage(BasePage):
     author_visible = BooleanField()
     attachments = ParentalManyToManyField(Document, blank=True)
 
+    override_translatable_fields = [
+        SynchronizedField("attachments"),
+    ]
     content_panels = Page.content_panels + [
         FieldPanel("body", classname="full"),
         FieldPanel("attachments", widget=AttachmentSelectWidget),
@@ -145,9 +152,9 @@ class MinutesForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.minutes_list = kwargs["parent_page"]
-
         if not kwargs["instance"].title:  # Check if page has been created
+            self.minutes_list = kwargs["parent_page"]
+
             self.initial["date"] = date.today()
             self.initial["slug"] = date.today().isoformat()
 
@@ -211,6 +218,10 @@ class Minutes(BasePage):
     guests = models.JSONField(blank=True, default=[])
     attachments = ParentalManyToManyField(Document, blank=True)
 
+    override_translatable_fields = [
+        SynchronizedField("participants"),
+        SynchronizedField("attachments"),
+    ]
     content_panels = Page.content_panels + [
         FieldPanel("date"),
         FieldPanel("moderator", widget=UserSelectWidget({"data-width": "100%"})),

@@ -256,9 +256,7 @@ WAGTAILDOCS_SERVE_METHOD = "serve_view"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = SITE_URL
 
-ANONYMOUS_IP_RANGE_GROUPS = {
-    env.str("ANONYMOUS_IP_RANGE"): env.str("ANONYMOUS_IP_RANGE_GROUP_NAME")
-}
+ANONYMOUS_IP_RANGE_GROUPS = env.dict("ANONYMOUS_IP_RANGE_GROUPS")
 
 # django.contrib.messages
 MESSAGE_TAGS = {
