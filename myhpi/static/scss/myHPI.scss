@@ -227,7 +227,7 @@ h1.side-panel-title::after {
     margin-top: -0.25rem;
 }
 
-.rendered-image {
+img {
     max-width: 100%;
 }
 
@@ -235,6 +235,19 @@ h1.side-panel-title::after {
     display: flex;
     align-items: flex-end;
     flex-direction: column-reverse;
+}
+
+.minutes-navigation-button {
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      color: white;
+    }
+}
+
+.minutes-navigation-icon {
+    margin: 0 5px;
 }
 
 @import "./navbar.scss";
@@ -294,5 +307,23 @@ h1.side-panel-title::after {
     #minutes-footer {
         margin-top: 50px;
         order: 3;
+    }
+}
+
+@media (pointer: coarse), (hover: none) {
+    [title] {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+    }
+    [title]:focus::after {
+      content: attr(title);
+      position: absolute;
+      top: 90%;
+      color: #000;
+      background-color: #fff;
+      border: 1px solid;
+      width: fit-content;
+      padding: 3px;
     }
 }

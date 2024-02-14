@@ -38,13 +38,26 @@ def insert_footer(page):
 @register.filter(name="tag_external_links")
 def tag_external_links(content):
     """Takes the content of a website and inserts external link icons after every external link."""
-    external_links = re.finditer('<a[^>]*href="(?!' + settings.SITE_URL + ")[^>]*>[^<]*", content)
+    external_links = re.finditer(
+        '<a[^>]*href="(?!' + settings.SITE_URL + ")(?!\/)[^>]*>[^<]*", content
+    )
     for link in reversed(list(external_links)):
         content = (
-            content[: link.end()]
+            content[: link.start() + 2]
+            + " target='_blank'"
+            + content[link.start() + 2 : link.end()]
             + " {% bs_icon 'box-arrow-up-right' extra_classes='external-link-icon' %}"
             + content[link.end() :]
         )
+    template = Template("{% load bootstrap_icons %}" + content)
+    return template.render(Context())
+
+
+@register.filter(name="touchify_abbreviations")
+def touchify_abbreviations(content):
+    abbreviations = re.finditer("<abbr[^>]*>[^<]*", content)
+    for link in reversed(list(abbreviations)):
+        content = content[: link.start() + 5] + " tabindex=0" + content[link.start() + 5 :]
     template = Template("{% load bootstrap_icons %}" + content)
     return template.render(Context())
 
