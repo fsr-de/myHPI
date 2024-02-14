@@ -22,7 +22,7 @@
             <div class="card-body">
                 <p>
                     {% with post.body|markdown as parsed_md %}
-                        {{ parsed_md.0|safe| truncatechars_html:400 }}
+                        {{ parsed_md.0|safe| truncatechars_html:limit }}
                     {% endwith %}
                 </p>
                 <a href="{{ post.get_url }}">{% trans  "Read more" %}</a>

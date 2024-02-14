@@ -3,8 +3,8 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.snippets.models import register_snippet
 
+from myhpi import settings
 from myhpi.core.markdown.fields import CustomMarkdownField
-from myhpi.core.markdown.utils import render_markdown
 from myhpi.core.models import BasePage
 
 
@@ -22,6 +22,7 @@ class Feed(BasePage):
         # Currently, there is no filter for visibility on posts. That is, it is assumed that all post should be visible to students
         context["page"] = page
         context["posts"] = page.object_list
+        context["limit"] = settings.FEED_TRUNCATE_LIMIT
         return context
 
 

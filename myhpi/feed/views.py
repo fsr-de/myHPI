@@ -25,7 +25,7 @@ class PostFeedEntryView(View):
             # Parse body as JSON
             body = json.loads(request.body)
 
-            feed.add_child(
+            post = feed.add_child(
                 instance=Post(
                     title=body["title"],
                     body=body["body"],
@@ -35,4 +35,4 @@ class PostFeedEntryView(View):
                     first_published_at=datetime.datetime.now(datetime.UTC),
                 )
             )
-            return HttpResponse("OK", status=200)
+            return HttpResponse(post.id, status=200)

@@ -378,4 +378,6 @@ try:
 except importlib_metadata.PackageNotFoundError:
     MYHPI_VERSION = "dev"
 
+# Feed settings
 REDIRECT_TO_FEED = env.bool("REDIRECT_TO_FEED", False)
+FEED_TRUNCATE_LIMIT = 400
