@@ -67,9 +67,7 @@ class TextArrayWidget(forms.Widget):
     template_name = "core/text_array_widget.html"
 
     class Media:
-        css = {
-            "all": ["css/text_array_widget.css"]
-        }
+        css = {"all": ["css/text_array_widget.css"]}
         js = ["js/admin/text_array_widget.js"]
 
     def get_context(self, name, value, attrs):
