@@ -53,6 +53,15 @@ def tag_external_links(content):
     return template.render(Context())
 
 
+@register.filter(name="touchify_abbreviations")
+def touchify_abbreviations(content):
+    abbreviations = re.finditer("<abbr[^>]*>[^<]*", content)
+    for link in reversed(list(abbreviations)):
+        content = content[: link.start() + 5] + " tabindex=0" + content[link.start() + 5 :]
+    template = Template("{% load bootstrap_icons %}" + content)
+    return template.render(Context())
+
+
 @register.filter(name="markdown")
 def markdown(value):
     return render_markdown(value)

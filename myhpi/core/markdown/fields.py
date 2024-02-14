@@ -30,4 +30,4 @@ class CustomMarkdownField(MarkdownField):
 
     def restore_translated_segments(self, value, field_segments):
         format, template, strings = organise_template_segments(field_segments)
-        return html2text.html2text(restore_strings(template, strings))
+        return html2text.html2text(restore_strings(template, strings), bodywidth=0)
