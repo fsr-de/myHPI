@@ -109,6 +109,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "myhpi.feed.middleware.FeedRedirectMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "myhpi.core.middleware.IPRangeUserMiddleware",
@@ -376,3 +377,5 @@ try:
     MYHPI_VERSION = importlib_metadata.version("myHPI")
 except importlib_metadata.PackageNotFoundError:
     MYHPI_VERSION = "dev"
+
+REDIRECT_TO_FEED = env.bool("REDIRECT_TO_FEED", False)

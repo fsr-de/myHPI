@@ -1,6 +1,7 @@
 import datetime
 import json
 
+from django.core.exceptions import MultipleObjectsReturned, SuspiciousOperation
 from django.http import HttpResponse
 from django.views import View
 
@@ -10,10 +11,13 @@ from myhpi.feed.models import Feed, Post, PostAccount
 class PostFeedEntryView(View):
     def post(self, request, *args, **kwargs):
         provided_key = request.headers.get("X-API-KEY")
-        post_account = PostAccount.objects.filter(post_key=provided_key).first()
-        if not post_account:
+        post_accounts = PostAccount.objects.filter(post_key=provided_key)
+        if post_accounts.count() == 0:
             return HttpResponse("Unauthorized", status=401)
+        if post_accounts.count() > 1:
+            raise MultipleObjectsReturned("Multiple post accounts with the same key found")
         else:
+            post_account = post_accounts.first()
             feed = Feed.objects.first()
             if not feed:
                 return HttpResponse("No feed found", status=500)
