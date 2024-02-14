@@ -41,10 +41,8 @@ class Post(BasePage):
     def snippet(self):
         generated = render_markdown(self.body)
         length = 500
-        if len(generated[0]) > length:
-            return generated[0][:length] + "..."
-        else:
-            return generated[0]
+        snippet = generated[0][:length] + "..." if len(generated[0]) > length else generated[0]
+        return snippet
 
     @property
     def author(self):
