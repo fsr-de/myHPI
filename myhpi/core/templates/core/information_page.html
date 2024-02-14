@@ -12,39 +12,28 @@
                 {{ page.title }}
             </span>
         </h1>
-        {{ parsed_md.0 }}
+        {{ parsed_md.0|tag_external_links }}
     </div>
     <div class="col-lg-3">
         <div class="side-panel-container">
             <aside class="side-panel border-accent">
-                <h1 class="toc-title">{% translate "Last edited" %}</h1>
-                {% get_current_timezone as TIMEZONE %}
-                <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
-                    {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
-                        {{ date }} at {{ time }}
-                    {% endblocktranslate %}
-                </time>
-                {% if page.author_visible %}
-                    {% translate "by" %}
+                <h1 class="side-panel-title">{% translate "Last edited" %}</h1>
+                {% if not page.last_published_at %}
+                    {% translate "A long time ago" %}
+                {% else %}
+                    {% get_current_timezone as TIMEZONE %}
+                    <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
+                        {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
+                            {{ date }} at {{ time }}
+                        {% endblocktranslate %}
+                    </time>
+                {% endif %}
+                {% if page.author_visible and page.last_edited_by %}
+                    <i>{% translate "by" %}</i>
                     {{ page.last_edited_by }}
                 {% endif %}
             </aside>
-            <aside class="side-panel border-accent toc-container d-print-none">
-                <h1 class="toc-title">{% translate "Table of contents" %}</h1>
-                {{ parsed_md.1 }}
-            </aside>
-            {% if page.attachments.all %}
-                <aside class="side-panel border-accent toc-container d-print-none">
-                    <h1 class="toc-title">{% translate "Attachments" %}</h1>
-                    <ul>
-                    {% for attachment in page.attachments.all %}
-                        <li>
-                            <a href="{{ attachment.url }}">{{ attachment.title }}</a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </aside>
-            {% endif %}
+            {% include "core/sidebar.html" %}
         </div>
     </div>
 </div>

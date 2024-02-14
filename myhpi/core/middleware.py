@@ -4,6 +4,15 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    return ip
+
+
 class IPRangeUserMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -20,7 +29,7 @@ class IPRangeUserMiddleware:
         return response
 
     def process_request(self, request):
-        address = ip_address(request.META.get("REMOTE_ADDR"))
+        address = ip_address(get_client_ip(request))
         request.user.ip_range_group_name = []
         for ip_range, group_name in self.ip_ranges.items():
             if address in ip_range:

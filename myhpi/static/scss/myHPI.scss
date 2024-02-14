@@ -144,6 +144,28 @@ p {
     border-top: solid 2px var(--bs-border);
 }
 
+.side-panel-title {
+    font-size: 1.05rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+h1.side-panel-title::after {
+    margin: 0;
+    height: 0px;
+}
+
+.side-panel-warning {
+    background-color: #ff000011;
+    border: 2px solid red;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.05rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
 .toc-container ul {
     list-style: none;
     padding: 0;
@@ -151,17 +173,6 @@ p {
 
 .toc-container ul li>ul {
     margin-left: 0.5rem;
-}
-
-.toc-title {
-    font-size: 1.05rem;
-    line-height: 1.1;
-    font-weight: 600;
-}
-
-h1.toc-title::after {
-    margin: 0;
-    height: 0px;
 }
 
 .search-result-list {
@@ -207,7 +218,7 @@ h1.toc-title::after {
     margin-top: -0.25rem;
 }
 
-.rendered-image {
+img {
     max-width: 100%;
 }
 
@@ -215,6 +226,19 @@ h1.toc-title::after {
     display: flex;
     align-items: flex-end;
     flex-direction: column-reverse;
+}
+
+.minutes-navigation-button {
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      color: white;
+    }
+}
+
+.minutes-navigation-icon {
+    margin: 0 5px;
 }
 
 @import "./navbar.scss";

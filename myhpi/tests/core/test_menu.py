@@ -11,7 +11,7 @@ def get_as_page_path_lookup(page_lookup):
 class MenuTests(MyHPIPageTestCase):
     def test_root_page_in_context(self):
         start_page = self.client.get("/en", follow=True)
-        self.assertEquals(self.root_page.path, start_page.context["root_page"].path)
+        self.assertEqual(self.root_page.path, start_page.context["root_page"].path)
 
     def test_page_lookup_is_correct_for_guests(self):
         start_page = self.client.get("/en", follow=True)

@@ -17,6 +17,7 @@ from wagtail.documents.models import Document
 from wagtail.models import Page, Site
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
+from wagtail_localize.fields import SynchronizedField
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
@@ -28,6 +29,9 @@ class BasePage(Page):
     is_public = BooleanField()
     is_creatable = False
 
+    override_translatable_fields = [
+        SynchronizedField("visible_for"),
+    ]
     settings_panels = [
         PublishingPanel(),
         FieldPanel("is_public", widget=forms.CheckboxInput),
@@ -54,6 +58,9 @@ class InformationPage(BasePage):
     author_visible = BooleanField()
     attachments = ParentalManyToManyField(Document, blank=True)
 
+    override_translatable_fields = [
+        SynchronizedField("attachments"),
+    ]
     content_panels = Page.content_panels + [
         FieldPanel("body", classname="full"),
         FieldPanel("attachments", widget=AttachmentSelectWidget),
@@ -206,16 +213,22 @@ class Minutes(BasePage):
         User, blank=True, null=True, on_delete=models.PROTECT, related_name="author"
     )
     participants = ParentalManyToManyField(User, related_name="minutes")
+    location = CharField(max_length=255, blank=True)
     labels = ClusterTaggableManager(through=TaggedMinutes, blank=True)
     body = CustomMarkdownField()
     guests = models.JSONField(blank=True, default=[])
     attachments = ParentalManyToManyField(Document, blank=True)
 
+    override_translatable_fields = [
+        SynchronizedField("participants"),
+        SynchronizedField("attachments"),
+    ]
     content_panels = Page.content_panels + [
         FieldPanel("date"),
         FieldPanel("moderator", widget=UserSelectWidget({"data-width": "100%"})),
         FieldPanel("author", widget=UserSelectWidget({"data-width": "100%"})),
         FieldPanel("participants", widget=UserSelectMultipleWidget({"data-width": "100%"})),
+        FieldPanel("location"),
         FieldPanel("labels"),
         FieldPanel("body"),
         FieldPanel("guests"),
@@ -272,6 +285,7 @@ class Footer(models.Model):
 class FirstLevelMenuItem(BasePage):
     parent_page_types = ["RootPage"]
     subpage_types = ["SecondLevelMenuItem", "InformationPage", "MinutesList"]
+    preview_modes = []
     show_in_menus_default = True
 
     def serve(self, request, *args, **kwargs):
@@ -302,6 +316,7 @@ class RedirectMenuItem(BasePage):
         "RootPage",
     ]
     subpage_types = []
+    preview_modes = []
     show_in_menus_default = True
 
     redirect_url = models.CharField(
