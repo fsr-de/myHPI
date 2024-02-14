@@ -1,5 +1,5 @@
-import os
 import datetime
+import os
 from datetime import date
 
 import django
@@ -15,9 +15,6 @@ from wagtail.contrib.redirects.models import Redirect
 from wagtail.documents.models import Document
 from wagtail.models import Collection, GroupCollectionPermission
 
-from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
-from myhpi.feed.models import Feed, Post, PostAccount
-
 from myhpi.core.models import (
     AbbreviationExplanation,
     BasePage,
@@ -29,6 +26,8 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
+from myhpi.feed.models import Feed, Post, PostAccount
+from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
 
 
