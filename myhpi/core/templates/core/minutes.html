@@ -3,6 +3,7 @@
 {% load core_extras %}
 {% load minutes_tags %}
 {% load i18n %}
+{% load bootstrap_icons %}
 
 {% block content %}
     <div class="row minutes-container">
@@ -11,7 +12,7 @@
             <h1>{{  page.title }}</h1>
         </div>
         <div class="col-9 minutes-text">
-            {{ parsed_md.0|tag_external_links }}
+            {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
         </div>
         <div class="col-3 minutes-meta">
             <aside class="side-panel border-accent">
@@ -64,16 +65,16 @@
         </div>
         <div id="minutes-footer" class="d-none d-print-block"></div>
         <div id="minutes-navigation" class="row d-print-none">
-            <div class="col-6">
+            <div class="col-4">
                 {%  prev_minutes page as prev %}
                 {% if prev %}
-                    <a href="{{ prev.url }}">< {% translate "Previous minutes" %}</a>
+                    <a href="{{ prev.url }}" class="btn btn-outline-primary minutes-navigation-button">{% bs_icon 'arrow-left' extra_classes='minutes-navigation-icon' %} {% translate "Previous minutes" %}</a>
                 {%  endif %}
             </div>
-            <div class="col-6">
+            <div class="col-5 text-end">
                 {%  next_minutes page as next %}
                 {% if next %}
-                    <a href="{{ next.url }}"> {% translate "Next minutes" %} ></a>
+                    <a href="{{ next.url }}" class="btn btn-outline-primary minutes-navigation-button"> {% translate "Next minutes" %} {% bs_icon 'arrow-right' extra_classes='minutes-navigation-icon' %}</a>
                 {%  endif %}
             </div>
         </div>
