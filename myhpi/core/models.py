@@ -152,9 +152,9 @@ class MinutesForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.minutes_list = kwargs["parent_page"]
-
         if not kwargs["instance"].title:  # Check if page has been created
+            self.minutes_list = kwargs["parent_page"]
+
             self.initial["date"] = date.today()
             self.initial["slug"] = date.today().isoformat()
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-13 12:56+0100\n"
+"POT-Creation-Date: 2024-02-13 20:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,7 +137,6 @@ msgid "Visibility"
 msgstr "Sichtbarkeit"
 
 #: myhpi/core/templates/core/sidebar.html:16
-#: myhpi/polls/templates/polls/poll.html:29
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
@@ -145,42 +144,108 @@ msgstr "Inhaltsverzeichnis"
 msgid "Attachments"
 msgstr "Anhänge"
 
-#: myhpi/polls/templates/polls/poll.html:17
-msgid "You have already voted and the results are not yet visible."
+#: myhpi/polls/models.py:66
+#, fuzzy
+#| msgid "Not subscribed users are allowed to post."
+msgid "You are not allowed to vote."
+msgstr "Du darfst nicht abstimmen."
+
+#: myhpi/polls/models.py:95
+msgid "You must select at least one choice."
+msgstr "Bitte wähle mindestens eine Option."
+
+#: myhpi/polls/models.py:99
+msgid "You can only select up to {} options."
+msgstr "Du kannst nur bis zu {} Optionen auswählen."
+
+#: myhpi/polls/models.py:110
+msgid "Invalid choice."
+msgstr "Ungültige Auswahl."
+
+#: myhpi/polls/models.py:113 myhpi/polls/models.py:193
+msgid "Your vote has been counted."
+msgstr "Deine Stimme wurde gezählt."
+
+#: myhpi/polls/models.py:171
+#, python-brace-format
+msgid ""
+"Invalid ballot.\n"
+"{errors}"
+msgstr ""
+"Ungültige Stimmabgabe.\n"
+"{errors}"
+
+#: myhpi/polls/models.py:181
+msgid "You have already voted."
+msgstr "Du hast schon abgestimmt."
+
+#: myhpi/polls/models.py:195
+msgid "Invalid ballot."
+msgstr "Ungültige Stimmabgabe."
+
+#: myhpi/polls/models.py:197
+msgid "A database error occured. Please try again."
+msgstr "Ein Datenbankfehler ist aufgetreten. Bitte versuche es erneut."
+
+#: myhpi/polls/templates/polls/base_poll.html:20
+msgid "You've accessed this page outside of the voting period."
+msgstr "Du hast diese Seite außerhalb des Abstimmungszeitraums aufgerufen."
+
+#: myhpi/polls/templates/polls/base_poll.html:22
+#, fuzzy
+#| msgid "You have already voted and the results are not yet visible."
+msgid ""
+"You are not allowed to cast (another) vote and the results are not visible "
+"yet."
 msgstr ""
 "Du hast schon abgestimmt und die Ergebnisse sind noch nicht veröffentlicht."
 
-#: myhpi/polls/templates/polls/poll.html:21
+#: myhpi/polls/templates/polls/base_poll.html:26
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: myhpi/polls/templates/polls/poll.html:23
+#: myhpi/polls/templates/polls/base_poll.html:28
 msgid "End Date"
 msgstr "Enddatum"
 
-#: myhpi/polls/templates/polls/poll.html:25
+#: myhpi/polls/templates/polls/base_poll.html:30
 msgid "Number of participants"
 msgstr "Teilnehmendenanzahl"
 
-#: myhpi/polls/templates/polls/poll.html:27
-msgid "Number of votes"
-msgstr "Stimmenanzahl"
-
-#: myhpi/polls/templates/polls/results.html:4
+#: myhpi/polls/templates/polls/majority_vote_poll.html:20
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:37
 msgid "Choice"
 msgstr "Auswahl"
 
-#: myhpi/polls/templates/polls/results.html:5
+#: myhpi/polls/templates/polls/majority_vote_poll.html:22
 msgid "Description"
 msgstr "Beschreibung"
 
-#: myhpi/polls/templates/polls/results.html:6
+#: myhpi/polls/templates/polls/majority_vote_poll.html:23
 msgid "Votes"
 msgstr "Stimmen"
 
-#: myhpi/polls/templates/polls/results.html:7
+#: myhpi/polls/templates/polls/majority_vote_poll.html:24
 msgid "Percentage"
 msgstr "Prozent"
+
+#: myhpi/polls/templates/polls/poll_list.html:10
+msgid "Title"
+msgstr "Titel"
+
+#: myhpi/polls/templates/polls/poll_list.html:11
+msgid "Voting period"
+msgstr "Abstimmungszeitraum"
+
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:36
+msgid "Rank"
+msgstr "Rang"
+
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:38
+#, fuzzy
+#| msgid "Votes"
+msgid "Final Votes"
+msgstr "Stimmen"
 
 #: myhpi/search/templates/search/search.html:7
 #: myhpi/search/templates/search/search.html:12
@@ -201,7 +266,7 @@ msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
 #: myhpi/search/templates/search/search_field.html:6
-#: myhpi/templates/base.html:168
+#: myhpi/templates/base.html:166
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -278,7 +343,7 @@ msgstr "Protokoll erstellen"
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: myhpi/templates/base.html:170
+#: myhpi/templates/base.html:168
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -522,6 +587,9 @@ msgstr "{email} hat erfolgreich {list} verlassen."
 #, python-brace-format
 msgid "The subscription of {email} onto {list} was rolled back."
 msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
+
+#~ msgid "Number of votes"
+#~ msgstr "Stimmenanzahl"
 
 #~ msgid "Draft"
 #~ msgstr "Entwurf"

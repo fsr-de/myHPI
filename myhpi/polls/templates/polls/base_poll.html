@@ -1,20 +1,25 @@
 {% extends "base.html" %}
+{% load polls %}
 {% load core_extras %}
 {% load i18n %}
 
 {% block content %}
-    <div class="row">
+<div class="row">
         {% with page.description|markdown as parsed_md %}
         <div class="col-9">
             <h1> {{ page.title }} </h1>
             {{ parsed_md.0 }}
             <h2> {{ page.question }} </h2>
-            {% if can_vote %}
-                {% include "polls/vote.html" %}
+            {% if page|can_vote:request.user %}
+                {% block ballot %}
+                {% endblock %}
             {% elif page.results_visible %}
-                {% include "polls/results.html" %}
+                {% block results %}
+                {% endblock %}
+            {% elif not page.in_voting_period %}
+                <p> {% translate "You've accessed this page outside of the voting period." %} </p>
             {% else %}
-                <p> {% translate "You have already voted and the results are not yet visible." %} </p>
+                <p> {% translate "You are not allowed to cast (another) vote and the results are not visible yet." %}</p>
             {% endif %}
         </div>
         <div class="col-3">
@@ -23,11 +28,7 @@
             <h4>{% translate "End Date" %}</h4>
             <p>{{ page.end_date }}</p>
             <h4>{% translate "Number of participants" %}</h4>
-            <p>{{ page.participants.count }}</p>
-            <h4>{% translate "Number of votes" %}</h4>
-            <p>{{ page.num_votes }}</p>
-            <h4>{% translate "Table of contents" %}</h4>
-            {{ parsed_md.1 }}
+            <p>{{ page.already_voted.count }}</p>
         </div>
         {% endwith %}
     </div>

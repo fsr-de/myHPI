@@ -1,6 +1,9 @@
 import os
+from datetime import date
 
 import django
+
+from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myhpi.settings")
 django.setup()
@@ -310,6 +313,45 @@ def create_some_pages(users, groups, documents):
             visible_for=[groups[4]],
         )
     )
+
+    # Polls
+
+    polls_page = root_page.add_child(
+        instance=PollList(
+            title="Polls",
+            slug="polls",
+            show_in_menus=True,
+            is_public=True,
+            visible_for=[groups[0]],
+        )
+    )
+    slash_1999_poll = polls_page.add_child(
+        instance=RankedChoicePoll(
+            title="SLASH 1999",
+            slug="slash-1999",
+            show_in_menus=True,
+            is_public=True,
+            description=generate_text(),
+            start_date=date(1999, 1, 1),
+            end_date=date(2999, 12, 31),
+            results_visible=False,
+            eligible_groups=[groups[0]],
+            visible_for=[groups[0]],
+        )
+    )
+    option_alice = RankedChoiceOption(
+        name="Alice", description=generate_text(), poll=slash_1999_poll
+    )
+    option_bob = RankedChoiceOption(name="Bob", description=generate_text(), poll=slash_1999_poll)
+    option_charlie = RankedChoiceOption(
+        name="Charlie", description=generate_text(), poll=slash_1999_poll
+    )
+    option_alice.save()
+    option_bob.save()
+    option_charlie.save()
+    slash_1999_poll.options.add(option_alice)
+    slash_1999_poll.options.add(option_bob)
+    slash_1999_poll.options.add(option_charlie)
 
 
 def main():
