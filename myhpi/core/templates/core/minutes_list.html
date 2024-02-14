@@ -3,10 +3,9 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{{ page.title }}</h1>
-    {% for year,minutes in minutes_by_years.items %}
-        <h3 id="year{{ year }}">{{ year }}</h3>
-        <table class="table table-striped">
+<h1>{{ page.title }} {{ selected_year }}</h1>
+{% if minutes %}
+    <table class="table table-striped">
         {% for minute in minutes %}
             <tr>
                 <td><a href="{{ minute.get_valid_url }}">{{ minute.date|date:"d.m.Y" }}</a></td>
@@ -28,6 +27,56 @@
                 </td>
             </tr>
         {% endfor %}
-        </table>
-    {% endfor %}
+    </table>
+{% else %}
+    <p>
+        {% translate "No minutes available for this year." %}
+    </p>
+{% endif %}
+{% if all_years|length > 1 %}
+<nav aria-label="Page navigation" class="d-inline-block">
+    <ul class="pagination">
+        <li class="page-item {% if selected_year == all_years|first %} disabled {% endif %}">
+            <a class="page-link" href="{{ minute_list.get_valid_url }}?year={{ all_years|first }}" aria-label="First">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        {% if all_years|first != year_range|first %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="More">
+                <span aria-hidden="true">...</span>
+            </a>
+        </li>
+        {% endif %}
+
+        {% for paginated_year in year_range %}
+        <li
+            {% if selected_year == paginated_year %}
+            class="page-item active" aria-current="true"
+            {% else %}
+            class="page-item"
+            {% endif %}>
+            <a class="page-link" href="{{ minute_list.get_valid_url }}?year={{ paginated_year }}">
+                {{ paginated_year }}
+            </a>
+        </li>
+        {% endfor %}
+
+        {% if all_years|last != year_range|last %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="More">
+                <span aria-hidden="true">...</span>
+            </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item {% if selected_year == all_years|last %} disabled {% endif %}">
+            <a class="page-link" href="{{ minute_list.get_valid_url }}?year={{ all_years|last }}" aria-label="Last">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
 {% endblock %}
