@@ -20,7 +20,11 @@
                 </div>
             </div>
             <div class="card-body">
-                <p>{{ post.snippet | safe }}</p>
+                <p>
+                    {% with post.body|markdown as parsed_md %}
+                        {{ parsed_md.0|safe| truncatechars_html:400 }}
+                    {% endwith %}
+                </p>
                 <a href="{{ post.get_url }}">{% trans  "Read more" %}</a>
             </div>
         </div>

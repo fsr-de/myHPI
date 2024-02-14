@@ -382,7 +382,7 @@ def create_some_pages(users, groups, documents):
                 slug=f"post-{i}",
                 show_in_menus=False,
                 is_public=False,
-                post_account = the_potsdam_post,
+                post_account=the_potsdam_post,
                 body=generate_text(),
                 visible_for=[groups[0]],
                 first_published_at=datetime.datetime.now(datetime.UTC)
