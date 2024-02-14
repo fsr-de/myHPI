@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.snippets.models import register_snippet
@@ -14,9 +15,13 @@ class Feed(BasePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        # TODO: Add pagination
+        all_posts = self.get_children().live().order_by("-first_published_at").specific()
+        paginator = Paginator(all_posts, 10)
+        page = paginator.get_page(request.GET.get("page"))
+
         # Currently, there is no filter for visibility on posts. That is, it is assumed that all post should be visible to students
-        context["posts"] = self.get_children().live().order_by("-first_published_at").specific()
+        context["page"] = page
+        context["posts"] = page.object_list
         return context
 
 
