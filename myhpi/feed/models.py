@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.snippets.models import register_snippet
+from wagtail.users.models import UserProfile, upload_avatar_to
 
 from myhpi import settings
 from myhpi.core.markdown.fields import CustomMarkdownField
@@ -49,12 +50,25 @@ class Post(BasePage):
     def date(self):
         return self.first_published_at.date()
 
+    @property
+    def image_url(self):
+        if self.post_account and self.post_account.icon:
+            return self.post_account.icon.url
+        # user = self.author if self.author else self.owner
+        # if user:
+        #    profile = UserProfile.get_for_user(user)
+        #    return profile.avatar.url
+        else:
+            return "https://www.gravatar.com/avatar/b1a83a1baa8a1d45c905a59217a7d30a?s=140&d=mm"
+
 
 # The PostAccount is used to create posts via API
 @register_snippet
 class PostAccount(models.Model):
     post_key = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
+
+    icon = models.ImageField(upload_to=upload_avatar_to, null=True, blank=True)
 
     def __str__(self):
         return self.name
