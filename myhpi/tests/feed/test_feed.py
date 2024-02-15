@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from myhpi.feed.models import Feed, Post, PostAccount
+from myhpi.feed.models import NewsFeed, Post, PostAccount
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
@@ -9,7 +9,7 @@ class FeedTest(MyHPIPageTestCase):
         super().setUp()
 
         self.feed = self.root_page.add_child(
-            instance=Feed(
+            instance=NewsFeed(
                 title="Feed",
                 slug="feed",
                 visible_for=[self.test_data["groups"][0]],

@@ -1,13 +1,13 @@
 from django.http import HttpResponseRedirect
 
 from myhpi import settings
-from myhpi.feed.models import Feed
+from myhpi.feed.models import NewsFeed
 
 
 class FeedRedirectMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        self.feed = Feed.objects.first()
+        self.feed = NewsFeed.objects.first()
 
     def __call__(self, request):
         self.process_request(request)

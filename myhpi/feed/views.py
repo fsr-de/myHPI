@@ -5,7 +5,7 @@ from django.core.exceptions import MultipleObjectsReturned, SuspiciousOperation
 from django.http import HttpResponse
 from django.views import View
 
-from myhpi.feed.models import Feed, Post, PostAccount
+from myhpi.feed.models import NewsFeed, Post, PostAccount
 
 
 class PostFeedEntryView(View):
@@ -18,7 +18,7 @@ class PostFeedEntryView(View):
             raise MultipleObjectsReturned("Multiple post accounts with the same key found")
         else:
             post_account = post_accounts.first()
-            feed = Feed.objects.first()
+            feed = NewsFeed.objects.first()
             if not feed:
                 return HttpResponse("No feed found", status=500)
 

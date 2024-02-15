@@ -26,7 +26,7 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
-from myhpi.feed.models import Feed, Post, PostAccount
+from myhpi.feed.models import NewsFeed, Post, PostAccount
 from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
 
@@ -360,7 +360,7 @@ def create_some_pages(users, groups, documents):
     # Create feed and posts
 
     feed = root_page.add_child(
-        instance=Feed(
+        instance=NewsFeed(
             title="Feed",
             slug="feed",
             show_in_menus=True,

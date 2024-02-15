@@ -8,7 +8,7 @@ from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.models import BasePage
 
 
-class Feed(BasePage):
+class NewsFeed(BasePage):
     parent_page_types = ["core.RootPage"]
     subpage_types = ["Post"]
     max_count = 1
@@ -27,7 +27,7 @@ class Feed(BasePage):
 
 
 class Post(BasePage):
-    parent_page_types = ["Feed"]
+    parent_page_types = ["NewsFeed"]
     subpage_types = []
     body = CustomMarkdownField()
     post_account = models.ForeignKey(
