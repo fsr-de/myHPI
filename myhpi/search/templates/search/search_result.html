@@ -5,8 +5,8 @@
     <div class="search-result">
         <hgroup>
             <h5>{{ result.title }}</h5>
-            <time datetime="{{ result.first_published_at|date:"c" }}">
-                {{ result.first_published_at|date:"SHORT_DATE_FORMAT" }}
+            <time datetime="{{ result.specific.date|date:"c" }}">
+                {{ result.specific.date|date:"SHORT_DATE_FORMAT" }}
             </time>
         </hgroup>
         <span class="text-dark">
