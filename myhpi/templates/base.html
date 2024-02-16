@@ -82,9 +82,13 @@
         <div class="navbar-bottom d-flex">
             <div class="navbar-bottom-content page-content d-flex flex-column flex-xl-row flex-grow-1 flex-xl-grow-0">
 
-                {% cache 500 menu request.user.id request.user.ip_range_group_name LANGUAGE_CODE %}
+                {% if enable_menu_cache %}
+                    {% cache 500 menu request.user.id request.user.ip_range_group_name LANGUAGE_CODE %}
+                        {% build_nav_level_for root_page %}
+                    {% endcache %}
+                {% else %}
                     {% build_nav_level_for root_page %}
-                {% endcache %}
+                {% endif %}
 
                 <!-- For navbar desktop mode: Wrappers for sub level containers of root level in navbar -->
                 <div id="nav-level-1" class="nav-level"></div>

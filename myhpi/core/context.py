@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db.models import Q
 from wagtail.models import Site
 
@@ -39,6 +40,7 @@ def base_context(request):
         "root_page": root_page,
         "pages_by_parent": page_lookup,
         "minutes_creation_links": minutes_creation_links,
+        "enable_menu_cache": not settings.DEBUG,
     }
 
 
