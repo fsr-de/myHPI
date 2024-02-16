@@ -70,7 +70,7 @@ const localizeLastPublished = () => {
         let abbr = document.createElement("abbr");
         abbr.setAttribute("title", lastPublishedLocalized)
         lastPublished.removeAttribute("title")
-        lastPublished.innerHTML = lastPublished.textContent.trim()
+        lastPublished.innerText = lastPublished.textContent.trim()
 
         let parent = lastPublished.parentNode;
         parent.replaceChild(abbr, lastPublished);
