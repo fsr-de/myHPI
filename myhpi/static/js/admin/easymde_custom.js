@@ -168,11 +168,12 @@ function addResolution(editor){
     const cm = editor.codemirror;
     const position = cm.getCursor();
 
-    const output = " **[//]** (HHT: ).";
+    const output = "\n* Wir beschließen, bis zu  € für  auszugeben **[||]** (HHT: ).";
     cm.replaceSelection(output);
 
-    // move the cursor to the "in favor" count [x/ / ]
-    position.ch += 4; // space + **[
+    // move the cursor to the first missing field
+    position.line += 1;
+    position.ch = "* Wir beschließen, bis zu ".length;
     cm.focus();
     cm.setCursor(position);
 }
