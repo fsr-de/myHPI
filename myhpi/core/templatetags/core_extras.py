@@ -70,3 +70,9 @@ def markdown(value):
 @register.filter(name="get_link_for_group")
 def get_link_for_group(minutes_creation_links, group):
     return minutes_creation_links[group.id]
+
+
+@register.filter(name="non_empty")
+def toc_non_empty(toc):
+    toc_links = re.findall(r'<a href="#[^"]*"', toc)
+    return toc and len(toc_links) > 0
