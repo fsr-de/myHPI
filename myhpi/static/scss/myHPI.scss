@@ -181,13 +181,8 @@ h1.side-panel-title::after {
     margin: -0.5rem -0.8rem;
 
     .search-result {
-        hgroup {
-          display: flex;
-          justify-content: space-between;
-
-          h5 {
-            hyphens: auto;
-          }
+        h5 {
+          hyphens: auto;
         }
 
         transition: all 0.25s;
