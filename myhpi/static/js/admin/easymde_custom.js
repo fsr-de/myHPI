@@ -98,7 +98,6 @@ function getCurrentTime(){
 // Custom button actions
 
 function startMeeting(editor) {
-
     const cm = editor.codemirror;
     let output = '';
     const currentTime = getCurrentTime()
@@ -166,14 +165,14 @@ function addQuorum(editor){
 
 function addResolution(editor){
     const cm = editor.codemirror;
-    const position = cm.getCursor();
 
-    const output = "\n* Wir beschließen, bis zu  € für  auszugeben **[||]** (HHT: ).";
+    const output = "\n|resolution|()()()[||]";
     cm.replaceSelection(output);
 
     // move the cursor to the first missing field
+    const position = cm.getCursor();
     position.line += 1;
-    position.ch = "* Wir beschließen, bis zu ".length;
+    position.ch = "|resolution|(".length;
     cm.focus();
     cm.setCursor(position);
 }

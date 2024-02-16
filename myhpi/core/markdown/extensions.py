@@ -97,6 +97,24 @@ class QuorumPreprocessor(MinutesBasePreprocessor):
         )
 
 
+class ResolutionPreprocessor(MinutesBasePreprocessor):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.patterns = [
+            (r"\|resolution\|\(\d+([.,]\d{2})?\)\(\S+\)\(\S\)\[(\d+)\|(\d+)\|(\d+)\]", self.resolutify),
+        ]
+
+    def resolutify(self, match):
+        amount = match.group(1)
+        purchase = match.group(2)
+        budget = match.group(3)
+        num_positive_votes = match.group(4)
+        num_negative_votes = match.group(5)
+        num_abstentions = match.group(6)
+
+        return _(f"* Wir beschließen, bis zu {amount} € für {purchase} auszugeben **[{num_positive_votes}|{num_negative_votes}|{num_abstentions}]** (HHT: {budget}).")
+
+
 class EnterLeavePreprocessor(MinutesBasePreprocessor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -179,6 +197,7 @@ class MinuteExtension(Extension):
         md.preprocessors.register(StartEndPreprocessor(md), "start_or_endify", 200)
         md.preprocessors.register(BreakPreprocessor(md), "breakify", 200)
         md.preprocessors.register(QuorumPreprocessor(md), "quorumify", 200)
+        md.preprocessors.register(ResolutionPreprocessor(md), "resolutify", 200)
         md.preprocessors.register(EnterLeavePreprocessor(md), "enter_or_leavify", 200)
         md.preprocessors.register(HeadingLevelPreprocessor(md), "decrease", 200)
         md.preprocessors.register(VersionPreprocessor(md), "version", 200)
