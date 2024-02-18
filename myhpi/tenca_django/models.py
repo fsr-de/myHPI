@@ -1,4 +1,7 @@
 from django.db import models
+from django.urls import reverse
+from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from tenca.hash_storage import (
     HashStorage,
     MailmanDescriptionHashStorage,
@@ -19,6 +22,10 @@ class HashEntry(TencaModel):
 
     def __str__(self):
         return "HashEntry for {}".format(self.list_id)
+
+    @property
+    def manage_page(self):
+        return format_html('<a href="{url}">{text}</a>'.format(text=_("Manage List"), url=reverse("tenca_django:tenca_manage_list", args=(self.list_id,))))
 
     class Meta(TencaModel.Meta):
         verbose_name = "Mailing List Hash Entry"
