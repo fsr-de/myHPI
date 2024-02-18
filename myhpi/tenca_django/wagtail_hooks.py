@@ -13,10 +13,12 @@ class HashEntryFilterSet(SnippetViewSet):
     menu_icon = "mail"
     list_display = ("list_id", "hash_id", "manage_page")
 
-    edit_handler = MultiFieldPanel([
-        FieldPanel("list_id", read_only=True),
-        FieldPanel("hash_id"),
-    ])
+    edit_handler = MultiFieldPanel(
+        [
+            FieldPanel("list_id", read_only=True),
+            FieldPanel("hash_id"),
+        ]
+    )
 
 
 register_snippet(HashEntryFilterSet)
