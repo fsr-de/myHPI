@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "wagtail.contrib.search_promotions",
     "django.contrib.messages",
     "django_bootstrap_icons",
     "django_select2",
