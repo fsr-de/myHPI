@@ -25,7 +25,12 @@ class HashEntry(TencaModel):
 
     @property
     def manage_page(self):
-        return format_html('<a href="{url}">{text}</a>'.format(text=_("Manage List"), url=reverse("tenca_django:tenca_manage_list", args=(self.list_id,))))
+        return format_html(
+            '<a href="{url}">{text}</a>'.format(
+                text=_("Manage List"),
+                url=reverse("tenca_django:tenca_manage_list", args=(self.list_id,)),
+            )
+        )
 
     class Meta(TencaModel.Meta):
         verbose_name = "Mailing List Hash Entry"
