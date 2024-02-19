@@ -142,7 +142,9 @@ class MinutesLabel(TagBase):
 
 
 class TaggedMinutes(ItemBase):
-    tag = models.ForeignKey(MinutesLabel, on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s_items")
+    tag = models.ForeignKey(
+        MinutesLabel, on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s_items"
+    )
     content_object = ParentalKey(
         "core.Minutes", on_delete=models.CASCADE, related_name="tagged_items"
     )
