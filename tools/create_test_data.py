@@ -26,7 +26,7 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
-from myhpi.feed.models import NewsFeed, Post, NewsFeedAccount
+from myhpi.feed.models import NewsFeed, NewsFeedAccount, Post
 from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
 

@@ -10,7 +10,7 @@ def main():
     host = "myhpi.de"
 
     response = requests.post(
-        f"https://{host}/post",
+        f"https://{host}/api/post",
         json={
             "title": title,
             "body": body,

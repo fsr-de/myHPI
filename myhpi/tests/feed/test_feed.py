@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from myhpi.feed.models import NewsFeed, Post, NewsFeedAccount
+from myhpi.feed.models import NewsFeed, NewsFeedAccount, Post
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 

@@ -5,7 +5,7 @@ from django.core.exceptions import MultipleObjectsReturned, SuspiciousOperation
 from django.http import HttpResponse
 from django.views import View
 
-from myhpi.feed.models import NewsFeed, Post, NewsFeedAccount
+from myhpi.feed.models import NewsFeed, NewsFeedAccount, Post
 
 
 class PostFeedEntryView(View):

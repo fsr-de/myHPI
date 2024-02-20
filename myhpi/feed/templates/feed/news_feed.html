@@ -19,17 +19,17 @@
             </div>
         </div>
     {% endfor %}
-    <div class="row">
-    {%  if page.has_previous %}
-        <div class="col-6 text-start">
-        <a class="btn btn-outline-primary" href="?page={{ page.previous_page_number }}">Previous page</a>
+    <div id="minutes-navigation" class="row">
+        <div class="col-6">
+            {%  if page.has_previous %}
+                <a class="btn btn-outline-primary" href="?page={{ page.previous_page_number }}">Previous page</a>
+            {% endif %}
         </div>
-    {% endif %}
-    {% if page.has_next %}
         <div class="col-6 text-end">
-        <a class="btn btn-outline-primary" href="?page={{ page.next_page_number }}">Next page</a>
+            {% if page.has_next %}
+                <a class="btn btn-outline-primary" href="?page={{ page.next_page_number }}">Next page</a>
+            {% endif %}
         </div>
-    {% endif %}
     </div>
     </div>
 {% endblock %}
