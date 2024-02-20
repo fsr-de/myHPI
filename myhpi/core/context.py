@@ -40,7 +40,7 @@ def base_context(request):
         "root_page": root_page,
         "pages_by_parent": page_lookup,
         "minutes_creation_links": minutes_creation_links,
-        "enable_menu_cache": not settings.DEBUG,
+        "template_cache_duration": 1 if settings.DEBUG else 500,
     }
 
 
