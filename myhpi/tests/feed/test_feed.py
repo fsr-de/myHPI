@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from myhpi.feed.models import NewsFeed, Post, PostAccount
+from myhpi.feed.models import NewsFeed, Post, NewsFeedAccount
 from myhpi.tests.core.utils import MyHPIPageTestCase
 
 
@@ -17,7 +17,7 @@ class FeedTest(MyHPIPageTestCase):
             )
         )
 
-        self.post_account = PostAccount.objects.create(
+        self.post_account = NewsFeedAccount.objects.create(
             post_key="SECRET_POST_KEY",
             name="Test Post Account",
         )

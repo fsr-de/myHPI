@@ -26,7 +26,7 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
-from myhpi.feed.models import NewsFeed, Post, PostAccount
+from myhpi.feed.models import NewsFeed, Post, NewsFeedAccount
 from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
 
@@ -369,7 +369,7 @@ def create_some_pages(users, groups, documents):
         )
     )
 
-    the_potsdam_post = PostAccount.objects.create(
+    the_potsdam_post = NewsFeedAccount.objects.create(
         post_key="SECRET_TEST_KEY",
         name="the Potsdam Post",
     )

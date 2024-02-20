@@ -5,13 +5,13 @@ from django.core.exceptions import MultipleObjectsReturned, SuspiciousOperation
 from django.http import HttpResponse
 from django.views import View
 
-from myhpi.feed.models import NewsFeed, Post, PostAccount
+from myhpi.feed.models import NewsFeed, Post, NewsFeedAccount
 
 
 class PostFeedEntryView(View):
     def post(self, request, *args, **kwargs):
         provided_key = request.headers.get("X-API-KEY")
-        post_accounts = PostAccount.objects.filter(post_key=provided_key)
+        post_accounts = NewsFeedAccount.objects.filter(post_key=provided_key)
         if post_accounts.count() == 0:
             return HttpResponse("Unauthorized", status=401)
         if post_accounts.count() > 1:

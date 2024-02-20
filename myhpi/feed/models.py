@@ -32,7 +32,7 @@ class Post(BasePage):
     subpage_types = []
     body = CustomMarkdownField()
     post_account = models.ForeignKey(
-        "PostAccount", related_name="posts", on_delete=models.SET_NULL, null=True, blank=True
+        "NewsFeedAccount", related_name="posts", on_delete=models.SET_NULL, null=True, blank=True
     )
 
     content_panels = BasePage.content_panels + [
@@ -62,9 +62,9 @@ class Post(BasePage):
             return "https://www.gravatar.com/avatar/b1a83a1baa8a1d45c905a59217a7d30a?s=140&d=mm"
 
 
-# The PostAccount is used to create posts via API
+# The NewsFeedAccount is used to create posts via API
 @register_snippet
-class PostAccount(models.Model):
+class NewsFeedAccount(models.Model):
     post_key = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
 
