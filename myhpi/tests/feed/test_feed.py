@@ -24,7 +24,7 @@ class FeedTest(MyHPIPageTestCase):
 
     def test_post_to_feed(self):
         response = self.client.post(
-            "/post",
+            "/api/post",
             data={
                 "title": "Test Post",
                 "body": "This is a test post.",
@@ -41,7 +41,7 @@ class FeedTest(MyHPIPageTestCase):
 
     def test_post_to_feed_unauthorized(self):
         response = self.client.post(
-            "/post",
+            "/api/post",
             data={
                 "title": "Test Post",
                 "body": "This is a test post.",
@@ -55,7 +55,7 @@ class FeedTest(MyHPIPageTestCase):
 
     def test_post_truncation(self):
         response = self.client.post(
-            "/post",
+            "/api/post",
             data={
                 "title": "Test Post",
                 "body": "A" * 1000,
