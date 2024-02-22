@@ -38,7 +38,7 @@ class BasePoll(BasePage):
     results_visible = models.BooleanField(default=False)
     eligible_groups = ParentalManyToManyField(Group, related_name="base_polls", blank=True)
 
-    already_voted = models.ManyToManyField(User, related_name="base_polls")
+    already_voted = models.ManyToManyField(User, related_name="base_polls", blank=True)
 
     parent_page_types = [
         "PollList",
