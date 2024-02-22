@@ -5,7 +5,7 @@
 
 {% block content %}
 {% with page.body|markdown as parsed_md %}
-<div class="row flex-column-reverse flex-lg-row">
+<div class="row flex-column flex-lg-row">
     <div class="col-lg-9">
         <h1 class="page-title">
             <span class="underline">
@@ -19,18 +19,18 @@
             <aside class="side-panel border-accent">
                 <h1 class="side-panel-title">{% translate "Last edited" %}</h1>
                 {% if not page.last_published_at %}
-                    {% translate "A long time ago" %}
+                {% translate "A long time ago" %}
                 {% else %}
-                    {% get_current_timezone as TIMEZONE %}
-                    <time id="last-published" datetime="{{ page.last_published_at|date:"c" }}" title="{{ TIMEZONE }}">
-                        {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
-                            {{ date }} at {{ time }}
-                        {% endblocktranslate %}
-                    </time>
+                {% get_current_timezone as TIMEZONE %}
+                <time id="last-published" datetime="{{ page.last_published_at|date:'c' }}" title="{{ TIMEZONE }}">
+                    {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
+                    {{ date }} at {{ time }}
+                    {% endblocktranslate %}
+                </time>
                 {% endif %}
                 {% if page.author_visible and page.last_edited_by %}
-                    <i>{% translate "by" %}</i>
-                    {{ page.last_edited_by }}
+                <i>{% translate "by" %}</i>
+                {{ page.last_edited_by }}
                 {% endif %}
             </aside>
             {% include "core/sidebar.html" %}
