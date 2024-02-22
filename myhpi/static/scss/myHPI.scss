@@ -352,12 +352,22 @@ img {
         flex-direction: column;
     }
 
+    .page-title .underline {
+        border-bottom: none;
+    }
+
+    .side-panel {
+        border: none !important;
+        padding: 0;
+    }
+
     .minutes-title {
         order: 0
     }
 
     .minutes-meta {
         order: 1;
+        margin-bottom: 2rem;
     }
 
     .minutes-text {

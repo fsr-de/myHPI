@@ -276,9 +276,9 @@ WAGTAILMARKDOWN = {
     "extension_configs": {
         "toc": {
             "permalink": "#",
-            "permalink_class": "toc-permalink ms-2",
+            "permalink_class": "toc-permalink ms-2 d-print-none",
         }
-    }
+    },
 }
 
 ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS", False)
