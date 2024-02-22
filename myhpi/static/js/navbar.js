@@ -17,7 +17,7 @@
  * @returns True if it is collapsed, false otherwise.
  */
 const isCollapsed = (navItemContainer) => {
-    return !navItemContainer.classList.contains("show")
+  return !navItemContainer.classList.contains("show")
 }
 
 /**
@@ -29,12 +29,12 @@ const isCollapsed = (navItemContainer) => {
  * @returns Level node of lower level. Null if there is no lower level (depends on `numberOfSupportedLevels`).
  */
 const getLevelBelow = (navItemContainer) => {
-    const levelId = parseInt(
-        navItemContainer.getAttribute("data-navbar-level").slice(11)
-    )
-    return levelId + 1 === numberOfSupportedLevels
-        ? null
-        : document.querySelector(`#nav-level-${levelId + 1}`)
+  const levelId = parseInt(
+    navItemContainer.getAttribute("data-navbar-level").slice(11)
+  )
+  return levelId + 1 === numberOfSupportedLevels
+    ? null
+    : document.querySelector(`#nav-level-${levelId + 1}`)
 }
 
 /**
@@ -50,18 +50,16 @@ const getLevelBelow = (navItemContainer) => {
  * @param {Node} navItemContainer Container whose children containers should be collapsed.
  */
 const collapseChildren = (navItemContainer) => {
-    const collapseLevelId =
-        "#" + getLevelBelow(navItemContainer)?.getAttribute("id")
-    if (!collapseLevelId) return
-    const navContainersToCollapse = document.querySelectorAll(
-        `.nav-item-container[data-navbar-level="${collapseLevelId}"]`
-    )
-    navContainersToCollapse.forEach((navItemContainerToCollapse) => {
-        if (isCollapsed(navItemContainerToCollapse)) return
-        bootstrap.Collapse.getOrCreateInstance(
-            navItemContainerToCollapse
-        ).hide()
-    })
+  const collapseLevelId =
+    "#" + getLevelBelow(navItemContainer)?.getAttribute("id")
+  if (!collapseLevelId) return
+  const navContainersToCollapse = document.querySelectorAll(
+    `.nav-item-container[data-navbar-level="${collapseLevelId}"]`
+  )
+  navContainersToCollapse.forEach((navItemContainerToCollapse) => {
+    if (isCollapsed(navItemContainerToCollapse)) return
+    bootstrap.Collapse.getOrCreateInstance(navItemContainerToCollapse).hide()
+  })
 }
 
 /**
@@ -74,15 +72,15 @@ const collapseChildren = (navItemContainer) => {
  * @param {Node} navItemContainer Container on whose level the other containers should be collapsed.
  */
 const collapseOthersOnSameLevel = (navItemContainer) => {
-    const collapseLevelId = navItemContainer.getAttribute("data-navbar-level")
-    const navContainersOnSameLevel = document.querySelectorAll(
-        `.nav-item-container[data-navbar-level="${collapseLevelId}"]`
-    )
-    navContainersOnSameLevel.forEach((navContainerOnSameLevel) => {
-        if (navContainerOnSameLevel === navItemContainer) return
-        if (isCollapsed(navContainerOnSameLevel)) return
-        bootstrap.Collapse.getOrCreateInstance(navContainerOnSameLevel).hide()
-    })
+  const collapseLevelId = navItemContainer.getAttribute("data-navbar-level")
+  const navContainersOnSameLevel = document.querySelectorAll(
+    `.nav-item-container[data-navbar-level="${collapseLevelId}"]`
+  )
+  navContainersOnSameLevel.forEach((navContainerOnSameLevel) => {
+    if (navContainerOnSameLevel === navItemContainer) return
+    if (isCollapsed(navContainerOnSameLevel)) return
+    bootstrap.Collapse.getOrCreateInstance(navContainerOnSameLevel).hide()
+  })
 }
 
 /**
@@ -95,37 +93,37 @@ const collapseOthersOnSameLevel = (navItemContainer) => {
  * @param {*} sender Node (usually navItem) that toggles the collapse of the navItemContainer.
  */
 const applyCollapseBehaviour = (navItemContainer, sender) => {
-    navItemContainer.addEventListener("hide.bs.collapse", (e) => {
-        sender.setAttribute("aria-expanded", "false")
-        e.stopPropagation()
-        collapseChildren(e.target)
-        toggleHideOnScrollBlock(sender)
-    })
-    navItemContainer.addEventListener("show.bs.collapse", (e) => {
-        sender.setAttribute("aria-expanded", "true")
-        e.stopPropagation()
-        collapseOthersOnSameLevel(e.target)
-        toggleHideOnScrollBlock(sender)
-    })
+  navItemContainer.addEventListener("hide.bs.collapse", (e) => {
+    sender.setAttribute("aria-expanded", "false")
+    e.stopPropagation()
+    collapseChildren(e.target)
+    toggleHideOnScrollBlock(sender)
+  })
+  navItemContainer.addEventListener("show.bs.collapse", (e) => {
+    sender.setAttribute("aria-expanded", "true")
+    e.stopPropagation()
+    collapseOthersOnSameLevel(e.target)
+    toggleHideOnScrollBlock(sender)
+  })
 }
 
 /**
  * Toggles the right-aligned user navbar.
  */
 const toggleUserNavbar = (e) => {
-    const userNavContainer = document.querySelector("#nav-item-container-user")
-    bootstrap.Collapse.getOrCreateInstance(userNavContainer).toggle()
-    e.stopPropagation()
+  const userNavContainer = document.querySelector("#nav-item-container-user")
+  bootstrap.Collapse.getOrCreateInstance(userNavContainer).toggle()
+  e.stopPropagation()
 }
 
 /**
  * Toggles the navbar in mobile mode.
  */
 const toggleMobileNavbar = (e) => {
-    if (isNavbarInDesktopMode) return
-    const rootNavContainer = document.querySelector("#nav-item-container-root")
-    bootstrap.Collapse.getOrCreateInstance(rootNavContainer).toggle()
-    e.stopPropagation()
+  if (isNavbarInDesktopMode) return
+  const rootNavContainer = document.querySelector("#nav-item-container-root")
+  bootstrap.Collapse.getOrCreateInstance(rootNavContainer).toggle()
+  e.stopPropagation()
 }
 
 /**
@@ -138,32 +136,26 @@ const toggleMobileNavbar = (e) => {
  * This facilitates the logic due to reduced side effects.
  */
 const addNavbarCollapses = () => {
-    const navDropdowns = document.querySelectorAll(
-        ".nav-item.dropdown>.nav-link"
+  const navDropdowns = document.querySelectorAll(".nav-item.dropdown>.nav-link")
+  navDropdowns.forEach((navDropdown) => {
+    const controlledNavContainer = document.querySelector(
+      navDropdown.getAttribute("href")
     )
-    navDropdowns.forEach((navDropdown) => {
-        const controlledNavContainer = document.querySelector(
-            navDropdown.getAttribute("href")
-        )
-        navDropdown.addEventListener("click", (e) => {
-            bootstrap.Collapse.getOrCreateInstance(
-                controlledNavContainer
-            ).toggle()
-            e.stopPropagation()
-        })
-        applyCollapseBehaviour(controlledNavContainer, navDropdown)
+    navDropdown.addEventListener("click", (e) => {
+      bootstrap.Collapse.getOrCreateInstance(controlledNavContainer).toggle()
+      e.stopPropagation()
     })
+    applyCollapseBehaviour(controlledNavContainer, navDropdown)
+  })
 
-    const userNavToggle = document.querySelector("#nav-user-toggle")
-    const userNavContainer = document.querySelector("#nav-item-container-user")
-    applyCollapseBehaviour(userNavContainer, userNavToggle)
+  const userNavToggle = document.querySelector("#nav-user-toggle")
+  const userNavContainer = document.querySelector("#nav-item-container-user")
+  applyCollapseBehaviour(userNavContainer, userNavToggle)
 
-    const mobileNavToggle = document.querySelector("#nav-mobile-toggle")
-    const mobileNavContainer = document.querySelector(
-        "#nav-item-container-root"
-    )
+  const mobileNavToggle = document.querySelector("#nav-mobile-toggle")
+  const mobileNavContainer = document.querySelector("#nav-item-container-root")
 
-    applyCollapseBehaviour(mobileNavContainer, mobileNavToggle)
+  applyCollapseBehaviour(mobileNavContainer, mobileNavToggle)
 }
 
 /**
@@ -176,29 +168,28 @@ const addNavbarCollapses = () => {
 let isNavbarInDesktopMode = false
 
 const adjustUserNavContainerLevel = () => {
-    const userNavContainer = document.querySelector("#nav-item-container-user")
-    userNavContainer.setAttribute(
-        "data-navbar-level",
-        isNavbarInDesktopMode ? "#nav-level-1" : "#nav-level-0"
-    )
+  const userNavContainer = document.querySelector("#nav-item-container-user")
+  userNavContainer.setAttribute(
+    "data-navbar-level",
+    isNavbarInDesktopMode ? "#nav-level-1" : "#nav-level-0"
+  )
 }
 
 const adjustNavbarCollapseOnLayoutChange = () => {
-    const rootNavContainer = document.querySelector("#nav-item-container-root")
-    const expandedContainer = rootNavContainer.querySelector(
-        ".nav-item-container.show"
-    )
-    if (expandedContainer && isCollapsed(rootNavContainer)) {
-        bootstrap.Collapse.getOrCreateInstance(rootNavContainer).show()
-    } else if (!expandedContainer && !isCollapsed(rootNavContainer)) {
-        // By temporarily setting the transition duration to 0s we prevent
-        //   the navbar items from shortly disappearing when collapsing the container.
-        const originalTransitionDuration =
-            rootNavContainer.style.transitionDuration
-        rootNavContainer.style.transitionDuration = "0s"
-        bootstrap.Collapse.getOrCreateInstance(rootNavContainer).hide()
-        rootNavContainer.style.transitionDuration = originalTransitionDuration
-    }
+  const rootNavContainer = document.querySelector("#nav-item-container-root")
+  const expandedContainer = rootNavContainer.querySelector(
+    ".nav-item-container.show"
+  )
+  if (expandedContainer && isCollapsed(rootNavContainer)) {
+    bootstrap.Collapse.getOrCreateInstance(rootNavContainer).show()
+  } else if (!expandedContainer && !isCollapsed(rootNavContainer)) {
+    // By temporarily setting the transition duration to 0s we prevent
+    //   the navbar items from shortly disappearing when collapsing the container.
+    const originalTransitionDuration = rootNavContainer.style.transitionDuration
+    rootNavContainer.style.transitionDuration = "0s"
+    bootstrap.Collapse.getOrCreateInstance(rootNavContainer).hide()
+    rootNavContainer.style.transitionDuration = originalTransitionDuration
+  }
 }
 
 /**
@@ -206,45 +197,42 @@ const adjustNavbarCollapseOnLayoutChange = () => {
  * The number of levels is determined by `numberOfSupportedLevels`.
  */
 const moveNonRootLevelsToDesktopLayout = () => {
-    const levels = [...Array(numberOfSupportedLevels).keys()].slice(1)
-    levels.forEach((levelId) => {
-        const navItemContainers = document.querySelectorAll(
-            `*:not(#nav-level-right)>.nav-item-container[data-navbar-level='#nav-level-${levelId}']`
-        )
-        const bottomNavLevelContainer = document.querySelector(
-            `#nav-level-${levelId}`
-        )
-        for (const navItemContainer of navItemContainers) {
-            navItemContainer.setAttribute(
-                "data-bs-parent",
-                `#nav-level-${levelId}`
-            )
-            bottomNavLevelContainer.appendChild(navItemContainer)
-        }
-    })
+  const levels = [...Array(numberOfSupportedLevels).keys()].slice(1)
+  levels.forEach((levelId) => {
+    const navItemContainers = document.querySelectorAll(
+      `*:not(#nav-level-right)>.nav-item-container[data-navbar-level='#nav-level-${levelId}']`
+    )
+    const bottomNavLevelContainer = document.querySelector(
+      `#nav-level-${levelId}`
+    )
+    for (const navItemContainer of navItemContainers) {
+      navItemContainer.setAttribute("data-bs-parent", `#nav-level-${levelId}`)
+      bottomNavLevelContainer.appendChild(navItemContainer)
+    }
+  })
 }
 
 /**
  * Moves the nodes of the root navbar level from the mobile to the desktop layout.
  */
 const moveRootLevelToDesktopLayout = () => {
-    const rootNavLevelContainer = document.querySelector("#nav-level-0")
-    const rootLevel = document.querySelector("#nav-item-container-root")
-    rootNavLevelContainer.appendChild(rootLevel)
+  const rootNavLevelContainer = document.querySelector("#nav-level-0")
+  const rootLevel = document.querySelector("#nav-item-container-root")
+  rootNavLevelContainer.appendChild(rootLevel)
 
-    const userInfo = document.querySelector("#user-information-username")
-    if (userInfo != null) {
-        userInfo.classList.remove("d-none")
-        userInfo.ariaHidden = "false"
-    }
+  const userInfo = document.querySelector("#user-information-username")
+  if (userInfo != null) {
+    userInfo.classList.remove("d-none")
+    userInfo.ariaHidden = "false"
+  }
 }
 
 const setDesktopNavbar = () => {
-    if (isNavbarInDesktopMode) return
-    isNavbarInDesktopMode = true
-    adjustNavbarCollapseOnLayoutChange()
-    moveNonRootLevelsToDesktopLayout()
-    moveRootLevelToDesktopLayout()
+  if (isNavbarInDesktopMode) return
+  isNavbarInDesktopMode = true
+  adjustNavbarCollapseOnLayoutChange()
+  moveNonRootLevelsToDesktopLayout()
+  moveRootLevelToDesktopLayout()
 }
 
 /**
@@ -252,81 +240,93 @@ const setDesktopNavbar = () => {
  * The number of levels is determined by `numberOfSupportedLevels`.
  */
 const moveNonRootLevelsToMobileLayout = () => {
-    const levels = [...Array(numberOfSupportedLevels).keys()].slice(1)
-    levels
-        .sort((a, b) => b - a)
-        .forEach((levelId) => {
-            const levelNavItemContainer = document.querySelector(
-                `#nav-level-${levelId}`
-            )
-            const parentNavItems = document.querySelectorAll(
-                `#nav-level-${levelId - 1} .nav-item.dropdown`
-            )
-            for (const parentNavItem of parentNavItems) {
-                const levelNavItem = levelNavItemContainer.querySelector(
-                    `#${parentNavItem
-                        .querySelector(".nav-link")
-                        .getAttribute("aria-controls")}`
-                )
-                parentNavItem.appendChild(levelNavItem)
-            }
-        })
+  const levels = [...Array(numberOfSupportedLevels).keys()].slice(1)
+  levels
+    .sort((a, b) => b - a)
+    .forEach((levelId) => {
+      const levelNavItemContainer = document.querySelector(
+        `#nav-level-${levelId}`
+      )
+      const parentNavItems = document.querySelectorAll(
+        `#nav-level-${levelId - 1} .nav-item.dropdown`
+      )
+      for (const parentNavItem of parentNavItems) {
+        const levelNavItem = levelNavItemContainer.querySelector(
+          `#${parentNavItem
+            .querySelector(".nav-link")
+            .getAttribute("aria-controls")}`
+        )
+        parentNavItem.appendChild(levelNavItem)
+      }
+    })
 }
-
 
 /**
  * Moves the nodes of the root navbar level from the desktop to the mobile layout.
  */
 const moveRootLevelToMobileLayout = () => {
-    const bottomNavContainer = document.querySelector(".navbar-bottom-content")
-    const rootLevel = document.querySelector("#nav-item-container-root")
-    bottomNavContainer.appendChild(rootLevel)
+  const bottomNavContainer = document.querySelector(".navbar-bottom-content")
+  const rootLevel = document.querySelector("#nav-item-container-root")
+  bottomNavContainer.appendChild(rootLevel)
 
-    const userInfo = document.querySelector("#user-information-username")
-    if (userInfo != null) {
-        userInfo.classList.add("d-none")
-        userInfo.ariaHidden = "true"
-    }
+  const userInfo = document.querySelector("#user-information-username")
+  if (userInfo != null) {
+    userInfo.classList.add("d-none")
+    userInfo.ariaHidden = "true"
+  }
 }
 
 const setMobileNavbar = () => {
-    if (!isNavbarInDesktopMode) return
-    isNavbarInDesktopMode = false
-    moveNonRootLevelsToMobileLayout()
-    moveRootLevelToMobileLayout()
-    adjustNavbarCollapseOnLayoutChange()
+  if (!isNavbarInDesktopMode) return
+  isNavbarInDesktopMode = false
+  moveNonRootLevelsToMobileLayout()
+  moveRootLevelToMobileLayout()
+  adjustNavbarCollapseOnLayoutChange()
 }
 
 /**
  * Make the navbar adapt to the current size of the window.
  */
 const adaptNavbarToWindowSize = () => {
-    isMobileLayoutActive() ? setMobileNavbar() : setDesktopNavbar()
-    adjustUserNavContainerLevel()
+  isMobileLayoutActive() ? setMobileNavbar() : setDesktopNavbar()
+  adjustUserNavContainerLevel()
 }
 
 const _navbar = document.querySelector("#navbar")
 const _navbarTop = _navbar.querySelector(".navbar-top")
 const _page = document.querySelector("#page")
+const _root = document.querySelector(":root")
 
 /**
  * Emulate sticky position on Desktop.
  */
 const updateNavbarPosition = () => {
-    const pageClientY = _page.getBoundingClientRect().top
-    _navbar.style.top = (pageClientY < 0 ? 0 : pageClientY) + "px"
+  const pageClientY = _page.getBoundingClientRect().top
+  _navbar.style.top = (pageClientY < 0 ? 0 : pageClientY) + "px"
 }
+
+const updateVisibleNavbarHeight = () => {
+  _root.style.setProperty(
+    "--myhpi-navbar-visible-height",
+    _navbar.classList.contains("hide-now")
+      ? "0px"
+      : _root.style.getPropertyValue("--myhpi-navbar-height")
+  )
+}
+
+let classObserver = new MutationObserver(updateVisibleNavbarHeight)
+classObserver.observe(_navbar, { attributeFilter: ["class"] })
 
 /**
  * Make sure the page always has enough padding to not be overlayed by the navbar.
  */
 const respectNavbarHeight = () => {
-    const resizeObserver = new ResizeObserver((entries) => {
-        _page.style.paddingTop = isNavbarInDesktopMode
-            ? _navbarTop.offsetHeight + "px"
-            : _navbarTop.offsetHeight +
-              remToPx(defaultPagePadding + navbarBarHeight) +
-              "px"
-    })
-    resizeObserver.observe(_navbarTop)
+  const resizeObserver = new ResizeObserver((entries) => {
+    const navbarHeight = isNavbarInDesktopMode
+      ? _navbarTop.offsetHeight
+      : _navbarTop.offsetHeight + remToPx(navbarBarHeight)
+    _root.style.setProperty("--myhpi-navbar-height", navbarHeight + "px")
+    updateVisibleNavbarHeight()
+  })
+  resizeObserver.observe(_navbarTop)
 }
