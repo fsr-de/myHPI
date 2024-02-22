@@ -1,7 +1,7 @@
 /* Settings */
 
 const isMobileLayoutActive = () => {
-    return window.innerWidth < 1200
+  return window.innerWidth < 1200
 }
 
 const numberOfSupportedLevels = 3
@@ -12,9 +12,9 @@ let previousScrollPosition = window.scrollY
 /* Logic */
 
 const enableLogout = () => {
-    document.querySelector("#logout-link").onclick = () => {
-        document.querySelector("#logout-form").submit()
-    }
+  document.querySelector("#logout-link").onclick = () => {
+    document.querySelector("#logout-form").submit()
+  }
 }
 
 /**
@@ -25,7 +25,7 @@ const enableLogout = () => {
  * @param {Node} element Node to toggle the prevention on.
  */
 const toggleHideOnScrollBlock = (element) => {
-    element.classList.toggle("block-ancestor-hide")
+  element.classList.toggle("block-ancestor-hide")
 }
 
 /**
@@ -38,75 +38,80 @@ const toggleHideOnScrollBlock = (element) => {
  *   Before, the elements will always be displayed.
  */
 const toggleElementVisibilityOnScroll = (minScrollPosition = 0) => {
-    let currentScrollPosition = window.scrollY
-    let elements = document.querySelectorAll(".xl-hide-on-scroll")
-    if (
-        previousScrollPosition < currentScrollPosition &&
-        currentScrollPosition > minScrollPosition
-    ) {
-        elements.forEach((el) => {
-            if (el.querySelector(".block-ancestor-hide")) return
-            el.classList.add("hide-now")
-        })
-    } else {
-        elements.forEach((el) => el.classList.remove("hide-now"))
-    }
-    previousScrollPosition = currentScrollPosition
+  let currentScrollPosition = window.scrollY
+  let elements = document.querySelectorAll(".xl-hide-on-scroll")
+  if (
+    previousScrollPosition < currentScrollPosition &&
+    currentScrollPosition > minScrollPosition
+  ) {
+    elements.forEach((el) => {
+      if (el.querySelector(".block-ancestor-hide")) return
+      el.classList.add("hide-now")
+    })
+  } else {
+    elements.forEach((el) => el.classList.remove("hide-now"))
+  }
+  previousScrollPosition = currentScrollPosition
 }
 
 const localizeLastPublished = () => {
-    const lastPublished = document.getElementById("last-published")
-    const timezone_server = lastPublished.getAttribute("title")
-    const timezone_user = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const lastPublished = document.getElementById("last-published")
+  const timezone_server = lastPublished.getAttribute("title")
+  const timezone_user = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    if(timezone_server !== timezone_user) {
-        lastPublishedLocalized = new Date(lastPublished.getAttribute("datetime")).toLocaleString(undefined, {
-            year: "numeric", month: "numeric", day: "numeric",
-            hour: "numeric", minute: "2-digit",
-            timeZoneName: "short"
-        })
+  if (timezone_server !== timezone_user) {
+    lastPublishedLocalized = new Date(
+      lastPublished.getAttribute("datetime")
+    ).toLocaleString(undefined, {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short",
+    })
 
-        // replace <time> width <abbr> tag
-        let abbr = document.createElement("abbr");
-        abbr.setAttribute("title", lastPublishedLocalized)
-        lastPublished.removeAttribute("title")
-        lastPublished.innerText = lastPublished.textContent.trim()
+    // replace <time> width <abbr> tag
+    let abbr = document.createElement("abbr")
+    abbr.setAttribute("title", lastPublishedLocalized)
+    lastPublished.removeAttribute("title")
 
-        let parent = lastPublished.parentNode;
-        parent.replaceChild(abbr, lastPublished);
-        abbr.appendChild(lastPublished);
-    }
+    let parent = lastPublished.parentNode
+    parent.replaceChild(abbr, lastPublished)
+    abbr.appendChild(lastPublished)
+  }
 }
 
 const enableTooltips = () => {
-    const tooltipTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="tooltip"]'
-    )
-    Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
-        new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  )
+  Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
+    new bootstrap.Tooltip(tooltipTriggerEl)
+  })
 }
 
 window.onload = () => {
-    updateNavbarPosition()
-    addNavbarCollapses()
-    adaptNavbarToWindowSize()
-    toggleElementVisibilityOnScroll()
-    respectNavbarHeight()
-    enableLogout()
+  updateNavbarPosition()
+  addNavbarCollapses()
+  adaptNavbarToWindowSize()
+  toggleElementVisibilityOnScroll()
+  respectNavbarHeight()
+  enableLogout()
 
-    initializeSearch()
+  initializeSidebar()
 
-    localizeLastPublished()
+  initializeSearch()
 
-    enableTooltips()
+  localizeLastPublished()
 
+  enableTooltips()
 }
 window.onscroll = () => {
-    updateNavbarPosition()
-    toggleElementVisibilityOnScroll(_navbarTop.offsetHeight)
+  updateNavbarPosition()
+  toggleElementVisibilityOnScroll(_navbarTop.offsetHeight)
 }
 window.onresize = () => {
-    adaptNavbarToWindowSize()
-    updateNavbarPosition()
+  adaptNavbarToWindowSize()
+  updateNavbarPosition()
 }
