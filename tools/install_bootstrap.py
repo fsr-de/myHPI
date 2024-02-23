@@ -5,7 +5,6 @@ import shutil
 import zipfile
 
 import requests
-from django.core.management import BaseCommand
 
 TEMP_DIRECTORY = "tmp"
 ZIP_FILENAME = "bootstrap.zip"
@@ -14,6 +13,8 @@ logger = logging.getLogger("myhpi_install_bootstrap")
 
 
 def ensure_correct_directory():
+    if os.getcwd().endswith("tools"):
+        os.chdir("..")
     try:
         with open("pyproject.toml") as toml_file:
             return "myHPI" in toml_file.readlines()[1]
@@ -94,40 +95,50 @@ def is_bootstrap_installed():
     )
 
 
-class Command(BaseCommand):
-    help = "Install bootstrap for myHPI."
+def init_argparse() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [-u]", description="Install bootstrap for myHPI."
+    )
+    parser.add_argument(
+        "-u",
+        "--update",
+        action="store_true",
+        help="Update (Remove and reinstall) current bootstrap installation.",
+    )
+    parser.add_argument(
+        "-r", "--remove", action="store_true", help="Remove current bootstrap installation."
+    )
+    parser.add_argument(
+        "--is-installed", action="store_true", help="Check if bootstrap is installed."
+    )
+    return parser
 
-    def add_arguments(self, parser):
-        parser.add_argument(
-            "-u",
-            "--update",
-            action="store_true",
-            help="Update (Remove and reinstall) current bootstrap installation.",
-        )
-        parser.add_argument(
-            "-r", "--remove", action="store_true", help="Remove current bootstrap installation."
-        )
-        parser.add_argument(
-            "--is-installed", action="store_true", help="Check if bootstrap is installed."
-        )
 
-    def handle(self, *args, **options):
-        correct_dir = ensure_correct_directory()
-        if not correct_dir:
-            logger.error(
-                "The program was not executed in the correct directory!\n\
-            Ensure that it is run in the top directory of the repository."
-            )
-            exit(1)
-        if options["is_installed"]:
-            is_installed = is_bootstrap_installed()
-            exit(0 if is_installed else 1)
-        if options["update"] or options["remove"]:
-            remove_current_bootstrap()
-            if options["remove"]:
-                exit(0)
-        file_path = download_zip()
-        extract_zip(file_path)
-        move_files()
-        remove_temporary_directory()
-        self.stdout.write(self.style.SUCCESS("Installed bootstrap"))
+def install_bootstrap():
+    logger.setLevel(level=logging.INFO)
+    logger.addHandler(logging.StreamHandler())
+    parser = init_argparse()
+    args = parser.parse_args()
+    correct_dir = ensure_correct_directory()
+    if not correct_dir:
+        logger.error(
+            "The program was not executed in the correct directory!\n\
+        Ensure that it is run in the top directory of the repository."
+        )
+        exit(1)
+    if args.is_installed:
+        is_installed = is_bootstrap_installed()
+        exit(0 if is_installed else 1)
+    if args.update or args.remove:
+        remove_current_bootstrap()
+        if args.remove:
+            exit(0)
+    file_path = download_zip()
+    extract_zip(file_path)
+    move_files()
+    remove_temporary_directory()
+    print("Installed bootstrap")
+
+
+if __name__ == "__main__":
+    install_bootstrap()

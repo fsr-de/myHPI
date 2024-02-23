@@ -13,6 +13,6 @@ RUN pip install "poetry==$POETRY_VERSION" "uwsgi==$UWSGI_PIP_VERSION" "psycopg2=
 RUN poetry self add "poetry-dynamic-versioning[plugin]"
 ADD . /app
 RUN poetry install --no-dev
-RUN python tools/install_bootstrap.py -u # FIXME
+RUN python tools/install_bootstrap.py -u
 RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
