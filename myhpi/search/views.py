@@ -1,8 +1,8 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.template.response import TemplateResponse
+from wagtail.contrib.search_promotions.models import Query
 from wagtail.models import Page
-from wagtail.search.models import Query
 
 from myhpi.core.models import BasePage
 from myhpi.core.utils import get_user_groups
