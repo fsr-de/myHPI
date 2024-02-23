@@ -10,7 +10,7 @@ python = "^3.11"
 wagtail = "^6.0"
 django-environ = "^0.11.2"
 wagtail-localize = "^1.7"
-mozilla-django-oidc = "^3.0.0"
+mozilla-django-oidc = "^4.0.0"
 django-bootstrap-icons = "^0.8.7"
 django-select2 = "^8.1.2"
 django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
