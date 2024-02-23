@@ -48,16 +48,14 @@ class Post(BasePage):
 
     @property
     def date(self):
-        return self.first_published_at.date()
+        if self.first_published_at:
+            return self.first_published_at.date()
 
     @property
     def image_url(self):
         if self.post_account and self.post_account.icon:
             return self.post_account.icon.url
-        # user = self.author if self.author else self.owner
-        # if user:
-        #    profile = UserProfile.get_for_user(user)
-        #    return profile.avatar.url
+        # Currently does not use the wagtail user icon since it is not used anywhere else
         else:
             return "https://www.gravatar.com/avatar/b1a83a1baa8a1d45c905a59217a7d30a?s=140&d=mm"
 
