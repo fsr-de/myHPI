@@ -3,7 +3,12 @@
 
 <a href="{% pageurl result %}">
     <div class="search-result">
-        <h5>{{ result.title }}</h5>
+        <hgroup class="d-flex justify-content-between">
+            <h5 class="text-break">{{ result.title }}</h5>
+            <time datetime="{{ result.specific.date|date:"c" }}">
+                {{ result.specific.date|date:"SHORT_DATE_FORMAT" }}
+            </time>
+        </hgroup>
         <span class="text-dark">
             {% if result.search_description %}
                 {{ result.search_description }}
