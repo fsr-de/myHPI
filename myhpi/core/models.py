@@ -21,7 +21,7 @@ from wagtail_localize.fields import SynchronizedField
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.utils import get_user_groups
-from myhpi.core.widgets import AttachmentSelectWidget
+from myhpi.core.widgets import AttachmentSelectWidget, TextArrayWidget
 
 
 class BasePage(Page):
@@ -142,7 +142,9 @@ class MinutesLabel(TagBase):
 
 
 class TaggedMinutes(ItemBase):
-    tag = models.ForeignKey(MinutesLabel, on_delete=models.CASCADE)
+    tag = models.ForeignKey(
+        MinutesLabel, on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s_items"
+    )
     content_object = ParentalKey(
         "core.Minutes", on_delete=models.CASCADE, related_name="tagged_items"
     )
@@ -171,6 +173,7 @@ class MinutesForm(WagtailAdminPageForm):
         self.fields["attachments"].widget = AttachmentSelectWidget(
             user=self.for_user, choices=self.fields["attachments"].widget.choices
         )
+        self.fields["guests"].widget = TextArrayWidget()
 
     def get_last_minutes(self):
         # Since the minutes aren't created yet, they are not yet in the tree

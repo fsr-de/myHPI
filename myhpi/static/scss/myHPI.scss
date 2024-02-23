@@ -171,6 +171,12 @@ h1.side-panel-title::after {
     padding: 0;
 }
 
+.toc-container ul li a {
+    display: block;
+    line-height: 100%;
+    padding-bottom: 0.3rem;
+}
+
 .toc-container ul li>ul {
     margin-left: 0.5rem;
 }
@@ -181,6 +187,10 @@ h1.side-panel-title::after {
     margin: -0.5rem -0.8rem;
 
     .search-result {
+        h5 {
+          hyphens: auto;
+        }
+
         transition: all 0.25s;
 
         padding: 0.5rem 0.8rem;
@@ -302,12 +312,12 @@ img {
 }
 
 @media (pointer: coarse), (hover: none) {
-      [title] {
+    [title] {
         position: relative;
         display: inline-flex;
         justify-content: center;
-      }
-      [title]:focus::after {
+    }
+    [title]:focus::after {
         content: attr(title);
         position: absolute;
         top: 90%;
@@ -316,5 +326,5 @@ img {
         border: 1px solid;
         width: fit-content;
         padding: 3px;
-      }
     }
+}
