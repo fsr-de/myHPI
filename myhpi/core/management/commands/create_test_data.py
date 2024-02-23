@@ -1,24 +1,11 @@
-import os
+import random
 from datetime import date
 
-import django
-
-from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myhpi.settings")
-django.setup()
-import random
-
-from django.contrib.auth.models import Group, Permission, User
-from django.core.files import File
-from django.db import IntegrityError
-from wagtail.contrib.redirects.models import Redirect
-from wagtail.documents.models import Document
-from wagtail.models import Collection, GroupCollectionPermission
+from django.contrib.auth.models import Group, User
+from django.core.management import BaseCommand
 
 from myhpi.core.models import (
     AbbreviationExplanation,
-    BasePage,
     FirstLevelMenuItem,
     InformationPage,
     Minutes,
@@ -27,6 +14,7 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
+from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
 
 
@@ -354,14 +342,18 @@ def create_some_pages(users, groups, documents):
     slash_1999_poll.options.add(option_charlie)
 
 
-def main():
-    # Superuser is created manually via createsuperuser command
-    users, groups = create_users_and_groups()
-    collections = list(create_collections(groups))
-    documents = create_documents([collections[1], collections[2]])
-    create_abbreviation_explanations()
-    create_some_pages(users, groups, documents)
+class Command(BaseCommand):
+    help = "Creates test data (user, pages, etc.) for myHPI."
 
-
-if __name__ == "__main__":
-    main()
+    def handle(self, *args, **options):
+        # Superuser is created manually via createsuperuser command
+        users, groups = create_users_and_groups()
+        collections = list(create_collections(groups))
+        documents = create_documents([collections[1], collections[2]])
+        create_abbreviation_explanations()
+        create_some_pages(users, groups, documents)
+        self.stdout.write(
+            self.style.SUCCESS(
+                'Test data created succesfully. Remember that you need to create a superuser manually with "python manage.py createsuperuser".'
+            )
+        )
