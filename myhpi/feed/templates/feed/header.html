@@ -2,16 +2,23 @@
 
 <div class="row justify-content-between">
     <div class="col-auto">
-        <h2><span class="underline">{{ post.title }}</span></h2>
-        <span>{{ post.date }}</span>
+        <h2 style="min-height: 50px"><span class="underline">{{ post.title }}</span></h2>
     </div>
     <div class="col-auto">
         {% if post.author %}
             <div class="d-flex justify-content-end">
                 <img src="{{ post.image_url }}" class="rounded-circle" width="50" height="50" alt="Newsfeed poster icon">
             </div>
-            <p class="lead">{% trans "by" %} {{ post.author }}</p>
         {% endif %}
-        <div class="d-flex justify-content-end text-muted"> </div>
+    </div>
+</div>
+<div class="row justify-content-between">
+    <div class="col-auto">
+        <span>{{ post.date }}</span>
+    </div>
+    <div class="col-auto">
+        {% if post.author %}
+        <span>{% trans "by" %} {{ post.author }}</span>
+        {% endif %}
     </div>
 </div>
