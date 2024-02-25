@@ -8,16 +8,17 @@ from django.core.management import BaseCommand
 from myhpi.feed.models import NewsFeed, NewsFeedAccount, Post
 
 
-def get_release():
-    version = settings.MYHPI_VERSION
-    tag = f"v{version}"
+def get_release(tag):
     r = requests.get(f"https://api.github.com/repos/fsr-de/myHPI/releases/tags/{tag}")
     r.raise_for_status()
     return r.json()
 
 
-def publish_release_post(force_publish=False):
-    release = get_release()
+def publish_release_post(force_publish, tag=None):
+    if tag is None:
+        version = settings.MYHPI_VERSION
+        tag = f"v{version}"
+    release = get_release(tag)
 
     feed = NewsFeed.objects.first()
     if feed is None:
@@ -65,5 +66,12 @@ class Command(BaseCommand):
             help="Create a release post even if the release is already published.",
         )
 
+        parser.add_argument(
+            "--tag",
+            "-t",
+            type=str,
+            help="Specify a tag to publish a release post for (defaults to currently installed version, typically latest tag).",
+        )
+
     def handle(self, *args, **options):
-        publish_release_post(options["force"])
+        publish_release_post(options["force"], options["tag"])
