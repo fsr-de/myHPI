@@ -67,3 +67,4 @@ max-line-length = "100"
 
 [tool.poetry-dynamic-versioning]
 enable = true
+format = "v{base}"

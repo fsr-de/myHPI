@@ -379,6 +379,11 @@ def create_some_pages(users, groups, documents):
             )
         )
 
+    myhpi_releases = NewsFeedAccount.objects.create(
+        post_key="SECRET_TEST_KEY_2",
+        name="myHPI Releases",
+    )
+
 
 class Command(BaseCommand):
     help = "Creates test data (user, pages, etc.) for myHPI."
@@ -392,6 +397,6 @@ class Command(BaseCommand):
         create_some_pages(users, groups, documents)
         self.stdout.write(
             self.style.SUCCESS(
-                'Test data created succesfully. Remember that you need to create a superuser manually with "python manage.py createsuperuser".'
+                'Test data created successfully. Remember that you need to create a superuser manually with "python manage.py createsuperuser".'
             )
         )
