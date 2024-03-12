@@ -187,6 +187,10 @@ h1.side-panel-title::after {
     margin: -0.5rem -0.8rem;
 
     .search-result {
+        h5 {
+          hyphens: auto;
+        }
+
         transition: all 0.25s;
 
         padding: 0.5rem 0.8rem;
@@ -309,18 +313,18 @@ img {
 
 @media (pointer: coarse), (hover: none) {
     [title] {
-      position: relative;
-      display: inline-flex;
-      justify-content: center;
+        position: relative;
+        display: inline-flex;
+        justify-content: center;
     }
     [title]:focus::after {
-      content: attr(title);
-      position: absolute;
-      top: 90%;
-      color: #000;
-      background-color: #fff;
-      border: 1px solid;
-      width: fit-content;
-      padding: 3px;
+        content: attr(title);
+        position: absolute;
+        top: 90%;
+        color: #000;
+        background-color: #fff;
+        border: 1px solid;
+        width: fit-content;
+        padding: 3px;
     }
 }
