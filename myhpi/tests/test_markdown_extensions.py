@@ -12,6 +12,7 @@ from myhpi.core.markdown.extensions import (
     HeadingLevelPreprocessor,
     InternalLinkPattern,
     QuorumPreprocessor,
+    ResolutionPreprocessor,
     StartEndPreprocessor,
     VotePreprocessor,
 )
@@ -44,6 +45,22 @@ class TestMarkdownExtensions(TestCase):
         text = ["|quorum|(3/8)", "|quorum|(4/8)"]
         result = qp.run(text)
         self.assertEqual(result, ["*3/8 present → not quorate*  ", "*4/8 present → quorate*  "])
+
+    def test_resolution_preprocessor(self):
+        activate("en")
+        qp = ResolutionPreprocessor()
+        text = [
+            "|resolution|(1000000)(Bouncy Castle)(Fun)",
+            "|resolution|(0.42)(Paper clips)(Office)",
+        ]
+        result = qp.run(text)
+        self.assertEqual(
+            result,
+            [
+                "* We decide to spend up to 1000000 € for Bouncy Castle (Budget: Fun).",
+                "* We decide to spend up to 0.42 € for Paper clips (Budget: Office).",
+            ],
+        )
 
     def test_enter_leave_preprocessor(self):
         activate("en")

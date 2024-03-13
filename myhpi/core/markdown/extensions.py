@@ -102,7 +102,7 @@ class ResolutionPreprocessor(MinutesBasePreprocessor):
         super().__init__(*args, **kwargs)
         self.patterns = [
             # vote [||] is handled by VotePreprocessor
-            (r"\|resolution\|\((\d+([.,]\d{2})?)\)\((\S+)\)\((\S+)\)", self.resolutify),
+            (r"\|resolution\|\((\d+([.,]\d{2})?)\)\((.+)\)\((.+)\)", self.resolutify),
         ]
 
     def resolutify(self, match):
