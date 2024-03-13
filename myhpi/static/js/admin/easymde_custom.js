@@ -166,12 +166,11 @@ function addQuorum(editor){
 function addResolution(editor){
     const cm = editor.codemirror;
 
-    const output = "\n|resolution|()()()[||]";
+    const output = "\n|resolution|()()() [||]";
     cm.replaceSelection(output);
 
     // move the cursor to the first missing field
     const position = cm.getCursor();
-    position.line += 1;
     position.ch = "|resolution|(".length;
     cm.focus();
     cm.setCursor(position);
