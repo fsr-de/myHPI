@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-13 20:36+0100\n"
+"POT-Creation-Date: 2024-03-13 17:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,25 +44,33 @@ msgstr "nicht beschlussfähig"
 msgid "*{num_participants}/{max_num_participants} present → {quorate}*  "
 msgstr "*{num_participants}/{max_num_participants} anwesend → {quorate}*  "
 
-#: myhpi/core/markdown/extensions.py:117
+#: myhpi/core/markdown/extensions.py:109
+#, python-brace-format
+msgid ""
+"* We decide to spend up to {amount} € for {purchase} (Budget: {budget})."
+msgstr ""
+"* Wir beschließen, bis zu {amount} € für {purchase} auszugeben (HHT: "
+"{budget})."
+
+#: myhpi/core/markdown/extensions.py:134
 #, python-brace-format
 msgid "*{time}: {name} {event} the meeting*  "
 msgstr "*{time}: {name} {event} das Meeting*  "
 
-#: myhpi/core/markdown/extensions.py:122
+#: myhpi/core/markdown/extensions.py:139
 #, python-brace-format
 msgid "*{time}: {name} {event} the meeting via {mean_of_participation}*  "
 msgstr "*{time}: {name} {event} das Meeting via {mean_of_participation}*  "
 
-#: myhpi/core/markdown/extensions.py:132
+#: myhpi/core/markdown/extensions.py:149
 msgid "enters"
 msgstr "betritt"
 
-#: myhpi/core/markdown/extensions.py:135
+#: myhpi/core/markdown/extensions.py:152
 msgid "leaves"
 msgstr "verlässt"
 
-#: myhpi/core/markdown/extensions.py:156
+#: myhpi/core/markdown/extensions.py:173
 msgid "[missing link]"
 msgstr "[link fehlt]"
 
@@ -83,47 +91,47 @@ msgstr "%(date)s um %(time)s Uhr"
 msgid "by"
 msgstr "von"
 
-#: myhpi/core/templates/core/minutes.html:18
+#: myhpi/core/templates/core/minutes.html:19
 msgid "Date"
 msgstr "Datum"
 
-#: myhpi/core/templates/core/minutes.html:22
+#: myhpi/core/templates/core/minutes.html:23
 msgid "Moderator"
 msgstr "Sitzungsleitung"
 
-#: myhpi/core/templates/core/minutes.html:26
+#: myhpi/core/templates/core/minutes.html:27
 msgid "Minutes taker"
 msgstr "Protokollführung"
 
-#: myhpi/core/templates/core/minutes.html:30
+#: myhpi/core/templates/core/minutes.html:31
 msgid "Participants"
 msgstr "Teilnehmende"
 
-#: myhpi/core/templates/core/minutes.html:38
+#: myhpi/core/templates/core/minutes.html:39
 msgid "Guests"
 msgstr "Gäste"
 
-#: myhpi/core/templates/core/minutes.html:46
+#: myhpi/core/templates/core/minutes.html:47
 msgid "No guests"
 msgstr "Keine Gäste"
 
-#: myhpi/core/templates/core/minutes.html:51
+#: myhpi/core/templates/core/minutes.html:52
 msgid "Location"
 msgstr "Ort"
 
-#: myhpi/core/templates/core/minutes.html:56
+#: myhpi/core/templates/core/minutes.html:57
 msgid "Labels"
 msgstr "Labels"
 
-#: myhpi/core/templates/core/minutes.html:60
+#: myhpi/core/templates/core/minutes.html:61
 msgid "No labels"
 msgstr "Keine Labels"
 
-#: myhpi/core/templates/core/minutes.html:70
+#: myhpi/core/templates/core/minutes.html:71
 msgid "Previous minutes"
 msgstr "Vorheriges Protokoll"
 
-#: myhpi/core/templates/core/minutes.html:76
+#: myhpi/core/templates/core/minutes.html:77
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
@@ -132,15 +140,15 @@ msgstr "Nächstes Protokoll"
 msgid "Page has unpublished changes!"
 msgstr "Seite hat unveröffentlichte Änderungen!"
 
-#: myhpi/core/templates/core/sidebar.html:11
+#: myhpi/core/templates/core/sidebar.html:13
 msgid "Visibility"
 msgstr "Sichtbarkeit"
 
-#: myhpi/core/templates/core/sidebar.html:16
+#: myhpi/core/templates/core/sidebar.html:22
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
-#: myhpi/core/templates/core/sidebar.html:21
+#: myhpi/core/templates/core/sidebar.html:30
 msgid "Attachments"
 msgstr "Anhänge"
 
@@ -162,7 +170,7 @@ msgstr "Du kannst nur bis zu {} Optionen auswählen."
 msgid "Invalid choice."
 msgstr "Ungültige Auswahl."
 
-#: myhpi/polls/models.py:113 myhpi/polls/models.py:193
+#: myhpi/polls/models.py:113 myhpi/polls/models.py:195
 msgid "Your vote has been counted."
 msgstr "Deine Stimme wurde gezählt."
 
@@ -175,15 +183,15 @@ msgstr ""
 "Ungültige Stimmabgabe.\n"
 "{errors}"
 
-#: myhpi/polls/models.py:181
+#: myhpi/polls/models.py:183
 msgid "You have already voted."
 msgstr "Du hast schon abgestimmt."
 
-#: myhpi/polls/models.py:195
+#: myhpi/polls/models.py:197
 msgid "Invalid ballot."
 msgstr "Ungültige Stimmabgabe."
 
-#: myhpi/polls/models.py:197
+#: myhpi/polls/models.py:199
 msgid "A database error occured. Please try again."
 msgstr "Ein Datenbankfehler ist aufgetreten. Bitte versuche es erneut."
 
@@ -317,15 +325,15 @@ msgstr ""
 " Die angeforderte Seite existiert nicht. Bitte überprüfe die URL oder nutze "
 "das Menü oben, um die gewünschte Seite zu finden."
 
-#: myhpi/templates/base.html:45
+#: myhpi/templates/base.html:46
 msgid "To home page"
 msgstr "Zur Startseite"
 
-#: myhpi/templates/base.html:52
+#: myhpi/templates/base.html:53
 msgid "Ctrl+K"
 msgstr "Strg+K"
 
-#: myhpi/templates/base.html:74
+#: myhpi/templates/base.html:75
 msgid "Sign in"
 msgstr "Anmelden"
 
@@ -359,12 +367,7 @@ msgstr "Aktueller User:"
 msgid "Please login to see this page."
 msgstr "Bitte melde dich an um diese Seite zu sehen."
 
-#: myhpi/tenca_django/admin.py:23
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:6
-msgid "Manage List"
-msgstr "Liste verwalten"
-
-#: myhpi/tenca_django/apps.py:7
+#: myhpi/tenca_django/apps.py:7 myhpi/tenca_django/wagtail_hooks.py:12
 msgid "Mailing Lists"
 msgstr "Mailinglisten"
 
@@ -375,6 +378,11 @@ msgstr "Nichtmitglieder dürfen an diese Liste schreiben."
 #: myhpi/tenca_django/forms.py:18
 msgid "Replies are addressed to the list per default."
 msgstr "Antworten gehen immer an den Verteiler."
+
+#: myhpi/tenca_django/models.py:30
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:6
+msgid "Manage List"
+msgstr "Liste verwalten"
 
 #: myhpi/tenca_django/templates/tenca_django/action.html:4
 #: myhpi/tenca_django/templates/tenca_django/action.html:9

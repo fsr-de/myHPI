@@ -6,19 +6,19 @@ window.wagtailMarkdown.options = {
                 name: "start meeting",
                 action: startMeeting,
                 className: "fa fa-play", // Look for a suitable icon
-                title: "start or continue meeting (Ctrl/Cmd-Alt-R)",
+                title: "Start or continue meeting (Ctrl/Cmd-Alt-R)",
             },
             {
                name: "end meeting",
                action: endMeeting,
                className: "fa fa-stop",
-               title: "end meeting"
+               title: "End meeting"
             },
             {
                 name: "pause",
                 action: pauseMeeting,
                 className: "fa fa-pause",
-                title: "pause meeting"
+                title: "Pause meeting"
             },
             {
                 name: "enter",
@@ -37,6 +37,12 @@ window.wagtailMarkdown.options = {
                 action: addQuorum,
                 className: "fa fa-users",
                 title: "Add quorum text"
+            },
+            {
+                name: "resolution",
+                action: addResolution,
+                className: "fa fa-euro",
+                title: "Add resolution"
             },
             {
                 name: "Internal link",
@@ -92,7 +98,6 @@ function getCurrentTime(){
 // Custom button actions
 
 function startMeeting(editor) {
-
     const cm = editor.codemirror;
     let output = '';
     const currentTime = getCurrentTime()
@@ -156,4 +161,17 @@ function addQuorum(editor){
 
     output = "\n|quorum|(/)";
     cm.replaceSelection(output);
+}
+
+function addResolution(editor){
+    const cm = editor.codemirror;
+
+    const output = "\n|resolution|()()() [||]";
+    cm.replaceSelection(output);
+
+    // move the cursor to the first missing field
+    const position = cm.getCursor();
+    position.ch = "|resolution|(".length;
+    cm.focus();
+    cm.setCursor(position);
 }
