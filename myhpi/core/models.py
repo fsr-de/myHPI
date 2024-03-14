@@ -43,6 +43,12 @@ class BasePage(Page):
         index.FilterField("is_public"),
     ]
 
+    @property
+    def last_edited_by(self):
+        if self.get_latest_revision():
+            user = self.get_latest_revision().user
+            return f"{user.first_name} {user.last_name}"
+
 
 class InformationPageForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
@@ -82,12 +88,6 @@ class InformationPage(BasePage):
     ]
 
     base_form_class = InformationPageForm
-
-    @property
-    def last_edited_by(self):
-        if self.get_latest_revision():
-            user = self.get_latest_revision().user
-            return f"{user.first_name} {user.last_name}"
 
 
 class MinutesList(BasePage):

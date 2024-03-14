@@ -6,13 +6,13 @@ from wagtailmarkdown.utils import _get_markdown_kwargs, _sanitise_markdown_html
 from myhpi.core.markdown.extensions import MinuteExtension
 
 
-def render_markdown(text, context=None, with_abbreveations=True):
+def render_markdown(text, context=None, with_abbreviations=True):
     """
     Turn markdown into HTML.
     """
     if context is None or not isinstance(context, dict):
         context = {}
-    markdown_html, toc = _transform_markdown_into_html(text, with_abbreviations=with_abbreveations)
+    markdown_html, toc = _transform_markdown_into_html(text, with_abbreviations=with_abbreviations)
     sanitised_markdown_html = _sanitise_markdown_html(markdown_html)
     return mark_safe(sanitised_markdown_html), mark_safe(toc)
 

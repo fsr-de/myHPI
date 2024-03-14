@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load core_extras %}
+{% load i18n %}
+
+{% block content %}
+    <div>
+    {% for post in posts %}
+        <div class="card mb-2">
+            <div class="card-header bg-light">
+                {% include "feed/header.html" %}
+            </div>
+            <div class="card-body">
+                <p>
+                    {% with post.body|markdown as parsed_md %}
+                        {{ parsed_md.0|safe| truncatechars_html:limit }}
+                    {% endwith %}
+                </p>
+                <a href="{{ post.get_url }}">{% trans  "Read more" %}</a>
+            </div>
+        </div>
+    {% endfor %}
+    <div id="minutes-navigation" class="row">
+        <div class="col-6">
+            {%  if page.has_previous %}
+                <a class="btn btn-outline-primary" href="?page={{ page.previous_page_number }}">{% trans "Previous page" %}</a>
+            {% endif %}
+        </div>
+        <div class="col-6 text-end">
+            {% if page.has_next %}
+                <a class="btn btn-outline-primary" href="?page={{ page.next_page_number }}">{% trans "Next page" %}</a>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

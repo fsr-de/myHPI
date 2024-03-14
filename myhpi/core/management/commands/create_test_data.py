@@ -1,3 +1,4 @@
+import datetime
 import random
 from datetime import date
 
@@ -14,6 +15,7 @@ from myhpi.core.models import (
     RootPage,
     SecondLevelMenuItem,
 )
+from myhpi.feed.models import NewsFeed, NewsFeedAccount, Post
 from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
 
@@ -327,6 +329,9 @@ def create_some_pages(users, groups, documents):
             visible_for=[groups[0]],
         )
     )
+
+    # Create poll
+
     option_alice = RankedChoiceOption(
         name="Alice", description=generate_text(), poll=slash_1999_poll
     )
@@ -341,6 +346,44 @@ def create_some_pages(users, groups, documents):
     slash_1999_poll.options.add(option_bob)
     slash_1999_poll.options.add(option_charlie)
 
+    # Create feed and posts
+
+    feed = root_page.add_child(
+        instance=NewsFeed(
+            title="Feed",
+            slug="feed",
+            show_in_menus=True,
+            is_public=False,
+            visible_for=[groups[0]],
+        )
+    )
+
+    the_potsdam_post = NewsFeedAccount.objects.create(
+        post_key="SECRET_TEST_KEY",
+        name="the Potsdam Post",
+    )
+
+    for i in range(10):
+        feed.add_child(
+            instance=Post(
+                title=f"Post {i}",
+                slug=f"post-{i}",
+                show_in_menus=False,
+                is_public=False,
+                post_account=the_potsdam_post,
+                body=generate_text(),
+                visible_for=[groups[0]],
+                first_published_at=datetime.datetime.now(datetime.UTC)
+                - datetime.timedelta(10)
+                + datetime.timedelta(days=i),
+            )
+        )
+
+    myhpi_releases = NewsFeedAccount.objects.create(
+        post_key="SECRET_TEST_KEY_2",
+        name="myHPI Releases",
+    )
+
 
 class Command(BaseCommand):
     help = "Creates test data (user, pages, etc.) for myHPI."
@@ -354,6 +397,6 @@ class Command(BaseCommand):
         create_some_pages(users, groups, documents)
         self.stdout.write(
             self.style.SUCCESS(
-                'Test data created succesfully. Remember that you need to create a superuser manually with "python manage.py createsuperuser".'
+                'Test data created successfully. Remember that you need to create a superuser manually with "python manage.py createsuperuser".'
             )
         )

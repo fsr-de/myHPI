@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "myhpi.core",
     "myhpi.polls",
     "myhpi.search",
+    "myhpi.feed",
     "static_precompiler",
     "django_prometheus",
 ]
@@ -108,6 +109,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "myhpi.feed.middleware.FeedRedirectMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "myhpi.core.middleware.IPRangeUserMiddleware",
@@ -375,3 +377,8 @@ try:
     MYHPI_VERSION = importlib_metadata.version("myHPI")
 except importlib_metadata.PackageNotFoundError:
     MYHPI_VERSION = "dev"
+
+# Feed settings
+REDIRECT_TO_FEED = env.bool("REDIRECT_TO_FEED", False)
+FEED_TRUNCATE_LIMIT = env.int("FEED_TRUNCATE_LIMIT", 400)
+RELEASE_POST_ACCOUNT_ID = env.str("RELEASE_POST_ACCOUNT_ID", None)
