@@ -111,6 +111,13 @@ class RankedChoiceAlgorithmTests(MyHPIPageTestCase):
             [(1, "Alice", 0), (1, "Bob", 0), (1, "Charlie", 0), (1, "Dora", 0)],
         )
 
+    def test_empty_ballots(self):
+        self.cast_ballots([[]])
+        self.assertEqual(
+            self.poll.calculate_ranking(),
+            [(1, "Alice", 0), (1, "Bob", 0), (1, "Charlie", 0), (1, "Dora", 0)],
+        )
+
     def test_fast(self):
         self.cast_ballots(([["alice", "bob"]] * 1000) + ([["bob", "alice", "charlie"]] * 900))
 

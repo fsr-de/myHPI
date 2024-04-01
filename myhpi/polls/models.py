@@ -234,7 +234,8 @@ class RankedChoicePoll(BasePoll):
             names[option.pk] = option.name
 
         for ballot in ballots:
-            current_votes[heapq.heappop(ballot)[1].option.pk].append(ballot)
+            if ballot:
+                current_votes[heapq.heappop(ballot)[1].option.pk].append(ballot)
 
         def find_loosers():
             threshold = min(map(lambda key: len(current_votes[key]), current_votes.keys()))
