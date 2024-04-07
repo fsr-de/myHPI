@@ -1,8 +1,6 @@
 from itertools import chain
 
-from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
 from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail import hooks
@@ -13,16 +11,7 @@ from myhpi.core.models import InformationPage, Minutes, MinutesList
 @hooks.register("before_serve_page")
 def check_view_permissions(page, request, serve_args, serve_kwargs):
     if isinstance(page, (Minutes, MinutesList, InformationPage)):
-        target_groups = request.user.groups.all()
-        if request.user.is_superuser:
-            return
-        if getattr(request.user, "ip_range_group_name", None):
-            target_groups = Group.objects.filter(
-                Q(name=request.user.ip_range_group_name) | Q(id__in=request.user.groups.all())
-            )
-        is_matching_group = any(group in page.visible_for.all() for group in target_groups)
-        if not (is_matching_group or page.is_public):
-            raise PermissionDenied
+        page.specific.check_can_view(request)
 
 
 @hooks.register("before_serve_document")
