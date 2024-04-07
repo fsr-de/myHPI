@@ -66,8 +66,7 @@ class InformationPage(BasePage):
         FieldPanel("attachments", widget=AttachmentSelectWidget),
     ]
     parent_page_types = [
-        "FirstLevelMenuItem",
-        "SecondLevelMenuItem",
+        "MenuItem",
         "InformationPage",
         "RootPage",
     ]
@@ -97,8 +96,7 @@ class MinutesList(BasePage):
         FieldPanel("group", widget=forms.Select),
     ]
     parent_page_types = [
-        "FirstLevelMenuItem",
-        "SecondLevelMenuItem",
+        "MenuItem",
         "InformationPage",
         "RootPage",
     ]
@@ -284,9 +282,9 @@ class Footer(models.Model):
         )
 
 
-class FirstLevelMenuItem(BasePage):
+class MenuItem(BasePage):
     parent_page_types = ["RootPage"]
-    subpage_types = ["SecondLevelMenuItem", "InformationPage", "MinutesList"]
+    subpage_types = ["MenuItem", "InformationPage", "MinutesList"]
     preview_modes = []
     show_in_menus_default = True
 
@@ -297,11 +295,6 @@ class FirstLevelMenuItem(BasePage):
             return HttpResponseRedirect(first_descendant.url)
         else:
             return HttpResponseRedirect(Site.find_for_request(request).root_page.url)
-
-
-class SecondLevelMenuItem(FirstLevelMenuItem):
-    parent_page_types = ["FirstLevelMenuItem"]
-    subpage_types = ["InformationPage", "MinutesList"]
 
 
 @register_snippet
