@@ -26,10 +26,4 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(replace_menu_items),
-        migrations.DeleteModel(
-            name="FirstLevelMenuItem",
-        ),
-        migrations.DeleteModel(
-            name="SecondLevelMenuItem",
-        ),
     ]
