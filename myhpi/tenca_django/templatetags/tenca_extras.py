@@ -9,3 +9,8 @@ def fqdn_ize(list_id):
     from myhpi.tenca_django.connection import connection
 
     return connection.fqdn_ize(list_id)
+
+
+@register.filter(name='addcss')
+def addcss(field, css):
+    return field.as_widget(attrs={"class":css})
