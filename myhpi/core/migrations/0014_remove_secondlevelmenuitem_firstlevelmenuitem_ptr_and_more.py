@@ -10,14 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="secondlevelmenuitem",
-            name="firstlevelmenuitem_ptr",
+        migrations.DeleteModel(
+            name="SecondLevelMenuItem",
         ),
         migrations.DeleteModel(
             name="FirstLevelMenuItem",
-        ),
-        migrations.DeleteModel(
-            name="SecondLevelMenuItem",
         ),
     ]

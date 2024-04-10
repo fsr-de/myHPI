@@ -283,7 +283,7 @@ class Footer(models.Model):
 
 
 class MenuItem(BasePage):
-    parent_page_types = ["RootPage"]
+    parent_page_types = ["RootPage", "MenuItem"]
     subpage_types = ["MenuItem", "InformationPage", "MinutesList"]
     preview_modes = []
     show_in_menus_default = True
