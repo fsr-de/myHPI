@@ -3,6 +3,7 @@ from datetime import date
 
 from django import forms
 from django.contrib.auth.models import Group, User
+from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
@@ -42,6 +43,18 @@ class BasePage(Page):
         index.FilterField("group_id"),
         index.FilterField("is_public"),
     ]
+
+    def check_can_view(self, request):
+        target_groups = request.user.groups.all()
+        if request.user.is_superuser:
+            return
+        if getattr(request.user, "ip_range_group_name", None):
+            target_groups = Group.objects.filter(
+                Q(name=request.user.ip_range_group_name) | Q(id__in=request.user.groups.all())
+            )
+        is_matching_group = any(group in self.visible_for.all() for group in target_groups)
+        if not (is_matching_group or self.is_public):
+            raise PermissionDenied
 
 
 class InformationPageForm(WagtailAdminPageForm):
