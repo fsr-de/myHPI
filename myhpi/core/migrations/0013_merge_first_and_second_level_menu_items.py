@@ -8,14 +8,22 @@ def replace_menu_items(apps, schema_editor):
     menu_item_content_type = ContentType.objects.get_for_model(MenuItem)
     FirstLevelMenuItem = apps.get_model("core", "FirstLevelMenuItem")
     SecondLevelMenuItem = apps.get_model("core", "SecondLevelMenuItem")
-    for menu_item in FirstLevelMenuItem.objects.values():
-        FirstLevelMenuItem.objects.get(id=menu_item["id"]).delete()
-        menu_item["content_type_id"] = menu_item_content_type.id
-        MenuItem.objects.create(**menu_item)
-    for menu_item in SecondLevelMenuItem.objects.values():
-        SecondLevelMenuItem.objects.get(id=menu_item["id"]).delete()
-        menu_item["content_type_id"] = menu_item_content_type.id
-        MenuItem.objects.create(**menu_item)
+    for menu_item_data in FirstLevelMenuItem.objects.values():
+        menu_item = FirstLevelMenuItem.objects.get(id=menu_item_data["id"])
+        visible_for = list(menu_item.visible_for.all())
+        menu_item.delete()
+        menu_item_data["content_type_id"] = menu_item_content_type.id
+        new_menu_item = MenuItem.objects.create(**menu_item_data)
+        new_menu_item.visible_for = visible_for
+        new_menu_item.save()
+    for menu_item_data in SecondLevelMenuItem.objects.values():
+        menu_item = SecondLevelMenuItem.objects.get(id=menu_item_data["id"])
+        visible_for = list(menu_item.visible_for.all())
+        menu_item.delete()
+        menu_item_data["content_type_id"] = menu_item_content_type.id
+        new_menu_item = MenuItem.objects.create(**menu_item_data)
+        new_menu_item.visible_for = visible_for
+        new_menu_item.save()
 
 
 class Migration(migrations.Migration):
