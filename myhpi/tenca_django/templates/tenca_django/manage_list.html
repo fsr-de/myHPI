@@ -31,7 +31,7 @@
             {% for field in form %}
                 <div class="form-check">
                     {{ field|addcss:"form-check-input" }}
-                    {{ field.label }}
+                    {{ field.label_tag }}
                 </div>
             {% endfor %}
         </div>
