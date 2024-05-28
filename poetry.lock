@@ -548,17 +548,17 @@ requests = "*"
 
 [[package]]
 name = "django-debug-toolbar"
-version = "4.3.0"
+version = "4.4.2"
 description = "A configurable set of panels that display various debug information about the current request/response."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django_debug_toolbar-4.3.0-py3-none-any.whl", hash = "sha256:e09b7dcb8417b743234dfc57c95a7c1d1d87a88844abd13b4c5387f807b31bf6"},
-    {file = "django_debug_toolbar-4.3.0.tar.gz", hash = "sha256:0b0dddee5ea29b9cb678593bc0d7a6d76b21d7799cb68e091a2148341a80f3c4"},
+    {file = "django_debug_toolbar-4.4.2-py3-none-any.whl", hash = "sha256:5d7afb2ea5f8730241e5b0735396e16cd1fd8c6b53a2f3e1e30bbab9abb23728"},
+    {file = "django_debug_toolbar-4.4.2.tar.gz", hash = "sha256:9204050fcb1e4f74216c5b024bc76081451926a6303993d6c513f5e142675927"},
 ]
 
 [package.dependencies]
-django = ">=3.2.4"
+django = ">=4.2.9"
 sqlparse = ">=0.2"
 
 [[package]]
@@ -1289,8 +1289,8 @@ files = [
 astroid = ">=3.1.0,<=3.2.0-dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
-    {version = ">=0.3.6", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
     {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
+    {version = ">=0.3.6", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
 ]
 isort = ">=4.2.5,<5.13.0 || >5.13.0,<6"
 mccabe = ">=0.6,<0.8"
@@ -1704,8 +1704,8 @@ files = [
 defusedxml = ">=0.7,<1.0"
 filetype = ">=1.0.10,<1.1.0 || >1.1.0"
 pillow-heif = [
-    {version = ">=0.10.0,<1.0.0", optional = true, markers = "extra == \"heif\" and python_version < \"3.12\""},
     {version = ">=0.13.0,<1.0.0", optional = true, markers = "extra == \"heif\" and python_version >= \"3.12\""},
+    {version = ">=0.10.0,<1.0.0", optional = true, markers = "extra == \"heif\" and python_version < \"3.12\""},
 ]
 
 [package.extras]
@@ -1722,4 +1722,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6877bde34c44ab607bb49bb0dc84987344e7e807c35381a230579ad649d0ca0d"
+content-hash = "eb4c7a00405e841ffe5e18fc0bbd40da962a3d4d7971a9f3c91974c1022d20d1"
