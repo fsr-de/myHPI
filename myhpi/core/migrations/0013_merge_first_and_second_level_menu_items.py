@@ -4,25 +4,28 @@ from django.db import migrations
 
 
 def replace_menu_items(apps, schema_editor):
+    BasePage = apps.get_model("core", "BasePage")
     MenuItem = apps.get_model("core", "MenuItem")
     menu_item_content_type = ContentType.objects.get_for_model(MenuItem)
     FirstLevelMenuItem = apps.get_model("core", "FirstLevelMenuItem")
     SecondLevelMenuItem = apps.get_model("core", "SecondLevelMenuItem")
     for menu_item_data in FirstLevelMenuItem.objects.values():
         menu_item = FirstLevelMenuItem.objects.get(id=menu_item_data["id"])
-        visible_for = list(menu_item.visible_for.all())
-        menu_item.delete()
-        menu_item_data["content_type_id"] = menu_item_content_type.id
-        new_menu_item = MenuItem.objects.create(**menu_item_data)
-        new_menu_item.visible_for = visible_for
+        basepage_ptr_id = menu_item.basepage_ptr_id
+        menu_item.delete(keep_parents=True)
+        basepage = BasePage.objects.get(pk=basepage_ptr_id)
+        new_menu_item = MenuItem(basepage_ptr_id=basepage_ptr_id)
+        new_menu_item.__dict__.update(basepage.__dict__)
+        new_menu_item.content_type_id = menu_item_content_type
         new_menu_item.save()
     for menu_item_data in SecondLevelMenuItem.objects.values():
         menu_item = SecondLevelMenuItem.objects.get(id=menu_item_data["id"])
-        visible_for = list(menu_item.visible_for.all())
-        menu_item.delete()
-        menu_item_data["content_type_id"] = menu_item_content_type.id
-        new_menu_item = MenuItem.objects.create(**menu_item_data)
-        new_menu_item.visible_for = visible_for
+        basepage_ptr_id = menu_item.basepage_ptr_id
+        menu_item.delete(keep_parents=True)
+        basepage = BasePage.objects.get(pk=basepage_ptr_id)
+        new_menu_item = MenuItem(basepage_ptr_id=basepage_ptr_id)
+        new_menu_item.__dict__.update(basepage.__dict__)
+        new_menu_item.content_type_id = menu_item_content_type
         new_menu_item.save()
 
 
