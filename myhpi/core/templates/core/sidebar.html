@@ -2,38 +2,64 @@
 {% load i18n %}
 
 {% if perms.wagtail.edit_page %}
-    {% if page.has_unpublished_changes %}
-    <aside class="side-panel border-accent toc-container d-print-none">
-        <h1 class="side-panel-warning">{% translate "Page has unpublished changes!" %}</h1>
-    </aside>
-    {% endif %}
-    {% with page.visible_for.all|join:", " as visibility %}
-        {% if visibility %}
-            <aside class="side-panel border-accent toc-container d-print-none">
-                <h1 class="side-panel-title">{% translate "Visibility" %}</h1>
-                {{ visibility }}
-            </aside>
-        {% endif %}
-    {% endwith %}
+{% if page.has_unpublished_changes %}
+<aside class="side-panel border-accent sidebar-container d-print-none">
+    <h1 class="side-panel-warning">{% translate "Page has unpublished changes!" %}</h1>
+</aside>
 {% endif %}
-{% with parsed_md.1 as toc %}
-    {% if toc|non_empty %}
-        <aside class="side-panel border-accent toc-container d-print-none">
-            <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
-            {{ toc }}
-        </aside>
-    {% endif %}
+{% with page.visible_for.all|join:", " as visibility %}
+{% if visibility %}
+<aside class="side-panel border-accent sidebar-container d-print-none">
+    <h1 class="side-panel-title">{% translate "Visibility" %}</h1>
+    {{ visibility }}
+</aside>
+{% endif %}
 {% endwith %}
+{% endif %}
 
-{% if page.attachments.all %}
-    <aside class="side-panel border-accent toc-container d-print-none">
+<!-- Bootstrap 5.2 supports responsive offcanvas.
+    This duplication is a workaround and should be removed after the upgrade -->
+<div class="d-none d-lg-block side-panel-container">
+    <aside class="side-panel border-accent sidebar-container d-print-none">
+        <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
+        {{ parsed_md.1 }}
+    </aside>
+    {% if page.attachments.all %}
+    <aside class="side-panel border-accent sidebar-container d-print-none">
         <h1 class="side-panel-title">{% translate "Attachments" %}</h1>
         <ul>
-        {% for attachment in page.attachments.all %}
+            {% for attachment in page.attachments.all %}
             <li>
                 <a href="{{ attachment.url }}">{{ attachment.title }}</a>
             </li>
-        {% endfor %}
+            {% endfor %}
         </ul>
     </aside>
-{% endif %}
+    {% endif %}
+</div>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="sidebar-offcanvas" aria-labelledby="sidebar-offcanvas-label">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebar-offcanvas-label">{% translate "Table of contents" %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            aria-label="{% translate 'Close' %}"></button>
+    </div>
+    <div class="offcanvas-body">
+        <aside class="side-panel border-accent sidebar-container d-print-none">
+            <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
+            {{ parsed_md.1 }}
+        </aside>
+        {% if page.attachments.all %}
+        <aside class="side-panel border-accent sidebar-container d-print-none">
+            <h1 class="side-panel-title">{% translate "Attachments" %}</h1>
+            <ul>
+                {% for attachment in page.attachments.all %}
+                <li>
+                    <a href="{{ attachment.url }}">{{ attachment.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        {% endif %}
+    </div>
+</div>

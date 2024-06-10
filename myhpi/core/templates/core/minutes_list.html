@@ -4,30 +4,31 @@
 
 {% block content %}
 <h1>{{ page.title }}</h1>
-    {% for year,minutes in minutes_by_years.items %}
-        <h3 id="year{{ year }}">{{ year }}</h3>
-        <table class="table table-striped">
-        {% for minute in minutes %}
-            <tr>
-                <td><a href="{{ minute.get_valid_url }}">{{ minute.date|date:"d.m.Y" }}</a></td>
-                <td>
-                    {% if minute.has_unpublished_changes %}
-                        <span title='{% translate "Page has unpublished changes!" %}' aria-hidden="true">⚠️</span>
-                    {% endif %}
-                </td>
-                <td>
-                    {% include "core/label.html" with minutes=minute %}
-                </td>
-                <td><a href="{{ minute.get_valid_url }}">{{ minute.title }}</a></td>
-                <td>
-                    {% if minute.attachments.count > 0 %}
-                        <span class="text-gray" data-toggle="tooltip" data-placement="left" data-container="body" title="{{ minute.attachments.all|join:', ' }}">
-                            📦
-                        </span>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
+{% for year,minutes in minutes_by_years.items %}
+<h3 id="year{{ year }}">{{ year }}</h3>
+<table class="table table-striped">
+    {% for minute in minutes %}
+    <tr>
+        <td><a href="{{ minute.get_valid_url }}">{{ minute.date|date:"d.m.Y" }}</a></td>
+        <td>
+            {% if minute.has_unpublished_changes %}
+            <span title='{% translate "Page has unpublished changes!" %}' aria-hidden="true">⚠️</span>
+            {% endif %}
+        </td>
+        <td>
+            {% include "core/label.html" with minutes=minute %}
+        </td>
+        <td><a href="{{ minute.get_valid_url }}">{{ minute.title }}</a></td>
+        <td>
+            {% if minute.attachments.count > 0 %}
+            <span class="text-gray" data-toggle="tooltip" data-placement="left" data-container="body"
+                title="{{ minute.attachments.all|join:', ' }}">
+                📦
+            </span>
+            {% endif %}
+        </td>
+    </tr>
     {% endfor %}
+</table>
+{% endfor %}
 {% endblock %}
