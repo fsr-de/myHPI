@@ -81,7 +81,7 @@
         </div>
         <div class="navbar-bottom d-flex">
             <div class="navbar-bottom-content page-content d-flex flex-column flex-xl-row flex-grow-1 flex-xl-grow-0">
-            
+
                 {% cache template_cache_duration menu request.user.id request.user.ip_range_group_name LANGUAGE_CODE %}
                     {% build_nav_level_for root_page %}
                 {% endcache %}
@@ -113,6 +113,9 @@
                         {% endfor %}
                         <li class="dropdown-divider"></li>
                         {% endif %}
+                        <li class="nav-item">
+                            <a class='nav-link' href="https://auth.myhpi.de" id="edit-profile-link">{% trans "Edit profile" %}</a>
+                        </li>
                         <li class="nav-item">
                             <a class='nav-link' href="#" id="logout-link">{% trans "Sign out" %}</a>
                             <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
