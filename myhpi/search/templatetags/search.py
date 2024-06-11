@@ -1,15 +1,17 @@
 import re
+
 from django import template
-from myhpi.core.markdown.utils import render_markdown
-from django.utils.safestring import mark_safe
 from django.utils.html import escape
+from django.utils.safestring import mark_safe
+
+from myhpi.core.markdown.utils import render_markdown
 
 register = template.Library()
 
 
-@register.filter(name="highlight_query")
+@register.filter(name="highlight_query_markdown")
 # select 3 lines around first match and highlight query match
-def highlight_query(content, search_query):
+def highlight_query(content, search_query, surrounding_lines=1):
     lines = content.split("\n")
     for i, line in enumerate(lines):
         if search_query.lower() in line.lower():
@@ -29,6 +31,9 @@ def highlight_query(content, search_query):
             if trailing_heading:
                 lines.insert(0, trailing_heading)
             break
+    excerpt_max_length = surrounding_lines * 2 + 1
+    if len(lines) > excerpt_max_length:
+        lines = lines[:excerpt_max_length]
     markdown = "\n".join(lines)
     # Replace search query with bold version but preserve case from markdown
     markdown = re.sub(

@@ -14,7 +14,7 @@
             {% if result.search_description %}
                 {{ result.search_description }}
             {% else %}
-                {{ result.specific.body|highlight_query:search_query }}
+                {{ result.specific.body|highlight_query_markdown:search_query }}
             {% endif %}
         </span>
     </div>
