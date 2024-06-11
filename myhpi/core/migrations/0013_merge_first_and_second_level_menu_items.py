@@ -9,8 +9,7 @@ def replace_menu_items(apps, schema_editor):
     menu_item_content_type = ContentType.objects.get_for_model(MenuItem)
     FirstLevelMenuItem = apps.get_model("core", "FirstLevelMenuItem")
     SecondLevelMenuItem = apps.get_model("core", "SecondLevelMenuItem")
-    for menu_item_data in FirstLevelMenuItem.objects.values():
-        menu_item = FirstLevelMenuItem.objects.get(id=menu_item_data["id"])
+    for menu_item in FirstLevelMenuItem.objects.all():
         basepage_ptr_id = menu_item.basepage_ptr_id
         menu_item.delete(keep_parents=True)
         basepage = BasePage.objects.get(pk=basepage_ptr_id)
@@ -18,8 +17,7 @@ def replace_menu_items(apps, schema_editor):
         new_menu_item.__dict__.update(basepage.__dict__)
         new_menu_item.content_type_id = menu_item_content_type
         new_menu_item.save()
-    for menu_item_data in SecondLevelMenuItem.objects.values():
-        menu_item = SecondLevelMenuItem.objects.get(id=menu_item_data["id"])
+    for menu_item in SecondLevelMenuItem.objects.all():
         basepage_ptr_id = menu_item.basepage_ptr_id
         menu_item.delete(keep_parents=True)
         basepage = BasePage.objects.get(pk=basepage_ptr_id)
