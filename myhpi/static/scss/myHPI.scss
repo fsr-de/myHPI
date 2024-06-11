@@ -186,6 +186,12 @@ h1.side-panel-title::after {
     padding: 0;
     margin: -0.5rem -0.8rem;
 
+    .search-preview {
+        h1, h2, h3, h4, h5, h6{
+            font-size: 1rem;
+        }
+    }
+
     .search-result {
         h5 {
           hyphens: auto;
@@ -250,6 +256,8 @@ img {
 .minutes-navigation-icon {
     margin: 0 5px;
 }
+
+
 
 @import "./navbar.scss";
 @import "./footer.scss";

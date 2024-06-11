@@ -1,0 +1,38 @@
+import re
+from django import template
+from myhpi.core.markdown.utils import render_markdown
+from django.utils.safestring import mark_safe
+
+register = template.Library()
+
+@register.filter(name="highlight_query")
+# select 3 lines around first match and highlight query match
+def highlight_query(content, search_query):
+    lines = content.split("\n")
+    for i, line in enumerate(lines):
+        if search_query.lower() in line.lower():
+            lines[i] = line
+            # try finding the last leading heading to include it in the snippet
+            trailing_heading = None
+            # skip if the current line already is a heading
+            if not line.startswith("#"):
+              for j in range(i - 1, -1, -1):
+                  if lines[j].startswith("#"):
+                      trailing_heading = lines[j]
+                      break
+            # take 3 lines around match
+            start = max(0, i - 1)
+            end = min(len(lines), i + 2)
+            lines = lines[start:end]
+            if trailing_heading:
+                lines.insert(0, trailing_heading)
+            break
+    markdown = "\n".join(lines)
+    # Replace search query with bold version but preserve case from markdown
+    markdown = re.sub(
+        re.compile(f"({search_query})", re.IGNORECASE),
+        r"**\1**",
+        markdown,
+    )
+    rendered_markdown = render_markdown(markdown, None, False)[0]
+    return rendered_markdown

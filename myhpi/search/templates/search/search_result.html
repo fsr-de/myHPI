@@ -1,5 +1,6 @@
 {% load static wagtailcore_tags %}
 {% load bootstrap_icons %}
+{% load search %}
 
 <a href="{% pageurl result %}">
     <div class="search-result">
@@ -9,11 +10,11 @@
                 {{ result.specific.date|date:"SHORT_DATE_FORMAT" }}
             </time>
         </hgroup>
-        <span class="text-dark">
+        <span class="text-dark search-preview">
             {% if result.search_description %}
                 {{ result.search_description }}
             {% else %}
-                {{ result.specific.body|truncatewords:20 }}
+                {{ result.specific.body|highlight_query:search_query }}
             {% endif %}
         </span>
     </div>
