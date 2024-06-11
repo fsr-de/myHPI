@@ -2,6 +2,7 @@ import re
 from django import template
 from myhpi.core.markdown.utils import render_markdown
 from django.utils.safestring import mark_safe
+from django.utils.html import escape
 
 register = template.Library()
 
@@ -36,3 +37,12 @@ def highlight_query(content, search_query):
     )
     rendered_markdown = render_markdown(markdown, None, False)[0]
     return rendered_markdown
+
+@register.filter(name="highlight_title")
+def highlight_title(title, search_query):
+    title = escape(title)
+    return mark_safe(re.sub(
+        re.compile(f"({search_query})", re.IGNORECASE),
+        r"<strong>\1</strong>",
+        title,
+    ))

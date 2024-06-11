@@ -5,7 +5,7 @@
 <a href="{% pageurl result %}">
     <div class="search-result">
         <hgroup class="d-flex justify-content-between">
-            <h5 class="text-break">{{ result.title }}</h5>
+            <h5 class="text-break">{{ result.title|highlight_title:search_query }}</h5>
             <time datetime="{{ result.specific.date|date:"c" }}">
                 {{ result.specific.date|date:"SHORT_DATE_FORMAT" }}
             </time>
