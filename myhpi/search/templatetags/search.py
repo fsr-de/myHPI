@@ -6,6 +6,7 @@ from django.utils.html import escape
 
 register = template.Library()
 
+
 @register.filter(name="highlight_query")
 # select 3 lines around first match and highlight query match
 def highlight_query(content, search_query):
@@ -17,10 +18,10 @@ def highlight_query(content, search_query):
             trailing_heading = None
             # skip if the current line already is a heading
             if not line.startswith("#"):
-              for j in range(i - 1, -1, -1):
-                  if lines[j].startswith("#"):
-                      trailing_heading = lines[j]
-                      break
+                for j in range(i - 1, -1, -1):
+                    if lines[j].startswith("#"):
+                        trailing_heading = lines[j]
+                        break
             # take 3 lines around match
             start = max(0, i - 1)
             end = min(len(lines), i + 2)
@@ -38,11 +39,14 @@ def highlight_query(content, search_query):
     rendered_markdown = render_markdown(markdown, None, False)[0]
     return rendered_markdown
 
+
 @register.filter(name="highlight_title")
 def highlight_title(title, search_query):
     title = escape(title)
-    return mark_safe(re.sub(
-        re.compile(f"({search_query})", re.IGNORECASE),
-        r"<strong>\1</strong>",
-        title,
-    ))
+    return mark_safe(
+        re.sub(
+            re.compile(f"({search_query})", re.IGNORECASE),
+            r"<strong>\1</strong>",
+            title,
+        )
+    )
