@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-13 17:26+0100\n"
+"POT-Creation-Date: 2024-06-11 11:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -278,7 +278,7 @@ msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
 #: myhpi/search/templates/search/search_field.html:6
-#: myhpi/templates/base.html:166
+#: myhpi/templates/base.html:169
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -352,10 +352,14 @@ msgid "Create minutes"
 msgstr "Protokoll erstellen"
 
 #: myhpi/templates/base.html:117
+msgid "Edit profile"
+msgstr "Profil bearbeiten"
+
+#: myhpi/templates/base.html:120
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: myhpi/templates/base.html:168
+#: myhpi/templates/base.html:171
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -446,12 +450,6 @@ msgstr ""
 "\n"
 "\t\tMöchtest du die Liste %(listname)s wirklich löschen?\n"
 "\t"
-
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:20
-#, fuzzy
-#| msgid "Delete list"
-msgid "Delete"
-msgstr "Liste Löschen"
 
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:21
 msgid "Cancel"
@@ -605,11 +603,6 @@ msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
 
 #~ msgid "Draft"
 #~ msgstr "Entwurf"
-
-#, fuzzy
-#~| msgid "[missing link]"
-#~ msgid "[missing image]"
-#~ msgstr "[link fehlt]"
 
 #~ msgid "Sorry, this page could not be found."
 #~ msgstr ""
