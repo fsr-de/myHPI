@@ -1661,22 +1661,22 @@ testing = ["coverage (>=7.0,<8.0)", "dj-database-url (>=2.1.0,<3)", "django-rq (
 
 [[package]]
 name = "wagtail-markdown"
-version = "0.11.1"
+version = "0.12.1"
 description = "Markdown support for Wagtail"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtail_markdown-0.11.1-py3-none-any.whl", hash = "sha256:3d2c5dcfac718c3fc03f2ed05aca535b2aa70f71254599505ee272c54437db21"},
-    {file = "wagtail_markdown-0.11.1.tar.gz", hash = "sha256:afcb64efac5b1b57de9f7cc475987c0c7dec5b669833e4617ec4658880de0f77"},
+    {file = "wagtail_markdown-0.12.1-py3-none-any.whl", hash = "sha256:bb5f02b6bdfef74b50a74e7aa3f255c7bc9787cec8d03dae50fc9404a0097dba"},
+    {file = "wagtail_markdown-0.12.1.tar.gz", hash = "sha256:54f1ba375348e86e03f4eca7d2ac3d33245ead9f854028d7ee9c479448f1e678"},
 ]
 
 [package.dependencies]
 bleach = ">=3.3,<5"
 Markdown = ">=3.3,<4"
-Wagtail = ">=4.1"
+Wagtail = ">=5.2"
 
 [package.extras]
-testing = ["pre-commit (>=3.3.0,<4)", "tox (>=4.6.4,<5)"]
+testing = ["coverage (>=7.0,<8.0)", "tox (>=4.6.4,<5)"]
 
 [[package]]
 name = "webencodings"
@@ -1722,4 +1722,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "eb4c7a00405e841ffe5e18fc0bbd40da962a3d4d7971a9f3c91974c1022d20d1"
+content-hash = "b1d20541681aae4c251eb48a8506eb5c71a6aa010957280ebe4c0c8608ade466"
