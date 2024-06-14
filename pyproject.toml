@@ -17,7 +17,7 @@ django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
 django-debug-toolbar = "^4.4.2"
 django-permissionedforms = "^0.1"
 tenca = "^0.0.2"
-html2text = "^2020.1.16"
+html2text = "^2024.2.26"
 wagtail-markdown = "^0.12.1"
 autoflake = "^2.2.1"
 setuptools-scm = "^8.0.4"
