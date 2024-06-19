@@ -19,6 +19,7 @@ def search(request):
             BasePage.objects.live()
             .filter(Q(visible_for__in=user_groups) | Q(is_public=True))
             .distinct()
+            .order_by("-last_published_at")
         )
         search_results = allowed_pages.search(search_query)
         query = Query.get(search_query)
