@@ -776,13 +776,12 @@ files = [
 
 [[package]]
 name = "html2text"
-version = "2020.1.16"
+version = "2024.2.26"
 description = "Turn HTML into equivalent Markdown-structured text."
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.8"
 files = [
-    {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
-    {file = "html2text-2020.1.16.tar.gz", hash = "sha256:e296318e16b059ddb97f7a8a1d6a5c1d7af4544049a01e261731d2d5cc277bbb"},
+    {file = "html2text-2024.2.26.tar.gz", hash = "sha256:05f8e367d15aaabc96415376776cdd11afd5127a77fce6e36afc60c563ca2c32"},
 ]
 
 [[package]]
@@ -1722,4 +1721,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "2a34e751be7c3dfbafb0fb9b3488d1a91de4a5d9283a50cb1c250dfc1255a634"
+content-hash = "3ce62bd85d3b29760cce6d6d8448714877e5c2257f1164ca1da7cfa499d469d0"
