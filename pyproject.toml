@@ -14,7 +14,7 @@ mozilla-django-oidc = "^4.0.0"
 django-bootstrap-icons = "^0.8.7"
 django-select2 = "^8.1.2"
 django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
-django-debug-toolbar = "^4.4.2"
+django-debug-toolbar = "^4.4.5"
 django-permissionedforms = "^0.1"
 tenca = "^0.0.2"
 html2text = "^2020.1.16"
