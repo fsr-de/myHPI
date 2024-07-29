@@ -3,10 +3,8 @@
 
 <form action="{% url 'search' %}" method="get" class="pb-3">
     <div class="input-group">
-        <input type="search" class="form-control" name="query" placeholder={% translate "Search..." %} {% if search_query %}
-            value="{{ search_query }}"
-            {% endif %}>
+        <input type="search" class="form-control" name="query" placeholder="{% translate 'Search...' %}" {% if search_query %} value="{{ search_query }}" {% endif %}>
         <button type="submit"
-            class="btn btn-primary" aria-label={% translate "Search" %}>{% bs_icon 'search' extra_classes="text-light" %}</button>
+            class="btn btn-primary" aria-label="{% translate 'Search' %}">{% bs_icon "search" extra_classes="text-light" %}</button>
     </div>
 </form>
