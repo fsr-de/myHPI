@@ -347,11 +347,6 @@ img {
 }
 
 @media print {
-    .minutes-container {
-        display: flex;
-        flex-direction: column;
-    }
-
     .page-title .underline {
         border-bottom: none;
     }
