@@ -7,30 +7,30 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-wagtail = "^6.0"
+wagtail = "^6.1"
 django-environ = "^0.11.2"
 wagtail-localize = "^1.9"
 mozilla-django-oidc = "^4.0.0"
 django-bootstrap-icons = "^0.8.7"
 django-select2 = "^8.1.2"
 django-static-precompiler = {extras = ["libsass"], version = "^2.4"}
-django-debug-toolbar = "^4.2.0"
+django-debug-toolbar = "^4.4.2"
 django-permissionedforms = "^0.1"
 tenca = "^0.0.2"
 html2text = "^2020.1.16"
-wagtail-markdown = "^0.11.1"
+wagtail-markdown = "^0.12.1"
 autoflake = "^2.2.1"
 setuptools-scm = "^8.0.4"
 django-prometheus = "^2.3.1"
 
 [tool.poetry.group.dev.dependencies]
-pylint = "^3.0.3"
+pylint = "^3.2.5"
 black = "^24.2"
 isort = "^5.12.0"
 autoflake = "^2.2.1"
 pre-commit = "^3.5.0"
-pytest = "^8.0.1"
-coverage = "^7.4.2"
+pytest = "^8.2.2"
+coverage = "^7.5.3"
 
 [tool.poetry.extras]
 pgsql = ["psycopg2"]
