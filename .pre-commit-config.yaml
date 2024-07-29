@@ -19,3 +19,11 @@ repos:
     rev: 23.9.1
     hooks:
       - id: black
+  - repo: local
+    hooks:
+      - id: prettier-eslint
+        name: Prettier and ESLint
+        entry: prettier-eslint --write --list-different
+        language: node
+        types_or: [javascript, css, markdown, yaml]
+        additional_dependencies: ["prettier-eslint-cli@8.0.1"]
