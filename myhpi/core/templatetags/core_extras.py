@@ -39,10 +39,9 @@ def insert_footer(page):
 def tag_external_links(content):
     """Takes the content of a website and inserts external link icons after every external link."""
     external_links = re.finditer(
-        # match the entire <a> tag if the href does not start with SITE_URL
-        # also include all tags inside it (as small times as possible .*?)
-        # internal links MUST start with SITE_URL (/internal is not allowed)
-        '<a[^>]*href="(?!#|' + settings.SITE_URL + ")[^>]*>(.*?)</a>",
+        # match all <a> tag (and any tags inside it) whose href does not start with # (anchors) or /a (relative to site root)
+        # the SITE_URL is not included in internal links inserted via the editor: [Home](page:3) => <a href="/en/">Home</a>
+        r'<a[^>]*href="(?!#|/\w)[^>]*>(.*?)</a>',
         content,
     )
     for link in reversed(list(external_links)):
