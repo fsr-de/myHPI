@@ -35,7 +35,7 @@
         {% endblock %}
     </head>
 
-    <body class="bg-background myhpi-accent {% block body_class %}{% endblock %}">
+    <body class="bg-background myhpi-accent d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
         <nav id="navbar" class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top xl-hide-on-scroll">
@@ -125,7 +125,7 @@
             </div>
         </nav>
 
-        <div id="page" class="container-lg page bg-white pb-3">
+        <div id="page" class="container-lg page bg-white pb-3 flex-grow-1">
             <div class="page-content">
                 <div id="messages">
                     {% for message in messages %}
