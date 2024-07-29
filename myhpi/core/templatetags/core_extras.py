@@ -35,6 +35,11 @@ def insert_footer(page):
     return {"footer_columns": [footer.column_1, footer.column_2, footer.column_3], "page": page}
 
 
+@register.filter()
+def hasTocContent(toc):
+    return "li" in toc
+
+
 @register.filter(name="tag_external_links")
 def tag_external_links(content):
     """Takes the content of a website and inserts external link icons after every external link."""
