@@ -70,8 +70,7 @@
         <div class="col-4">
             {% prev_minutes page as prev %}
             {% if prev %}
-            <a href="{{ prev.url }}" class="btn btn-outline-primary minutes-navigation-button">{% bs_icon 'arrow-left'
-                extra_classes='minutes-navigation-icon' %} {% translate "Previous minutes" %}</a>
+            <a href="{{ prev.url }}" class="btn btn-outline-primary minutes-navigation-button">{% bs_icon 'arrow-left' extra_classes='minutes-navigation-icon' %} {% translate "Previous minutes" %}</a>
             {% endif %}
         </div>
         <div class="col-5 text-end">
