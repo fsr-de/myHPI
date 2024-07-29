@@ -6,14 +6,14 @@
 {% load bootstrap_icons %}
 
 {% block content %}
-<div class="row minutes-container">
+<div class="row flex-column flex-lg-row">
     {% with page.body|markdown as parsed_md %}
     <h1 class="page-title">
         <span class="underline">
             {{ page.title }}
         </span>
     </h1>
-    <div class="col-9 minutes-text">
+    <div class="col-lg-9 minutes-text">
         {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
     </div>
     <div class="col-lg-3 minutes-meta">
