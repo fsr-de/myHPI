@@ -39,11 +39,15 @@
     {% wagtailuserbar %}
 
     <nav id="navbar" class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top xl-hide-on-scroll">
-        <div class="navbar-top bg-white d-flex">
+        <div class="navbar-top d-flex">
             <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
                 <div id="navbar-left" class="d-flex align-items-center">
                     <a class="nav-brand" href="{% pageurl root_page %}">
-                        <img src="{% static 'img/myHPI-Logo.svg' %}" class="w-100" alt={% translate "To home page" %}>
+                        <picture class="w-100" alt={% translate "To home page" %}>
+                            <source srcset="{% static 'img/myHPI-Logo.svg' %}" media="(prefers-color-scheme: light)"/>
+                            <source srcset="{% static 'img/myHPI-Logo-white.svg' %}" media="(prefers-color-scheme: dark)"/>
+                            <img src="{% static 'img/myHPI-Logo.svg' %}"/>
+                        </picture>
                     </a>
                 </div>
                 <div id="nav-level-0" class="nav-level"></div>
@@ -129,7 +133,7 @@
         </div>
     </nav>
 
-    <div id="page" class="container-lg page bg-white pb-3">
+    <div id="page" class="container-lg page pb-3">
         <div class="page-content">
             <div id="messages">
                 {% for message in messages %}

@@ -8,7 +8,7 @@ import requests
 
 TEMP_DIRECTORY = "tmp"
 ZIP_FILENAME = "bootstrap.zip"
-VERSION = "5.0.2"
+VERSION = "5.3.3"
 logger = logging.getLogger("myhpi_install_bootstrap")
 
 
