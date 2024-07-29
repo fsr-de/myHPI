@@ -198,7 +198,7 @@ h1.side-panel-title::after {
     opacity: 0;
 }
 
-*:hover>.toc-permalink, .toc-permalink:focus {
+*:hover>.toc-permalink, *:active>.toc-permalink, .toc-permalink:focus {
     opacity: 1;
 }
 
