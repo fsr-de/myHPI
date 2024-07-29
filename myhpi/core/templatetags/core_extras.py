@@ -39,15 +39,18 @@ def insert_footer(page):
 def tag_external_links(content):
     """Takes the content of a website and inserts external link icons after every external link."""
     external_links = re.finditer(
-        '<a[^>]*href="(?!#|' + settings.SITE_URL + ")(?!\/)[^>]*>[^<]*", content
+        # Matches any <a> tags (and any tags inside it) which href does not start with # (anchors) or /a (relative to site root).
+        # The SITE_URL is not included in internal links inserted via the editor: [Home](page:3) => <a href="/en/">Home</a>
+        r'<a[^>]*href="(?!#|/\w)[^>]*>(.*?)</a>',
+        content,
     )
     for link in reversed(list(external_links)):
         content = (
-            content[: link.start() + 2]
+            content[: link.start() + len("<a")]
             + " target='_blank'"
-            + content[link.start() + 2 : link.end()]
+            + content[link.start() + len("<a") : link.end() - len("</a>")]
             + " {% bs_icon 'box-arrow-up-right' extra_classes='external-link-icon' %}"
-            + content[link.end() :]
+            + content[link.end() - len("</a>") :]
         )
     template = Template("{% load bootstrap_icons %}" + content)
     return template.render(Context())
