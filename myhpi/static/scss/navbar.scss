@@ -1,6 +1,8 @@
 :root {
     --logo-width: 6.5rem;
     --logo-margin: 1rem;
+    --bs-nav-link-padding-x: 1rem;
+    --bs-nav-link-padding-y: 0.5rem;
 }
 
 .navbar-myhpi {
@@ -20,13 +22,13 @@
 
 .nav-link,
 .nav-link:focus {
-    color: var(--bs-gray-700);
+    color: var(--text-muted);
 }
 
 .nav-link:hover,
 .nav-link:focus-visible,
 .nav-link[aria-expanded=true] {
-    color: var(--bs-dark);
+    color: var(--test-muted);
 }
 
 .nav-item-container {
@@ -86,7 +88,7 @@
 }
 
 .navbar-bottom {
-    background-color: var(--bs-body-bg-light);
+    background-color: var(--bs-light-bg-subtle);
 
     .nav-item-container {
         padding-left: var(--bs-p-4);
@@ -107,13 +109,13 @@
     .nav-link {
         transition: all 0.25s;
         border-radius: var(--myhpi-round-border);
-        border: solid 2px var(--bs-body-bg-light);
+        border: solid 2px transparent;
     }
 
     .nav-link:hover,
     .nav-link:focus-visible,
     .nav-link:active {
-        border-color: var(--bs-body-bg-overlay);
+        border-color: var(--bs-border-dark);
         background-color: var(--bs-body-bg-overlay);
     }
 

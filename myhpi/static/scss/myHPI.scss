@@ -5,20 +5,25 @@
 $primary: #F5631E;
 $secondary: #F5631E;
 $body-bg: #F5F5F5;
+$body-color-dark: white;
+$body-color: black;
+
+$gray-100: #e9e9e9;
+$gray-200: #EEE;
+$gray-300: #DDD;
+$gray-400: #CCC;
+$gray-500: #BBB;
+$gray-600: #999;
+$gray-700: #777;
+$gray-800: #555;
+$gray-900: #333;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "./bootstrap/variables";
 @import "./bootstrap/mixins";
+@import "./bootstrap/maps";
 
-$custom-colors: (
-    "gray-700": $gray-700,
-    "text-muted": $text-muted,
-    "border": #EEE,
-    "border-dark": #B2B2B2,
-    "body-bg-light": #FBFBFB,
-    "body-bg-overlay": #EEE
-);
-$colors: map-merge($colors, $custom-colors);
+$color-mode-type: media-query;
 
 @import "./bootstrap/root";
 
@@ -62,10 +67,24 @@ $colors: map-merge($colors, $custom-colors);
 
 // 6. Add additional custom code here
 
+
+
 :root {
+    --bs-body-bg-overlay: var(--bs-gray-200);
     --bs-p-2: 0.5rem;
     --bs-p-4: 1rem;
     --myhpi-round-border: 2px;
+    --content-bg: white;
+    --bs-border-dark: var(--bs-gray-500);
+}
+
+@include color-mode(dark) {
+    :root {
+        --bs-body-bg-overlay: var(--bs-gray-700);
+        --bs-breadcrumb-divider-color: var(--bs-gray-500);
+        --content-bg: var(--bs-dark-bg);
+        --bs-border-dark: var(--bs-gray-600);
+    }
 }
 
 a {
@@ -121,7 +140,7 @@ p {
 
     a,
     a:hover {
-        color: var(--bs-text-muted);
+        color: var(--bs-body-color);
         text-decoration: none;
     }
 
@@ -186,6 +205,10 @@ h1.side-panel-title::after {
     padding: 0;
     margin: -0.5rem -0.8rem;
 
+    .search-preview {
+        color: var(--bs-body-color);
+    }
+
     .search-result {
         h5 {
           hyphens: auto;
@@ -200,13 +223,13 @@ h1.side-panel-title::after {
 
         &:hover,
         &:focus-visible {
-            border-color: var(--bs-border);
-            background-color: var(--bs-body-bg-light);
+            border-color: var(--bs-border-dark);
+            background-color: var(--bs-light-bg-subtle);
         }
 
         &:active {
             border-color: var(--bs-border-dark);
-            background-color: var(--bs-body-bg-overlay);
+            background-color: var(--bs-light-bg-overlay);
         }
     }
 }
@@ -327,4 +350,8 @@ img {
         width: fit-content;
         padding: 3px;
     }
+}
+
+#page {
+    background-color: var(--content-bg)
 }
