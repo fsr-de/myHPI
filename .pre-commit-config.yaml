@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.11
+  python: python3.12
 repos:
   - repo: https://github.com/myint/autoflake
     rev: v2.2.1
@@ -12,7 +12,7 @@ repos:
           - --ignore-init-module-imports
           - --expand-star-imports
   - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
+    rev: 5.13.2
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
