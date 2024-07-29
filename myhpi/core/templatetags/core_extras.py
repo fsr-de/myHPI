@@ -41,7 +41,8 @@ def tag_external_links(content):
     external_links = re.finditer(
         # match the entire <a> tag if the href does not start with SITE_URL
         # also include all tags inside it (as small times as possible .*?)
-        '<a[^>]*href="(?!#|' + settings.SITE_URL + ")(?!/)[^>]*>(.*?)</a>",
+        # internal links MUST start with SITE_URL (/internal is not allowed)
+        '<a[^>]*href="(?!#|' + settings.SITE_URL + ")[^>]*>(.*?)</a>",
         content,
     )
     for link in reversed(list(external_links)):
