@@ -34,9 +34,10 @@ Test the code with `python manage.py test myhpi.tests`.
 
 We recommend installing a pre-commit hook with `pre-commit install`. That will (look at `.pre-commit-config.yaml`) before every commit
 
--   run `autoflake` with a couple of flags to remove unused imports,
--   run `isort .` to sort imports,
--   run `black .` to format the code. You can also check out the [IDE integration](https://github.com/psf/black#editor-integration)
+- run `autoflake` with a couple of flags to remove unused imports,
+- run `isort .` to sort imports,
+- run `black .` to format the python code. You can also check out the [IDE integration](https://github.com/psf/black#editor-integration)
+- run `prettier-eslint --write --list-different` to format the JavaScript code and Markdown files. You can also check out the [Prettier IDE integration](https://prettier.io/docs/en/editors.html)
 
 If you want to do that manually, run `pre-commit run --all-files`. Next to that, we also run `pylint myhpi` to check for semantic issues in the code.
 
