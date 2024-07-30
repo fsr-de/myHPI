@@ -91,7 +91,7 @@ p {
 }
 
 #page {
-    padding-top: calc(var(--myhpi-page-padding-top) + var(--myhpi-navbar-height));
+    padding-top: calc(var(--myhpi-page-padding-top)/2 + var(--myhpi-navbar-height));
 }
 
 .page {
