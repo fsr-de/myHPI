@@ -7,5 +7,5 @@
  * Source: https://stackoverflow.com/questions/36532307/rem-px-in-javascript
  */
 function remToPx(rem) {
-    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
 }

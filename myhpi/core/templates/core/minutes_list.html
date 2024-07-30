@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load bootstrap_icons %}
+{% load wagtailcore_tags %}
+{% load i18n %}
+
+{% block content %}
+    <h1 class="page-title">
+        <span class="underline">
+            {{ page.title }} {{ selected_year }}
+        </span>
+    </h1>
+    {% if minutes %}
+        <table class="table table-striped">
+            {% for minute in minutes %}
+                <tr>
+                    <td><a href="{{ minute.get_valid_url }}">{{ minute.date|date:"d.m.Y" }}</a></td>
+                    <td>
+                        {% if minute.has_unpublished_changes %}
+                            <span title='{% translate "Page has unpublished changes!" %}' aria-hidden="true">{% bs_icon "exclamation-triangle" %}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% include "core/label.html" with minutes=minute %}
+                    </td>
+                    <td><a href="{{ minute.get_valid_url }}">{{ minute.title }}</a></td>
+                    <td>
+                        {% if minute.attachments.count > 0 %}
+                            <span class="text-gray" data-toggle="tooltip" data-placement="left" data-container="body" title="{{ minute.attachments.all|join:', ' }}">
+                                {% bs_icon "paperclip" %}
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>
+            {% translate "No minutes available for this year." %}
+        </p>
+    {% endif %}
+    {% if all_years|length > 1 %}
+        <nav aria-label="Page navigation" class="d-inline-block">
+            <ul class="pagination">
+                <li class="page-item {% if selected_year == all_years|first %} disabled {% endif %}">
+                    <a class="page-link" href="{{ minute_list.get_valid_url }}?year={{ all_years|first }}" aria-label="First">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                {% if all_years|first != year_range|first %}
+                    <li class="page-item disabled">
+                        <a class="page-link" aria-label="More">
+                            <span aria-hidden="true">...</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for paginated_year in year_range %}
+                    <li
+                        {% if selected_year == paginated_year %}
+                            class="page-item active" aria-current="true"
+                        {% else %}
+                            class="page-item"
+                        {% endif %}>
+                        <a class="page-link" href="{{ minute_list.get_valid_url }}?year={{ paginated_year }}">
+                            {{ paginated_year }}
+                        </a>
+                    </li>
+                {% endfor %}
+
+                {% if all_years|last != year_range|last %}
+                    <li class="page-item disabled">
+                        <a class="page-link" aria-label="More">
+                            <span aria-hidden="true">...</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item {% if selected_year == all_years|last %} disabled {% endif %}">
+                    <a class="page-link" href="{{ minute_list.get_valid_url }}?year={{ all_years|last }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

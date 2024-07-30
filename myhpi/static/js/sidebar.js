@@ -24,9 +24,9 @@ const initializeSidebar = () => {
 const applyTocOffcanvasBehaviour = () => {
   const anchors = document.querySelectorAll("#sidebar-offcanvas a")
   const offcanvas = new bootstrap.Offcanvas(
-    document.querySelector("#sidebar-offcanvas")
+    document.querySelector("#sidebar-offcanvas"),
   )
   anchors.forEach((anchor) =>
-    anchor.addEventListener("click", () => offcanvas.hide())
+    anchor.addEventListener("click", () => offcanvas.hide()),
   )
 }
