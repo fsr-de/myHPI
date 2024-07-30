@@ -13,6 +13,10 @@
     }
 }
 
+body.modal-open .navbar-myhpi {
+    transform: translateX(calc(-1 * var(--myhpi-scrollbar-width) / 2));
+}
+
 #navbar-right {
     /* Should align navbar and page content. Assumes that the most right element in the navbar is a nav-link/has a padding of --bs-p-4) */
     margin-right: calc(-1 * var(--bs-p-4));
