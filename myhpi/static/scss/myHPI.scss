@@ -216,7 +216,7 @@ h1.side-panel-title::after {
 
     .search-result {
         h5 {
-          hyphens: auto;
+            hyphens: auto;
         }
 
         transition: all 0.25s;
@@ -271,7 +271,7 @@ img {
     align-items: center;
 
     &:hover {
-      color: white;
+        color: white;
     }
 }
 
@@ -315,7 +315,7 @@ img {
         .side-panel:first-of-type {
             border-top: none;
             padding-top: 0;
-        
+
             .side-panel-title {
                 display: none;
             }
@@ -347,7 +347,7 @@ img {
     .page:not(.navbar-myhpi) .page-content {
         padding-top: 1.5rem; // default padding without height of navbar
     }
-    
+
     .sidebar-container ul li>ul {
         margin-left: 0.5rem;
     }

@@ -1,11 +1,10 @@
 import datetime
 import heapq
-import math
 
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.db import DatabaseError, IntegrityError, models, transaction
-from django.db.models import F, Sum
+from django.db.models import Sum
 from django.shortcuts import redirect
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
