@@ -6,13 +6,12 @@ from django.core.management import BaseCommand
 
 from myhpi.core.models import (
     AbbreviationExplanation,
-    FirstLevelMenuItem,
     InformationPage,
+    MenuItem,
     Minutes,
     MinutesLabel,
     MinutesList,
     RootPage,
-    SecondLevelMenuItem,
 )
 from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.setup import create_collections, create_documents
@@ -128,7 +127,7 @@ def create_some_pages(users, groups, documents):
 
     # Create information pages
     information_page_root = root_page.add_child(
-        instance=FirstLevelMenuItem(
+        instance=MenuItem(
             title="Information",
             slug="information",
             show_in_menus=True,
@@ -161,7 +160,7 @@ def create_some_pages(users, groups, documents):
     # Create student rep pages
 
     student_rep_menu = root_page.add_child(
-        instance=FirstLevelMenuItem(
+        instance=MenuItem(
             title="Student Representatives",
             slug="fsr",
             show_in_menus=True,
@@ -221,7 +220,7 @@ def create_some_pages(users, groups, documents):
     # Study council pages
 
     study_council_menu = root_page.add_child(
-        instance=FirstLevelMenuItem(
+        instance=MenuItem(
             title="Study Council",
             slug="study-council",
             show_in_menus=True,
@@ -271,7 +270,7 @@ def create_some_pages(users, groups, documents):
     # Club pages
 
     club_menu = root_page.add_child(
-        instance=FirstLevelMenuItem(
+        instance=MenuItem(
             title="Student Clubs",
             slug="clubs",
             show_in_menus=True,
@@ -281,7 +280,7 @@ def create_some_pages(users, groups, documents):
     )
 
     frisbee_club_menu = club_menu.add_child(
-        instance=SecondLevelMenuItem(
+        instance=MenuItem(
             title="Frisbee Club",
             slug="frisbee",
             show_in_menus=True,
