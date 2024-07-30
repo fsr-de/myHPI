@@ -30,7 +30,7 @@ const isCollapsed = (navItemContainer) => {
  */
 const getLevelBelow = (navItemContainer) => {
   const levelId = parseInt(
-    navItemContainer.getAttribute("data-navbar-level").slice(11)
+    navItemContainer.getAttribute("data-navbar-level").slice(11),
   )
   return levelId + 1 === numberOfSupportedLevels
     ? null
@@ -54,7 +54,7 @@ const collapseChildren = (navItemContainer) => {
     "#" + getLevelBelow(navItemContainer)?.getAttribute("id")
   if (!collapseLevelId) return
   const navContainersToCollapse = document.querySelectorAll(
-    `.nav-item-container[data-navbar-level="${collapseLevelId}"]`
+    `.nav-item-container[data-navbar-level="${collapseLevelId}"]`,
   )
   navContainersToCollapse.forEach((navItemContainerToCollapse) => {
     if (isCollapsed(navItemContainerToCollapse)) return
@@ -74,7 +74,7 @@ const collapseChildren = (navItemContainer) => {
 const collapseOthersOnSameLevel = (navItemContainer) => {
   const collapseLevelId = navItemContainer.getAttribute("data-navbar-level")
   const navContainersOnSameLevel = document.querySelectorAll(
-    `.nav-item-container[data-navbar-level="${collapseLevelId}"]`
+    `.nav-item-container[data-navbar-level="${collapseLevelId}"]`,
   )
   navContainersOnSameLevel.forEach((navContainerOnSameLevel) => {
     if (navContainerOnSameLevel === navItemContainer) return
@@ -139,7 +139,7 @@ const addNavbarCollapses = () => {
   const navDropdowns = document.querySelectorAll(".nav-item.dropdown>.nav-link")
   navDropdowns.forEach((navDropdown) => {
     const controlledNavContainer = document.querySelector(
-      navDropdown.getAttribute("href")
+      navDropdown.getAttribute("href"),
     )
     navDropdown.addEventListener("click", (e) => {
       bootstrap.Collapse.getOrCreateInstance(controlledNavContainer).toggle()
@@ -171,14 +171,14 @@ const adjustUserNavContainerLevel = () => {
   const userNavContainer = document.querySelector("#nav-item-container-user")
   userNavContainer.setAttribute(
     "data-navbar-level",
-    isNavbarInDesktopMode ? "#nav-level-1" : "#nav-level-0"
+    isNavbarInDesktopMode ? "#nav-level-1" : "#nav-level-0",
   )
 }
 
 const adjustNavbarCollapseOnLayoutChange = () => {
   const rootNavContainer = document.querySelector("#nav-item-container-root")
   const expandedContainer = rootNavContainer.querySelector(
-    ".nav-item-container.show"
+    ".nav-item-container.show",
   )
   if (expandedContainer && isCollapsed(rootNavContainer)) {
     bootstrap.Collapse.getOrCreateInstance(rootNavContainer).show()
@@ -200,10 +200,10 @@ const moveNonRootLevelsToDesktopLayout = () => {
   const levels = [...Array(numberOfSupportedLevels).keys()].slice(1)
   levels.forEach((levelId) => {
     const navItemContainers = document.querySelectorAll(
-      `*:not(#nav-level-right)>.nav-item-container[data-navbar-level='#nav-level-${levelId}']`
+      `*:not(#nav-level-right)>.nav-item-container[data-navbar-level='#nav-level-${levelId}']`,
     )
     const bottomNavLevelContainer = document.querySelector(
-      `#nav-level-${levelId}`
+      `#nav-level-${levelId}`,
     )
     for (const navItemContainer of navItemContainers) {
       navItemContainer.setAttribute("data-bs-parent", `#nav-level-${levelId}`)
@@ -245,16 +245,16 @@ const moveNonRootLevelsToMobileLayout = () => {
     .sort((a, b) => b - a)
     .forEach((levelId) => {
       const levelNavItemContainer = document.querySelector(
-        `#nav-level-${levelId}`
+        `#nav-level-${levelId}`,
       )
       const parentNavItems = document.querySelectorAll(
-        `#nav-level-${levelId - 1} .nav-item.dropdown`
+        `#nav-level-${levelId - 1} .nav-item.dropdown`,
       )
       for (const parentNavItem of parentNavItems) {
         const levelNavItem = levelNavItemContainer.querySelector(
           `#${parentNavItem
             .querySelector(".nav-link")
-            .getAttribute("aria-controls")}`
+            .getAttribute("aria-controls")}`,
         )
         parentNavItem.appendChild(levelNavItem)
       }
@@ -310,7 +310,7 @@ const updateVisibleNavbarHeight = () => {
     "--myhpi-navbar-visible-height",
     _navbar.classList.contains("hide-now")
       ? "0px"
-      : _root.style.getPropertyValue("--myhpi-navbar-height")
+      : _root.style.getPropertyValue("--myhpi-navbar-height"),
   )
 }
 
@@ -329,4 +329,12 @@ const respectNavbarHeight = () => {
     updateVisibleNavbarHeight()
   })
   resizeObserver.observe(_navbarTop)
+}
+
+const setScrollbarWidth = () => {
+  const body = document.querySelector("body")
+  _root.style.setProperty(
+    "--myhpi-scrollbar-width",
+    window.innerWidth - body.clientWidth + "px",
+  )
 }
