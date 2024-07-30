@@ -21,10 +21,10 @@
     This duplication is a workaround and should be removed after the upgrade -->
 <div class="d-none d-lg-block side-panel-container">
     {%if parsed_md.1|hasTocContent %}
-    <aside class="side-panel border-accent sidebar-container d-print-none">
-        <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
-        {{ parsed_md.1 }}
-    </aside>
+        <aside class="side-panel border-accent sidebar-container d-print-none">
+            <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
+            {{ parsed_md.1 }}
+        </aside>
     {% endif %}
     {% if page.attachments.exists %}
         <aside class="side-panel border-accent sidebar-container d-print-none">
