@@ -3,7 +3,11 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{{ page.title }} {{ selected_year }}</h1>
+<h1 class="page-title">
+    <span class="underline">
+        {{ page.title }} {{ selected_year }}
+    </span>
+</h1>
 {% if minutes %}
     <table class="table table-striped">
         {% for minute in minutes %}
