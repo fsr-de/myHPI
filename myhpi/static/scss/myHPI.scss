@@ -150,6 +150,7 @@ p {
 
 .side-panel-container {
     position: sticky;
+    z-index: 30;
     top: 6rem;
 }
 
@@ -285,6 +286,7 @@ img {
 
 #sidebar-toggle {
     position: sticky;
+    z-index: 20;
     transition: all 0.3s ease; // Equal to .xl-hide-on-scroll
     top: calc(1rem + var(--myhpi-navbar-visible-height));
 }
@@ -383,6 +385,7 @@ img {
 @media (pointer: coarse), (hover: none) {
     [title] {
         position: relative;
+        z-index: 10;
         display: inline-flex;
         justify-content: center;
     }
