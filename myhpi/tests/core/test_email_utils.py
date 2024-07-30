@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-from myhpi import settings
 from myhpi.core.utils import (
     alternative_emails,
     email_belongs_to_domain,

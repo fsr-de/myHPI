@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 from django.forms.models import ModelChoiceIteratorValue
 
 from myhpi.core.widgets import AttachmentSelectWidget
