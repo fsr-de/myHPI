@@ -7,7 +7,7 @@
         {% csrf_token %}
         {% for choice in page.choices.all %}
             <input type={% if page.max_allowed_answers > 1 %} "checkbox" {% else %} "radio"
-            {% endif %} name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+                   {% endif %} name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
             <label for="choice{{ forloop.counter }}">{{ choice.text }}</label><br/>
         {% endfor %}
         <input type="submit" value="Vote"/>
