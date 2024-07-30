@@ -14,13 +14,13 @@
                 <th>{% translate "Title" %}</th>
                 <th>{% translate "Voting period" %}</th>
             </tr>
-        <tbody>
-        {% for poll in poll_list %}
-            <tr>
-                <td><a href="{% pageurl poll %}">{{ poll.title }}</a></td>
-                <td>{{ poll.start_date }} - {{ poll.end_date }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <tbody>
+                {% for poll in poll_list %}
+                    <tr>
+                        <td><a href="{% pageurl poll %}">{{ poll.title }}</a></td>
+                        <td>{{ poll.start_date }} - {{ poll.end_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 {% endblock %}
