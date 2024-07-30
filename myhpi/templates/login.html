@@ -8,11 +8,11 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-      <p>{% translate "Current user:" %} {{ user.email }}</p>
-      <form action="{% url 'oidc_logout' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="logout">
-      </form>
+        <p>{% translate "Current user:" %} {{ user.email }}</p>
+        <form action="{% url 'oidc_logout' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="logout">
+        </form>
     {% else %}
         {% if 'next' in request.GET and not request.GET.user_initiated %}
             <div class="alert alert-danger alert-dismissable">

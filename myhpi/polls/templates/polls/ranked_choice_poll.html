@@ -32,20 +32,20 @@
 {% block results %}
     <table class="table">
         <thead>
-        <tr>
-            <th scope="col"> {% translate "Rank" %}</th>
-            <th scope="col"> {% translate "Choice" %}</th>
-            <th scope="col"> {% translate "Final Votes" %}</th>
-        </tr>
+            <tr>
+                <th scope="col"> {% translate "Rank" %}</th>
+                <th scope="col"> {% translate "Choice" %}</th>
+                <th scope="col"> {% translate "Final Votes" %}</th>
+            </tr>
         </thead>
         <tbody>
-        {% for choice in page.calculate_ranking %}
-            <tr>
-                <th scope="row"> {{ choice.0 }} </th>
-                <td> {{ choice.1 }} </td>
-                <td> {{ choice.2 }} </td>
-            </tr>
-        {% endfor %}
+            {% for choice in page.calculate_ranking %}
+                <tr>
+                    <th scope="row"> {{ choice.0 }} </th>
+                    <td> {{ choice.1 }} </td>
+                    <td> {{ choice.2 }} </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

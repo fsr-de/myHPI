@@ -4,21 +4,21 @@
 <footer class="footer-myhpi container-lg page text-light">
   <div class="page-content d-flex flex-wrap flex-column flex-sm-row">
     {% for column in footer_columns %}
-    <div class="footer-category">
-      {% with column|markdown as parsed_markdown %}
-      {{ parsed_markdown.0|tag_external_links }}
-      {% endwith %}
-    </div>
+      <div class="footer-category">
+        {% with column|markdown as parsed_markdown %}
+          {{ parsed_markdown.0|tag_external_links }}
+        {% endwith %}
+      </div>
     {% endfor %}
     <div class="footer-category">
       <h2>{% translate "Language" %}</h2>
       {% for translation in page.get_translations %}
-      <form id="language-form-{{ translation.locale }}" action="{% url 'set_language' %}" method="post">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ translation.url }}">
-        <input type="hidden" name="language" value="{{ translation.locale.language_code }}">
-        <button class="btn btn-link" type="submit">{{ translation.locale }}</button>
-      </form>
+        <form id="language-form-{{ translation.locale }}" action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ translation.url }}">
+          <input type="hidden" name="language" value="{{ translation.locale.language_code }}">
+          <button class="btn btn-link" type="submit">{{ translation.locale }}</button>
+        </form>
       {% endfor %}
     </div>
   </div>

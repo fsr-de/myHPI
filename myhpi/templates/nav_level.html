@@ -7,32 +7,32 @@
     id="nav-item-container-{{ parent_id }}"
     data-navbar-level="#nav-level-{{ level }}"
     {% if level == 0 %}
-    class="nav-item-container d-xl-flex flex-xl-row flex-grow-1 flex-xl-grow-0 flex-xl-wrap collapse"
+        class="nav-item-container d-xl-flex flex-xl-row flex-grow-1 flex-xl-grow-0 flex-xl-wrap collapse"
     {% else %}
-    class="nav-item-container collapse"
-    aria-labelledby="nav-item-{{ parent_id }}"
+        class="nav-item-container collapse"
+        aria-labelledby="nav-item-{{ parent_id }}"
     {% endif %}>
     {% for page in level_pages %}
-    {% if pages_by_parent|get_nav_children_for:page.path %}
-    <li class="nav-item dropdown">
-        <a class="nav-link"
-            id="nav-item-{{ page.id }}"
-            href="#nav-item-container-{{ page.id }}"
-            aria-controls="nav-item-container-{{ page.id }}"
-            aria-expanded="false">
-            <span class="nav-link-title dropdown-toggle">
-                {{ page.title }}
-            </span>
-            {% bs_icon 'arrow-right-short' extra_classes="nav-link-icon d-none" %}
-        </a>
-        {% build_nav_level_for page level|add:"1" page.id %}
-    </li>
-    {% else %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% pageurl page %}">
-            {{ page.title }}
-        </a>
-    </li>
-    {% endif %}
+        {% if pages_by_parent|get_nav_children_for:page.path %}
+            <li class="nav-item dropdown">
+                <a class="nav-link"
+                   id="nav-item-{{ page.id }}"
+                   href="#nav-item-container-{{ page.id }}"
+                   aria-controls="nav-item-container-{{ page.id }}"
+                   aria-expanded="false">
+                    <span class="nav-link-title dropdown-toggle">
+                        {{ page.title }}
+                    </span>
+                    {% bs_icon 'arrow-right-short' extra_classes="nav-link-icon d-none" %}
+                </a>
+                {% build_nav_level_for page level|add:"1" page.id %}
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% pageurl page %}">
+                    {{ page.title }}
+                </a>
+            </li>
+        {% endif %}
     {% endfor %}
 </ul>
