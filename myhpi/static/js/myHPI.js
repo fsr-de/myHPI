@@ -61,7 +61,7 @@ const localizeLastPublished = () => {
 
   if (timezone_server !== timezone_user) {
     lastPublishedLocalized = new Date(
-      lastPublished.getAttribute("datetime")
+      lastPublished.getAttribute("datetime"),
     ).toLocaleString(undefined, {
       year: "numeric",
       month: "numeric",
@@ -85,7 +85,7 @@ const localizeLastPublished = () => {
 
 const enableTooltips = () => {
   const tooltipTriggerList = document.querySelectorAll(
-    '[data-bs-toggle="tooltip"]'
+    '[data-bs-toggle="tooltip"]',
   )
   Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
     new bootstrap.Tooltip(tooltipTriggerEl)
@@ -99,6 +99,8 @@ window.onload = () => {
   toggleElementVisibilityOnScroll()
   respectNavbarHeight()
   enableLogout()
+
+  setScrollbarWidth()
 
   initializeSidebar()
 
