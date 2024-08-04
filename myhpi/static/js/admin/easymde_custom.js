@@ -83,10 +83,10 @@ window.wagtailMarkdown.options = {
             chosen: function (t) {
               editor.codemirror.replaceSelection(
                 "![" +
-                t.title +
-                "](image:" +
-                t.id +
-                ",class=rendered-image,filter=width-800)",
+                  t.title +
+                  "](image:" +
+                  t.id +
+                  ",class=rendered-image,filter=width-800)",
               )
             },
           },

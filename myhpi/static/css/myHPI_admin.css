@@ -11,8 +11,8 @@
 
 @media (prefers-color-scheme: dark) {
   .select2-container--default
-  .select2-selection--single
-  .select2-selection__rendered {
+    .select2-selection--single
+    .select2-selection__rendered {
     color: white !important;
     background-color: inherit !important;
   }
@@ -20,8 +20,8 @@
   .select2-container--default .select2-selection--single,
   .select2-container--default .select2-selection--multiple,
   .select2-container--default
-  .select2-selection--multiple
-  .select2-selection__choice,
+    .select2-selection--multiple
+    .select2-selection__choice,
   .select2-container--default .select2-results__option[aria-selected="true"] {
     background-color: inherit !important;
   }

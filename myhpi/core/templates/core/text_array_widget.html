@@ -1,16 +1,27 @@
-<input type="hidden" id="id-{{ widget.name }}" name="{{ widget.name }}" value="{{ widget.value }}">
+<input type="hidden"
+       id="id-{{ widget.name }}"
+       name="{{ widget.name }}"
+       value="{{ widget.value }}">
 <div id="text-array-{{ widget.name }}" class="text-array">
     {% if strings|length == 0 %}
         <div>
-            <input type="text" onkeydown="onTextArrayItemInputKeyDown('{{ widget.name }}', event, this)" onkeyup="synchronizeTextArray('{{ widget.name }}')">
+            <input type="text"
+                   onkeydown="onTextArrayItemInputKeyDown('{{ widget.name }}', event, this)"
+                   onkeyup="synchronizeTextArray('{{ widget.name }}')">
             <span onclick="removeTextArrayItem('{{ widget.name }}',this)">X</span>
         </div>
     {% endif %}
     {% for string in strings %}
         <div>
-            <input type="text" value="{{ string }}" onkeydown="onTextArrayItemInputKeyDown('{{ widget.name }}', event, this)" onkeyup="synchronizeTextArray('{{ widget.name }}')">
+            <input type="text"
+                   value="{{ string }}"
+                   onkeydown="onTextArrayItemInputKeyDown('{{ widget.name }}', event, this)"
+                   onkeyup="synchronizeTextArray('{{ widget.name }}')">
             <span onclick="removeTextArrayItem('{{ widget.name }}',this)">X</span>
         </div>
     {% endfor %}
 </div>
-<button type="button" class="text-array-button" id="text-array-add-button-{{ widget.name }}" onclick="addTextArrayItem('{{ widget.name }}').focus()">+</button>
+<button type="button"
+        class="text-array-button"
+        id="text-array-add-button-{{ widget.name }}"
+        onclick="addTextArrayItem('{{ widget.name }}').focus()">+</button>
