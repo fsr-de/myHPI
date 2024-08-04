@@ -9,9 +9,7 @@
         <div class="row flex-column flex-lg-row">
             <div class="col-lg-9">
                 <h1 class="page-title">
-                    <span class="underline">
-                        {{ page.title }}
-                    </span>
+                    <span class="underline">{{ page.title }}</span>
                 </h1>
                 {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
             </div>
@@ -23,7 +21,9 @@
                             {% translate "A long time ago" %}
                         {% else %}
                             {% get_current_timezone as TIMEZONE %}
-                            <time id="last-published" datetime="{{ page.last_published_at|date:'c' }}" title="{{ TIMEZONE }}">
+                            <time id="last-published"
+                                  datetime="{{ page.last_published_at|date:'c' }}"
+                                  title="{{ TIMEZONE }}">
                                 {% blocktranslate with date=page.last_published_at|date:"SHORT_DATE_FORMAT" time=page.last_published_at|time:"TIME_FORMAT" trimmed %}
                                     {{ date }} at {{ time }}
                                 {% endblocktranslate %}

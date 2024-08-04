@@ -3,7 +3,6 @@ import re
 from django import template
 from django.template import Context, Template
 
-from myhpi import settings
 from myhpi.core.markdown.utils import render_markdown
 from myhpi.core.models import Footer
 

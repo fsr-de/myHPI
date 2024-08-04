@@ -4,7 +4,7 @@ import tenca.settings
 import tenca.templates
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext as _

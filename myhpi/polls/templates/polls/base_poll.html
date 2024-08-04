@@ -8,22 +8,18 @@
         <div class="row flex-column flex-lg-row">
             <div class="col-lg-9">
                 <h1 class="page-title">
-                    <span class="underline">
-                        {{ page.title }}
-                    </span>
+                    <span class="underline">{{ page.title }}</span>
                 </h1>
                 {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
-                <h2> {{ page.question }} </h2>
+                <h2>{{ page.question }}</h2>
                 {% if page|can_vote:request.user %}
-                    {% block ballot %}
-                    {% endblock %}
+                    {% block ballot %}{% endblock %}
                 {% elif page.results_visible %}
-                    {% block results %}
-                    {% endblock %}
+                    {% block results %}{% endblock %}
                 {% elif not page.in_voting_period %}
-                    <p> {% translate "You've accessed this page outside of the voting period." %} </p>
+                    <p>{% translate "You've accessed this page outside of the voting period." %}</p>
                 {% else %}
-                    <p> {% translate "You are not allowed to cast (another) vote and the results are not visible yet." %}</p>
+                    <p>{% translate "You are not allowed to cast (another) vote and the results are not visible yet." %}</p>
                 {% endif %}
             </div>
             <div class="col-lg-3">

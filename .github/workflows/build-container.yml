@@ -3,9 +3,9 @@ name: build-container
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   docker:
