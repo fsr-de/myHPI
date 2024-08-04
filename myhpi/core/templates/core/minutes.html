@@ -10,13 +10,9 @@
         {% include "core/toc_button.html" with toc=parsed_md.1 attachments=page.attachments.exists %}
         <div class="row flex-column flex-lg-row">
             <h1 class="page-title">
-                <span class="underline">
-                    {{ page.title }}
-                </span>
+                <span class="underline">{{ page.title }}</span>
             </h1>
-            <div class="col-lg-9 minutes-text">
-                {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
-            </div>
+            <div class="col-lg-9 minutes-text">{{ parsed_md.0|touchify_abbreviations|tag_external_links }}</div>
             <div class="col-lg-3 minutes-meta">
                 <aside class="side-panel border-accent">
                     <h1 class="side-panel-title">{% translate "Date" %}</h1>
@@ -33,18 +29,14 @@
                 <aside class="side-panel border-accent">
                     <h1 class="side-panel-title">{% translate "Participants" %}</h1>
                     <ul>
-                        {% for participant in page.participants.all %}
-                            <li>{{ participant.get_full_name }}</li>
-                        {% endfor %}
+                        {% for participant in page.participants.all %}<li>{{ participant.get_full_name }}</li>{% endfor %}
                     </ul>
                 </aside>
                 <aside class="side-panel border-accent">
                     <h1 class="side-panel-title">{% translate "Guests" %}</h1>
                     {% if page.guests %}
                         <ul>
-                            {% for guest in page.guests %}
-                                <li>{{ guest }}</li>
-                            {% endfor %}
+                            {% for guest in page.guests %}<li>{{ guest }}</li>{% endfor %}
                         </ul>
                     {% else %}
                         <i>{% translate "No guests" %}</i>
@@ -61,7 +53,7 @@
                     {% if page.labels.all %}
                         <p>{% include "core/label.html" with minutes=page %}</p>
                     {% else %}
-                        <i>{% translate "No labels"%}</i>
+                        <i>{% translate "No labels" %}</i>
                     {% endif %}
                 </aside>
                 {% include "core/sidebar.html" %}
@@ -72,19 +64,21 @@
                     <div class="col-6">
                         {% prev_minutes page as prev %}
                         {% if prev %}
-                            <a href="{{ prev.url }}" class="btn btn-outline-primary minutes-navigation-button">{% bs_icon 'arrow-left' extra_classes='minutes-navigation-icon' %} {% translate "Previous minutes" %}</a>
+                            <a href="{{ prev.url }}"
+                               class="btn btn-outline-primary minutes-navigation-button">{% bs_icon 'arrow-left' extra_classes='minutes-navigation-icon' %} {% translate "Previous minutes" %}</a>
                         {% endif %}
                     </div>
                     <div class="col-6 text-end">
                         {% next_minutes page as next %}
                         {% if next %}
-                            <a href="{{ next.url }}" class="btn btn-outline-primary minutes-navigation-button"> {% translate "Next minutes" %} {% bs_icon 'arrow-right' extra_classes='minutes-navigation-icon' %}</a>
+                            <a href="{{ next.url }}"
+                               class="btn btn-outline-primary minutes-navigation-button"> {% translate "Next minutes" %} {% bs_icon 'arrow-right' extra_classes='minutes-navigation-icon' %}</a>
                         {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
     {% endwith %}
-    </div>
 {% endblock %}
 
 {% block extra_js %}
