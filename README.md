@@ -32,14 +32,47 @@ Test the code with `python manage.py test myhpi.tests`.
 
 ### Code style
 
+#### Pre-commit hook
+
 We recommend installing a pre-commit hook with `pre-commit install`. The [hook](.pre-commit-config.yaml) will do the following steps before every commit:
 
 - run `autoflake` with a couple of flags to remove unused imports,
 - run `isort .` to sort imports,
-- run `black .` to format the python code. You can also check out the [IDE integration](https://github.com/psf/black#editor-integration)
-- run `prettier-eslint --write --list-different` to format the JavaScript code and Markdown files. You can also check out the [Prettier IDE integration](https://prettier.io/docs/en/editors.html), e. g. the [prettier-eslint](vscode:extension/rvest.vs-code-prettier-eslint) Visual Studio Code extension
+- run `black .` to format the python code
+- run `djlint-reformat-django --quiet` and `djlint-django` to format and lint template files (`html`) according to the `pyproject.toml` configuration
+- run `prettier-eslint --write --list-different` to format the JavaScript code, (S)CSS, Markdown and YAML files according to the `.prettierrc` configuration
 
 If you want to do that manually, run `pre-commit run --all-files`. Next to that, we also run `pylint myhpi` to check for semantic issues in the code.
+
+#### IDE support
+
+To get optional linting-related warnings within your IDE and format files when saving them, follow these steps:
+
+- Install IDE plugins
+  - black ([IDE integrations](https://black.readthedocs.io/en/stable/integrations/editors.html))
+  - djLint ([VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=monosans.djlint))
+  - Prettier ([IDE integrations](https://prettier.io/docs/en/editors))
+- Set configuration
+  - Linting and formatting are already configured by the `.prettierrc` and `pyproject.tml` files which are also used by the [pre-commit hook](#pre-commit-hook)
+  - You still have to write IDE-specific configuration to e.g. enable formatting on save and assign file types to the correct plugin
+    - Find configuration examples for IDEs below
+
+##### Configuration in VSCode
+
+Workspace settings:
+
+```
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "ms-python.black-formatter",
+  "[javascript][css][scss][markdown][yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+}
+```
 
 ## Tips
 
