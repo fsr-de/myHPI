@@ -10,12 +10,15 @@
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
-
     <head>
         <meta charset="utf-8" />
         <title>
             {% block title %}
-                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+                {% if self.seo_title %}
+                    {{ self.seo_title }}
+                {% else %}
+                    {{ self.title }}
+                {% endif %}
             {% endblock %}
             {% block title_suffix %}
                 {% with self.get_site.site_name as site_name %}
@@ -23,50 +26,64 @@
                 {% endwith %}
             {% endblock %}
         </title>
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="myHPI" />
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <link rel="icon" type="svg" href="{% static 'img/favicon/favicon.svg' %}" />
 
-    {# Global stylesheets #}
-        <link type="text/css" href="{% static 'scss/myHPI.scss'|compile %}" rel="stylesheet">
+        {# Global stylesheets #}
+        <link type="text/css"
+              href="{% static 'scss/myHPI.scss'|compile %}"
+              rel="stylesheet">
 
-        {% block extra_css %}
-    {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
+        {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
     </head>
 
     <body class="bg-background myhpi-accent d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        <nav id="navbar" class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top xl-hide-on-scroll">
+        <nav id="navbar"
+             class="navbar-myhpi page d-flex flex-column d-print-none container-lg fixed-top xl-hide-on-scroll">
             <div class="navbar-top bg-white d-flex">
                 <div class="page-content d-flex flex-grow-1 flex-xl-grow-0">
                     <div id="navbar-left" class="d-flex align-items-center">
                         <a class="nav-brand" href="{% pageurl root_page %}">
-                            <img src="{% static 'img/myHPI-Logo.svg' %}" class="w-100" alt="{% translate 'To home page' %}">
+                            <img src="{% static 'img/myHPI-Logo.svg' %}"
+                                 class="w-100"
+                                 alt="{% translate 'To home page' %}">
                         </a>
                     </div>
                     <div id="nav-level-0" class="nav-level"></div>
-                    <div id="navbar-right" class="flex-fill justify-content-end d-flex align-items-center">
-                        <a id="nav-search-button" class="nav-link" onclick="showSearchModal(event)" data-bs-toggle="tooltip"
-                           data-bs-placement="bottom" data-bs-title="{% translate 'Ctrl+K' %}" role="button">
-                            {% bs_icon 'search' size='1.4em' %}
-                        </a>
-                        <a id="nav-mobile-toggle" class="nav-link d-xl-none" href="#nav-item-container-root"
-                           onclick="toggleMobileNavbar(event)" role="button" aria-expanded="false"
-                           aria-controls="nav-item-container-root">
-                            {% bs_icon 'list' size='1.4em' %}
-                        </a>
+                    <div id="navbar-right"
+                         class="flex-fill justify-content-end d-flex align-items-center">
+                        <a id="nav-search-button"
+                           class="nav-link"
+                           onclick="showSearchModal(event)"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           data-bs-title="{% translate 'Ctrl+K' %}"
+                           role="button">{% bs_icon 'search' size='1.4em' %}</a>
+                        <a id="nav-mobile-toggle"
+                           class="nav-link d-xl-none"
+                           href="#nav-item-container-root"
+                           onclick="toggleMobileNavbar(event)"
+                           role="button"
+                           aria-expanded="false"
+                           aria-controls="nav-item-container-root">{% bs_icon 'list' size='1.4em' %}</a>
                         {% if user.is_authenticated %}
-                            <a id="nav-user-toggle" class="nav-link" href="#nav-item-container-user"
-                               onclick="toggleUserNavbar(event)" role="button" aria-expanded="false"
+                            <a id="nav-user-toggle"
+                               class="nav-link"
+                               href="#nav-item-container-user"
+                               onclick="toggleUserNavbar(event)"
+                               role="button"
+                               aria-expanded="false"
                                aria-controls="nav-item-container-user">
-                                <span id="user-information-username" class="d-none" aria-hidden="true">{{ user.first_name }}
-                                    {{ user.last_name }}</span>
+                                <span id="user-information-username" class="d-none" aria-hidden="true">{{ user.first_name }} {{ user.last_name }}</span>
                                 {% bs_icon 'person-circle' size='1.4em' %}
                             </a>
                         {% else %}
-                            <a id="nav-user-toggle" class="nav-link"
+                            <a id="nav-user-toggle"
+                               class="nav-link"
                                href="{% url 'oidc_authentication_init' %}?next={{ request.path }}">
                                 <span class="d-none d-md-inline-block">{% translate "Sign in" %}</span>
                                 {% bs_icon 'box-arrow-in-right' size='1.4em' %}
@@ -82,26 +99,25 @@
                         {% build_nav_level_for root_page %}
                     {% endcache %}
 
-                <!-- For navbar desktop mode: Wrappers for sub level containers of root level in navbar -->
+                    <!-- For navbar desktop mode: Wrappers for sub level containers of root level in navbar -->
                     <div id="nav-level-1" class="nav-level"></div>
                     <div id="nav-level-2" class="nav-level"></div>
 
                     <div id="nav-level-right"
                          class="nav-level d-flex flex-column flex-grow-1 align-items-stretch align-items-xl-end">
-                        <ul id="nav-item-container-user" class="nav-item-container collapse"
+                        <ul id="nav-item-container-user"
+                            class="nav-item-container collapse"
                             data-navbar-level="#nav-level-0">
                             {% if user.groups.all.exists %}
                                 <span class="nav-link pe-none" id="navbar-groups-header"><i>{% translate "Your groups:" %}</i></span>
                                 {% for group in user.groups.all %}
                                     <li class="nav-link nav-link-extra-indent">
                                         <div class="row">
-                                            <div class="col">
-                                                {{ group }}
-                                            </div>
-                                            {% if minutes_creation_links|get_link_for_group:group%}
+                                            <div class="col">{{ group }}</div>
+                                            {% if minutes_creation_links|get_link_for_group:group %}
                                                 <div class="col add-minutes">
                                                     <a href="{{ minutes_creation_links|get_link_for_group:group }}"
-                                                       title="{% translate 'Create minutes' %}"> {% bs_icon 'journal-plus' size='1.4em' %}</a>
+                                                       title="{% translate 'Create minutes' %}">{% bs_icon 'journal-plus' size='1.4em' %}</a>
                                                 </div>
                                             {% endif %}
                                         </div>
@@ -110,10 +126,10 @@
                                 <li class="dropdown-divider"></li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class='nav-link' href="https://auth.myhpi.de" id="edit-profile-link">{% trans "Edit profile" %}</a>
+                                <a class="nav-link" href="https://auth.myhpi.de" id="edit-profile-link">{% trans "Edit profile" %}</a>
                             </li>
                             <li class="nav-item">
-                                <a class='nav-link' href="#" id="logout-link">{% trans "Sign out" %}</a>
+                                <a class="nav-link" href="#" id="logout-link">{% trans "Sign out" %}</a>
                                 <form action="{% url 'oidc_logout' %}" method="post" id="logout-form">
                                     {% csrf_token %}
                                 </form>
@@ -131,18 +147,26 @@
                     {% for message in messages %}
                         <div class="alert {{ message.tags }} alert-dismissible" role="alert">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% translate 'Close' %}"></button>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"
+                                    aria-label="{% translate 'Close' %}"></button>
                         </div>
                     {% endfor %}
                 </div>
 
                 {% if self.get_ancestors|length > 1 %}
-                    <nav aria-label="breadcrumb" class="d-print-none"
-                         style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,{% filter urlencode|slice:'43:' %}{% bs_icon 'chevron-right' size='8' %}{% endfilter %} &#34;);">
+                    <nav aria-label="breadcrumb"
+                         class="d-print-none"
+                         style="--bs-breadcrumb-divider: url(&#34;
+                                data:image/svg+xml,{% filter urlencode|slice:'43:' %}{% bs_icon 'chevron-right' size='8' %}{% endfilter %} &#34;
+                                )">
                         <ol class="breadcrumb">
                             {% for ancestor_page in self.get_ancestors %}
                                 {% if ancestor_page.is_root == False %}
-                                    <li class="breadcrumb-item"><a href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a></li>
+                                    <li class="breadcrumb-item">
+                                        <a href="{% pageurl ancestor_page %}">{{ ancestor_page.title }}</a>
+                                    </li>
                                 {% endif %}
                             {% endfor %}
                             <li class="breadcrumb-item active" aria-current="page">{{ self.title }}</li>
@@ -158,10 +182,23 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form id="searchForm" class="d-flex align-items-center" action="{% url 'search' %}">
-                            <input id="searchInput" type="search" class="form-control me-3" placeholder="{% translate 'Search...' %}" aria-label="Suche" name="query">
-                            <button type="submit" class="btn btn-primary" aria-label="{% translate 'Start search' %}"
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Enter">{% bs_icon 'search' size='1.4em' extra_classes="text-light" %}</button>
+                        <form id="searchForm"
+                              class="d-flex align-items-center"
+                              action="{% url 'search' %}">
+                            <input id="searchInput"
+                                   type="search"
+                                   class="form-control me-3"
+                                   placeholder="{% translate 'Search...' %}"
+                                   aria-label="Suche"
+                                   name="query">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    aria-label="{% translate 'Start search' %}"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom"
+                                    data-bs-title="Enter">
+                                {% bs_icon 'search' size='1.4em' extra_classes="text-light" %}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -170,7 +207,7 @@
 
         {% insert_footer page %}
 
-    {# Global javascript #}
+        {# Global javascript #}
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
@@ -178,9 +215,7 @@
         <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
 
-        {% block extra_js %}
-    {# Override this in templates to add extra javascript #}
-        {% endblock %}
+        {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
     </body>
 
 </html>

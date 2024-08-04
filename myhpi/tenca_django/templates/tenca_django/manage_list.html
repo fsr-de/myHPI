@@ -7,14 +7,20 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <li><span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;<a href="{% url "tenca_django:tenca_dashboard" %}">{% trans "Mailing lists" %}</a></li>
-    <li><span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Manage list" %}</li>
+    <li>
+        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;<a href="{% url 'tenca_django:tenca_dashboard' %}">{% trans "Mailing lists" %}</a>
+    </li>
+    <li>
+        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Manage list" %}
+    </li>
 {% endblock %}
 
 {% block content %}
-    <p>{% blocktrans %}
-        This is the admin view for the owners of {{ listname }}
-    {% endblocktrans %}</p>
+    <p>
+        {% blocktrans %}
+            This is the admin view for the owners of {{ listname }}
+        {% endblocktrans %}
+    </p>
 
     <h3>{% trans "Invite Link" %}</h3>
     {% trans "Share this link to invite new members:" %}
@@ -37,45 +43,33 @@
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
-            <a class="btn btn-danger" href="{% url "tenca_django:tenca_delete_list" mailing_list.list_id %}">{% trans "Delete list" %}</a>		</div>
+            <a class="btn btn-danger"
+               href="{% url 'tenca_django:tenca_delete_list' mailing_list.list_id %}">{% trans "Delete list" %}</a>
+        </div>
     </form>
 
     <h4 class="mt-2">{% trans "Members" %}</h4>
     {% for form, is_owner, is_blocked in members %}
-        <form method="post" action="{% url "tenca_django:tenca_edit_member" mailing_list.list_id %}">
+        <form method="post"
+              action="{% url 'tenca_django:tenca_edit_member' mailing_list.list_id %}">
             {% csrf_token %}
             <div class="card mb-1">
                 <div class="card-body d-flex py-2">
                     <div class="flex-fill">{{ form.email }}</div>
                     <div>
                         {% if is_owner %}
-                            <button name="demote_member"
-                                    class="btn btn-link"
-                                    type="submit">Demote from Owner
-                            </button>
+                            <button name="demote_member" class="btn btn-link" type="submit">Demote from Owner</button>
                         {% else %}
-                            <button name="promote_member"
-                                    class="btn btn-link"
-                                    type="submit">Promote to Owner
-                            </button>
+                            <button name="promote_member" class="btn btn-link" type="submit">Promote to Owner</button>
                         {% endif %}
 
                         {% if is_blocked %}
-                            <button name="unblock_member"
-                                    class="btn btn-link"
-                                    type="submit">Unblock member
-                            </button>
+                            <button name="unblock_member" class="btn btn-link" type="submit">Unblock member</button>
                         {% else %}
-                            <button name="block_member"
-                                    class="btn btn-link"
-                                    type="submit">Block member
-                            </button>
+                            <button name="block_member" class="btn btn-link" type="submit">Block member</button>
                         {% endif %}
 
-                        <button name="remove_member"
-                                class="btn btn-link"
-                                type="submit">Remove member
-                        </button>
+                        <button name="remove_member" class="btn btn-link" type="submit">Remove member</button>
                     </div>
                 </div>
             </div>

@@ -20,7 +20,7 @@
 <!-- Bootstrap 5.2 supports responsive offcanvas.
     This duplication is a workaround and should be removed after the upgrade -->
 <div class="d-none d-lg-block side-panel-container">
-    {%if parsed_md.1|hasTocContent %}
+    {% if parsed_md.1|hasTocContent %}
         <aside class="side-panel border-accent sidebar-container d-print-none">
             <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
             {{ parsed_md.1 }}
@@ -46,7 +46,9 @@
          aria-labelledby="sidebar-offcanvas-label">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="sidebar-offcanvas-label">{% translate "Table of contents" %}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="offcanvas"
                     aria-label="{% translate 'Close' %}"></button>
         </div>
         <div class="offcanvas-body">
