@@ -9,23 +9,25 @@
         <div id="options" class="mb-3">
             {% for field in page.get_ballot_form %}
                 <div class="card">
-                    <div class="card-header" data-toggle="collapse" data-target="#collapse_{{ field.html_name }}">
+                    <div class="card-header"
+                         data-toggle="collapse"
+                         data-target="#collapse_{{ field.html_name }}">
                         <div class="row">
                             <div class="col">{{ field.label }}</div>
                             <div class="col-auto">{{ field }}</div>
                         </div>
                     </div>
-                    <div id="collapse_{{ field.html_name }}" data-parent="#options" class="collapse show">
+                    <div id="collapse_{{ field.html_name }}"
+                         data-parent="#options"
+                         class="collapse show">
                         <div class="card-body">
-                            {% with field.help_text|markdown as parsed_md %}
-                                <p>{{ parsed_md.0 }}</p>
-                            {% endwith %}
+                            {% with field.help_text|markdown as parsed_md %}<p>{{ parsed_md.0 }}</p>{% endwith %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-        <input class="btn btn-primary" type="submit" value="Vote"/>
+        <input class="btn btn-primary" type="submit" value="Vote" />
     </form>
 {% endblock %}
 
@@ -33,17 +35,17 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col"> {% translate "Rank" %}</th>
-                <th scope="col"> {% translate "Choice" %}</th>
-                <th scope="col"> {% translate "Final Votes" %}</th>
+                <th scope="col">{% translate "Rank" %}</th>
+                <th scope="col">{% translate "Choice" %}</th>
+                <th scope="col">{% translate "Final Votes" %}</th>
             </tr>
         </thead>
         <tbody>
             {% for choice in page.calculate_ranking %}
                 <tr>
-                    <th scope="row"> {{ choice.0 }} </th>
-                    <td> {{ choice.1 }} </td>
-                    <td> {{ choice.2 }} </td>
+                    <th scope="row">{{ choice.0 }}</th>
+                    <td>{{ choice.1 }}</td>
+                    <td>{{ choice.2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>

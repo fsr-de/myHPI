@@ -6,11 +6,14 @@
     <form method="post">
         {% csrf_token %}
         {% for choice in page.choices.all %}
-            <input type={% if page.max_allowed_answers > 1 %} "checkbox" {% else %} "radio"
-                   {% endif %} name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-            <label for="choice{{ forloop.counter }}">{{ choice.text }}</label><br/>
+            <input type="{% if page.max_allowed_answers > 1 %} 'checkbox' {% else %} 'radio' {% endif %}"
+                   name="choice"
+                   id="choice{{ forloop.counter }}"
+                   value="{{ choice.id }}" />
+            <label for="choice{{ forloop.counter }}">{{ choice.text }}</label>
+            <br />
         {% endfor %}
-        <input type="submit" value="Vote"/>
+        <input type="submit" value="Vote" />
     </form>
 {% endblock %}
 
@@ -19,7 +22,8 @@
         <tr>
             <th class="col-sm-3">{% trans "Choice" %}</th>
             {% if has_choice_descriptions %}
-                <th class="col-sm-5">{% trans "Description" %}</th>{% endif %}
+                <th class="col-sm-5">{% trans "Description" %}</th>
+            {% endif %}
             <th class="col-sm-1 text-right">{% trans "Votes" %}</th>
             <th class="col-sm-1 text-right">{% trans "Percentage" %}</th>
         </tr>

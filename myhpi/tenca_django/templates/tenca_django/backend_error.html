@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Mailing Lists Unavailable" %}{% endblock %}
+{% block title %}
+    {% trans "Mailing Lists Unavailable" %}
+{% endblock %}
 
 {% block content %}
     <p>{% trans "Sorry for the inconvenience, but the mail server backend does not reply. Please try again later." %}</p>

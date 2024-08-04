@@ -4,10 +4,14 @@
 {% load i18n %}
 {% load bootstrap_icons %}
 
-{%if toc|hasTocContent or attachments %}
+{% if toc|hasTocContent or attachments %}
     <div id="sidebar-toggle" class="d-grid d-lg-none d-print-none">
-        <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-offcanvas"
-            aria-controls="sidebar-offcanvas" class="btn btn-light mb-3" aria-label="{% translate 'Table of contents and Attachments' %}">
+        <button type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#sidebar-offcanvas"
+                aria-controls="sidebar-offcanvas"
+                class="btn btn-light mb-3"
+                aria-label="{% translate 'Table of contents and Attachments' %}">
             {% bs_icon 'list-ol' size='1.3rem' %}
             {% if toc|hasTocContent and attachments %}
                 {% translate "Table of contents and Attachments" %}

@@ -4,13 +4,13 @@
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}{% translate "Search" %}{% endblock %}
+{% block title %}
+    {% translate "Search" %}
+{% endblock %}
 
 {% block content %}
     <h1 class="page-title">
-        <span class="underline">
-            {% translate "Search" %}
-        </span>
+        <span class="underline">{% translate "Search" %}</span>
     </h1>
 
     {% include "search/search_field.html" %}
@@ -49,16 +49,9 @@
                     </li>
                 {% endif %}
                 {% for page_index in search_results_page.paginator.page_range %}
-                    <li
-                        {% if page_index == search_results_page.number %}
-                            class="page-item active" aria-current="page"
-                        {% else %}
-                            class="page-item"
-                        {% endif %}>
+                    <li {% if page_index == search_results_page.number %} class="page-item active" aria-current="page" {% else %} class="page-item" {% endif %}>
                         <a class="page-link"
-                           href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ page_index }}">
-                            {{ page_index }}
-                        </a>
+                           href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ page_index }}">{{ page_index }}</a>
                     </li>
                 {% endfor %}
                 {% if search_results_page.has_next %}
