@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 19:26+0200\n"
+"POT-Creation-Date: 2024-08-08 20:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,73 +74,73 @@ msgstr "verlässt"
 msgid "[missing link]"
 msgstr "[link fehlt]"
 
-#: myhpi/core/templates/core/information_page.html:20
+#: myhpi/core/templates/core/information_page.html:21
 msgid "Last edited"
 msgstr "Zuletzt bearbeitet"
 
-#: myhpi/core/templates/core/information_page.html:22
+#: myhpi/core/templates/core/information_page.html:23
 msgid "A long time ago"
 msgstr "Vor langer Zeit"
 
-#: myhpi/core/templates/core/information_page.html:26
+#: myhpi/core/templates/core/information_page.html:27
 #, python-format
 msgid "%(date)s at %(time)s"
 msgstr "%(date)s um %(time)s Uhr"
 
-#: myhpi/core/templates/core/information_page.html:32
+#: myhpi/core/templates/core/information_page.html:33
 msgid "by"
 msgstr "von"
 
-#: myhpi/core/templates/core/minutes.html:19
+#: myhpi/core/templates/core/minutes.html:22
 msgid "Date"
 msgstr "Datum"
 
-#: myhpi/core/templates/core/minutes.html:23
+#: myhpi/core/templates/core/minutes.html:26
 msgid "Moderator"
 msgstr "Sitzungsleitung"
 
-#: myhpi/core/templates/core/minutes.html:27
+#: myhpi/core/templates/core/minutes.html:30
 msgid "Minutes taker"
 msgstr "Protokollführung"
 
-#: myhpi/core/templates/core/minutes.html:31
+#: myhpi/core/templates/core/minutes.html:34
 msgid "Participants"
 msgstr "Teilnehmende"
 
-#: myhpi/core/templates/core/minutes.html:39
+#: myhpi/core/templates/core/minutes.html:42
 msgid "Guests"
 msgstr "Gäste"
 
-#: myhpi/core/templates/core/minutes.html:47
+#: myhpi/core/templates/core/minutes.html:50
 msgid "No guests"
 msgstr "Keine Gäste"
 
-#: myhpi/core/templates/core/minutes.html:52
+#: myhpi/core/templates/core/minutes.html:55
 msgid "Location"
 msgstr "Ort"
 
-#: myhpi/core/templates/core/minutes.html:57
+#: myhpi/core/templates/core/minutes.html:60
 msgid "Labels"
 msgstr "Labels"
 
-#: myhpi/core/templates/core/minutes.html:61
+#: myhpi/core/templates/core/minutes.html:64
 msgid "No labels"
 msgstr "Keine Labels"
 
-#: myhpi/core/templates/core/minutes.html:71
+#: myhpi/core/templates/core/minutes.html:75
 msgid "Previous minutes"
 msgstr "Vorheriges Protokoll"
 
-#: myhpi/core/templates/core/minutes.html:77
+#: myhpi/core/templates/core/minutes.html:81
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
-#: myhpi/core/templates/core/minutes_list.html:14
+#: myhpi/core/templates/core/minutes_list.html:18
 #: myhpi/core/templates/core/sidebar.html:7
 msgid "Page has unpublished changes!"
 msgstr "Seite hat unveröffentlichte Änderungen!"
 
-#: myhpi/core/templates/core/minutes_list.html:33
+#: myhpi/core/templates/core/minutes_list.html:37
 msgid "No minutes available for this year."
 msgstr "Keine Protokolle für dieses Jahr verfügbar."
 
@@ -148,13 +148,25 @@ msgstr "Keine Protokolle für dieses Jahr verfügbar."
 msgid "Visibility"
 msgstr "Sichtbarkeit"
 
-#: myhpi/core/templates/core/sidebar.html:22
+#: myhpi/core/templates/core/sidebar.html:25
+#: myhpi/core/templates/core/sidebar.html:46
+#: myhpi/core/templates/core/sidebar.html:52
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
-#: myhpi/core/templates/core/sidebar.html:30
+#: myhpi/core/templates/core/sidebar.html:31
+#: myhpi/core/templates/core/sidebar.html:57
 msgid "Attachments"
 msgstr "Anhänge"
+
+#: myhpi/core/templates/core/sidebar.html:48 myhpi/templates/base.html:134
+msgid "Close"
+msgstr "Schließen"
+
+#: myhpi/core/templates/core/toc_button.html:10
+#: myhpi/core/templates/core/toc_button.html:12
+msgid "Table of contents and attachments"
+msgstr "Inhaltsverzeichnis und Anhänge"
 
 #: myhpi/polls/models.py:66
 #, fuzzy
@@ -199,11 +211,11 @@ msgstr "Ungültige Stimmabgabe."
 msgid "A database error occured. Please try again."
 msgstr "Ein Datenbankfehler ist aufgetreten. Bitte versuche es erneut."
 
-#: myhpi/polls/templates/polls/base_poll.html:20
+#: myhpi/polls/templates/polls/base_poll.html:24
 msgid "You've accessed this page outside of the voting period."
 msgstr "Du hast diese Seite außerhalb des Abstimmungszeitraums aufgerufen."
 
-#: myhpi/polls/templates/polls/base_poll.html:22
+#: myhpi/polls/templates/polls/base_poll.html:26
 #, fuzzy
 #| msgid "You have already voted and the results are not yet visible."
 msgid ""
@@ -212,15 +224,15 @@ msgid ""
 msgstr ""
 "Du hast schon abgestimmt und die Ergebnisse sind noch nicht veröffentlicht."
 
-#: myhpi/polls/templates/polls/base_poll.html:26
+#: myhpi/polls/templates/polls/base_poll.html:32
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: myhpi/polls/templates/polls/base_poll.html:28
+#: myhpi/polls/templates/polls/base_poll.html:34
 msgid "End Date"
 msgstr "Enddatum"
 
-#: myhpi/polls/templates/polls/base_poll.html:30
+#: myhpi/polls/templates/polls/base_poll.html:36
 msgid "Number of participants"
 msgstr "Teilnehmendenanzahl"
 
@@ -241,11 +253,11 @@ msgstr "Stimmen"
 msgid "Percentage"
 msgstr "Prozent"
 
-#: myhpi/polls/templates/polls/poll_list.html:10
+#: myhpi/polls/templates/polls/poll_list.html:14
 msgid "Title"
 msgstr "Titel"
 
-#: myhpi/polls/templates/polls/poll_list.html:11
+#: myhpi/polls/templates/polls/poll_list.html:15
 msgid "Voting period"
 msgstr "Abstimmungszeitraum"
 
@@ -261,7 +273,7 @@ msgstr "Stimmen"
 
 #: myhpi/search/templates/search/search.html:7
 #: myhpi/search/templates/search/search.html:12
-#: myhpi/search/templates/search/search_field.html:10
+#: myhpi/search/templates/search/search_field.html:8
 msgid "Search"
 msgstr "Suche"
 
@@ -278,7 +290,7 @@ msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
 #: myhpi/search/templates/search/search_field.html:6
-#: myhpi/templates/base.html:169
+#: myhpi/templates/base.html:162
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -333,33 +345,33 @@ msgstr ""
 msgid "To home page"
 msgstr "Zur Startseite"
 
-#: myhpi/templates/base.html:53
+#: myhpi/templates/base.html:52
 msgid "Ctrl+K"
 msgstr "Strg+K"
 
-#: myhpi/templates/base.html:75
+#: myhpi/templates/base.html:71
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: myhpi/templates/base.html:99
+#: myhpi/templates/base.html:94
 msgid "Your groups:"
 msgstr "Deine Gruppen"
 
-#: myhpi/templates/base.html:108
+#: myhpi/templates/base.html:104
 #, fuzzy
 #| msgid "Next minutes"
 msgid "Create minutes"
 msgstr "Protokoll erstellen"
 
-#: myhpi/templates/base.html:117
+#: myhpi/templates/base.html:113
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
-#: myhpi/templates/base.html:120
+#: myhpi/templates/base.html:116
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: myhpi/templates/base.html:171
+#: myhpi/templates/base.html:163
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -456,7 +468,6 @@ msgstr ""
 "\t"
 
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:20
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:499
 #, fuzzy
 #| msgid "Delete list"
 msgid "Delete"
