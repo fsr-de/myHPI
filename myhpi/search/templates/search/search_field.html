@@ -10,6 +10,8 @@
                {% if search_query %}value="{{ search_query }}"{% endif %}>
         <button type="submit"
                 class="btn btn-primary"
-                aria-label="{% translate 'Search' %}">{% bs_icon "search" extra_classes="text-light" %}</button>
+                aria-label="{% translate 'Search' %}">
+            {% bs_icon "search" extra_classes="text-light" %}
+        </button>
     </div>
 </form>

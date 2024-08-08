@@ -14,7 +14,9 @@
     {% else %}
         {% if 'next' in request.GET and not request.GET.user_initiated %}
             <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    &times;
+                </button>
                 {% translate "Please login to see this page." %}
             </div>
         {% endif %}

@@ -12,7 +12,9 @@
             <h1 class="page-title">
                 <span class="underline">{{ page.title }}</span>
             </h1>
-            <div class="col-lg-9 minutes-text">{{ parsed_md.0|touchify_abbreviations|tag_external_links }}</div>
+            <div class="col-lg-9 minutes-text">
+                {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
+            </div>
             <div class="col-lg-3 minutes-meta">
                 <aside class="side-panel border-accent">
                     <h1 class="side-panel-title">{% translate "Date" %}</h1>
@@ -29,7 +31,9 @@
                 <aside class="side-panel border-accent">
                     <h1 class="side-panel-title">{% translate "Participants" %}</h1>
                     <ul>
-                        {% for participant in page.participants.all %}<li>{{ participant.get_full_name }}</li>{% endfor %}
+                        {% for participant in page.participants.all %}
+                            <li>{{ participant.get_full_name }}</li>
+                        {% endfor %}
                     </ul>
                 </aside>
                 <aside class="side-panel border-accent">

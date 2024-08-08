@@ -36,7 +36,9 @@
               href="{% static 'scss/myHPI.scss'|compile %}"
               rel="stylesheet">
 
-        {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
     </head>
 
     <body class="bg-background myhpi-accent d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}">
@@ -150,7 +152,8 @@
                             <button type="button"
                                     class="btn-close"
                                     data-bs-dismiss="alert"
-                                    aria-label="{% translate 'Close' %}"></button>
+                                    aria-label="{% translate 'Close' %}">
+                            </button>
                         </div>
                     {% endfor %}
                 </div>
@@ -215,7 +218,9 @@
         <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/myHPI.js' %}"></script>
 
-        {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
     </body>
 
 </html>

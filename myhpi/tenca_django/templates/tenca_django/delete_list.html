@@ -23,7 +23,9 @@
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
-            <button type="submit" name="confirm" class="btn btn-danger">{% trans "Delete" %}</button>
+            <button type="submit" name="confirm" class="btn btn-danger">
+                {% trans "Delete" %}
+            </button>
             <a class="btn btn-secondary"
                href="{% url 'tenca_django:tenca_manage_list' mailing_list.list_id %}">{% trans "Cancel" %}</a>
         </div>

@@ -5,7 +5,9 @@
     <div class="page-content d-flex flex-wrap flex-column flex-sm-row">
         {% for column in footer_columns %}
             <div class="footer-category">
-                {% with column|markdown as parsed_markdown %}{{ parsed_markdown.0|tag_external_links }}{% endwith %}
+                {% with column|markdown as parsed_markdown %}
+                    {{ parsed_markdown.0|tag_external_links }}
+                {% endwith %}
             </div>
         {% endfor %}
         <div class="footer-category">
