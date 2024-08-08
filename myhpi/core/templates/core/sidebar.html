@@ -40,7 +40,7 @@
     {% endif %}
 </div>
 
-{%if parsed_md.1|hasTocContent %}
+{%if parsed_md.1|hasTocContent or page.attachments.all %}
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="sidebar-offcanvas" aria-labelledby="sidebar-offcanvas-label">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="sidebar-offcanvas-label">{% translate "Table of contents" %}</h5>
