@@ -20,7 +20,7 @@ To set up a development version on your local machine, you need to execute the f
 1. Create env file by copying the `.env.example` file to `.env`, e.g. `cp .env.example .env` (Notice that for some functionality like OIDC some settings must be changed)
 1. Migrate the database with `python manage.py migrate`
 1. Install bootstrap with `python tools/install_bootstrap.py`
-1. Optionally: Compile translations with `python manage.py compilemessages` (does not work on Windows, recommended to skip this step or see [docs](https://docs.djangoproject.com/en/4.0/topics/i18n/translation/#gettext-on-windows))
+1. Optionally: Compile translations with `python manage.py compilemessages -i venv` (does not work on Windows, recommended to skip this step or see [docs](https://docs.djangoproject.com/en/4.0/topics/i18n/translation/#gettext-on-windows))
 1. Optionally: Create test data with `python manage.py create_test_data`
 1. Create a local superuser with `python manage.py createsuperuser`
 1. Start the development server with `python manage.py runserver`
@@ -43,7 +43,7 @@ If you want to do that manually, run `pre-commit run --all-files`. Next to that,
 
 ## Tips
 
-- To create translations, run `python manage.py makemessages -l de -i venv`.
+- To create translations: Run `python manage.py makemessages -l de -i venv`. Fill in the translations in `django.po`. Apply changes by running `python manage.py compilemessages -i venv`.
 
 ### Reset database
 
