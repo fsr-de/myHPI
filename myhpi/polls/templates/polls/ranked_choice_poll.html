@@ -21,7 +21,9 @@
                          data-parent="#options"
                          class="collapse show">
                         <div class="card-body">
-                            {% with field.help_text|markdown as parsed_md %}<p>{{ parsed_md.0 }}</p>{% endwith %}
+                            {% with field.help_text|markdown as parsed_md %}
+                                <p>{{ parsed_md.0 }}</p>
+                            {% endwith %}
                         </div>
                     </div>
                 </div>
