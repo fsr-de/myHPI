@@ -135,10 +135,14 @@ msgstr "Vorheriges Protokoll"
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
-#: myhpi/core/templates/core/minutes_list.html:15
+#: myhpi/core/templates/core/minutes_list.html:14
 #: myhpi/core/templates/core/sidebar.html:7
 msgid "Page has unpublished changes!"
 msgstr "Seite hat unveröffentlichte Änderungen!"
+
+#: myhpi/core/templates/core/minutes_list.html:33
+msgid "No minutes available for this year."
+msgstr "Keine Protokolle für dieses Jahr verfügbar."
 
 #: myhpi/core/templates/core/sidebar.html:13
 msgid "Visibility"
@@ -274,7 +278,7 @@ msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
 #: myhpi/search/templates/search/search_field.html:6
-#: myhpi/templates/base.html:166
+#: myhpi/templates/base.html:169
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -348,10 +352,14 @@ msgid "Create minutes"
 msgstr "Protokoll erstellen"
 
 #: myhpi/templates/base.html:117
+msgid "Edit profile"
+msgstr "Profil bearbeiten"
+
+#: myhpi/templates/base.html:120
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: myhpi/templates/base.html:168
+#: myhpi/templates/base.html:171
 msgid "Start search"
 msgstr "Suche starten"
 

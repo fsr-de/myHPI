@@ -3,6 +3,7 @@ from datetime import date
 
 from django import forms
 from django.contrib.auth.models import Group, User
+from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.db.models import BooleanField, CharField, DateField, ForeignKey, Model, Q
 from django.http import HttpResponseRedirect
@@ -42,6 +43,18 @@ class BasePage(Page):
         index.FilterField("group_id"),
         index.FilterField("is_public"),
     ]
+
+    def check_can_view(self, request):
+        target_groups = request.user.groups.all()
+        if request.user.is_superuser:
+            return
+        if getattr(request.user, "ip_range_group_name", None):
+            target_groups = Group.objects.filter(
+                Q(name=request.user.ip_range_group_name) | Q(id__in=request.user.groups.all())
+            )
+        is_matching_group = any(group in self.visible_for.all() for group in target_groups)
+        if not (is_matching_group or self.is_public):
+            raise PermissionDenied
 
 
 class InformationPageForm(WagtailAdminPageForm):
@@ -106,28 +119,39 @@ class MinutesList(BasePage):
 
     def get_visible_minutes(self, request):
         user_groups = get_user_groups(request.user)
-        minutes_ids = self.get_children().exact_type(Minutes).values_list("id", flat=True)
+        minutes = Minutes.objects.child_of(self)
 
+        visible_minutes = minutes.filter(Q(visible_for__in=user_groups) | Q(is_public=True))
         # display all minutes including drafts if user is in group that owns the minutes list
         if self.group in user_groups:
-            return Minutes.objects.filter(id__in=minutes_ids).order_by("-date")
+            visible_minutes = minutes
+        return visible_minutes
 
-        minutes_list = (
-            Minutes.objects.filter(id__in=minutes_ids)
-            .filter(Q(visible_for__in=user_groups) | Q(is_public=True))
-            .order_by("-date")
-            .distinct()
-        )
-        return minutes_list
+    def get_visible_minutes_for_year(self, request):
+        visible_minutes = self.get_visible_minutes(request)
+        try:
+            year = request.GET.get("year", None)
+            if year is None:
+                year = visible_minutes.order_by("-date")[0].date.year
+            else:
+                year = int(year)
+        except (ValueError, IndexError):
+            year = date.today().year
+        year_list = list(map(lambda d: d.year, visible_minutes.dates("date", "year")))
+
+        minutes = visible_minutes.filter(date__year=year).order_by("-date").distinct()
+        return year, year_list, minutes
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        minutes_list = self.get_visible_minutes(request)
-        context.setdefault("minutes_list", minutes_list)
-        minutes_by_years = defaultdict(lambda: [])
-        for minute in minutes_list:
-            minutes_by_years[minute.date.year].append(minute)
-        context["minutes_by_years"] = dict(minutes_by_years)
+        selected_year, all_years, minutes = self.get_visible_minutes_for_year(request)
+        context["selected_year"], context["all_years"] = selected_year, all_years
+        try:
+            year_index = all_years.index(selected_year)
+            context["year_range"] = all_years[max(year_index - 3, 0) : year_index + 4]
+        except ValueError:
+            context["year_range"] = all_years[-3:]
+        context["minutes"], context["minutes_list"] = minutes, self
         return context
 
 

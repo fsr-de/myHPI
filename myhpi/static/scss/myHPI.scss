@@ -16,9 +16,11 @@ $custom-colors: (
     "border": #EEE,
     "border-dark": #B2B2B2,
     "body-bg-light": #FBFBFB,
-    "body-bg-overlay": #EEE
+    "body-bg-overlay": #EEE,
 );
 $colors: map-merge($colors, $custom-colors);
+
+$offcanvas-vertical-height: 70vh;
 
 @import "./bootstrap/root";
 
@@ -65,7 +67,19 @@ $colors: map-merge($colors, $custom-colors);
 :root {
     --bs-p-2: 0.5rem;
     --bs-p-4: 1rem;
+    --myhpi-page-padding-top: 1.5rem;
     --myhpi-round-border: 2px;
+    --myhpi-navbar-height: 73px; // Default value, overwritten by JS as necessary
+    --myhpi-navbar-visible-height: 73px; // Default value, overwritten by JS as necessary
+}
+
+h1, h2, h3, h4, h5, h6, .toc a, .page-content {
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: calc(5rem + var(--myhpi-navbar-height));
 }
 
 a {
@@ -74,6 +88,10 @@ a {
 
 p {
     text-align: justify;
+}
+
+#page {
+    padding-top: calc(var(--myhpi-page-padding-top)/2 + var(--myhpi-navbar-height));
 }
 
 .page {
@@ -132,6 +150,7 @@ p {
 
 .side-panel-container {
     position: sticky;
+    z-index: 30;
     top: 6rem;
 }
 
@@ -166,25 +185,34 @@ h1.side-panel-title::after {
     font-weight: 600;
 }
 
-.toc-container ul {
+.sidebar-container ul {
     list-style: none;
     padding: 0;
 }
 
-.toc-container ul li a {
-    display: block;
-    line-height: 100%;
-    padding-bottom: 0.3rem;
+.sidebar-container ul li>ul {
+    margin-left: 1rem;
 }
 
-.toc-container ul li>ul {
-    margin-left: 0.5rem;
+.toc-permalink {
+    font-size: 0.85em;
+    opacity: 0;
+}
+
+*:hover>.toc-permalink, *:active>.toc-permalink, .toc-permalink:focus {
+    opacity: 1;
 }
 
 .search-result-list {
     list-style: none;
     padding: 0;
     margin: -0.5rem -0.8rem;
+
+    .search-preview {
+        h1, h2, h3, h4, h5, h6{
+            font-size: 1rem;
+        }
+    }
 
     .search-result {
         h5 {
@@ -251,8 +279,17 @@ img {
     margin: 0 5px;
 }
 
+
+
 @import "./navbar.scss";
 @import "./footer.scss";
+
+#sidebar-toggle {
+    position: sticky;
+    z-index: 20;
+    transition: all 0.3s ease; // Equal to .xl-hide-on-scroll
+    top: calc(1rem + var(--myhpi-navbar-visible-height));
+}
 
 @media screen and (max-width: 1200px) {
     .xl-hide-on-scroll {
@@ -264,11 +301,40 @@ img {
         opacity: 0;
         transform: translateY(-100%);
     }
+
+    .sidebar-container a {
+        display: block;
+        padding: var(--bs-p-2);
+    }
+
+    .offcanvas {
+        .offcanvas-body {
+            padding-top: 0;
+        }
+
+        .side-panel:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        
+            .side-panel-title {
+                display: none;
+            }
+        }
+
+        .side-panel {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 @media screen and (min-width: 1200px) {
     body {
         padding-top: 1rem;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        scroll-margin-top: calc(1.5rem + var(--myhpi-navbar-height));
     }
 
     .page-content {
@@ -281,16 +347,20 @@ img {
     .page:not(.navbar-myhpi) .page-content {
         padding-top: 1.5rem; // default padding without height of navbar
     }
+    
+    .sidebar-container ul li>ul {
+        margin-left: 0.5rem;
+    }
 }
 
 @media print {
-    .toc {
-        display: none;
+    .page-title .underline {
+        border-bottom: none;
     }
 
-    .minutes-container {
-        display: flex;
-        flex-direction: column;
+    .side-panel {
+        border: none !important;
+        padding: 0;
     }
 
     .minutes-title {
@@ -299,6 +369,7 @@ img {
 
     .minutes-meta {
         order: 1;
+        margin-bottom: 2rem;
     }
 
     .minutes-text {
@@ -314,6 +385,7 @@ img {
 @media (pointer: coarse), (hover: none) {
     [title] {
         position: relative;
+        z-index: 10;
         display: inline-flex;
         justify-content: center;
     }

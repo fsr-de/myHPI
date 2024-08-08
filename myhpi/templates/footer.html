@@ -12,9 +12,14 @@
     {% endfor %}
     <div class="footer-category">
       <h2>{% translate "Language" %}</h2>
-        {% for translation in page.get_translations %}
-            <a href="{{ translation.url }}">{{ translation.locale }}</a>
-        {% endfor %}
+      {% for translation in page.get_translations %}
+      <form id="language-form-{{ translation.locale }}" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ translation.url }}">
+        <input type="hidden" name="language" value="{{ translation.locale.language_code }}">
+        <button class="btn btn-link" type="submit">{{ translation.locale }}</button>
+      </form>
+      {% endfor %}
     </div>
   </div>
 </footer>

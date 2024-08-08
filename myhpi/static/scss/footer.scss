@@ -25,6 +25,12 @@
             text-decoration: underline;
         }
     }
+
+    .btn-link {
+        color: var(--bs-text-light);
+        text-decoration: none;
+        padding: 0;
+    }
 }
 
 @media screen and (min-width: 576px) {

@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.11
+  python: python3.12
 repos:
   - repo: https://github.com/myint/autoflake
     rev: v2.2.1
@@ -12,10 +12,18 @@ repos:
           - --ignore-init-module-imports
           - --expand-star-imports
   - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
+    rev: 5.13.2
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
     rev: 23.9.1
     hooks:
       - id: black
+  - repo: local
+    hooks:
+      - id: prettier-eslint
+        name: Prettier and ESLint
+        entry: prettier-eslint --write --list-different
+        language: node
+        types_or: [javascript, css, markdown, yaml]
+        additional_dependencies: ["prettier-eslint-cli@8.0.1"]
