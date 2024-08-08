@@ -73,3 +73,4 @@ enable = true
 ignore = "T002,T003,H006,H023,H031,H037"
 preserve_blank_lines = true
 custom_blocks = "blocktrans,cache"
+max_line_length=80
