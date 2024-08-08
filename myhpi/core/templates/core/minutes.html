@@ -7,7 +7,7 @@
 
 {% block content %}
     {% with page.body|markdown as parsed_md %}
-        {% include "core/toc_button.html" with toc=parsed_md.1 %}
+        {% include "core/toc_button.html" with toc=parsed_md.1 attachments=page.attachments.all %}
         <div class="row flex-column flex-lg-row">
             <h1 class="page-title">
                 <span class="underline">
