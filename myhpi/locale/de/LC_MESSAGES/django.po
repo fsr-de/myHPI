@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-11 11:13+0200\n"
+"POT-Creation-Date: 2024-07-29 19:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -380,12 +380,16 @@ msgid "Mailing Lists"
 msgstr "Mailinglisten"
 
 #: myhpi/tenca_django/forms.py:15
-msgid "Not subscribed users are allowed to post."
-msgstr "Nichtmitglieder dürfen an diese Liste schreiben."
+msgid "Not subscribed users are allowed to post"
+msgstr "Nichtmitglieder dürfen an diese Liste schreiben"
 
 #: myhpi/tenca_django/forms.py:18
-msgid "Replies are addressed to the list per default."
-msgstr "Antworten gehen immer an den Verteiler."
+msgid "Replies are addressed to the list per default"
+msgstr "Antworten gehen immer an den Verteiler"
+
+#: myhpi/tenca_django/forms.py:21
+msgid "Footer contains invitation link"
+msgstr "Fußzeile beinhaltet Einladungslink"
 
 #: myhpi/tenca_django/models.py:30
 #: myhpi/tenca_django/templates/tenca_django/manage_list.html:6
@@ -436,7 +440,7 @@ msgstr "Deine Mitgliedschaften"
 
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:5
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:10
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:48
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:40
 msgid "Delete list"
 msgstr "Liste Löschen"
 
@@ -450,6 +454,13 @@ msgstr ""
 "\n"
 "\t\tMöchtest du die Liste %(listname)s wirklich löschen?\n"
 "\t"
+
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:20
+#: venv/lib/python3.12/site-packages/django/forms/formsets.py:499
+#, fuzzy
+#| msgid "Delete list"
+msgid "Delete"
+msgstr "Liste Löschen"
 
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:21
 msgid "Cancel"
@@ -482,11 +493,11 @@ msgstr "Teile diesen Link, um neue Mitglieder einzuladen:"
 msgid "List options"
 msgstr "Listeneinstellungen"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:47
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:39
 msgid "Save"
 msgstr "Speichern"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:51
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:43
 msgid "Members"
 msgstr "Mitglieder"
 

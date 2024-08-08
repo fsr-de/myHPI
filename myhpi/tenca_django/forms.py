@@ -12,10 +12,13 @@ class TencaNewListForm(Form):
 
 class TencaListOptionsForm(Form):
     notsubscribed_allowed_to_post = BooleanField(
-        label=_("Not subscribed users are allowed to post."), required=False
+        label=_("Not subscribed users are allowed to post"), required=False
     )
     replies_addressed_to_list = BooleanField(
-        label=_("Replies are addressed to the list per default."), required=False
+        label=_("Replies are addressed to the list per default"), required=False
+    )
+    footer_has_subscribe_link = BooleanField(
+        label=_("Footer contains invitation link"), required=False
     )
     # Fields should be named according to their respective setting on the tenca list object
 
@@ -24,6 +27,7 @@ class TencaListOptionsForm(Form):
         super().__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.initial = getattr(mailing_list, key)
+        self.label_suffix = ""
 
 
 class TencaMemberEditForm(Form):
