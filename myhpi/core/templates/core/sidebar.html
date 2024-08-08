@@ -4,7 +4,9 @@
 {% if perms.wagtail.edit_page %}
     {% if page.has_unpublished_changes %}
         <aside class="side-panel border-accent sidebar-container d-print-none">
-            <h1 class="side-panel-warning">{% translate "Page has unpublished changes!" %}</h1>
+            <h1 class="side-panel-warning">
+                {% translate "Page has unpublished changes!" %}
+            </h1>
         </aside>
     {% endif %}
     {% with page.visible_for.all|join:", " as visibility %}
@@ -45,7 +47,9 @@
          id="sidebar-offcanvas"
          aria-labelledby="sidebar-offcanvas-label">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebar-offcanvas-label">{% translate "Table of contents" %}</h5>
+            <h5 class="offcanvas-title" id="sidebar-offcanvas-label">
+                {% translate "Table of contents" %}
+            </h5>
             <button type="button"
                     class="btn-close"
                     data-bs-dismiss="offcanvas"

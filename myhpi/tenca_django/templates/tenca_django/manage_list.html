@@ -58,18 +58,28 @@
                     <div class="flex-fill">{{ form.email }}</div>
                     <div>
                         {% if is_owner %}
-                            <button name="demote_member" class="btn btn-link" type="submit">Demote from Owner</button>
+                            <button name="demote_member" class="btn btn-link" type="submit">
+                                Demote from Owner
+                            </button>
                         {% else %}
-                            <button name="promote_member" class="btn btn-link" type="submit">Promote to Owner</button>
+                            <button name="promote_member" class="btn btn-link" type="submit">
+                                Promote to Owner
+                            </button>
                         {% endif %}
 
                         {% if is_blocked %}
-                            <button name="unblock_member" class="btn btn-link" type="submit">Unblock member</button>
+                            <button name="unblock_member" class="btn btn-link" type="submit">
+                                Unblock member
+                            </button>
                         {% else %}
-                            <button name="block_member" class="btn btn-link" type="submit">Block member</button>
+                            <button name="block_member" class="btn btn-link" type="submit">
+                                Block member
+                            </button>
                         {% endif %}
 
-                        <button name="remove_member" class="btn btn-link" type="submit">Remove member</button>
+                        <button name="remove_member" class="btn btn-link" type="submit">
+                            Remove member
+                        </button>
                     </div>
                 </div>
             </div>
