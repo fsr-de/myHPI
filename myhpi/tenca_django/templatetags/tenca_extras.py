@@ -11,6 +11,6 @@ def fqdn_ize(list_id):
     return connection.fqdn_ize(list_id)
 
 
-@register.filter(name='addcss')
+@register.filter(name="addcss")
 def addcss(field, css):
-    return field.as_widget(attrs={"class":css})
+    return field.as_widget(attrs={"class": css})
