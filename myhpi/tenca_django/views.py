@@ -29,7 +29,10 @@ class TencaDashboard(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         email = self.request.user.email
         kwargs.setdefault(
-            "memberships", connection.get_owner_and_memberships(email, *alternative_emails(email))
+            "memberships",
+            connection.get_owner_and_memberships(
+                email, *alternative_emails(email), ignore_missing_hashes=True
+            ),
         )
         kwargs.setdefault("domain_addon", "@" + str(connection.domain))
         return super().get_context_data(**kwargs)
