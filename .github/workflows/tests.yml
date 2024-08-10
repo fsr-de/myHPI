@@ -40,10 +40,10 @@ jobs:
         run: |
           poetry run pylint --version
           poetry run pylint --fail-under=9 myhpi
-      - name: Lint templates with djhtml
+      - name: Lint templates with djLint
         run: |
-          poetry run djhtml --version
-          poetry run djhtml --check myhpi
+          poetry run djlint --version
+          poetry run djlint --lint myhpi
 
   test:
     runs-on: ubuntu-20.04
