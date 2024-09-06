@@ -1897,13 +1897,13 @@ testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-f
 
 [[package]]
 name = "wagtail-localize"
-version = "1.9"
+version = "1.9.1"
 description = "Translation plugin for Wagtail CMS"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtail_localize-1.9-py3-none-any.whl", hash = "sha256:a680fc33c17145e6726f03a57b2ec465405847ae7cb77943ecc0e56463ad68c7"},
-    {file = "wagtail_localize-1.9.tar.gz", hash = "sha256:f4fa9c36d8dbab5c27d1b675ed6fd7b9e8f012cf4bb308464168de7ebbad8324"},
+    {file = "wagtail_localize-1.9.1-py3-none-any.whl", hash = "sha256:c895efc286970d2810929056044c11ff0b4ebb7a26b494d052a07c41ead4afab"},
+    {file = "wagtail_localize-1.9.1.tar.gz", hash = "sha256:d7b1434e765a004ffd7b5951d151b3817bbbd1ee5c4f11b9485c84e520f383e6"},
 ]
 
 [package.dependencies]
