@@ -687,13 +687,13 @@ prometheus-client = ">=0.7"
 
 [[package]]
 name = "django-select2"
-version = "8.2.0"
+version = "8.2.1"
 description = "This is a Django_ integration of Select2_."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django_select2-8.2.0-py3-none-any.whl", hash = "sha256:0e173ce49c6ea91efa9fc24c5ca8d1f8a3c545e60db779cf2c623d4e07405360"},
-    {file = "django_select2-8.2.0.tar.gz", hash = "sha256:43ca01fecff1bd9ffaf87de90a4beca86fe801edd0c0102c3230c34f81490b9a"},
+    {file = "django_select2-8.2.1-py3-none-any.whl", hash = "sha256:2d7f52b5cd362c4d0b1bf4caca8ad8463ae269b252eebbab4afabd762d08baf5"},
+    {file = "django_select2-8.2.1.tar.gz", hash = "sha256:dc03524c1cf7ef970e8b3ab2de76ce3179e414254fa812d8e2d2f0ba6fa487ba"},
 ]
 
 [package.dependencies]
@@ -1981,4 +1981,4 @@ pgsql = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1c4268b97cd6ef3c2c91c87c0fbd66076e9d6b3d3994c41d685967a6d4ae4ee9"
+content-hash = "3185fa79b93e4ce2f2b65856af6a0db951344199dcfe7b1eb251bf4c125ee4ed"
