@@ -1,8 +1,6 @@
 import os
-import sys
 from email.utils import getaddresses
 
-import tenca
 from django.contrib.messages import constants
 from environ import environ
 
@@ -282,24 +280,16 @@ WAGTAILMARKDOWN = {
 }
 
 ENABLE_MAILING_LISTS = env.bool("ENABLE_MAILING_LISTS", False)
-
-# The mailing lists library (Tenca) has a django-like settings module.
-# This code will read in all correctly prefixed settings from the
-# current module, e.g. `TENCA_API_USER` -> `tenca.settings.API_USER`
 if ENABLE_MAILING_LISTS:
-    import tenca.settings
-
-    TENCA_API_HOST = env.str("TENCA_API_HOST")
-    TENCA_API_PORT = env.int("TENCA_API_PORT")
-    TENCA_API_SCHEME = env.str("TENCA_API_SCHEME")
+    TENCA_MAILMAN_URL = env.str("TENCA_MAILMAN_URL")
     TENCA_ADMIN_USER = env.str("TENCA_ADMIN_USER")
     TENCA_ADMIN_PASS = env.str("TENCA_ADMIN_PASS")
     TENCA_LIST_HASH_ID_SALT = env.str("TENCA_LIST_HASH_ID_SALT")
-    TENCA_WEB_UI_HOSTNAME = env.str("TENCA_WEB_UI_HOSTNAME")
     TENCA_DISABLE_GOODBYE_MESSAGES = env.bool("TENCA_DISABLE_GOODBYE_MESSAGES")
-    TENCA_HASH_STORAGE_CLASS = env.str("TENCA_HASH_STORAGE_CLASS")
-
-    tenca.settings.load_from_module(sys.modules[__name__])
+    TENCA_DISABLED_NON_MEMBER_ACTION = env.str("TENCA_DISABLED_NON_MEMBER_ACTION")
+    TENCA_BLOCKED_MEMBER_ACTION = env.str("TENCA_BLOCKED_MEMBER_ACTION")
+    TENCA_RETRY_CANCELS_PENDING_SUBSCRIPTION = env.bool("TENCA_RETRY_CANCELS_PENDING_SUBSCRIPTION")
+    TENCA_USE_RANDOM_LIST_HASH = env.bool("TENCA_USE_RANDOM_LIST_HASH")
 
     INSTALLED_APPS += ["myhpi.tenca_django"]
     MIDDLEWARE += ["myhpi.tenca_django.middleware.TencaNoConnectionMiddleware"]
