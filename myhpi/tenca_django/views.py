@@ -1,7 +1,3 @@
-import tenca.exceptions
-import tenca.pipelines
-import tenca.settings
-import tenca.templates
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
@@ -13,6 +9,7 @@ from django.views.generic import FormView, TemplateView
 
 from myhpi.core.utils import alternative_emails
 from myhpi.tenca_django.connection import connection
+from myhpi.tenca_django.exceptions import NoSuchRequestException, LastOwnerException
 from myhpi.tenca_django.forms import (
     TencaListOptionsForm,
     TencaMemberEditForm,
@@ -20,6 +17,21 @@ from myhpi.tenca_django.forms import (
     TencaSubscriptionForm,
 )
 from myhpi.tenca_django.mixins import TencaListAdminMixin, TencaSingleListMixin
+
+
+class MailmanTemplateView(TemplateView):
+    content_type = "text/plain"
+
+    def get_template_names(self):
+        if (template_name := self.kwargs.get("template_name", None)) and template_name in ["creation_message", "subscription_message", "unsubscription_message", "rejected_message", "mail_footer"]:
+            return [f"mailman/{template_name}.html"]
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        for key, value in self.request.GET.items():
+            ctx[key] = value
+        return ctx
 
 
 class TencaDashboard(LoginRequiredMixin, FormView):
@@ -102,7 +114,7 @@ class TencaListAdminView(LoginRequiredMixin, TencaListAdminMixin, FormView):
         kwargs.setdefault("listname", self.mailing_list.fqdn_listname)
         kwargs.setdefault(
             "invite_link",
-            tenca.pipelines.call_func(tenca.settings.BUILD_INVITE_LINK, self.mailing_list),
+            self.mailing_list.build_invite_link(),
         )
         kwargs.setdefault(
             "members",
@@ -219,9 +231,9 @@ class TencaActionConfirmView(TencaSingleListMixin, TemplateView):
                     self.mailing_list.demote_from_owner(email)
 
             self.mailing_list.confirm_subscription(kwargs.get("token"))
-        except tenca.exceptions.NoSuchRequestException:
+        except NoSuchRequestException:
             raise Http404("This link is invalid.")
-        except tenca.exceptions.LastOwnerException:
+        except LastOwnerException:
             messages.error(
                 self.request,
                 _(
@@ -231,7 +243,7 @@ class TencaActionConfirmView(TencaSingleListMixin, TemplateView):
             )
             try:
                 self.mailing_list.cancel_pending_subscription(kwargs.get("token"))
-            except tenca.exceptions.NoSuchRequestException:
+            except NoSuchRequestException:
                 pass
             return super().get_context_data(**kwargs)
 
@@ -267,6 +279,6 @@ class TencaReportView(TencaSingleListMixin, TemplateView):
                     email=email, list=self.mailing_list.fqdn_listname
                 ),
             )
-        except tenca.exceptions.NoSuchRequestException:
+        except NoSuchRequestException:
             pass  # We don't tell to leak no data
         return super().get_context_data(**kwargs)
