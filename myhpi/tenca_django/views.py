@@ -19,6 +19,21 @@ from myhpi.tenca_django.forms import (
 from myhpi.tenca_django.mixins import TencaListAdminMixin, TencaSingleListMixin
 
 
+class MailmanTemplateView(TemplateView):
+    content_type = "text/plain"
+
+    def get_template_names(self):
+        if (template_name := self.kwargs.get("template_name", None)) and template_name in ["creation_message", "subscription_message", "unsubscription_message", "rejected_message", "mail_footer"]:
+            return [f"mailman/{template_name}.html"]
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        for key, value in self.request.GET.items():
+            ctx[key] = value
+        return ctx
+
+
 class TencaDashboard(LoginRequiredMixin, FormView):
     template_name = "tenca_django/dashboard.html"
     form_class = TencaNewListForm

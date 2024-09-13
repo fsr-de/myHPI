@@ -94,7 +94,7 @@ class MailingList(object):
 		This is useful from interfaces where you don't want to hint attackers
 		the current membership status of others.
 
-		Returns a tuple of (status, token), where token is True if the user was newly
+		Returns a tuple of (status, token), where status is True if the user was newly
 		added and False if it was removed.
 		"""
 		if self.is_member(email):
@@ -121,9 +121,7 @@ class MailingList(object):
 			invite_link=self.build_invite_link(),
 			web_ui=urllib.parse.urljoin(settings.GET_SITE_URL(), reverse("tenca_dashboard"))
 		)
-		self.list.set_template(mailman_template_name, templates.http_substitute_url(
-			tenca_template_name, **template_args
-		))
+		self.list.set_template(mailman_template_name, urllib.parse.urljoin(settings.SITE_URL, reverse("tenca_django:mailman_template", kwargs={'template_name': tenca_template_name})))
 
 	def pending_subscriptions(self, request_type='subscription'):
 		"""As of mailman<3.3.3 no unsubscriptions are delivered via REST.
