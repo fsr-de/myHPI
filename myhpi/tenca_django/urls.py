@@ -5,7 +5,11 @@ from myhpi.tenca_django import views
 app_name = "tenca_django"
 
 urlpatterns = [
-    path("templates/<str:template_name>/", views.MailmanTemplateView.as_view(), name="mailman_template"),
+    path(
+        "templates/<str:template_name>/",
+        views.MailmanTemplateView.as_view(),
+        name="mailman_template",
+    ),
     path("dashboard/", views.TencaDashboard.as_view(), name="tenca_dashboard"),
     path(
         "confirm/<str:list_id>/<str:token>/", views.TencaActionConfirmView.as_view(), name="confirm"

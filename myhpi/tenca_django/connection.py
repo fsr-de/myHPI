@@ -29,13 +29,15 @@ class Connection(object):
     def __init__(self, hash_storage_cls=None):
         """Creates a new connection to Mailman's REST API.
 
-		Can be provided with a subclass of tenca.HashStorage to lookup
-		scrambled hashes, identifying a mailing list in the invite links.
+        Can be provided with a subclass of tenca.HashStorage to lookup
+        scrambled hashes, identifying a mailing list in the invite links.
 
-		If hash_storage_cls is None, the class specified in
-		settings.HASH_STORAGE_CLASS will be used.
-		"""
-        self.client = mailmanclient.Client(settings.TENCA_MAILMAN_URL, settings.TENCA_ADMIN_USER, settings.TENCA_ADMIN_PASS)
+        If hash_storage_cls is None, the class specified in
+        settings.HASH_STORAGE_CLASS will be used.
+        """
+        self.client = mailmanclient.Client(
+            settings.TENCA_MAILMAN_URL, settings.TENCA_ADMIN_USER, settings.TENCA_ADMIN_PASS
+        )
         domains = self.client.domains
         assert len(domains), 1
         self.domain = domains[0]
@@ -45,7 +47,9 @@ class Connection(object):
         self.hash_storage = hash_storage_cls(self)
 
     def __repr__(self):
-        return '<{} on {} for {}>'.format(type(self).__name__, settings.TENCA_MAILMAN_URL, str(self.domain))
+        return "<{} on {} for {}>".format(
+            type(self).__name__, settings.TENCA_MAILMAN_URL, str(self.domain)
+        )
 
     def _wrap_list(self, list, skip_hash_id=False, hash_id=None):
         if hash_id is None:
@@ -59,12 +63,12 @@ class Connection(object):
         return self.client._connection.call(path, data, method)
 
     def fqdn_ize(self, listname):
-        if '@' in listname:
+        if "@" in listname:
             return listname
-        domain_str = '.' + str(self.domain)
+        domain_str = "." + str(self.domain)
         if listname.endswith(domain_str):
             listname = listname.rsplit(domain_str, 1)[0]
-        return '{}@{}'.format(listname, str(self.domain))
+        return "{}@{}".format(listname, str(self.domain))
 
     def get_list(self, fqdn_listname):
         try:
@@ -106,10 +110,10 @@ class Connection(object):
     def flush_hash(self, hash_id):
         """Call this function, when you manually changed a list's hash_id in your UI.
 
-		This will cause two actions:
-			* In a multi-level cache write the hash to all storages
-			* Issue a reload of the list's text templates
-		"""
+        This will cause two actions:
+                * In a multi-level cache write the hash to all storages
+                * Issue a reload of the list's text templates
+        """
         self.hash_storage.flush(hash_id)
         mailing_list = self.get_list_by_hash_id(hash_id)
         if mailing_list:
@@ -141,41 +145,49 @@ class Connection(object):
 
     def _raw_find_lists(self, addresses, role):
         for address in addresses:
-            data = {'subscriber': address, 'role': role}
+            data = {"subscriber": address, "role": role}
             try:
-                response, content = self.rest_call('lists/find', data)
-                if 'entries' not in content:
+                response, content = self.rest_call("lists/find", data)
+                if "entries" not in content:
                     yield []
             except urllib.error.HTTPError as e:
                 exceptions.map_http_404(e)
                 yield []
             else:
-                yield [entry['list_id'] for entry in content['entries']]
+                yield [entry["list_id"] for entry in content["entries"]]
 
     def find_lists(self, address, role=None, count=50, page=1):
         """Returns a paginated view on all lists address is member of"""
         try:
-            return [self._wrap_list(list) for list in self.client.find_lists(address, role, count, page)]
+            return [
+                self._wrap_list(list) for list in self.client.find_lists(address, role, count, page)
+            ]
         except urllib.error.HTTPError as e:
             exceptions.map_http_404(e)
             return []
 
     def get_owner_and_memberships(self, *addresses, ignore_missing_hashes=False):
         """Returns a list of tuples in the form (MailingList, bool),
-		for all lists address is a member of, with the second argument being tur,
-		if that member is also an owner of the MailingList.
+        for all lists address is a member of, with the second argument being tur,
+        if that member is also an owner of the MailingList.
 
-		The resulted is sorted alphabetically, with the owned lists first.
-		"""
+        The resulted is sorted alphabetically, with the owned lists first.
+        """
         memberships = {
-            list_id: False for list_id in itertools.chain(*self._raw_find_lists(addresses, 'member'))
+            list_id: False
+            for list_id in itertools.chain(*self._raw_find_lists(addresses, "member"))
         }
-        memberships.update({
-            list_id: True for list_id in itertools.chain(*self._raw_find_lists(addresses, 'owner'))
-        })
-        sorted_mo_ships = sorted(memberships.items(), key=lambda t: (not t[1], t[0]))  # False < True
+        memberships.update(
+            {
+                list_id: True
+                for list_id in itertools.chain(*self._raw_find_lists(addresses, "owner"))
+            }
+        )
+        sorted_mo_ships = sorted(
+            memberships.items(), key=lambda t: (not t[1], t[0])
+        )  # False < True
         result = []
-        for (list_id, is_owner) in sorted_mo_ships:
+        for list_id, is_owner in sorted_mo_ships:
             try:
                 result.append((list_id, self.hash_storage.get_hash_id(list_id), is_owner))
             except NotInStorageError as e:

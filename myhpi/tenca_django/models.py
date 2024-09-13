@@ -3,8 +3,12 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from myhpi.tenca_django.hash_storage import HashStorage, NotInStorageError, TwoLevelHashStorage, \
-    MailmanDescriptionHashStorage
+from myhpi.tenca_django.hash_storage import (
+    HashStorage,
+    NotInStorageError,
+    TwoLevelHashStorage,
+    MailmanDescriptionHashStorage,
+)
 
 
 class TencaModel(models.Model):

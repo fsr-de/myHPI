@@ -23,7 +23,13 @@ class MailmanTemplateView(TemplateView):
     content_type = "text/plain"
 
     def get_template_names(self):
-        if (template_name := self.kwargs.get("template_name", None)) and template_name in ["creation_message", "subscription_message", "unsubscription_message", "rejected_message", "mail_footer"]:
+        if (template_name := self.kwargs.get("template_name", None)) and template_name in [
+            "creation_message",
+            "subscription_message",
+            "unsubscription_message",
+            "rejected_message",
+            "mail_footer",
+        ]:
             return [f"mailman/{template_name}.html"]
         raise Http404
 
