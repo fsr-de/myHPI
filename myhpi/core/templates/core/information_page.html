@@ -16,6 +16,12 @@
     </div>
     <div class="col-lg-3">
         <div class="side-panel-container">
+            {% get_language_info for LANGUAGE_CODE as lang %}
+            {% if lang.code == "en" %}
+                <aside class="side-panel border-accent">
+                    This has page has been machine-translated.
+                </aside>
+            {% endif %}
             <aside class="side-panel border-accent">
                 <h1 class="side-panel-title">{% translate "Last edited" %}</h1>
                 {% if not page.last_published_at %}
