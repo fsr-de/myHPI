@@ -32,8 +32,7 @@ class Connection(object):
         Can be provided with a subclass of tenca.HashStorage to lookup
         scrambled hashes, identifying a mailing list in the invite links.
 
-        If hash_storage_cls is None, the class specified in
-        settings.HASH_STORAGE_CLASS will be used.
+        If hash_storage_cls is None, DjangoModelCachedDescriptionHashStorage will be used.
         """
         self.client = mailmanclient.Client(
             settings.TENCA_MAILMAN_URL, settings.TENCA_ADMIN_USER, settings.TENCA_ADMIN_PASS

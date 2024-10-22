@@ -16,8 +16,6 @@ import mailmanclient
 class MailingList(object):
     """A decorator for mailmanclient.restobjects.mailinglist.MailingList"""
 
-    # Can be extended by settings.LIST_DEFAULT_SETTINGS
-    # In case of conflicting entries, settings wins.
     SHARED_LIST_DEFAULT_SETTINGS = {
         "advertised": False,
         "default_member_action": "accept",
@@ -41,7 +39,7 @@ class MailingList(object):
         self.conn = connection
         self.list = list
         self.hash_id = hash_id
-        if settings.DISABLE_GOODBYE_MESSAGES:
+        if settings.TENCA_DISABLE_GOODBYE_MESSAGES:
             # Note: Option not present for mailman < 3.3.3
             self.SHARED_LIST_DEFAULT_SETTINGS["send_goodbye_message"] = False
 
@@ -76,7 +74,11 @@ class MailingList(object):
             return self.list.subscribe(email, send_welcome_message=send_welcome_message)["token"]
         except urllib.error.HTTPError as e:
             # Already pending subscriptions are retried
-            if e.status == 409 and not _on_retry and settings.RETRY_CANCELS_PENDING_SUBSCRIPTION:
+            if (
+                e.status == 409
+                and not _on_retry
+                and settings.TENCA_RETRY_CANCELS_PENDING_SUBSCRIPTION
+            ):
                 try:
                     token = next(t for t, e in self.pending_subscriptions().items() if e == email)
                 except StopIteration:  # pragma: no cover
@@ -107,7 +109,6 @@ class MailingList(object):
 
     def configure_list(self):
         self.list.settings.update(self.SHARED_LIST_DEFAULT_SETTINGS)
-        self.list.settings.update(settings.LIST_DEFAULT_SETTINGS)
         self.list.settings["subject_prefix"] = "[{}] ".format(
             self.list.settings["list_name"].lower()
         )
@@ -123,7 +124,7 @@ class MailingList(object):
             action_link=self.build_action_link("$token"),
             action_abuse_link=self.build_action_abuse_link("$token"),
             invite_link=self.build_invite_link(),
-            web_ui=urllib.parse.urljoin(settings.GET_SITE_URL(), reverse("tenca_dashboard")),
+            web_ui=urllib.parse.urljoin(settings.SITE_URL, reverse("tenca_django:tenca_dashboard")),
         )
         self.list.set_template(
             mailman_template_name,
@@ -138,10 +139,10 @@ class MailingList(object):
     def pending_subscriptions(self, request_type="subscription"):
         """As of mailman<3.3.3 no unsubscriptions are delivered via REST.
         In case you updated core (but use an older version of mailmanclient),
-        you can set `settings.DISABLE_GOODBYE_MESSAGES` to True to enable
+        you can set `settings.TENCA_DISABLE_GOODBYE_MESSAGES` to True to enable
         proper removal.
         """
-        if settings.DISABLE_GOODBYE_MESSAGES:
+        if settings.TENCA_DISABLE_GOODBYE_MESSAGES:
             path = "lists/{}/requests".format(self.fqdn_listname)
             get_params = {"token_owner": "subscriber", "request_type": request_type}
             response, answer = self.conn.rest_call(
@@ -200,7 +201,7 @@ class MailingList(object):
 
     def set_blocked(self, email, is_blocked):
         member = self._raw_get_member(email)
-        member.moderation_action = settings.BLOCKED_MEMBER_ACTION if is_blocked else ""
+        member.moderation_action = settings.TENCA_BLOCKED_MEMBER_ACTION if is_blocked else ""
         member.save()
 
     def _patched_unsubscribe(self, email, **kwargs):
@@ -227,7 +228,7 @@ class MailingList(object):
         is not exposed using the REST API. Thus, this function is never silent and
         will always send a final notification when a member is successfully removed.
 
-        If you have updated core, set `settings.DISABLE_GOODBYE_MESSAGES` to true.
+        If you have updated core, set `settings.TENCA_DISABLE_GOODBYE_MESSAGES` to true.
         """
         return self.remove_member(email, pre_confirmed=None)
 
@@ -292,16 +293,16 @@ class MailingList(object):
                    for non-persistent caches.
 
         I actually like the second aspect, but if you don't or #1 worries you
-        too much, consider changing `settings.USE_RANDOM_LIST_HASH`	to True.
+        too much, consider changing `settings.TENCA_USE_RANDOM_LIST_HASH`	to True.
         """
-        if settings.USE_RANDOM_LIST_HASH:
+        if settings.TENCA_USE_RANDOM_LIST_HASH:
             LEN = 32
             ALPHA_NUM = string.ascii_letters + string.digits
             return "".join(random.choice(ALPHA_NUM) for _ in range(LEN))
         else:
             BAD_B64_CHARS = "+/="
 
-            components = (settings.LIST_HASH_ID_SALT, round, self.list_id)
+            components = (settings.TENCA_LIST_HASH_ID_SALT, round, self.list_id)
             hashobj = hashlib.sha256()
             hashobj.update("$".join(map(str, components)).encode("ascii"))
             b64 = base64.b64encode(hashobj.digest()).decode("ascii")
@@ -328,7 +329,9 @@ class MailingList(object):
         if is_allowed:
             self.list.settings["default_nonmember_action"] = "accept"
         else:
-            self.list.settings["default_nonmember_action"] = settings.DISABLED_NON_MEMBER_ACTION
+            self.list.settings["default_nonmember_action"] = (
+                settings.TENCA_DISABLED_NON_MEMBER_ACTION
+            )
         self.list.settings.save()
 
     @property
