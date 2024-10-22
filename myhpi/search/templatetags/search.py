@@ -12,6 +12,9 @@ register = template.Library()
 @register.filter(name="highlight_query_markdown")
 # select 3 lines around first match and highlight query match
 def highlight_query(content, search_query, surrounding_lines=1):
+    # if query coincides with page id the search breaks without the extra space
+    if search_query.isnumeric():
+        search_query = str(search_query) + " "
     lines = content.split("\n")
     for i, line in enumerate(lines):
         if search_query.lower() in line.lower():
