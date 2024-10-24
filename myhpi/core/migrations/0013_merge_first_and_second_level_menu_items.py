@@ -12,7 +12,9 @@ def replace_menu_items(apps, schema_editor):
     Revisions = apps.get_model("wagtailcore", "Revision")
 
     first_level_menu_item_content_type_id = ContentType.objects.get_for_model(FirstLevelMenuItem).id
-    second_level_menu_item_content_type_id = ContentType.objects.get_for_model(SecondLevelMenuItem).id
+    second_level_menu_item_content_type_id = ContentType.objects.get_for_model(
+        SecondLevelMenuItem
+    ).id
 
     for menu_item in FirstLevelMenuItem.objects.all():
         basepage_ptr_id = menu_item.basepage_ptr_id
@@ -35,10 +37,13 @@ def replace_menu_items(apps, schema_editor):
         revision.content_type_id = menu_item_content_type
         revision.base_content_type_id = menu_item_content_type
         revision.save()
-    for revision in Revisions.objects.filter(content_type_id=second_level_menu_item_content_type_id):
+    for revision in Revisions.objects.filter(
+        content_type_id=second_level_menu_item_content_type_id
+    ):
         revision.content_type_id = menu_item_content_type
         revision.base_content_type_id = menu_item_content_type
         revision.save()
+
 
 class Migration(migrations.Migration):
 
