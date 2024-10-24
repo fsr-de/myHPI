@@ -9,6 +9,11 @@ def replace_menu_items(apps, schema_editor):
     menu_item_content_type = ContentType.objects.get_for_model(MenuItem)
     FirstLevelMenuItem = apps.get_model("core", "FirstLevelMenuItem")
     SecondLevelMenuItem = apps.get_model("core", "SecondLevelMenuItem")
+    Revisions = apps.get_model("wagtailcore", "Revision")
+
+    first_level_menu_item_content_type_id = ContentType.objects.get_for_model(FirstLevelMenuItem).id
+    second_level_menu_item_content_type_id = ContentType.objects.get_for_model(SecondLevelMenuItem).id
+
     for menu_item in FirstLevelMenuItem.objects.all():
         basepage_ptr_id = menu_item.basepage_ptr_id
         menu_item.delete(keep_parents=True)
@@ -26,11 +31,20 @@ def replace_menu_items(apps, schema_editor):
         new_menu_item.content_type_id = menu_item_content_type
         new_menu_item.save()
 
+    for revision in Revisions.objects.filter(content_type_id=first_level_menu_item_content_type_id):
+        revision.content_type_id = menu_item_content_type
+        revision.base_content_type_id = menu_item_content_type
+        revision.save()
+    for revision in Revisions.objects.filter(content_type_id=second_level_menu_item_content_type_id):
+        revision.content_type_id = menu_item_content_type
+        revision.base_content_type_id = menu_item_content_type
+        revision.save()
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ("core", "0012_menuitem"),
+        ("wagtailcore", "0070_rename_pagerevision_revision"),
     ]
 
     operations = [
