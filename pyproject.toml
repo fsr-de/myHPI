@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-wagtail = "^6.2"
+wagtail = "^6.3"
 django-environ = "^0.11.2"
 wagtail-localize = "^1.9"
 mozilla-django-oidc = "^4.0.0"
