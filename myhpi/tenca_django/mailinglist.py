@@ -120,9 +120,8 @@ class MailingList(object):
 
     def configure_single_template(self, mailman_template_name, tenca_template_name):
         template_args = dict(
-            fqdn_listname=self.fqdn_listname,
-            action_link=self.build_action_link("$token"),
-            action_abuse_link=self.build_action_abuse_link("$token"),
+            confirm_link=self.build_confirm_link("$token"),
+            report_link=self.build_report_link("$token"),
             invite_link=self.build_invite_link(),
             web_ui=urllib.parse.urljoin(settings.SITE_URL, reverse("tenca_django:tenca_dashboard")),
         )
@@ -132,7 +131,9 @@ class MailingList(object):
                 settings.SITE_URL,
                 reverse(
                     "tenca_django:mailman_template", kwargs={"template_name": tenca_template_name}
-                ),
+                )
+                + "?"
+                + urllib.parse.urlencode(template_args),
             ),
         )
 
@@ -309,13 +310,22 @@ class MailingList(object):
             return b64.translate({ord(c): None for c in BAD_B64_CHARS})
 
     def build_invite_link(self):
-        return urllib.parse.urljoin(settings.SITE_URL, self.hash_id)
+        return urllib.parse.urljoin(
+            settings.SITE_URL,
+            reverse("tenca_django:tenca_manage_subscription", kwargs={"hash_id": self.hash_id}),
+        )
 
-    def build_action_link(self, token, action="confirm"):
-        return urllib.parse.urljoin(settings.SITE_URL, "/".join((action, self.list_id, token)))
+    def build_confirm_link(self, token):
+        return urllib.parse.urljoin(
+            settings.SITE_URL,
+            reverse("tenca_django:confirm", kwargs={"list_id": self.hash_id, "token": token}),
+        )
 
-    def build_action_abuse_link(self, token):
-        return self.build_action_link(token, "report")
+    def build_report_link(self, token):
+        return urllib.parse.urljoin(
+            settings.SITE_URL,
+            reverse("tenca_django:report", kwargs={"list_id": self.hash_id, "token": token}),
+        )
 
     ############################################################################
     ## Options
