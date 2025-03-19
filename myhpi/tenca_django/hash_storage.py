@@ -1,9 +1,9 @@
-from . import exceptions
-
-from abc import ABCMeta, abstractmethod
 import urllib.error
+from abc import ABCMeta, abstractmethod
 
 import mailmanclient
+
+from . import exceptions
 
 
 class NotInStorageError(exceptions.TencaException):

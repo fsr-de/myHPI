@@ -9,7 +9,7 @@ from django.views.generic import FormView, TemplateView
 
 from myhpi.core.utils import alternative_emails
 from myhpi.tenca_django.connection import connection
-from myhpi.tenca_django.exceptions import NoSuchRequestException, LastOwnerException
+from myhpi.tenca_django.exceptions import LastOwnerException, NoSuchRequestException
 from myhpi.tenca_django.forms import (
     TencaListOptionsForm,
     TencaMemberEditForm,

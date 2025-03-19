@@ -1,16 +1,13 @@
-import urllib.error
-
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from mailmanclient.restbase.connection import MailmanConnectionError
-
 import itertools
 import urllib.error
 
 import mailmanclient
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from mailmanclient.restbase.connection import MailmanConnectionError
 
 from myhpi.tenca_django import exceptions
-from myhpi.tenca_django.hash_storage import NotInStorageError, DictCachedDescriptionStorage
+from myhpi.tenca_django.hash_storage import NotInStorageError
 from myhpi.tenca_django.mailinglist import MailingList
 from myhpi.tenca_django.models import DjangoModelCachedDescriptionHashStorage
 

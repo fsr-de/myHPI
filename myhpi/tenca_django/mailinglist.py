@@ -1,16 +1,14 @@
-from django.conf import settings
-from django.urls import reverse
-
-from . import exceptions, templates
-
 import base64
 import hashlib
 import random
 import string
-import urllib.parse
 import urllib.error
+import urllib.parse
 
-import mailmanclient
+from django.conf import settings
+from django.urls import reverse
+
+from . import exceptions
 
 
 class MailingList(object):
