@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
+        python-version: [3.11, 3.12] # Also update Coveralls step when updating versions here
         database: [sqlite, postgres]
         include:
           - database: sqlite
