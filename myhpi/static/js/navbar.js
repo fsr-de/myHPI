@@ -96,9 +96,13 @@ const collapseOthersOnSameLevel = (navItemContainer) => {
     // In that case, we wait for the collapse to finish before hiding them.
     if (isCollapsing(navContainerOnSameLevel)) {
       navContainerOnSameLevel.addEventListener(
-        "shown.bs.collapse",
-        () => {
-          bootstrap.Collapse.getOrCreateInstance(navContainerOnSameLevel).hide()
+        "transitionend",
+        (event) => {
+          if (event.target.classList.contains("show")) {
+            bootstrap.Collapse.getOrCreateInstance(
+              navContainerOnSameLevel,
+            ).hide()
+          }
         },
         { once: true },
       )
