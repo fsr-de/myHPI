@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
+        python-version: [3.11, 3.12] # Also update Coveralls step when updating versions here
         database: [sqlite, postgres]
         include:
           - database: sqlite
@@ -126,4 +126,4 @@ jobs:
           source env/bin/activate
           pip install coveralls
           coveralls --service=github
-        if: matrix.python-version == '3.9' && matrix.database == 'sqlite'
+        if: matrix.python-version == '3.11' && matrix.database == 'sqlite'
