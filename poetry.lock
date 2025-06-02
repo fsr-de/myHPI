@@ -2014,26 +2014,26 @@ testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-f
 
 [[package]]
 name = "wagtail-localize"
-version = "1.9.1"
+version = "1.12.1"
 description = "Translation plugin for Wagtail CMS"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "wagtail_localize-1.9.1-py3-none-any.whl", hash = "sha256:c895efc286970d2810929056044c11ff0b4ebb7a26b494d052a07c41ead4afab"},
-    {file = "wagtail_localize-1.9.1.tar.gz", hash = "sha256:d7b1434e765a004ffd7b5951d151b3817bbbd1ee5c4f11b9485c84e520f383e6"},
+    {file = "wagtail_localize-1.12.1-py3-none-any.whl", hash = "sha256:24b65974f09b4fb14e4e53a1d14b763c027e172bbe5b2300d02f30b5de0a30e6"},
+    {file = "wagtail_localize-1.12.1.tar.gz", hash = "sha256:84cc5d5685e6246b5454be0e6bd6acc013a8815874b6a085a6c10cfb86654437"},
 ]
 
 [package.dependencies]
-Django = ">=3.2,<5.1"
+Django = ">=4.2,<6.0"
 polib = ">=1.1,<2.0"
 typing_extensions = ">=4.0"
-Wagtail = ">=5.2"
+Wagtail = ">=6.3"
 
 [package.extras]
 documentation = ["mkdocs (==1.4.3)", "mkdocs-autorefs (>=0.4.0,<0.5)", "mkdocs-include-markdown-plugin (>=4.0.4,<5)", "mkdocs-material (>=9.1,<10)", "mkdocstrings[python] (==0.22.0)", "pygments (>=2.15,<2.16)"]
 google = ["google-cloud-translate (>=3.0.0)"]
-linting = ["pre-commit (>=3.4,<4)"]
+linting = ["pre-commit (>=4.2.0,<6)"]
 testing = ["coverage (>=7.0,<8.0)", "dj-database-url (>=2.1.0,<3)", "django-rq (>=2.5,<3.0)", "freezegun (>=1.2,<2)", "google-cloud-translate (>=3.0.0)", "wagtail-modeladmin (>=2.0,<3.0)"]
 
 [[package]]
@@ -2102,4 +2102,4 @@ pgsql = []
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "5774df9c682c75193164959242d36f47e200693e34d1cbc0cb74c272d1cbfbe8"
+content-hash = "fd05e196ff49b0dd302c37db1cb248753decdc3d2c4701abfef86c175e738ff2"
