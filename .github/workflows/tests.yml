@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -46,7 +46,7 @@ jobs:
           poetry run djlint --lint myhpi
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11, 3.12] # Also update Coveralls step when updating versions here
