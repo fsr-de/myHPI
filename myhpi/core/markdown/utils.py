@@ -1,6 +1,7 @@
 import markdown
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
+from wagtail.models import Locale
 from wagtailmarkdown.utils import _get_markdown_kwargs, _sanitise_markdown_html
 
 from myhpi.core.markdown.extensions import MinuteExtension
@@ -29,7 +30,7 @@ def _transform_markdown_into_html(text, with_abbreviations):
         "\n".join(
             [
                 f"*[{abbr.abbreviation}]: {abbr.explanation}"
-                for abbr in AbbreviationExplanation.objects.all()
+                for abbr in AbbreviationExplanation.objects.filter(locale=Locale.get_active())
             ]
         )
     )

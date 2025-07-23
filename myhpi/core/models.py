@@ -14,7 +14,7 @@ from taggit.models import ItemBase, TagBase
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.admin.panels import FieldPanel, PublishingPanel
 from wagtail.documents.models import Document
-from wagtail.models import Page, Site
+from wagtail.models import Page, Site, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 from wagtail_localize.fields import SynchronizedField
@@ -328,12 +328,14 @@ class SecondLevelMenuItem(FirstLevelMenuItem):
 
 
 @register_snippet
-class AbbreviationExplanation(Model):
+class AbbreviationExplanation(TranslatableMixin, Model):
     abbreviation = CharField(max_length=255)
     explanation = CharField(max_length=255)
 
     def __str__(self):
-        return self.abbreviation
+        return f"{self.abbreviation}: {self.explanation}"
+
+    override_translatable_fields = [SynchronizedField("abbreviation", overridable=False)]
 
 
 class RedirectMenuItem(BasePage):
