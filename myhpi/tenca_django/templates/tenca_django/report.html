@@ -2,17 +2,15 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans "Report action" %}
+    {% trans "Report Action" %}
 {% endblock %}
 
 {% block breadcrumbs %}
     {% if request.user.is_authenticated %}
         <li>
-            <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;<a href="{% url "tenca_django:tenca_dashboard" %}">{% trans "Mailing lists" %}</a>
+            <a href="{% url "tenca_django:tenca_dashboard" %}">{% trans "Mailing Lists" %}</a>
         </li>
-        <li>
-            <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Report action" %}
-        </li>
+        <li>{% trans "Report Action" %}</li>
     {% endif %}
 {% endblock %}
 

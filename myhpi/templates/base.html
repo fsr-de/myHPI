@@ -158,13 +158,13 @@
                     {% endfor %}
                 </div>
 
-                {% if self.get_ancestors|length > 1 %}
-                    <nav aria-label="breadcrumb"
-                         class="d-print-none"
-                         style="--bs-breadcrumb-divider: url(&#34;
-                                data:image/svg+xml,{% filter urlencode|slice:'43:' %}{% bs_icon 'chevron-right' size='8' %}{% endfilter %} &#34;
-                                )">
-                        <ol class="breadcrumb">
+                <nav aria-label="breadcrumb"
+                     class="d-print-none"
+                     style="--bs-breadcrumb-divider: url(&#34;
+                            data:image/svg+xml,{% filter urlencode|slice:'43:' %}{% bs_icon 'chevron-right' size='8' %}{% endfilter %} &#34;
+                            )">
+                    <ol class="breadcrumb">
+                        {% if self.get_ancestors|length > 0 %}
                             {% for ancestor_page in self.get_ancestors %}
                                 {% if ancestor_page.is_root == False %}
                                     <li class="breadcrumb-item">
@@ -172,10 +172,17 @@
                                     </li>
                                 {% endif %}
                             {% endfor %}
+                        {% else %}
+                            <li class="breadcrumb-item">
+                                <a href="{% pageurl root_page %}">{% trans "Home Page" %}</a>
+                            </li>
+                        {% endif %}
+                        {% if self.get_ancestors|length > 1 %}
                             <li class="breadcrumb-item active" aria-current="page">{{ self.title }}</li>
-                        </ol>
-                    </nav>
-                {% endif %}
+                        {% endif %}
+                        {% block breadcrumbs %}{% endblock %}
+                    </ol>
+                </nav>
 
                 {% block content %}{% endblock %}
             </div>

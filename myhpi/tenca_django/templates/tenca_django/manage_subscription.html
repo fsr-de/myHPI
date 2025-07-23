@@ -2,45 +2,56 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans "Manage subscription" %}
+    {% trans "Manage Mailing List Subscription" %}
 {% endblock %}
 
 {% block breadcrumbs %}
     {% if request.user.is_authenticated %}
-        <li>
-            <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;<a href="{% url "tenca_django:tenca_dashboard" %}">{% trans "Mailing lists" %}</a>
+        <li class="breadcrumb-item">
+            <a href="{% url "tenca_django:tenca_dashboard" %}">{% trans "Mailing Lists" %}</a>
         </li>
-        <li>
-            <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Manage subscription" %}
-        </li>
+        <li class="breadcrumb-item">{% trans "Manage Subscription" %}</li>
     {% endif %}
 {% endblock %}
 
 {% block content %}
-    {% blocktrans %}
-        Enter the e-mail address you want to un-/subscribe from/to {{ list_name }}
-    {% endblocktrans %}
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="id_email">Email</label>
-            <div class="col-md-9">
-                {{ form.email }}
-                <!-- <input type="email"
-        name="email"
-        value=""
-        class="form-control"
-        placeholder="Email"
-        title=""
-        required=""
-        id="id_email"> -->
-            </div>
+    <h1 class="page-title">
+        <span class="underline">{% trans "Manage Mailing List Subscription" %}</span>
+    </h1>
+
+    <div class="card mb-4">
+        <div class="card-body blockquote mb-0">
+            {% trans "List" %}: <strong>{{ list_name }}</strong>
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">
-                {% trans 'Un-/Subscribe' %}
-            </button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <p>
+                {% blocktrans %}
+          Enter the e-mail address you want to un-/subscribe from/to {{ list_name }}:
+        {% endblocktrans %}
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group mb-2">
+                    <label for="id_email">{% trans "Email" %}</label>
+                    <input type="email"
+                           name="email"
+                           value="{{ form.email.value }}"
+                           maxlength="320"
+                           required=""
+                           id="id_email"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        {% trans 'Un-/Subscribe' %}
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 {% endblock %}
