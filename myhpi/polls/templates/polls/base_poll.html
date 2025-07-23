@@ -34,7 +34,10 @@
                         <h1 class="side-panel-title">{% translate "End Date" %}</h1>
                         <p>{{ page.end_date }}</p>
                         <h1 class="side-panel-title">{% translate "Number of participants" %}</h1>
-                        <p>{{ page.already_voted.count }}</p>
+                        {% if page.pk %}
+                          {# Handle not-yet saved previews, where accessing already_voted throws an exception #}
+                          <p>{{ page.already_voted.count }}</p>
+                        {% endif %}
                     </aside>
                 </div>
             </div>
