@@ -2,32 +2,45 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans "Delete list" %}
+    {% trans "Delete Mailing List" %}
 {% endblock %}
 
 {% block breadcrumbs %}
-    <li>
-        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;<a href="{% url 'tenca_django:tenca_dashboard' %}">{% trans "Mailing lists" %}</a>
+    <li class="breadcrumb-item">
+        <a href="{% url 'tenca_django:tenca_dashboard' %}">{% trans "Mailing Lists" %}</a>
     </li>
-    <li>
-        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Delete list" %}
-    </li>
+    <li class="breadcrumb-item">{% trans "Delete List" %}</li>
 {% endblock %}
 
 {% block content %}
-    <p>
-        {% blocktrans %}
-            Are you sure you want to delete the list {{ listname }}?
-        {% endblocktrans %}
-    </p>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <button type="submit" name="confirm" class="btn btn-danger">
-                {% trans "Delete" %}
-            </button>
-            <a class="btn btn-secondary"
-               href="{% url 'tenca_django:tenca_manage_list' mailing_list.list_id %}">{% trans "Cancel" %}</a>
+    <h1 class="page-title">
+        <span class="underline">{% trans "Delete Mailing List" %}</span>
+    </h1>
+
+    <div class="card mb-4">
+        <div class="card-body blockquote mb-0">
+            {% trans "List" %}: <strong>{{ listname }}</strong>
         </div>
-    </form>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <p>
+                {% blocktrans trimmed %}
+                    Are you sure you want to delete the list {{ listname }}?
+                {% endblocktrans %}
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <button type="submit" name="confirm" class="btn btn-danger">
+                        {% trans "Delete" %}
+                    </button>
+                    <a class="btn btn-secondary"
+                       href="{% url 'tenca_django:tenca_manage_list' mailing_list.list_id %}">{% trans "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

@@ -3,86 +3,112 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans "Manage List" %}
+    {% trans "Manage Mailing List" %}
 {% endblock %}
 
 {% block breadcrumbs %}
-    <li>
-        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;<a href="{% url 'tenca_django:tenca_dashboard' %}">{% trans "Mailing lists" %}</a>
+    <li class="breadcrumb-item">
+        <a href="{% url 'tenca_django:tenca_dashboard' %}">{% trans "Mailing Lists" %}</a>
     </li>
-    <li>
-        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Manage list" %}
-    </li>
+    <li class="breadcrumb-item">{% trans "Manage List" %}</li>
 {% endblock %}
 
 {% block content %}
-    <p>
-        {% blocktrans %}
-            This is the admin view for the owners of {{ listname }}
-        {% endblocktrans %}
-    </p>
 
-    <h3>{% trans "Invite Link" %}</h3>
-    {% trans "Share this link to invite new members:" %}
-    <div class="card mb-2">
-        <div class="card-body">
-            <a href="{{ invite_link }}">{{ invite_link }}</a>
+    <h1 class="page-title">
+        <span class="underline">{% trans "Manage Mailing List" %}</span>
+    </h1>
+
+    <div class="card mb-4">
+        <div class="card-body blockquote mb-0">
+            {% trans "List" %}: <strong>{{ listname }}</strong>
         </div>
     </div>
 
-    <h3>{% trans "List options" %}</h3>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group mb-3">
-            {% for field in form %}
-                <div class="form-check">
-                    {{ field|addcss:"form-check-input" }}
-                    {{ field.label_tag }}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title">{% trans "Invite Link" %}</h4>
+            <p>{% trans "Share this link to invite new members:" %}</p>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <a href="{{ invite_link }}">{{ invite_link }}</a>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
-            <a class="btn btn-danger"
-               href="{% url 'tenca_django:tenca_delete_list' mailing_list.list_id %}">{% trans "Delete list" %}</a>
-        </div>
-    </form>
+    </div>
 
-    <h4 class="mt-2">{% trans "Members" %}</h4>
-    {% for form, is_owner, is_blocked in members %}
-        <form method="post"
-              action="{% url 'tenca_django:tenca_edit_member' mailing_list.list_id %}">
-            {% csrf_token %}
-            <div class="card mb-1">
-                <div class="card-body d-flex py-2">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title">{% trans "List Options" %}</h4>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    {% for field in form %}
+                        <div class="form-check">
+                            {{ field|addcss:"form-check-input" }}
+                            {{ field.label_tag }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+                    <a class="btn btn-danger"
+                       href="{% url 'tenca_django:tenca_delete_list' mailing_list.list_id %}">{% trans "Delete list" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title">{% trans "Members" %}</h4>
+        </div>
+
+        <div class="list-group list-group-flush">
+            {% for form, is_owner, is_blocked in members %}
+
+                <form method="post"
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      action="{% url 'tenca_django:tenca_edit_member' mailing_list.list_id %}">
+                    {% csrf_token %}
                     <div class="flex-fill">{{ form.email }}</div>
                     <div>
                         {% if is_owner %}
-                            <button name="demote_member" class="btn btn-link" type="submit">
-                                Demote from Owner
+                            <button name="demote_member"
+                                    class="btn btn-outline-danger btn-sm"
+                                    type="submit">
+                                {% trans "Demote from Owner" %}
                             </button>
                         {% else %}
-                            <button name="promote_member" class="btn btn-link" type="submit">
-                                Promote to Owner
+                            <button name="promote_member"
+                                    class="btn btn-outline-warning btn-sm"
+                                    type="submit">
+                                {% trans "Promote to Owner" %}
                             </button>
                         {% endif %}
 
                         {% if is_blocked %}
-                            <button name="unblock_member" class="btn btn-link" type="submit">
-                                Unblock member
+                            <button name="unblock_member"
+                                    class="btn btn-outline-warning btn-sm"
+                                    type="submit">
+                                {% trans "Unblock member" %}
                             </button>
                         {% else %}
-                            <button name="block_member" class="btn btn-link" type="submit">
-                                Block member
+                            <button name="block_member"
+                                    class="btn btn-outline-danger btn-sm"
+                                    type="submit">
+                                {% trans "Block member" %}
                             </button>
                         {% endif %}
 
-                        <button name="remove_member" class="btn btn-link" type="submit">
-                            Remove member
+                        <button name="remove_member"
+                                class="btn btn-outline-danger btn-sm"
+                                type="submit">
+                            {% trans "Remove member" %}
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -3,55 +3,65 @@
 {% load tenca_extras %}
 
 {% block title %}
-    {% trans "List memberships" %}
+    {% trans "Mailing lists" %}
 {% endblock %}
 
 {% block breadcrumbs %}
-    <li>
-        <span class="fa fa-angle-right" aria-hidden="true"></span>&nbsp;{% trans "Mailing lists" %}
-    </li>
+    <li class="breadcrumb-item">{% trans "Mailing Lists" %}</li>
 {% endblock %}
 
 {% block content %}
-    <h4>{% trans "Create new list" %}</h4>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label class="sr-only" for="id_list_name">List name</label>
-            <div class="input-group">
-                <input type="text"
-                       name="list_name"
-                       class="form-control"
-                       placeholder="List name"
-                       title=""
-                       required=""
-                       id="id_list_name">
-                <div class="input-group-append">
-                    <span class="input-group-text">@lists.myhpi.de</span>
+    <h1 class="page-title">
+        <span class="underline">{% trans "Mailing Lists" %}</span>
+    </h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title">{% trans "Create New Mailing List" %}</h4>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="sr-only" for="id_list_name">{% trans "List name" %}</label>
+                    <div class="input-group">
+                        <input type="text"
+                               name="list_name"
+                               class="form-control"
+                               placeholder="{% trans "List name" %}"
+                               required
+                               id="id_list_name">
+                        <div class="input-group-append">
+                            <span class="input-group-text">@lists.myhpi.de</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group pt-2">
+                    <button type="submit" class="btn btn-primary">
+                        {% trans "Create mailing list" %}
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="form-group pt-2">
-            <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-    </form>
+    </div>
 
     {% if memberships %}
-        <h4 class="title is-4">{% trans "Your Memberships" %}</h4>
-
-        {% for list_id, hash_id, is_owner in memberships %}
-            <div class="card mb-1">
-                <div class="card-body d-flex">
-                    <div class="flex-fill">
-                        <a href="{% url "tenca_django:tenca_manage_subscription" hash_id %}">{{ list_id|fqdn_ize }}</a>
-                    </div>
-                    {% if is_owner %}
-                        <div>
-                            <a href="{% url "tenca_django:tenca_manage_list" list_id %}">Manage List</a>
-                        </div>
-                    {% endif %}
-                </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{% trans "Your Subscriptions" %}</h4>
             </div>
-        {% endfor %}
+            <div class="list-group list-group-flush">
+                {% for list_id, hash_id, is_owner in memberships %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="{% url "tenca_django:tenca_manage_subscription" hash_id %}">{{ list_id|fqdn_ize }}</a>
+                        {% if is_owner %}
+                            <div>
+                                <a class="btn btn-outline-primary btn-sm my-0"
+                                   href="{% url "tenca_django:tenca_manage_list" list_id %}">
+                                    {% trans "Manage list" %}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
