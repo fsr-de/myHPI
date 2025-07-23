@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 21:23+0200\n"
+"POT-Creation-Date: 2025-07-23 21:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,11 +74,11 @@ msgstr "verlässt"
 msgid "[missing link]"
 msgstr "[link fehlt]"
 
-#: myhpi/core/templates/core/information_page.html:21
+#: myhpi/core/templates/core/information_page.html:19
 msgid "Last edited"
 msgstr "Zuletzt bearbeitet"
 
-#: myhpi/core/templates/core/information_page.html:23
+#: myhpi/core/templates/core/information_page.html:21
 msgid "A long time ago"
 msgstr "Vor langer Zeit"
 
@@ -91,108 +91,108 @@ msgstr "%(date)s um %(time)s Uhr"
 msgid "by"
 msgstr "von"
 
-#: myhpi/core/templates/core/minutes.html:22
+#: myhpi/core/templates/core/minutes.html:20
 msgid "Date"
 msgstr "Datum"
 
-#: myhpi/core/templates/core/minutes.html:26
+#: myhpi/core/templates/core/minutes.html:24
 msgid "Moderator"
 msgstr "Sitzungsleitung"
 
-#: myhpi/core/templates/core/minutes.html:30
+#: myhpi/core/templates/core/minutes.html:28
 msgid "Minutes taker"
 msgstr "Protokollführung"
 
-#: myhpi/core/templates/core/minutes.html:34
+#: myhpi/core/templates/core/minutes.html:32
 msgid "Participants"
 msgstr "Teilnehmende"
 
-#: myhpi/core/templates/core/minutes.html:42
+#: myhpi/core/templates/core/minutes.html:40
 msgid "Guests"
 msgstr "Gäste"
 
-#: myhpi/core/templates/core/minutes.html:50
+#: myhpi/core/templates/core/minutes.html:46
 msgid "No guests"
 msgstr "Keine Gäste"
 
-#: myhpi/core/templates/core/minutes.html:55
+#: myhpi/core/templates/core/minutes.html:51
 msgid "Location"
 msgstr "Ort"
 
-#: myhpi/core/templates/core/minutes.html:60
+#: myhpi/core/templates/core/minutes.html:56
 msgid "Labels"
 msgstr "Labels"
 
-#: myhpi/core/templates/core/minutes.html:64
+#: myhpi/core/templates/core/minutes.html:60
 msgid "No labels"
 msgstr "Keine Labels"
 
-#: myhpi/core/templates/core/minutes.html:75
+#: myhpi/core/templates/core/minutes.html:72
 msgid "Previous minutes"
 msgstr "Vorheriges Protokoll"
 
-#: myhpi/core/templates/core/minutes.html:81
+#: myhpi/core/templates/core/minutes.html:79
 msgid "Next minutes"
 msgstr "Nächstes Protokoll"
 
-#: myhpi/core/templates/core/minutes_list.html:18
-#: myhpi/core/templates/core/sidebar.html:7
+#: myhpi/core/templates/core/minutes_list.html:19
+#: myhpi/core/templates/core/sidebar.html:8
 msgid "Page has unpublished changes!"
 msgstr "Seite hat unveröffentlichte Änderungen!"
 
-#: myhpi/core/templates/core/minutes_list.html:37
+#: myhpi/core/templates/core/minutes_list.html:40
 msgid "No minutes available for this year."
 msgstr "Keine Protokolle für dieses Jahr verfügbar."
 
-#: myhpi/core/templates/core/sidebar.html:13
+#: myhpi/core/templates/core/sidebar.html:15
 msgid "Visibility"
 msgstr "Sichtbarkeit"
 
-#: myhpi/core/templates/core/sidebar.html:25
-#: myhpi/core/templates/core/sidebar.html:46
-#: myhpi/core/templates/core/sidebar.html:52
-#: myhpi/core/templates/core/toc_button.html:15
+#: myhpi/core/templates/core/sidebar.html:27
+#: myhpi/core/templates/core/sidebar.html:51
+#: myhpi/core/templates/core/sidebar.html:60
+#: myhpi/core/templates/core/toc_button.html:19
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
-#: myhpi/core/templates/core/sidebar.html:31
-#: myhpi/core/templates/core/sidebar.html:57
-#: myhpi/core/templates/core/toc_button.html:17
+#: myhpi/core/templates/core/sidebar.html:33
+#: myhpi/core/templates/core/sidebar.html:65
+#: myhpi/core/templates/core/toc_button.html:21
 msgid "Attachments"
 msgstr "Anhänge"
 
-#: myhpi/core/templates/core/sidebar.html:48 myhpi/templates/base.html:134
+#: myhpi/core/templates/core/sidebar.html:56 myhpi/templates/base.html:155
 msgid "Close"
 msgstr "Schließen"
 
-#: myhpi/core/templates/core/toc_button.html:10
-#: myhpi/core/templates/core/toc_button.html:13
+#: myhpi/core/templates/core/toc_button.html:14
+#: myhpi/core/templates/core/toc_button.html:17
 msgid "Table of contents and Attachments"
 msgstr "Inhaltsverzeichnis und Anhänge"
 
-#: myhpi/polls/models.py:66
+#: myhpi/polls/models.py:65
 #, fuzzy
 #| msgid "Not subscribed users are allowed to post."
 msgid "You are not allowed to vote."
 msgstr "Du darfst nicht abstimmen."
 
-#: myhpi/polls/models.py:95
+#: myhpi/polls/models.py:94
 msgid "You must select at least one choice."
 msgstr "Bitte wähle mindestens eine Option."
 
-#: myhpi/polls/models.py:99
+#: myhpi/polls/models.py:98
 msgid "You can only select up to {} options."
 msgstr "Du kannst nur bis zu {} Optionen auswählen."
 
-#: myhpi/polls/models.py:110
+#: myhpi/polls/models.py:109
 msgid "Invalid choice."
 msgstr "Ungültige Auswahl."
 
-#: myhpi/polls/models.py:113 myhpi/polls/models.py:195
+#: myhpi/polls/models.py:112 myhpi/polls/models.py:194
 msgid "Your vote has been counted."
 msgstr "Deine Stimme wurde gezählt."
 
-#: myhpi/polls/models.py:171
+#: myhpi/polls/models.py:170
 #, python-brace-format
 msgid ""
 "Invalid ballot.\n"
@@ -201,23 +201,23 @@ msgstr ""
 "Ungültige Stimmabgabe.\n"
 "{errors}"
 
-#: myhpi/polls/models.py:183
+#: myhpi/polls/models.py:182
 msgid "You have already voted."
 msgstr "Du hast schon abgestimmt."
 
-#: myhpi/polls/models.py:197
+#: myhpi/polls/models.py:196
 msgid "Invalid ballot."
 msgstr "Ungültige Stimmabgabe."
 
-#: myhpi/polls/models.py:199
+#: myhpi/polls/models.py:198
 msgid "A database error occured. Please try again."
 msgstr "Ein Datenbankfehler ist aufgetreten. Bitte versuche es erneut."
 
-#: myhpi/polls/templates/polls/base_poll.html:24
+#: myhpi/polls/templates/polls/base_poll.html:21
 msgid "You've accessed this page outside of the voting period."
 msgstr "Du hast diese Seite außerhalb des Abstimmungszeitraums aufgerufen."
 
-#: myhpi/polls/templates/polls/base_poll.html:26
+#: myhpi/polls/templates/polls/base_poll.html:25
 #, fuzzy
 #| msgid "You have already voted and the results are not yet visible."
 msgid ""
@@ -238,44 +238,44 @@ msgstr "Enddatum"
 msgid "Number of participants"
 msgstr "Teilnehmendenanzahl"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:20
-#: myhpi/polls/templates/polls/ranked_choice_poll.html:37
+#: myhpi/polls/templates/polls/majority_vote_poll.html:23
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:41
 msgid "Choice"
 msgstr "Auswahl"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:22
+#: myhpi/polls/templates/polls/majority_vote_poll.html:25
 msgid "Description"
 msgstr "Beschreibung"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:23
+#: myhpi/polls/templates/polls/majority_vote_poll.html:27
 msgid "Votes"
 msgstr "Stimmen"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:24
+#: myhpi/polls/templates/polls/majority_vote_poll.html:28
 msgid "Percentage"
 msgstr "Prozent"
 
-#: myhpi/polls/templates/polls/poll_list.html:14
+#: myhpi/polls/templates/polls/poll_list.html:12
 msgid "Title"
 msgstr "Titel"
 
-#: myhpi/polls/templates/polls/poll_list.html:15
+#: myhpi/polls/templates/polls/poll_list.html:13
 msgid "Voting period"
 msgstr "Abstimmungszeitraum"
 
-#: myhpi/polls/templates/polls/ranked_choice_poll.html:36
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:40
 msgid "Rank"
 msgstr "Rang"
 
-#: myhpi/polls/templates/polls/ranked_choice_poll.html:38
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:42
 #, fuzzy
 #| msgid "Votes"
 msgid "Final Votes"
 msgstr "Stimmen"
 
-#: myhpi/search/templates/search/search.html:7
-#: myhpi/search/templates/search/search.html:12
-#: myhpi/search/templates/search/search_field.html:8
+#: myhpi/search/templates/search/search.html:8
+#: myhpi/search/templates/search/search.html:13
+#: myhpi/search/templates/search/search_field.html:13
 msgid "Search"
 msgstr "Suche"
 
@@ -287,20 +287,20 @@ msgstr "Ein Ergebnis gefunden"
 msgid " results found."
 msgstr " Ergebnisse gefunden."
 
-#: myhpi/search/templates/search/search.html:83
+#: myhpi/search/templates/search/search.html:76
 msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
-#: myhpi/search/templates/search/search_field.html:6
-#: myhpi/templates/base.html:162
+#: myhpi/search/templates/search/search_field.html:9
+#: myhpi/templates/base.html:194
 msgid "Search..."
 msgstr "Suchen..."
 
-#: myhpi/templates/403.html:5 myhpi/templates/403.html:11
+#: myhpi/templates/403.html:6 myhpi/templates/403.html:12
 msgid "Access denied"
 msgstr "Zugang verweigert"
 
-#: myhpi/templates/403.html:13
+#: myhpi/templates/403.html:15
 msgid ""
 "Unfortunately you are not allowed to view this page. This might have one of "
 "the following reasons:"
@@ -308,34 +308,47 @@ msgstr ""
 "Du bist nicht berechtigt, diese Seite zu sehen. Das kann einen der folgenden "
 "Gründe haben:"
 
-#: myhpi/templates/403.html:16
-msgid ""
-"You are not logged in and are not accessing the page from the university "
-"network."
+#: myhpi/templates/403.html:20
+#, fuzzy
+#| msgid ""
+#| "You are not logged in and are not accessing the page from the university "
+#| "network."
+msgid "You are not accessing the page from the university network."
 msgstr ""
 "Du bist nicht eingeloggt oder rufst die Seite nicht aus dem "
 "Universitätsnetzwerk auf."
 
-#: myhpi/templates/403.html:17
+#: myhpi/templates/403.html:24
+#, fuzzy
+#| msgid ""
+#| "You are not logged in and the page is only available for logged in users."
 msgid ""
-"You are not logged in and the page is only available for logged in users."
+"You are not logged in. The page may only be available for logged in users."
 msgstr ""
-"Du bist nicht eingeloggt und die Seite ist nur für eingeloggte Nutzer "
+"Du bist nicht eingeloggt. Die Seite ist möglicherweise nur für eingeloggte Nutzer:innen "
 "sichtbar."
 
-#: myhpi/templates/403.html:18
+#: myhpi/templates/403.html:30 myhpi/templates/base.html:90
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: myhpi/templates/403.html:35
+#, fuzzy
+#| msgid ""
+#| "You are logged in but don't have the required permissions to access this "
+#| "page."
 msgid ""
-"You are logged in but don't have the required permissions to access this "
-"page."
+"You don't have the required permissions to access this page. Consider "
+"contacting the source of the link you were given."
 msgstr ""
-"Du bist eingeloggt, aber hast keine ausreichenden Berechtigungen, um diese "
-"Seite zu sehen."
+"Du hast keine ausreichenden Berechtigungen, um diese "
+"Seite zu sehen. Kontaktiere gegebenenfalls die Quelle, von der Du den Link erhalten hast."
 
 #: myhpi/templates/404.html:7
 msgid "Page not found"
 msgstr "Seite nicht gefunden."
 
-#: myhpi/templates/404.html:9
+#: myhpi/templates/404.html:10
 msgid ""
 "The page you requested does not exist. Please check the URL or use the menu "
 "above to find your page."
@@ -343,37 +356,33 @@ msgstr ""
 " Die angeforderte Seite existiert nicht. Bitte überprüfe die URL oder nutze "
 "das Menü oben, um die gewünschte Seite zu finden."
 
-#: myhpi/templates/base.html:46
+#: myhpi/templates/base.html:55
 msgid "To home page"
 msgstr "Zur Startseite"
 
-#: myhpi/templates/base.html:52
+#: myhpi/templates/base.html:66
 msgid "Ctrl+K"
 msgstr "Strg+K"
 
-#: myhpi/templates/base.html:71
-msgid "Sign in"
-msgstr "Anmelden"
-
-#: myhpi/templates/base.html:94
+#: myhpi/templates/base.html:114
 msgid "Your groups:"
 msgstr "Deine Gruppen"
 
-#: myhpi/templates/base.html:104
+#: myhpi/templates/base.html:122
 #, fuzzy
 #| msgid "Next minutes"
 msgid "Create minutes"
 msgstr "Protokoll erstellen"
 
-#: myhpi/templates/base.html:113
+#: myhpi/templates/base.html:131
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
-#: myhpi/templates/base.html:116
+#: myhpi/templates/base.html:134
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: myhpi/templates/base.html:163
+#: myhpi/templates/base.html:199
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -381,7 +390,7 @@ msgstr "Suche starten"
 msgid "Language"
 msgstr "Sprache"
 
-#: myhpi/templates/login.html:11
+#: myhpi/templates/login.html:9
 msgid "Current user:"
 msgstr "Aktueller User:"
 
@@ -410,29 +419,29 @@ msgstr "Fußzeile beinhaltet Einladungslink"
 msgid "Manage List"
 msgstr "Liste verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/action.html:4
-#: myhpi/tenca_django/templates/tenca_django/action.html:9
+#: myhpi/tenca_django/templates/tenca_django/action.html:5
+#: myhpi/tenca_django/templates/tenca_django/action.html:14
 msgid "Adjust membership"
 msgstr "Mitgliedschaft ändern"
 
-#: myhpi/tenca_django/templates/tenca_django/action.html:8
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:10
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:9
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:10
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:10
-#: myhpi/tenca_django/templates/tenca_django/report.html:8
+#: myhpi/tenca_django/templates/tenca_django/action.html:11
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:11
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:10
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:11
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:11
+#: myhpi/tenca_django/templates/tenca_django/report.html:11
 msgid "Mailing lists"
 msgstr "Mailinglisten"
 
-#: myhpi/tenca_django/templates/tenca_django/action.html:14
+#: myhpi/tenca_django/templates/tenca_django/action.html:21
 msgid "This link is now invalid. You never need to visit it again."
 msgstr "Dieser Link ist nun ungültig. Du brauchst ihn nicht nochmal."
 
-#: myhpi/tenca_django/templates/tenca_django/backend_error.html:4
+#: myhpi/tenca_django/templates/tenca_django/backend_error.html:5
 msgid "Mailing Lists Unavailable"
 msgstr "Mailinglisten nicht verfügbar"
 
-#: myhpi/tenca_django/templates/tenca_django/backend_error.html:7
+#: myhpi/tenca_django/templates/tenca_django/backend_error.html:10
 msgid ""
 "Sorry for the inconvenience, but the mail server backend does not reply. "
 "Please try again later."
@@ -444,104 +453,117 @@ msgstr ""
 msgid "List memberships"
 msgstr "Mitgliedschaft ändern"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:14
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:16
 msgid "Create new list"
 msgstr "Neue Liste anlegen"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:36
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:40
 msgid "Your Memberships"
 msgstr "Deine Mitgliedschaften"
 
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:5
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:10
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:40
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:13
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:47
 msgid "Delete list"
 msgstr "Liste Löschen"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:14
-#, python-format
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:19
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "\t\tAre you sure you want to delete the list %(listname)s?\n"
+#| "\t"
 msgid ""
 "\n"
-"\t\tAre you sure you want to delete the list %(listname)s?\n"
-"\t"
+"            Are you sure you want to delete the list %(listname)s?\n"
+"        "
 msgstr ""
 "\n"
 "\t\tMöchtest du die Liste %(listname)s wirklich löschen?\n"
 "\t"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:20
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:27
 #, fuzzy
 #| msgid "Delete list"
 msgid "Delete"
 msgstr "Liste Löschen"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:21
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:30
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:11
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:14
 msgid "Manage list"
 msgstr "Liste verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:15
-#, python-format
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:20
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "\t\tThis is the admin view for the owners of %(listname)s\n"
+#| "\t"
 msgid ""
 "\n"
-"\t\tThis is the admin view for the owners of %(listname)s\n"
-"\t"
+"            This is the admin view for the owners of %(listname)s\n"
+"        "
 msgstr ""
 "\n"
 "\t\tDas ist die Ansicht für die Admins der Liste %(listname)s\n"
 "\t"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:19
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:25
 msgid "Invite Link"
 msgstr "Einladungslink"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:20
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:26
 msgid "Share this link to invite new members:"
 msgstr "Teile diesen Link, um neue Mitglieder einzuladen:"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:27
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:33
 msgid "List options"
 msgstr "Listeneinstellungen"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:39
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:45
 msgid "Save"
 msgstr "Speichern"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:43
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:51
 msgid "Members"
 msgstr "Mitglieder"
 
 #: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:5
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:11
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:14
 msgid "Manage subscription"
 msgstr "Mitgliedschaft verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:16
-#, python-format
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:20
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "\t\tEnter the e-mail address you want to un-/subscribe from/to "
+#| "%(list_name)s\n"
+#| "\t"
 msgid ""
 "\n"
-"\t\tEnter the e-mail address you want to un-/subscribe from/to "
+"        Enter the e-mail address you want to un-/subscribe from/to "
 "%(list_name)s\n"
-"\t"
+"    "
 msgstr ""
 "\n"
 "\t\tGib die E-Mailadresse ein, die du von %(list_name)s an-/abmelden "
 "möchtest\n"
 "\t"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:32
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:42
 msgid "Un-/Subscribe"
 msgstr "An-/Abmelden"
 
-#: myhpi/tenca_django/templates/tenca_django/report.html:4
-#: myhpi/tenca_django/templates/tenca_django/report.html:9
+#: myhpi/tenca_django/templates/tenca_django/report.html:5
+#: myhpi/tenca_django/templates/tenca_django/report.html:14
 msgid "Report action"
 msgstr "Vorgang melden"
 
-#: myhpi/tenca_django/templates/tenca_django/report.html:14
+#: myhpi/tenca_django/templates/tenca_django/report.html:21
 msgid ""
 "Sorry for this inconvenience. Please contact the Student Representative "
 "Group if this should happen more often."
@@ -549,56 +571,56 @@ msgstr ""
 "Entschuldige die Unannehmlichkeiten. Kontaktiere den Fachschaftsrat, falls "
 "diese häufiger auftreten sollte."
 
-#: myhpi/tenca_django/views.py:42
+#: myhpi/tenca_django/views.py:45
 #, python-brace-format
 msgid "The list {list} has been created successfully."
 msgstr "Die Liste {list} wurde erfolgreich angelegt."
 
-#: myhpi/tenca_django/views.py:48 myhpi/tenca_django/views.py:87
-#: myhpi/tenca_django/views.py:151 myhpi/tenca_django/views.py:192
+#: myhpi/tenca_django/views.py:51 myhpi/tenca_django/views.py:90
+#: myhpi/tenca_django/views.py:154 myhpi/tenca_django/views.py:195
 #, python-brace-format
 msgid "An error occurred: {error}"
 msgstr "Ein Fehler ist aufgetreten: {error}"
 
-#: myhpi/tenca_django/views.py:83
+#: myhpi/tenca_django/views.py:86
 msgid "The change has been requested. Please check your mails."
 msgstr "Änderung beantragt. Schau in deinem Postfach nach."
 
-#: myhpi/tenca_django/views.py:116
+#: myhpi/tenca_django/views.py:119
 msgid "List options saved successfully."
 msgstr "Listeneinstellungen gespeichert."
 
-#: myhpi/tenca_django/views.py:129
+#: myhpi/tenca_django/views.py:132
 #, python-brace-format
 msgid "Removed {member}"
 msgstr "{member} wurde entfernt"
 
-#: myhpi/tenca_django/views.py:130
+#: myhpi/tenca_django/views.py:133
 #, python-brace-format
 msgid "Promoted {member}"
 msgstr "{member} wurde befördert"
 
-#: myhpi/tenca_django/views.py:131
+#: myhpi/tenca_django/views.py:134
 #, python-brace-format
 msgid "Demoted {member}"
 msgstr "{member} wurde degradiert"
 
-#: myhpi/tenca_django/views.py:135
+#: myhpi/tenca_django/views.py:138
 #, python-brace-format
 msgid "Blocked {member}"
 msgstr "{member} wurde blockiert"
 
-#: myhpi/tenca_django/views.py:140
+#: myhpi/tenca_django/views.py:143
 #, python-brace-format
 msgid "Unblocked {member}"
 msgstr "{member} wurde entsperrt"
 
-#: myhpi/tenca_django/views.py:186
+#: myhpi/tenca_django/views.py:189
 #, python-brace-format
 msgid "{list} has been deleted successfully."
 msgstr "{list} wurde erfolgreich gelöscht."
 
-#: myhpi/tenca_django/views.py:225
+#: myhpi/tenca_django/views.py:228
 #, python-brace-format
 msgid ""
 "{email} is the last owner of {list}. Please delegate your job first, before "
@@ -607,17 +629,17 @@ msgstr ""
 "{email} ist der letzte Admin auf {list}. Bitte delegiere deine Rolle erst, "
 "bevor du die Liste verlässt."
 
-#: myhpi/tenca_django/views.py:239
+#: myhpi/tenca_django/views.py:242
 #, python-brace-format
 msgid "{email} has successfully joined {list}."
 msgstr "{email} ist erfolgreich {list} beigetreten."
 
-#: myhpi/tenca_django/views.py:246
+#: myhpi/tenca_django/views.py:249
 #, python-brace-format
 msgid "{email} has successfully left {list}."
 msgstr "{email} hat erfolgreich {list} verlassen."
 
-#: myhpi/tenca_django/views.py:263
+#: myhpi/tenca_django/views.py:266
 #, python-brace-format
 msgid "The subscription of {email} onto {list} was rolled back."
 msgstr "Die Anmeldung von {email} auf {list} wurde rückgänig gemacht."
