@@ -386,7 +386,6 @@ img {
     [title] {
         position: relative;
         z-index: 10;
-        display: inline-flex;
         justify-content: center;
     }
     [title]:focus::after {

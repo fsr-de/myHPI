@@ -41,37 +41,36 @@
         </aside>
     {% endif %}
 </div>
-{% if parsed_md.1|hasTocContent or page.attachments.exists %}
-    <div class="offcanvas offcanvas-bottom"
-         tabindex="-1"
-         id="sidebar-offcanvas"
-         aria-labelledby="sidebar-offcanvas-label">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebar-offcanvas-label">
-                {% translate "Table of contents" %}
-            </h5>
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="{% translate 'Close' %}"></button>
-        </div>
-        <div class="offcanvas-body">
-            <aside class="side-panel border-accent sidebar-container d-print-none">
-                <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
-                {{ parsed_md.1 }}
-            </aside>
-            {% if page.attachments.exists %}
-                <aside class="side-panel border-accent sidebar-container d-print-none">
-                    <h1 class="side-panel-title">{% translate "Attachments" %}</h1>
-                    <ul>
-                        {% for attachment in page.attachments.all %}
-                            <li>
-                                <a href="{{ attachment.url }}">{{ attachment.title }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </aside>
-            {% endif %}
-        </div>
+
+<div class="offcanvas offcanvas-bottom"
+        tabindex="-1"
+        id="sidebar-offcanvas"
+        aria-labelledby="sidebar-offcanvas-label">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebar-offcanvas-label">
+            {% translate "Table of contents" %}
+        </h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="{% translate 'Close' %}"></button>
     </div>
-{% endif %}
+    <div class="offcanvas-body">
+        <aside class="side-panel border-accent sidebar-container d-print-none">
+            <h1 class="side-panel-title">{% translate "Table of contents" %}</h1>
+            {{ parsed_md.1 }}
+        </aside>
+        {% if page.attachments.exists %}
+            <aside class="side-panel border-accent sidebar-container d-print-none">
+                <h1 class="side-panel-title">{% translate "Attachments" %}</h1>
+                <ul>
+                    {% for attachment in page.attachments.all %}
+                        <li>
+                            <a href="{{ attachment.url }}">{{ attachment.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        {% endif %}
+    </div>
+</div>
