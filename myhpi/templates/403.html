@@ -20,9 +20,9 @@
             {% translate "You are not accessing the page from the university network." %}
         </li>
         {% if not user.is_authenticated %}
-        <li>
-            {% translate "You are not logged in. The page may only be available for logged in users." %}
-        </li>
+            <li>
+                {% translate "You are not logged in. The page may only be available for logged in users." %}
+            </li>
             <br>
             <a id="nav-user-toggle"
                 class="btn btn-primary"
@@ -31,9 +31,9 @@
                 {% bs_icon 'box-arrow-in-right' size='1.4em' %}
             </a>
         {% else %}
-        <li>
-            {% translate "You don't have the required permissions to access this page. Consider contacting the source of the link you were given." %}
-        </li>
+            <li>
+                {% translate "You don't have the required permissions to access this page. Consider contacting the source of the link you were given." %}
+            </li>
         {% endif %}
     </ul>
 {% endblock %}
