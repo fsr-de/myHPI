@@ -92,13 +92,14 @@ const collapseOthersOnSameLevel = (navItemContainer) => {
   navContainersOnSameLevel.forEach((navContainerOnSameLevel) => {
     if (navContainerOnSameLevel === navItemContainer) return
     if (isCollapsed(navContainerOnSameLevel)) return
-    // When clicking on multiple navItems in quick succession, some might not yet be collapsed, but "collapsing".
-    // In that case, we wait for the collapse to finish before hiding them.
+    // When opening two navItems in quick succession, the first might not yet be expanded, but in the process of expanding. Bootstrap calls this state "collapsing".
+    // Hiding a collapsing item has no effect; the first navItem would stay expanded after finishing. Both navItems would be expanded.
+    // So we wait for the collapsing to finish before hiding the item properly.
     if (isCollapsing(navContainerOnSameLevel)) {
       navContainerOnSameLevel.addEventListener(
         "transitionend",
         (event) => {
-          if (event.target.classList.contains("show")) {
+          if (!isCollapsed(event.target)) {
             bootstrap.Collapse.getOrCreateInstance(
               navContainerOnSameLevel,
             ).hide()
