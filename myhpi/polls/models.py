@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.models import Orderable, Page
+from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.search import index
 
 from myhpi.core.markdown.fields import CustomMarkdownField
@@ -49,10 +49,14 @@ class BasePoll(BasePage):
         return self.start_date <= datetime.date.today() <= self.end_date
 
     def can_vote(self, user):
+        if not self.pk:  # Poll is not saved yet
+            return False
         return (
             self.in_voting_period()
             and user not in self.already_voted.all()
-            and self.eligible_groups.intersection(user.groups.all()).exists()
+            and self.eligible_groups.filter(
+                id__in=user.groups.values_list("id", flat=True)
+            ).exists()
         )
 
     def cast_vote(self, request, *args, **kwargs):
@@ -122,7 +126,7 @@ class MajorityVotePoll(BasePoll):
         return self.choices.aggregate(Sum("votes")).get("votes__sum")
 
 
-class MajorityVoteChoice(Orderable):
+class MajorityVoteChoice(TranslatableMixin, Orderable):
     text = models.CharField(max_length=254)
     votes = models.IntegerField(default=0)
     page = ParentalKey("MajorityVotePoll", on_delete=models.CASCADE, related_name="choices")
@@ -277,7 +281,7 @@ class RankedChoicePoll(BasePoll):
         return sorted(results)
 
 
-class RankedChoiceOption(Orderable):
+class RankedChoiceOption(TranslatableMixin, Orderable):
     name = models.CharField(max_length=254)
     description = CustomMarkdownField()
     poll = ParentalKey("RankedChoicePoll", related_name="options")
