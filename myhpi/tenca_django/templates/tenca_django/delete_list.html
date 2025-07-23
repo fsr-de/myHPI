@@ -26,9 +26,9 @@
     <div class="card">
         <div class="card-body">
             <p>
-                {% blocktrans %}
-          Are you sure you want to delete the list {{ listname }}?
-        {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Are you sure you want to delete the list {{ listname }}?
+                {% endblocktrans %}
             </p>
             <form method="post">
                 {% csrf_token %}

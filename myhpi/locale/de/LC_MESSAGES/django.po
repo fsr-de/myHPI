@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 21:06+0200\n"
-"PO-Revision-Date: 2025-07-23 21:12+0200\n"
+"POT-Creation-Date: 2025-07-23 22:28+0200\n"
+"PO-Revision-Date: 2025-07-23 22:28+0200\n"
 "Last-Translator: Jonathan Weth <git@jonathanewth.de>\n"
-"Language-Team: English\n"
-"Language: en\n"
+"Language-Team: German\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -287,7 +287,7 @@ msgid "No results found."
 msgstr "Keine Ergebnisse gefunden."
 
 #: myhpi/search/templates/search/search_field.html:9
-#: myhpi/templates/base.html:202
+#: myhpi/templates/base.html:201
 msgid "Search..."
 msgstr "Suchen..."
 
@@ -303,20 +303,16 @@ msgstr ""
 "Du bist nicht berechtigt, diese Seite zu sehen. Das kann einen der folgenden "
 "Gründe haben:"
 
-
 #: myhpi/templates/403.html:20
 msgid "You are not accessing the page from the university network."
-msgstr ""
-"Du rufst die Seite nicht aus dem "
-"Universitätsnetzwerk auf."
-
+msgstr "Du rufst die Seite nicht aus dem Universitätsnetzwerk auf."
 
 #: myhpi/templates/403.html:24
 msgid ""
 "You are not logged in. The page may only be available for logged in users."
 msgstr ""
-"Du bist nicht eingeloggt. Die Seite ist möglicherweise nur für eingeloggte Nutzer:innen "
-"sichtbar."
+"Du bist nicht eingeloggt. Die Seite ist möglicherweise nur für eingeloggte "
+"Nutzer:innen sichtbar."
 
 #: myhpi/templates/403.html:30 myhpi/templates/base.html:90
 msgid "Sign in"
@@ -327,8 +323,8 @@ msgid ""
 "You don't have the required permissions to access this page. Consider "
 "contacting the source of the link you were given."
 msgstr ""
-"Du hast keine ausreichenden Berechtigungen, um diese "
-"Seite zu sehen. Kontaktiere gegebenenfalls die Quelle, von der Du den Link erhalten hast."
+"Du hast keine ausreichenden Berechtigungen, um diese Seite zu sehen. "
+"Kontaktiere gegebenenfalls die Quelle, von der Du den Link erhalten hast."
 
 #: myhpi/templates/404.html:7
 msgid "Page not found"
@@ -370,7 +366,7 @@ msgstr "Abmelden"
 msgid "Home Page"
 msgstr "Startseite"
 
-#: myhpi/templates/base.html:199
+#: myhpi/templates/base.html:206
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -388,8 +384,8 @@ msgstr "Bitte melde dich an um diese Seite zu sehen."
 
 #: myhpi/tenca_django/apps.py:7
 #: myhpi/tenca_django/templates/tenca_django/action.html:11
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:11
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:17
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:10
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:15
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:10
 #: myhpi/tenca_django/templates/tenca_django/manage_list.html:11
 #: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:11
@@ -411,7 +407,7 @@ msgid "Footer contains invitation link"
 msgstr "Fußzeile beinhaltet Einladungslink"
 
 #: myhpi/tenca_django/models.py:30
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:14
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:13
 msgid "Manage List"
 msgstr "Liste verwalten"
 
@@ -419,24 +415,11 @@ msgstr "Liste verwalten"
 msgid "Adjust Mailing List Subscription"
 msgstr "Mailinglisten-Mitgliedschaft verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/action.html:14
+#: myhpi/tenca_django/templates/tenca_django/action.html:13
 msgid "Adjust Subscription"
 msgstr "Mitgliedschaft verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/action.html:14
-msgid "Adjust membership"
-msgstr "Mitgliedschaft ändern"
-
-#: myhpi/tenca_django/templates/tenca_django/action.html:11
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:11
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:10
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:11
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:11
-#: myhpi/tenca_django/templates/tenca_django/report.html:11
-msgid "Mailing lists"
-msgstr "Mailinglisten"
-
-#: myhpi/tenca_django/templates/tenca_django/action.html:21
+#: myhpi/tenca_django/templates/tenca_django/action.html:19
 msgid "This link is now invalid. You never need to visit it again."
 msgstr "Dieser Link ist nun ungültig. Du brauchst ihn nicht nochmal."
 
@@ -456,146 +439,134 @@ msgstr ""
 msgid "Mailing lists"
 msgstr "Mailinglisten"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:21
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:19
 msgid "Create New Mailing List"
 msgstr "Neue Mailingliste anlegen"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:25
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:30
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:23
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:28
 msgid "List name"
 msgstr "Listenname"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:39
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:38
 msgid "Create mailing list"
 msgstr "Mailingliste anlegen"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:49
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:48
 msgid "Your Subscriptions"
 msgstr "Deine Mitgliedschaften"
 
-#: myhpi/tenca_django/templates/tenca_django/dashboard.html:59
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:58
 msgid "Manage list"
 msgstr "Liste verwalten"
 
 #: myhpi/tenca_django/templates/tenca_django/delete_list.html:5
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:19
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:17
 msgid "Delete Mailing List"
 msgstr "Mailingliste löschen"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:13
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:12
 msgid "Delete List"
 msgstr "Liste löschen"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:24
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:26
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:27
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:22
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:24
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:25
 msgid "List"
 msgstr "Liste"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:31
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:29
 #, python-format
-msgid ""
-"\n"
-"          Are you sure you want to delete the list %(listname)s?\n"
-"        "
-msgstr ""
-"\n"
-"\t\tMöchtest du die Liste %(listname)s wirklich löschen?\n"
-"        "
+msgid "Are you sure you want to delete the list %(listname)s?"
+msgstr "Möchtest du die Liste %(listname)s wirklich löschen?"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:39
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:37
 msgid "Delete"
 msgstr "Löschen"
 
-#: myhpi/tenca_django/templates/tenca_django/delete_list.html:42
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:40
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #: myhpi/tenca_django/templates/tenca_django/manage_list.html:6
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:21
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:19
 msgid "Manage Mailing List"
 msgstr "Mailingliste verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:32
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:30
 msgid "Invite Link"
 msgstr "Einladungslink"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:33
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:31
 msgid "Share this link to invite new members:"
 msgstr "Teile diesen Link, um neue Mitglieder einzuladen:"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:44
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:42
 msgid "List Options"
 msgstr "Listeneinstellungen"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:56
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:54
 msgid "Save"
 msgstr "Speichern"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:58
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:56
 msgid "Delete list"
 msgstr "Liste löschen"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:66
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:64
 msgid "Members"
 msgstr "Mitglieder"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:79
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:80
 msgid "Demote from Owner"
 msgstr "Vom Eigentümer degradieren"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:83
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:86
 msgid "Promote to Owner"
 msgstr "Zum Eigentümer befördern"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:89
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:94
 msgid "Unblock member"
 msgstr "Mitglied entsperren"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:93
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:100
 msgid "Block member"
 msgstr "Mitglied blockieren"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_list.html:98
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:107
 msgid "Remove member"
 msgstr "Mitglied entfernen"
 
 #: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:5
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:22
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:20
 msgid "Manage Mailing List Subscription"
 msgstr "Mailinglisten-Mitgliedschaft verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:14
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:13
 msgid "Manage Subscription"
 msgstr "Mitgliedschaft verwalten"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:34
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:32
 #, python-format
 msgid ""
-"\n"
-"          Enter the e-mail address you want to un-/subscribe from/to "
-"%(list_name)s:\n"
-"        "
+"Enter the e-mail address you want to un-/subscribe from/to %(list_name)s:"
 msgstr ""
-"\n"
-"\t\tGib die E-Mailadresse ein, die du von %(list_name)s an-/abmelden "
-"möchtest\n"
-"        "
+"Gib die E-Mailadresse ein, die du von %(list_name)s an-/abmelden möchtest:"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:42
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:40
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
-#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:48
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:51
 msgid "Un-/Subscribe"
 msgstr "An-/Abmelden"
 
 #: myhpi/tenca_django/templates/tenca_django/report.html:5
-#: myhpi/tenca_django/templates/tenca_django/report.html:14
+#: myhpi/tenca_django/templates/tenca_django/report.html:13
 msgid "Report Action"
 msgstr "Vorgang melden"
 
-#: myhpi/tenca_django/templates/tenca_django/report.html:21
+#: myhpi/tenca_django/templates/tenca_django/report.html:19
 msgid ""
 "Sorry for this inconvenience. Please contact the Student Representative "
 "Group if this should happen more often."
