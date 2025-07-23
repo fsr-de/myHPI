@@ -17,7 +17,20 @@
  * @returns True if it is collapsed, false otherwise.
  */
 const isCollapsed = (navItemContainer) => {
-  return !navItemContainer.classList.contains("show")
+  return (
+    !navItemContainer.classList.contains("show") &&
+    !isCollapsing(navItemContainer)
+  )
+}
+
+/**
+ * Returns whether the given navItemContainer is currently collapsing.
+ *
+ * @param {Node} navItemContainer Container to check.
+ * @returns True if it is collapsing, false otherwise.
+ */
+const isCollapsing = (navItemContainer) => {
+  return navItemContainer.classList.contains("collapsing")
 }
 
 /**
@@ -66,7 +79,7 @@ const collapseChildren = (navItemContainer) => {
  * Collapses all navItemContainers on the same navbar level as the given navItemContainer, except for the given one.
  *
  * The level containers are not determined by the DOM, but the wagtail page tree encoded in the node ids, data-attributes, etc.
- * Thus we can arrange the containers to our liking, not necessarily in a tree layout, while still collapsing the containers
+ * Thus, we can arrange the containers to our liking, not necessarily in a tree layout, while still collapsing the containers
  *   on the same wagtail page tree level.
  *
  * @param {Node} navItemContainer Container on whose level the other containers should be collapsed.
@@ -79,7 +92,24 @@ const collapseOthersOnSameLevel = (navItemContainer) => {
   navContainersOnSameLevel.forEach((navContainerOnSameLevel) => {
     if (navContainerOnSameLevel === navItemContainer) return
     if (isCollapsed(navContainerOnSameLevel)) return
-    bootstrap.Collapse.getOrCreateInstance(navContainerOnSameLevel).hide()
+    // When opening two navItems in quick succession, the first might not yet be expanded, but in the process of expanding. Bootstrap calls this state "collapsing".
+    // Hiding a collapsing item has no effect; the first navItem would stay expanded after finishing. Both navItems would be expanded.
+    // So we wait for the collapsing to finish before hiding the item properly.
+    if (isCollapsing(navContainerOnSameLevel)) {
+      navContainerOnSameLevel.addEventListener(
+        "transitionend",
+        (event) => {
+          if (!isCollapsed(event.target)) {
+            bootstrap.Collapse.getOrCreateInstance(
+              navContainerOnSameLevel,
+            ).hide()
+          }
+        },
+        { once: true },
+      )
+    } else {
+      bootstrap.Collapse.getOrCreateInstance(navContainerOnSameLevel).hide()
+    }
   })
 }
 
