@@ -27,7 +27,7 @@ class EmailUtilTest(TestCase):
         expected = ["user1@hpi.de", "user2@unrelated.com", "user3@hpi.uni-potsdam.de"]
         for email, expected_email in zip(emails, expected):
             toggled = list(toggle_institution(email))
-            if not "unrelated" in email:
+            if "unrelated" not in email:
                 self.assertEqual(toggled[0], expected_email)
 
     def test_alternative_emails(self):

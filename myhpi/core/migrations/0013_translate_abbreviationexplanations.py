@@ -5,7 +5,6 @@ from wagtail.models import BootstrapTranslatableModel
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("core", "0012_abbreviationexplanation_locale_and_more"),
     ]
