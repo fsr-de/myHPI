@@ -315,7 +315,7 @@ msgstr ""
 #| "network."
 msgid "You are not accessing the page from the university network."
 msgstr ""
-"Du bist nicht eingeloggt oder rufst die Seite nicht aus dem "
+"Du rufst die Seite nicht aus dem "
 "Universitätsnetzwerk auf."
 
 #: myhpi/templates/403.html:24
