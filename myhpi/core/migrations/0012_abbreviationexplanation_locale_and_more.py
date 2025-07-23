@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("core", "0011_alter_taggedminutes_tag"),
         ("wagtailcore", "0094_alter_page_locale"),
