@@ -24,7 +24,7 @@ To set up a development version on your local machine, you need to execute the f
 1. Optionally: Create test data with `python manage.py create_test_data`
 1. Create a local superuser with `python manage.py createsuperuser`
 1. Start the development server with `python manage.py runserver`
-1. Open your web browser, visit `http://localhost:8000/admin` and log in with the user you just created
+1. Open your web browser, visit `http://localhost:8000/admin/` and log in with the user you just created
 
 ### Tests
 
