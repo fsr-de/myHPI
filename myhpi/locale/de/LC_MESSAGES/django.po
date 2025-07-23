@@ -291,11 +291,11 @@ msgstr "Keine Ergebnisse gefunden."
 msgid "Search..."
 msgstr "Suchen..."
 
-#: myhpi/templates/403.html:5 myhpi/templates/403.html:11
+#: myhpi/templates/403.html:6 myhpi/templates/403.html:12
 msgid "Access denied"
 msgstr "Zugang verweigert"
 
-#: myhpi/templates/403.html:14
+#: myhpi/templates/403.html:15
 msgid ""
 "Unfortunately you are not allowed to view this page. This might have one of "
 "the following reasons:"
@@ -303,28 +303,32 @@ msgstr ""
 "Du bist nicht berechtigt, diese Seite zu sehen. Das kann einen der folgenden "
 "Gründe haben:"
 
-#: myhpi/templates/403.html:19
-msgid ""
-"You are not logged in and are not accessing the page from the university "
-"network."
+
+#: myhpi/templates/403.html:20
+msgid "You are not accessing the page from the university network."
 msgstr ""
-"Du bist nicht eingeloggt oder rufst die Seite nicht aus dem "
+"Du rufst die Seite nicht aus dem "
 "Universitätsnetzwerk auf."
 
-#: myhpi/templates/403.html:22
+
+#: myhpi/templates/403.html:24
 msgid ""
-"You are not logged in and the page is only available for logged in users."
+"You are not logged in. The page may only be available for logged in users."
 msgstr ""
-"Du bist nicht eingeloggt und die Seite ist nur für eingeloggte Nutzer "
+"Du bist nicht eingeloggt. Die Seite ist möglicherweise nur für eingeloggte Nutzer:innen "
 "sichtbar."
 
-#: myhpi/templates/403.html:25
+#: myhpi/templates/403.html:30 myhpi/templates/base.html:90
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: myhpi/templates/403.html:35
 msgid ""
-"You are logged in but don't have the required permissions to access this "
-"page."
+"You don't have the required permissions to access this page. Consider "
+"contacting the source of the link you were given."
 msgstr ""
-"Du bist eingeloggt, aber hast keine ausreichenden Berechtigungen, um diese "
-"Seite zu sehen."
+"Du hast keine ausreichenden Berechtigungen, um diese "
+"Seite zu sehen. Kontaktiere gegebenenfalls die Quelle, von der Du den Link erhalten hast."
 
 #: myhpi/templates/404.html:7
 msgid "Page not found"
@@ -346,10 +350,6 @@ msgstr "Zur Startseite"
 msgid "Ctrl+K"
 msgstr "Strg+K"
 
-#: myhpi/templates/base.html:90
-msgid "Sign in"
-msgstr "Anmelden"
-
 #: myhpi/templates/base.html:114
 msgid "Your groups:"
 msgstr "Deine Gruppen"
@@ -370,7 +370,7 @@ msgstr "Abmelden"
 msgid "Home Page"
 msgstr "Startseite"
 
-#: myhpi/templates/base.html:207
+#: myhpi/templates/base.html:199
 msgid "Start search"
 msgstr "Suche starten"
 
@@ -422,6 +422,19 @@ msgstr "Mailinglisten-Mitgliedschaft verwalten"
 #: myhpi/tenca_django/templates/tenca_django/action.html:14
 msgid "Adjust Subscription"
 msgstr "Mitgliedschaft verwalten"
+
+#: myhpi/tenca_django/templates/tenca_django/action.html:14
+msgid "Adjust membership"
+msgstr "Mitgliedschaft ändern"
+
+#: myhpi/tenca_django/templates/tenca_django/action.html:11
+#: myhpi/tenca_django/templates/tenca_django/dashboard.html:11
+#: myhpi/tenca_django/templates/tenca_django/delete_list.html:10
+#: myhpi/tenca_django/templates/tenca_django/manage_list.html:11
+#: myhpi/tenca_django/templates/tenca_django/manage_subscription.html:11
+#: myhpi/tenca_django/templates/tenca_django/report.html:11
+msgid "Mailing lists"
+msgstr "Mailinglisten"
 
 #: myhpi/tenca_django/templates/tenca_django/action.html:21
 msgid "This link is now invalid. You never need to visit it again."
