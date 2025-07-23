@@ -38,13 +38,15 @@ def highlight_query(content, search_query, surrounding_lines=1):
     if len(lines) > excerpt_max_length:
         lines = lines[:excerpt_max_length]
     markdown = "\n".join(lines)
+
+    rendered_markdown = render_markdown(markdown, None, False)[0]
+
     # Replace search query with bold version but preserve case from markdown
     markdown = re.sub(
         re.compile(f"({search_query})", re.IGNORECASE),
         r"**\1**",
-        markdown,
+        rendered_markdown,
     )
-    rendered_markdown = render_markdown(markdown, None, False)[0]
     return rendered_markdown
 
 
