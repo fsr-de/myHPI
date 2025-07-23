@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load bootstrap_icons %}
 
 {% block title %}
     {% translate "Access denied" %}
@@ -15,14 +16,24 @@
     </p>
 
     <ul class="pb-3">
-        <li>
-            {% translate "You are not logged in and are not accessing the page from the university network." %}
+         <li>
+            {% translate "You are not accessing the page from the university network." %}
         </li>
+        {% if not user.is_authenticated %}
         <li>
-            {% translate "You are not logged in and the page is only available for logged in users." %}
+            {% translate "You are not logged in. The page may only be available for logged in users." %}
         </li>
+            <br>
+            <a id="nav-user-toggle"
+                class="btn btn-primary"
+                href="{% url 'oidc_authentication_init' %}?next={{ request.path }}">
+                <span class="d-none d-md-inline-block">{% translate "Sign in" %}</span>
+                {% bs_icon 'box-arrow-in-right' size='1.4em' %}
+            </a>
+        {% else %}
         <li>
-            {% translate "You are logged in but don't have the required permissions to access this page." %}
+            {% translate "You don't have the required permissions to access this page. Consider contacting the source of the link you were given." %}
         </li>
+        {% endif %}
     </ul>
 {% endblock %}
