@@ -49,10 +49,12 @@ class BasePoll(BasePage):
         return self.start_date <= datetime.date.today() <= self.end_date
 
     def can_vote(self, user):
+        if not self.pk: # Poll is not saved yet
+            return False
         return (
             self.in_voting_period()
             and user not in self.already_voted.all()
-            and self.eligible_groups.intersection(user.groups.all()).exists()
+            and self.eligible_groups.filter(id__in=user.groups.values_list("id", flat=True)).exists()
         )
 
     def cast_vote(self, request, *args, **kwargs):
