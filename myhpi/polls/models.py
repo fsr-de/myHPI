@@ -48,12 +48,23 @@ class BasePoll(BasePage):
     def in_voting_period(self):
         return self.start_date <= datetime.date.today() <= self.end_date
 
+    def get_canonical_poll(self):
+        # Returns the poll in the default locale for this translation_key
+        poll_model = self.__class__
+        from wagtail.models import Locale
+
+        default_locale = Locale.get_default()
+        return poll_model.objects.filter(translation_key=self.translation_key, locale=default_locale).first()
+
     def can_vote(self, user):
-        if not self.pk:  # Poll is not saved yet
+        if not self.pk: # Poll is not saved yet
+            return False
+        canonical_poll = self.get_canonical_poll()
+        if not canonical_poll:
             return False
         return (
             self.in_voting_period()
-            and user not in self.already_voted.all()
+            and user not in canonical_poll.already_voted.all()
             and self.eligible_groups.filter(
                 id__in=user.groups.values_list("id", flat=True)
             ).exists()
@@ -93,6 +104,10 @@ class MajorityVotePoll(BasePoll):
     is_creatable = True
 
     def cast_vote(self, request, *args, **kwargs):
+        canonical_poll = self.get_canonical_poll()
+        if not canonical_poll:
+            messages.error(request, _("Voting is not available for this poll."))
+            return redirect(self.relative_url(self.get_site()))
         choices = request.POST.getlist("choice")
         if len(choices) == 0:
             messages.error(request, _("You must select at least one choice."))
@@ -104,15 +119,15 @@ class MajorityVotePoll(BasePoll):
         else:
             confirmed_choices = 0
             for choice_id in choices:
-                choice = self.choices.filter(id=choice_id).first()
-                if choice and choice.page == self:
+                choice = canonical_poll.choices.filter(id=choice_id).first()
+                if choice and choice.page == canonical_poll:
                     choice.votes += 1
                     choice.save()
                     confirmed_choices += 1
                 else:
                     messages.error(request, _("Invalid choice."))
             if confirmed_choices > 0:
-                self.already_voted.add(request.user)
+                canonical_poll.already_voted.add(request.user)
                 messages.success(request, _("Your vote has been counted."))
         return redirect(self.relative_url(self.get_site()))
 
@@ -166,7 +181,11 @@ class RankedChoicePoll(BasePoll):
     is_creatable = True
 
     def cast_vote(self, request, *args, **kwargs):
-        form = self.get_ballot_form(request.POST)
+        canonical_poll = self.get_canonical_poll()
+        if not canonical_poll:
+            messages.error(request, _("Voting is not available for this poll."))
+            return redirect(self.relative_url(self.get_site()))
+        form = canonical_poll.get_ballot_form(request.POST)
         if not form.is_valid():
             messages.error(
                 request,
@@ -178,15 +197,14 @@ class RankedChoicePoll(BasePoll):
             )
         else:
             try:
-                qs = RankedChoicePoll.objects.select_for_update().filter(pk=self.pk)
+                qs = RankedChoicePoll.objects.select_for_update().filter(pk=canonical_poll.pk)
                 with transaction.atomic():
                     # acquire lock for this transaction by evaluating the queryset
-                    date = qs.get().start_date
-                    if self.already_voted.filter(pk=request.user.pk).exists():
+                    if canonical_poll.already_voted.filter(pk=request.user.pk).exists():
                         messages.error(request, _("You have already voted."))
                     else:
-                        ballot = RankedChoiceBallot.objects.create(poll=self)
-                        for option in self.options.all():
+                        ballot = RankedChoiceBallot.objects.create(poll=canonical_poll)
+                        for option in canonical_poll.options.all():
                             if f"option_{option.pk}" in form.cleaned_data:
                                 entry = RankedChoiceBallotEntry.objects.create(
                                     ballot=ballot,
@@ -194,12 +212,12 @@ class RankedChoicePoll(BasePoll):
                                     rank=form.cleaned_data[f"option_{option.pk}"],
                                 )
                                 entry.save()
-                        self.already_voted.add(request.user)
+                        canonical_poll.already_voted.add(request.user)
                         messages.success(request, _("Your vote has been counted."))
             except IntegrityError:
                 messages.error(request, _("Invalid ballot."))
             except DatabaseError:
-                messages.error(request, _("A database error occured. Please try again."))
+                messages.error(request, _("A database error occurred. Please try again."))
         return redirect(self.relative_url(self.get_site()))
 
     def get_ballot_form(self, data=None):
