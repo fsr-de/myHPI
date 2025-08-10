@@ -1,5 +1,6 @@
-from django.db import migrations
 import uuid
+
+from django.db import migrations
 
 
 def assign_translation_keys(apps, schema_editor):

@@ -12,7 +12,7 @@
                 </h1>
                 {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
                 <h2>{{ page.question }}</h2>
-                {% if page|can_vote:request.user %}
+                {% if page|can_vote:request %}
                     {% block ballot %}{% endblock %}
                 {% elif page.results_visible %}
                     {% block results %}{% endblock %}

@@ -58,12 +58,15 @@ class BasePoll(BasePage):
             translation_key=self.translation_key, locale=default_locale
         ).first()
 
-    def can_vote(self, user):
+    def can_vote(self, user, request=None, allow_preview=False):
         if not self.pk:  # Poll is not saved yet
             return False
         canonical_poll = self.get_canonical_poll()
         if not canonical_poll:
             return False
+        # Allow voting in preview mode so admins can see the poll options
+        if allow_preview and getattr(request, "is_preview", False):
+            return True
         return (
             self.in_voting_period()
             and user not in canonical_poll.already_voted.all()

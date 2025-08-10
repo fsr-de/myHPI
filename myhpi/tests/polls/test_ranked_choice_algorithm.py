@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 from django.db import connections
 from django.test.utils import CaptureQueriesContext, tag
+
 from myhpi.polls.models import (
     PollList,
     RankedChoiceBallot,

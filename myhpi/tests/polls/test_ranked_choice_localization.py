@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from wagtail.models import Locale
 
-from myhpi.polls.models import RankedChoiceOption, PollList, RankedChoicePoll
+from myhpi.polls.models import PollList, RankedChoiceOption, RankedChoicePoll
 from myhpi.tests.core.utils import MyHPIPageTestCase, ensure_ancestors_translated
 
 
