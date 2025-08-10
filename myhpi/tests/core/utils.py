@@ -38,3 +38,11 @@ class MyHPIPageTestCase(TestCase):
 
     def sign_in_as_super_user(self):
         self.client.force_login(self.super_user)
+
+
+def ensure_ancestors_translated(page, locale):
+    parent = page.get_parent().specific
+    if parent.depth > 1:
+        ensure_ancestors_translated(parent, locale)
+        if not parent.get_translations(inclusive=True).filter(locale=locale).exists():
+            parent.copy_for_translation(locale).save()

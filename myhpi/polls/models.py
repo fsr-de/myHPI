@@ -54,10 +54,12 @@ class BasePoll(BasePage):
         from wagtail.models import Locale
 
         default_locale = Locale.get_default()
-        return poll_model.objects.filter(translation_key=self.translation_key, locale=default_locale).first()
+        return poll_model.objects.filter(
+            translation_key=self.translation_key, locale=default_locale
+        ).first()
 
     def can_vote(self, user):
-        if not self.pk: # Poll is not saved yet
+        if not self.pk:  # Poll is not saved yet
             return False
         canonical_poll = self.get_canonical_poll()
         if not canonical_poll:
