@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 22:28+0200\n"
+"POT-Creation-Date: 2025-08-10 16:18+0200\n"
 "PO-Revision-Date: 2025-07-23 22:28+0200\n"
 "Last-Translator: Jonathan Weth <git@jonathanewth.de>\n"
 "Language-Team: German\n"
@@ -171,27 +171,31 @@ msgstr "Schließen"
 msgid "Table of contents and Attachments"
 msgstr "Inhaltsverzeichnis und Anhänge"
 
-#: myhpi/polls/models.py:65
+#: myhpi/polls/models.py:80
 msgid "You are not allowed to vote."
 msgstr "Du darfst nicht abstimmen."
 
-#: myhpi/polls/models.py:94
+#: myhpi/polls/models.py:109 myhpi/polls/models.py:186
+msgid "Voting is not available for this poll."
+msgstr "Abstimmung ist nicht möglich."
+
+#: myhpi/polls/models.py:113
 msgid "You must select at least one choice."
 msgstr "Bitte wähle mindestens eine Option."
 
-#: myhpi/polls/models.py:98
+#: myhpi/polls/models.py:117
 msgid "You can only select up to {} options."
 msgstr "Du kannst nur bis zu {} Optionen auswählen."
 
-#: myhpi/polls/models.py:109
+#: myhpi/polls/models.py:128
 msgid "Invalid choice."
 msgstr "Ungültige Auswahl."
 
-#: myhpi/polls/models.py:112 myhpi/polls/models.py:194
+#: myhpi/polls/models.py:131 myhpi/polls/models.py:216
 msgid "Your vote has been counted."
 msgstr "Deine Stimme wurde gezählt."
 
-#: myhpi/polls/models.py:170
+#: myhpi/polls/models.py:193
 #, python-brace-format
 msgid ""
 "Invalid ballot.\n"
@@ -200,16 +204,18 @@ msgstr ""
 "Ungültige Stimmabgabe.\n"
 "{errors}"
 
-#: myhpi/polls/models.py:182
+#: myhpi/polls/models.py:204
 msgid "You have already voted."
 msgstr "Du hast schon abgestimmt."
 
-#: myhpi/polls/models.py:196
+#: myhpi/polls/models.py:218
 msgid "Invalid ballot."
 msgstr "Ungültige Stimmabgabe."
 
-#: myhpi/polls/models.py:198
-msgid "A database error occured. Please try again."
+#: myhpi/polls/models.py:220
+#, fuzzy
+#| msgid "A database error occured. Please try again."
+msgid "A database error occurred. Please try again."
 msgstr "Ein Datenbankfehler ist aufgetreten. Bitte versuche es erneut."
 
 #: myhpi/polls/templates/polls/base_poll.html:21
@@ -235,20 +241,20 @@ msgstr "Enddatum"
 msgid "Number of participants"
 msgstr "Teilnehmendenanzahl"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:23
-#: myhpi/polls/templates/polls/ranked_choice_poll.html:41
+#: myhpi/polls/templates/polls/majority_vote_poll.html:26
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:44
 msgid "Choice"
 msgstr "Auswahl"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:25
+#: myhpi/polls/templates/polls/majority_vote_poll.html:28
 msgid "Description"
 msgstr "Beschreibung"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:27
+#: myhpi/polls/templates/polls/majority_vote_poll.html:30
 msgid "Votes"
 msgstr "Stimmen"
 
-#: myhpi/polls/templates/polls/majority_vote_poll.html:28
+#: myhpi/polls/templates/polls/majority_vote_poll.html:31
 msgid "Percentage"
 msgstr "Prozent"
 
@@ -260,11 +266,11 @@ msgstr "Titel"
 msgid "Voting period"
 msgstr "Abstimmungszeitraum"
 
-#: myhpi/polls/templates/polls/ranked_choice_poll.html:40
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:43
 msgid "Rank"
 msgstr "Rang"
 
-#: myhpi/polls/templates/polls/ranked_choice_poll.html:42
+#: myhpi/polls/templates/polls/ranked_choice_poll.html:45
 msgid "Final Votes"
 msgstr "Stimmen"
 
