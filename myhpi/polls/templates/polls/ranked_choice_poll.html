@@ -1,5 +1,5 @@
 {% extends "polls/base_poll.html" %}
-{% load core_extras %}
+{% load polls %}
 {% load core_extras %}
 {% load i18n %}
 
@@ -8,7 +8,7 @@
     <form method="post">
         {% csrf_token %}
         <div id="options" class="mb-3">
-            {% for field in canonical_poll.get_ballot_form %}
+            {% for field in canonical_poll|get_localized_form:request %}
                 <div class="card">
                     <div class="card-header"
                          data-toggle="collapse"
@@ -46,7 +46,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for choice in canonical_poll.calculate_ranking %}
+            {% for choice in canonical_poll|get_localized_results:request %}
                 <tr>
                     <th scope="row">{{ choice.0 }}</th>
                     <td>{{ choice.1 }}</td>

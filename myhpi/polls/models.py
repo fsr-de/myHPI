@@ -1,5 +1,6 @@
 import datetime
 import heapq
+from dataclasses import dataclass
 
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
@@ -10,8 +11,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.models import Orderable, Page, TranslatableMixin
+from wagtail.models import Locale, Orderable, Page, TranslatableMixin
 from wagtail.search import index
+from wagtail_localize.fields import SynchronizedField
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.models import BasePage
@@ -45,13 +47,20 @@ class BasePoll(BasePage):
     subpage_types = []
     is_creatable = False
 
+    # Options of the canonical poll are synchronized to translations
+    override_translatable_fields = [
+        SynchronizedField("start_date"),
+        SynchronizedField("end_date"),
+        SynchronizedField("results_visible"),
+        SynchronizedField("eligible_groups"),
+    ]
+
     def in_voting_period(self):
         return self.start_date <= datetime.date.today() <= self.end_date
 
     def get_canonical_poll(self):
         # Returns the poll in the default locale for this translation_key
         poll_model = self.__class__
-        from wagtail.models import Locale
 
         default_locale = Locale.get_default()
         return poll_model.objects.filter(
@@ -59,8 +68,6 @@ class BasePoll(BasePage):
         ).first()
 
     def can_vote(self, user, request=None, allow_preview=False):
-        if not self.pk:  # Poll is not saved yet
-            return False
         canonical_poll = self.get_canonical_poll()
         if not canonical_poll:
             return False
@@ -205,6 +212,7 @@ class RankedChoicePoll(BasePoll):
                 qs = RankedChoicePoll.objects.select_for_update().filter(pk=canonical_poll.pk)
                 with transaction.atomic():
                     # acquire lock for this transaction by evaluating the queryset
+                    qs.get()
                     if canonical_poll.already_voted.filter(pk=request.user.pk).exists():
                         messages.error(request, _("You have already voted."))
                     else:
@@ -225,10 +233,33 @@ class RankedChoicePoll(BasePoll):
                 messages.error(request, _("A database error occurred. Please try again."))
         return redirect(self.relative_url(self.get_site()))
 
-    def get_ballot_form(self, data=None):
+    def get_ballot_form(self, data=None, locale=None):
         from myhpi.polls.forms import RankedChoiceBallotForm
 
-        return RankedChoiceBallotForm(data, options=self.options.all())
+        @dataclass
+        class FormOption:
+            pk: int
+            name: str
+            description: str
+
+        # Translate poll option name and description if locale is given
+        if locale:
+            localized_options = []
+            for option in self.options.all():
+                localized_option = option.get_translation_or_none(locale)
+                localized_options.append(
+                    FormOption(
+                        pk=option.pk,  # Use the canonical pk to identify the option
+                        name=localized_option.name if localized_option else option.name,
+                        description=(
+                            localized_option.description if localized_option else option.description
+                        ),
+                    )
+                )
+
+            return RankedChoiceBallotForm(data, options=localized_options)
+        else:
+            return RankedChoiceBallotForm(data, options=self.options.all())
 
     def __str__(self):
         return self.title
@@ -241,7 +272,7 @@ class RankedChoicePoll(BasePoll):
         heapq.heapify(result)
         return result
 
-    def calculate_ranking(self):
+    def calculate_ranking(self, locale=None):
         ballots = list(
             map(
                 lambda x: self._heapify_ballot(x),
@@ -257,7 +288,10 @@ class RankedChoicePoll(BasePoll):
 
         for option in options:
             current_votes[option.pk] = []
-            names[option.pk] = option.name
+            if locale:
+                names[option.pk] = option.get_translation_or_none(locale).name or option.name
+            else:
+                names[option.pk] = option.name
 
         for ballot in ballots:
             if ballot:

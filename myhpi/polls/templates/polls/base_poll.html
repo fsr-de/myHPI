@@ -36,7 +36,9 @@
                         <h1 class="side-panel-title">{% translate "Number of participants" %}</h1>
                         {% if page.pk %}
                           {# Handle not-yet saved previews, where accessing already_voted throws an exception #}
-                          <p>{{ page.already_voted.count }}</p>
+                          {% with canonical_poll=page.get_canonical_poll %}
+                            <p>{{ page.canonical_poll.already_voted.count }}</p>
+                          {% endwith %}
                         {% endif %}
                     </aside>
                 </div>

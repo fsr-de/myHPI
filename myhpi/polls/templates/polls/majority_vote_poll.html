@@ -1,4 +1,5 @@
 {% extends "polls/base_poll.html" %}
+{% load polls %}
 {% load core_extras %}
 {% load i18n %}
 
@@ -7,11 +8,13 @@
         <form method="post">
             {% csrf_token %}
             {% for choice in canonical_poll.choices.all %}
-                <input type="{% if page.max_allowed_answers > 1 %}checkbox{% else %}radio{% endif %}"
-                       name="choice"
-                       id="choice{{ forloop.counter }}"
-                       value="{{ choice.id }}" />
-                <label for="choice{{ forloop.counter }}">{{ choice.text }}</label>
+                {% with choice|get_localized_choice:request as localized_choice %}
+                  <input type="{% if page.max_allowed_answers > 1 %}checkbox{% else %}radio{% endif %}"
+                         name="choice"
+                         id="choice{{ forloop.counter }}"
+                         value="{{ choice.id }}" />
+                  <label for="choice{{ forloop.counter }}">{{ localized_choice.text }}</label>
+                {% endwith %}
                 <br />
             {% endfor %}
             <input type="submit" value="Vote" />
@@ -31,14 +34,16 @@
             <th class="col-sm-1 text-right">{% trans "Percentage" %}</th>
         </tr>
         {% for choice in canonical_poll.choices.all %}
-            <tr class="choice-row">
-                <td>{{ choice.text }}</td>
-                {% if has_choice_descriptions %}
-                    <td>{{ choice.description|default_if_none:"" }}</td>
-                {% endif %}
-                <td class="text-right">{{ choice.votes }}</td>
-                <td class="text-right">{{ choice.percentage }}%</td>
-            </tr>
+            {% with choice|get_localized_choice:request as localized_choice %}
+              <tr class="choice-row">
+                  <td>{{ localized_choice.text }}</td>
+                  {% if has_choice_descriptions %}
+                      <td>{{ localized_choice.description|default_if_none:"" }}</td>
+                  {% endif %}
+                  <td class="text-right">{{ choice.votes }}</td>
+                  <td class="text-right">{{ choice.percentage }}%</td>
+              </tr>
+            {% endwith %}
         {% endfor %}
     </table>
     {% endwith %}
