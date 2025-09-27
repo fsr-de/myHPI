@@ -171,6 +171,11 @@ class MajorityVoteChoice(TranslatableMixin, Orderable):
             return 0
         return self.votes * 100 / participant_count
 
+    # Merged Meta of Orderable and TranslatableMixin
+    class Meta:
+        unique_together = [("translation_key", "locale")]
+        ordering = ["sort_order"]
+
 
 class RankedChoicePoll(BasePoll):
     content_panels = Page.content_panels + [
@@ -350,6 +355,11 @@ class RankedChoiceOption(TranslatableMixin, Orderable):
 
     def __str__(self):
         return self.name
+
+    # Merged Meta of Orderable and TranslatableMixin
+    class Meta:
+        unique_together = [("translation_key", "locale")]
+        ordering = ["sort_order"]
 
 
 class RankedChoiceBallot(models.Model):

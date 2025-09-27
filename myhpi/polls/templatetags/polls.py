@@ -16,6 +16,8 @@ def get_localized_choice(canonical_choice, request):
     localized_choice = canonical_choice.get_translation_or_none(locale)
     if localized_choice:
         return localized_choice
+    else:
+        return canonical_choice
 
 
 # Ranked choice poll localization utilities

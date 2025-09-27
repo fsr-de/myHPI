@@ -1,3 +1,5 @@
+import uuid
+
 import django.db.models.deletion
 from django.db import migrations, models
 
@@ -19,31 +21,33 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="majorityvotechoice",
             name="translation_key",
-            field=models.UUIDField(null=False, editable=False),
+            field=models.UUIDField(null=False, default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name="majorityvotechoice",
             name="locale",
             field=models.ForeignKey(
-                null=False,
                 editable=False,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="+",
                 to="wagtailcore.locale",
-                on_delete=django.db.models.deletion.CASCADE,
+                verbose_name="locale",
             ),
         ),
         migrations.AlterField(
             model_name="rankedchoiceoption",
             name="translation_key",
-            field=models.UUIDField(null=False, editable=False),
+            field=models.UUIDField(null=False, default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name="rankedchoiceoption",
             name="locale",
             field=models.ForeignKey(
-                null=False,
                 editable=False,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="+",
                 to="wagtailcore.locale",
-                on_delete=django.db.models.deletion.CASCADE,
+                verbose_name="locale",
             ),
         ),
         migrations.AlterUniqueTogether(
@@ -53,6 +57,20 @@ class Migration(migrations.Migration):
         migrations.AlterUniqueTogether(
             name="rankedchoiceoption",
             unique_together={("translation_key", "locale")},
+        ),
+        migrations.AlterModelOptions(
+            name="majorityvotechoice",
+            options={
+                "ordering": ["sort_order"],
+                "abstract": False,
+            },
+        ),
+        migrations.AlterModelOptions(
+            name="rankedchoiceoption",
+            options={
+                "ordering": ["sort_order"],
+                "abstract": False,
+            },
         ),
         migrations.RunPython(fix_null_locales, reverse_code=migrations.RunPython.noop),
     ]
