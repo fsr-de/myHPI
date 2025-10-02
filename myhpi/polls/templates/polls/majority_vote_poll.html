@@ -1,23 +1,29 @@
 {% extends "polls/base_poll.html" %}
+{% load polls %}
 {% load core_extras %}
 {% load i18n %}
 
 {% block ballot %}
-    <form method="post">
-        {% csrf_token %}
-        {% for choice in page.choices.all %}
-            <input type="{% if page.max_allowed_answers > 1 %} 'checkbox' {% else %} 'radio' {% endif %}"
-                   name="choice"
-                   id="choice{{ forloop.counter }}"
-                   value="{{ choice.id }}" />
-            <label for="choice{{ forloop.counter }}">{{ choice.text }}</label>
-            <br />
-        {% endfor %}
-        <input type="submit" value="Vote" />
-    </form>
+    {% with canonical_poll=page.get_canonical_poll %}
+        <form method="post">
+            {% csrf_token %}
+            {% for choice in canonical_poll.choices.all %}
+                {% with choice|get_localized_choice:request as localized_choice %}
+                  <input type="{% if page.max_allowed_answers > 1 %}checkbox{% else %}radio{% endif %}"
+                         name="choice"
+                         id="choice{{ forloop.counter }}"
+                         value="{{ choice.id }}" />
+                  <label for="choice{{ forloop.counter }}">{{ localized_choice.text }}</label>
+                {% endwith %}
+                <br />
+            {% endfor %}
+            <input type="submit" value="Vote" />
+        </form>
+    {% endwith %}
 {% endblock %}
 
 {% block results %}
+    {% with canonical_poll=page.get_canonical_poll %}
     <table class="table table-striped">
         <tr>
             <th class="col-sm-3">{% trans "Choice" %}</th>
@@ -27,12 +33,18 @@
             <th class="col-sm-1 text-right">{% trans "Votes" %}</th>
             <th class="col-sm-1 text-right">{% trans "Percentage" %}</th>
         </tr>
-        {% for choice in page.choices.all %}
-            <tr class="choice-row">
-                <td>{{ choice.text }}</td>
-                <td class="text-right">{{ choice.votes }}</td>
-                <td class="text-right">{{ choice.percentage }}%</td>
-            </tr>
+        {% for choice in canonical_poll.choices.all %}
+            {% with choice|get_localized_choice:request as localized_choice %}
+              <tr class="choice-row">
+                  <td>{{ localized_choice.text }}</td>
+                  {% if has_choice_descriptions %}
+                      <td>{{ localized_choice.description|default_if_none:"" }}</td>
+                  {% endif %}
+                  <td class="text-right">{{ choice.votes }}</td>
+                  <td class="text-right">{{ choice.percentage }}%</td>
+              </tr>
+            {% endwith %}
         {% endfor %}
     </table>
+    {% endwith %}
 {% endblock %}

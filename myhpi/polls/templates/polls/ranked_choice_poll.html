@@ -1,13 +1,14 @@
 {% extends "polls/base_poll.html" %}
-{% load core_extras %}
+{% load polls %}
 {% load core_extras %}
 {% load i18n %}
 
 {% block ballot %}
+    {% with canonical_poll=page.get_canonical_poll %}
     <form method="post">
         {% csrf_token %}
         <div id="options" class="mb-3">
-            {% for field in page.get_ballot_form %}
+            {% for field in canonical_poll|get_localized_form:request %}
                 <div class="card">
                     <div class="card-header"
                          data-toggle="collapse"
@@ -31,9 +32,11 @@
         </div>
         <input class="btn btn-primary" type="submit" value="Vote" />
     </form>
+  {% endwith %}
 {% endblock %}
 
 {% block results %}
+    {% with canonical_poll=page.get_canonical_poll %}
     <table class="table">
         <thead>
             <tr>
@@ -43,7 +46,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for choice in page.calculate_ranking %}
+            {% for choice in canonical_poll|get_localized_results:request %}
                 <tr>
                     <th scope="row">{{ choice.0 }}</th>
                     <td>{{ choice.1 }}</td>
@@ -52,4 +55,5 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endwith %}
 {% endblock %}

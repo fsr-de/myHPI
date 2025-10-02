@@ -12,7 +12,7 @@
                 </h1>
                 {{ parsed_md.0|touchify_abbreviations|tag_external_links }}
                 <h2>{{ page.question }}</h2>
-                {% if page|can_vote:request.user %}
+                {% if page|can_vote:request %}
                     {% block ballot %}{% endblock %}
                 {% elif page.results_visible %}
                     {% block results %}{% endblock %}
@@ -34,7 +34,12 @@
                         <h1 class="side-panel-title">{% translate "End Date" %}</h1>
                         <p>{{ page.end_date }}</p>
                         <h1 class="side-panel-title">{% translate "Number of participants" %}</h1>
-                        <p>{{ page.already_voted.count }}</p>
+                        {% if page.pk %}
+                          {# Handle not-yet saved previews, where accessing already_voted throws an exception #}
+                          {% with canonical_poll=page.get_canonical_poll %}
+                            <p>{{ page.canonical_poll.already_voted.count }}</p>
+                          {% endwith %}
+                        {% endif %}
                     </aside>
                 </div>
             </div>

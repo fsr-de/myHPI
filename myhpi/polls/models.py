@@ -1,5 +1,6 @@
 import datetime
 import heapq
+from dataclasses import dataclass
 
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
@@ -10,8 +11,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.models import Orderable, Page
+from wagtail.models import Locale, Orderable, Page, TranslatableMixin
 from wagtail.search import index
+from wagtail_localize.fields import SynchronizedField
 
 from myhpi.core.markdown.fields import CustomMarkdownField
 from myhpi.core.models import BasePage
@@ -45,14 +47,39 @@ class BasePoll(BasePage):
     subpage_types = []
     is_creatable = False
 
+    # Options of the canonical poll are synchronized to translations
+    override_translatable_fields = [
+        SynchronizedField("start_date"),
+        SynchronizedField("end_date"),
+        SynchronizedField("results_visible"),
+        SynchronizedField("eligible_groups"),
+    ]
+
     def in_voting_period(self):
         return self.start_date <= datetime.date.today() <= self.end_date
 
-    def can_vote(self, user):
+    def get_canonical_poll(self):
+        # Returns the poll in the default locale for this translation_key
+        poll_model = self.__class__
+
+        default_locale = Locale.get_default()
+        return poll_model.objects.filter(
+            translation_key=self.translation_key, locale=default_locale
+        ).first()
+
+    def can_vote(self, user, request=None, allow_preview=False):
+        canonical_poll = self.get_canonical_poll()
+        if not canonical_poll:
+            return False
+        # Allow voting in preview mode so admins can see the poll options
+        if allow_preview and getattr(request, "is_preview", False):
+            return True
         return (
             self.in_voting_period()
-            and user not in self.already_voted.all()
-            and self.eligible_groups.intersection(user.groups.all()).exists()
+            and user not in canonical_poll.already_voted.all()
+            and self.eligible_groups.filter(
+                id__in=user.groups.values_list("id", flat=True)
+            ).exists()
         )
 
     def cast_vote(self, request, *args, **kwargs):
@@ -89,6 +116,10 @@ class MajorityVotePoll(BasePoll):
     is_creatable = True
 
     def cast_vote(self, request, *args, **kwargs):
+        canonical_poll = self.get_canonical_poll()
+        if not canonical_poll:
+            messages.error(request, _("Voting is not available for this poll."))
+            return redirect(self.relative_url(self.get_site()))
         choices = request.POST.getlist("choice")
         if len(choices) == 0:
             messages.error(request, _("You must select at least one choice."))
@@ -100,15 +131,15 @@ class MajorityVotePoll(BasePoll):
         else:
             confirmed_choices = 0
             for choice_id in choices:
-                choice = self.choices.filter(id=choice_id).first()
-                if choice and choice.page == self:
+                choice = canonical_poll.choices.filter(id=choice_id).first()
+                if choice and choice.page == canonical_poll:
                     choice.votes += 1
                     choice.save()
                     confirmed_choices += 1
                 else:
                     messages.error(request, _("Invalid choice."))
             if confirmed_choices > 0:
-                self.already_voted.add(request.user)
+                canonical_poll.already_voted.add(request.user)
                 messages.success(request, _("Your vote has been counted."))
         return redirect(self.relative_url(self.get_site()))
 
@@ -122,7 +153,7 @@ class MajorityVotePoll(BasePoll):
         return self.choices.aggregate(Sum("votes")).get("votes__sum")
 
 
-class MajorityVoteChoice(Orderable):
+class MajorityVoteChoice(TranslatableMixin, Orderable):
     text = models.CharField(max_length=254)
     votes = models.IntegerField(default=0)
     page = ParentalKey("MajorityVotePoll", on_delete=models.CASCADE, related_name="choices")
@@ -139,6 +170,11 @@ class MajorityVoteChoice(Orderable):
         if participant_count == 0:
             return 0
         return self.votes * 100 / participant_count
+
+    # Merged Meta of Orderable and TranslatableMixin
+    class Meta:
+        unique_together = [("translation_key", "locale")]
+        ordering = ["sort_order"]
 
 
 class RankedChoicePoll(BasePoll):
@@ -162,7 +198,11 @@ class RankedChoicePoll(BasePoll):
     is_creatable = True
 
     def cast_vote(self, request, *args, **kwargs):
-        form = self.get_ballot_form(request.POST)
+        canonical_poll = self.get_canonical_poll()
+        if not canonical_poll:
+            messages.error(request, _("Voting is not available for this poll."))
+            return redirect(self.relative_url(self.get_site()))
+        form = canonical_poll.get_ballot_form(request.POST)
         if not form.is_valid():
             messages.error(
                 request,
@@ -174,15 +214,15 @@ class RankedChoicePoll(BasePoll):
             )
         else:
             try:
-                qs = RankedChoicePoll.objects.select_for_update().filter(pk=self.pk)
+                qs = RankedChoicePoll.objects.select_for_update().filter(pk=canonical_poll.pk)
                 with transaction.atomic():
                     # acquire lock for this transaction by evaluating the queryset
-                    date = qs.get().start_date
-                    if self.already_voted.filter(pk=request.user.pk).exists():
+                    qs.get()
+                    if canonical_poll.already_voted.filter(pk=request.user.pk).exists():
                         messages.error(request, _("You have already voted."))
                     else:
-                        ballot = RankedChoiceBallot.objects.create(poll=self)
-                        for option in self.options.all():
+                        ballot = RankedChoiceBallot.objects.create(poll=canonical_poll)
+                        for option in canonical_poll.options.all():
                             if f"option_{option.pk}" in form.cleaned_data:
                                 entry = RankedChoiceBallotEntry.objects.create(
                                     ballot=ballot,
@@ -190,18 +230,41 @@ class RankedChoicePoll(BasePoll):
                                     rank=form.cleaned_data[f"option_{option.pk}"],
                                 )
                                 entry.save()
-                        self.already_voted.add(request.user)
+                        canonical_poll.already_voted.add(request.user)
                         messages.success(request, _("Your vote has been counted."))
             except IntegrityError:
                 messages.error(request, _("Invalid ballot."))
             except DatabaseError:
-                messages.error(request, _("A database error occured. Please try again."))
+                messages.error(request, _("A database error occurred. Please try again."))
         return redirect(self.relative_url(self.get_site()))
 
-    def get_ballot_form(self, data=None):
+    def get_ballot_form(self, data=None, locale=None):
         from myhpi.polls.forms import RankedChoiceBallotForm
 
-        return RankedChoiceBallotForm(data, options=self.options.all())
+        @dataclass
+        class FormOption:
+            pk: int
+            name: str
+            description: str
+
+        # Translate poll option name and description if locale is given
+        if locale:
+            localized_options = []
+            for option in self.options.all():
+                localized_option = option.get_translation_or_none(locale)
+                localized_options.append(
+                    FormOption(
+                        pk=option.pk,  # Use the canonical pk to identify the option
+                        name=localized_option.name if localized_option else option.name,
+                        description=(
+                            localized_option.description if localized_option else option.description
+                        ),
+                    )
+                )
+
+            return RankedChoiceBallotForm(data, options=localized_options)
+        else:
+            return RankedChoiceBallotForm(data, options=self.options.all())
 
     def __str__(self):
         return self.title
@@ -214,7 +277,7 @@ class RankedChoicePoll(BasePoll):
         heapq.heapify(result)
         return result
 
-    def calculate_ranking(self):
+    def calculate_ranking(self, locale=None):
         ballots = list(
             map(
                 lambda x: self._heapify_ballot(x),
@@ -230,7 +293,10 @@ class RankedChoicePoll(BasePoll):
 
         for option in options:
             current_votes[option.pk] = []
-            names[option.pk] = option.name
+            if locale:
+                names[option.pk] = option.get_translation_or_none(locale).name or option.name
+            else:
+                names[option.pk] = option.name
 
         for ballot in ballots:
             if ballot:
@@ -277,7 +343,7 @@ class RankedChoicePoll(BasePoll):
         return sorted(results)
 
 
-class RankedChoiceOption(Orderable):
+class RankedChoiceOption(TranslatableMixin, Orderable):
     name = models.CharField(max_length=254)
     description = CustomMarkdownField()
     poll = ParentalKey("RankedChoicePoll", related_name="options")
@@ -289,6 +355,11 @@ class RankedChoiceOption(Orderable):
 
     def __str__(self):
         return self.name
+
+    # Merged Meta of Orderable and TranslatableMixin
+    class Meta:
+        unique_together = [("translation_key", "locale")]
+        ordering = ["sort_order"]
 
 
 class RankedChoiceBallot(models.Model):
