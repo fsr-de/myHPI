@@ -25,8 +25,8 @@
             </li>
             <br>
             <a id="nav-user-toggle"
-                class="btn btn-primary"
-                href="{% url 'oidc_authentication_init' %}?next={{ request.path }}">
+               class="btn btn-primary"
+               href="{% url 'oidc_authentication_init' %}?next={{ request.path }}">
                 <span class="d-none d-md-inline-block">{% translate "Sign in" %}</span>
                 {% bs_icon 'box-arrow-in-right' size='1.4em' %}
             </a>
