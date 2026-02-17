@@ -47,6 +47,19 @@ jobs:
 
   test:
     runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_DB: myHPI
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: pass
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       matrix:
         python-version: [3.11, 3.12] # Also update Coveralls step when updating versions here
@@ -93,14 +106,14 @@ jobs:
           poetry run python manage.py compilemessages --settings myhpi.settings
           poetry run python manage.py collectstatic --settings myhpi.settings
 
-      - name: Setup postgres
-        uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: "11" # See https://hub.docker.com/_/postgres for available versions
-          postgresql db: myHPI
-          postgresql user: user
-          postgresql password: pass
-        if: matrix.database == 'postgres'
+      # - name: Setup postgres
+      #   uses: harmon758/postgresql-action@v1
+      #   with:
+      #     postgresql version: "11" # See https://hub.docker.com/_/postgres for available versions
+      #     postgresql db: myHPI
+      #     postgresql user: user
+      #     postgresql password: pass
+      #   if: matrix.database == 'postgres'
 
       - name: Setup postgres dependency
         run: |
