@@ -36,9 +36,8 @@ Test the code with `python manage.py test myhpi.tests`.
 
 We recommend installing a pre-commit hook with `pre-commit install`. The [hook](.pre-commit-config.yaml) will do the following steps before every commit:
 
-- run `autoflake` with a couple of flags to remove unused imports,
-- run `isort .` to sort imports,
-- run `black .` to format the python code
+- run `ruff format .` to format the python code
+- run `ruff check --fix .` to check and fix the python code
 - run `djlint-reformat-django --quiet` and `djlint-django` to format and lint template files (`html`) according to the `pyproject.toml` configuration
 - run `prettier-eslint --write --list-different` to format the JavaScript code, (S)CSS, Markdown and YAML files according to the `.prettierrc` configuration
 
@@ -49,7 +48,7 @@ If you want to do that manually, run `pre-commit run --all-files`. Next to that,
 To get optional linting-related warnings within your IDE and format files when saving them, follow these steps:
 
 - Install IDE plugins
-  - black ([IDE integrations](https://black.readthedocs.io/en/stable/integrations/editors.html))
+  - ruff ([IDE integrations](https://docs.astral.sh/ruff/editors/))
   - djLint ([VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=monosans.djlint))
   - Prettier ([IDE integrations](https://prettier.io/docs/en/editors))
 - Set configuration
@@ -64,7 +63,7 @@ Workspace settings:
 ```
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "ms-python.black-formatter",
+  "editor.defaultFormatter": "charliermarsh.ruff",
   "[javascript][css][scss][markdown][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

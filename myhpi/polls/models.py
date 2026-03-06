@@ -83,7 +83,7 @@ class BasePoll(BasePage):
         )
 
     def cast_vote(self, request, *args, **kwargs):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
@@ -322,7 +322,7 @@ class RankedChoicePoll(BasePoll):
                         if not ballot:
                             break
                         next_option = heapq.heappop(ballot)[1].option.pk
-                        if not next_option in loosers and next_option in current_votes.keys():
+                        if next_option not in loosers and next_option in current_votes.keys():
                             current_votes[next_option].append(ballot)
                             break
 

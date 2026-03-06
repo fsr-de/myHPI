@@ -28,14 +28,11 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: check format with black
+      - name: check format with ruff
         run: |
-          poetry run black --version
-          poetry run black --check .
-      - name: check import order with isort
-        run: |
-          poetry run isort --version
-          poetry run isort -c .
+          poetry run ruff --version
+          poetry run ruff format --check .
+          poetry run ruff check .
       - name: Lint with pylint
         run: |
           poetry run pylint --version
