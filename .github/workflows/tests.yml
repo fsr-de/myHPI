@@ -106,15 +106,6 @@ jobs:
           poetry run python manage.py compilemessages --settings myhpi.settings
           poetry run python manage.py collectstatic --settings myhpi.settings
 
-      # - name: Setup postgres
-      #   uses: harmon758/postgresql-action@v1
-      #   with:
-      #     postgresql version: "11" # See https://hub.docker.com/_/postgres for available versions
-      #     postgresql db: myHPI
-      #     postgresql user: user
-      #     postgresql password: pass
-      #   if: matrix.database == 'postgres'
-
       - name: Setup postgres dependency
         run: |
           source env/bin/activate
