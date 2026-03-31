@@ -194,15 +194,6 @@ h1.side-panel-title::after {
     margin-left: 1rem;
 }
 
-.toc-permalink {
-    font-size: 0.85em;
-    opacity: 0;
-}
-
-*:hover>.toc-permalink, *:active>.toc-permalink, .toc-permalink:focus {
-    opacity: 1;
-}
-
 .search-result-list {
     list-style: none;
     padding: 0;
