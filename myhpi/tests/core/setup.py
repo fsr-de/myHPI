@@ -2,15 +2,7 @@ from django.contrib.auth.models import Group, Permission, User
 from wagtail.documents.models import Document
 from wagtail.models import Collection, GroupCollectionPermission, Site
 
-from myhpi.core.models import (
-    FirstLevelMenuItem,
-    Footer,
-    InformationPage,
-    Minutes,
-    MinutesList,
-    RootPage,
-    SecondLevelMenuItem,
-)
+from myhpi.core.models import Footer, InformationPage, MenuItem, Minutes, MinutesList, RootPage
 
 
 def create_users():
@@ -74,7 +66,7 @@ def create_basic_page_structure():
     Site.objects.create(
         hostname="localhost", port=80, site_name="myHPI", root_page=root_page, is_default_site=True
     )
-    information_menu = FirstLevelMenuItem(
+    information_menu = MenuItem(
         title="Information",
         show_in_menus=True,
         path="000100020001",
@@ -82,7 +74,7 @@ def create_basic_page_structure():
         is_public=True,
         slug="information",
     )
-    student_representation_menu = FirstLevelMenuItem(
+    student_representation_menu = MenuItem(
         title="Student representation",
         is_public=False,
         show_in_menus=True,
@@ -90,7 +82,7 @@ def create_basic_page_structure():
     )
     root_page.add_child(instance=information_menu)
     root_page.add_child(instance=student_representation_menu)
-    fsr_menu = SecondLevelMenuItem(
+    fsr_menu = MenuItem(
         title="Student representative group", show_in_menus=True, is_public=False, slug="fsr"
     )
     student_representation_menu.add_child(instance=fsr_menu)
